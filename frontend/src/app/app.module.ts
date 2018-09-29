@@ -5,18 +5,19 @@ import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
 
+import {AutosizeModule} from 'ngx-autosize';
+
 // Add css components from angular material
 import {MatButtonModule, MatCardModule, MatCheckboxModule, MatInputModule, MatListModule} from '@angular/material';
-import { TodoListComponent } from './todo-list/todo-list.component';
-import { TodoItemComponent } from './todo-item/todo-item.component';
 import {FormsModule} from '@angular/forms';
-
+import {JobComponent} from './job/job.component';
+import {SkillComponent} from './skill/skill.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TodoListComponent,
-    TodoItemComponent,
+    JobComponent,
+    SkillComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +28,8 @@ import {FormsModule} from '@angular/forms';
     MatListModule,
     MatInputModule,
     MatCheckboxModule,
-    MatCardModule
+    MatCardModule,
+    AutosizeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
