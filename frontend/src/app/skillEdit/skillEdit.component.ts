@@ -3,11 +3,11 @@ import {Skill} from '../skill';
 import {HttpClient, HttpParams} from '@angular/common/http';
 
 @Component({
-  selector: 'app-skill',
-  templateUrl: './skill.component.html',
-  styleUrls: ['./skill.component.css']
+  selector: 'app-skill-edit',
+  templateUrl: './skillEdit.component.html',
+  styleUrls: ['./skillEdit.component.css']
 })
-export class SkillComponent implements OnInit {
+export class SkillEditComponent implements OnInit {
 
   @Input()
   skill: Skill;
@@ -22,13 +22,13 @@ export class SkillComponent implements OnInit {
   }
 
   onSave() {
-    this.httpClient.put('http://localhost:3000/skill/' + this.skill.id, {
+    this.httpClient.put('http://localhost:3000/skillEdit/' + this.skill.id, {
       'name': this.skill.name, 'jobId': this.skill.jobId
     }).subscribe();
   }
 
   onDestroy() {
-    this.httpClient.delete('http://localhost:3000/skill/' + this.skill.id).subscribe(() => {
+    this.httpClient.delete('http://localhost:3000/skillEdit/' + this.skill.id).subscribe(() => {
       this.destroy.emit(this.skill);
     });
   }

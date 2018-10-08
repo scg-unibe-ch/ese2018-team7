@@ -1,0 +1,9 @@
+<mat-card>
+  <mat-form-field>
+    <input matInput placeholder="Username" [(ngModel)]="user.username" name="username">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="password" placeholder="Password" [(ngModel)]="user.password" name="password">
+  </mat-form-field>
+  <button mat-button (click)="onCreate()">Create Account</button>
+</mat-card>

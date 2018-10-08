@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Job} from './job';
 import {HttpClient} from '@angular/common/http';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,31 +8,54 @@ import {HttpClient} from '@angular/common/http';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  job: Job = new Job(null, '', '');
-  jobs: Job[] = [];
 
-  constructor(private httpClient: HttpClient) {
+  loggedin = false;
 
+  logInOutLink = '/login';
+  logInOutText = 'Login';
+
+  jobViewEditLink = '/viewJobs';
+  jobViewEditText = 'View Jobs';
+
+  constructor(private httpClient: HttpClient, route: ActivatedRoute) {
+    this.onUpdate({'id': ''});
+    route.params.subscribe(params => this.onUpdate(params));
   }
 
   ngOnInit() {
-    this.httpClient.get('http://localhost:3000/job').subscribe((instances: any) => {
-      this.jobs = instances.map((instance) => new Job(instance.id, instance.title, instance.description));
-    });
   }
 
-  onJobsCreate() {
-    this.httpClient.post('http://localhost:3000/job', {
-      'title': this.job.title, 'description': this.job.description,
-    }).subscribe((instance: any) => {
-      this.job.id = instance.id;
-      this.jobs.push(this.job);
-      this.job = new Job(null, '', '');
-    });
-  }
+  onUpdate(params:  any) {
+    console.log('menu id ' + params['id']);
 
-  onJobsDestroy(job: Job) {
-    this.jobs.splice(this.jobs.indexOf(job), 1);
+    this.httpClient.get('http://localhost:3000/login/check', {withCredentials: true}).subscribe(
+      (res: any) => {
+        console.log(res);
+        if (res.value === null || res.value !== 'true') {
+          if (this.loggedin === true) {
+            this.logInOutLink = '/login';
+            this.logInOutText = 'Login';
+
+            this.jobViewEditLink = '/viewJobs';
+            this.jobViewEditText = 'View Jobs';
+          }
+          this.loggedin = false;
+
+        } else {
+          if (this.loggedin === false) {
+            this.logInOutLink = '/logout';
+            this.logInOutText = 'Logout';
+
+            this.jobViewEditLink = '/editJobs';
+            this.jobViewEditText = 'Edit Jobs';
+          }
+
+          this.loggedin = true;
+
+        }
+      }
+    );
+
   }
 
 }

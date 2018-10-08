@@ -10,7 +10,7 @@
   <br>
   <mat-list>
     <mat-list-item *ngFor="let skill of skills">
-      <app-skill [skill]="skill" (destroy)="onSkillDestroy($event)"></app-skill>
+      <app-skill-edit [skill]="skill" (destroy)="onSkillDestroy($event)"></app-skill-edit>
     </mat-list-item>
 
   </mat-list>

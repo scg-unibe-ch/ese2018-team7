@@ -1,6 +1,6 @@
-<mat-form-field>
-  <input matInput placeholder="Create Job" [(ngModel)]="job.title" name="title">
-</mat-form-field>
-<button mat-button (click)="onJobsCreate()">create job</button>
-<app-jobs [job]="job" (destroy)="onJobsDestroy($event)"
-          *ngFor="let job of jobs"></app-jobs>
+<h1>ESE - Team 7 - Job Portal</h1>
+<nav>
+  <a routerLink="{{jobViewEditLink}}" routerLinkActive="active">{{jobViewEditText}}</a> |
+  <a routerLink="{{logInOutLink}}" routerLinkActive="active">{{logInOutText}}</a>
+</nav>
+<router-outlet></router-outlet>

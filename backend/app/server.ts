@@ -1,12 +1,17 @@
 // import everything from express and assign it to the express variable
-import express from 'express';
+import * as Express from 'express';
+import * as ExpressSession from 'express-session';
+
+export interface Request extends Express.Request {
+  session: any;
+}
 
 // import all the controllers. If you add a new controller, make sure to import it here as well.
-import {JobController, SkillController} from './controllers';
+import {JobController, SkillController, UserController} from './controllers';
 import {Sequelize} from 'sequelize-typescript';
 import {Job} from './models/job.model';
 import {Skill} from './models/skill.model';
-
+import {User} from './models/user.model';
 
 const sequelize =  new Sequelize({
   database: 'development',
@@ -15,27 +20,38 @@ const sequelize =  new Sequelize({
   password: '',
   storage: 'db.sqlite'
 });
-sequelize.addModels([Job, Skill]);
+sequelize.addModels([Job, Skill, User]);
 
 // create a new express application instance
-const app: express.Application = express();
-app.use(express.json());
+const app: Express.Application = Express();
+app.use(Express.json());
+
+app.use(ExpressSession({
+  secret: 'omfg, its a secret!',
+resave: false,
+  saveUninitialized: true
+}));
 
 // define the port the express app will listen on
-var port: number = 3000;
+let port = 3000;
 if (process.env.PORT !== undefined) {
   port = parseInt(process.env.PORT);
 }
 
 app.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', '*');
+  // Mustn't be '*' because then credentials are not working! need to be exact protocol, hostname and port
+  res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
+  res.header('Access-Control-Allow-Credentials', 'true');
+
+  // Must be explicit, because * seems not to be allowed
+  res.header('Access-Control-Allow-Methods', '"GET, POST, PUT, DELETE');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
 
-app.use('/job', JobController);
-app.use('/skill', SkillController);
+app.use('/jobView', JobController);
+app.use('/skillEdit', SkillController);
+app.use('/login', UserController);
 
 sequelize.sync().then(() => {
 // start serving the application on the given port
