@@ -9,7 +9,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./jobsEdit.component.css']
 })
 export class JobsEditComponent implements OnInit {
-  job: Job = new Job(null, '', '');
+  job: Job = new Job(null, '', '', '');
   jobs: Job[] = [];
 
   constructor(private httpClient: HttpClient, private router: Router) {
@@ -26,17 +26,17 @@ export class JobsEditComponent implements OnInit {
 
   ngOnInit() {
     this.httpClient.get('http://localhost:3000/jobView').subscribe((instances: any) => {
-      this.jobs = instances.map((instance) => new Job(instance.id, instance.title, instance.description));
+      this.jobs = instances.map((instance) => new Job(instance.id, instance.title, instance.company, instance.description));
     });
   }
 
   onJobsCreate() {
     this.httpClient.post('http://localhost:3000/jobView', {
-      'title': this.job.title, 'description': this.job.description,
+      'title': this.job.title, 'company': this.job.company, 'description': this.job.description,
     }).subscribe((instance: any) => {
       this.job.id = instance.id;
       this.jobs.push(this.job);
-      this.job = new Job(null, '', '');
+      this.job = new Job(null, '', '', '');
     });
   }
 
