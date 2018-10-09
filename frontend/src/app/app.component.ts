@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {ActivatedRoute} from '@angular/router';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -17,20 +17,23 @@ export class AppComponent implements OnInit {
   jobViewEditLink = '/viewJobs';
   jobViewEditText = 'View Jobs';
 
-  constructor(private httpClient: HttpClient, route: ActivatedRoute) {
+  constructor(private httpClient: HttpClient, router: Router) {
     this.onUpdate({'id': ''});
-    route.params.subscribe(params => this.onUpdate(params));
+    router.events.subscribe((val) => {
+      // see also
+      this.onUpdate(val);
+    });
+    // r
   }
 
   ngOnInit() {
   }
 
   onUpdate(params:  any) {
-    console.log('menu id ' + params['id']);
+    console.log('update menu ' + params['id']);
 
     this.httpClient.get('http://localhost:3000/login/check', {withCredentials: true}).subscribe(
       (res: any) => {
-        console.log(res);
         if (res.value === null || res.value !== 'true') {
           if (this.loggedin === true) {
             this.logInOutLink = '/login';
