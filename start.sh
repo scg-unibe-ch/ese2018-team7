@@ -22,25 +22,19 @@ clear
 #start backend
 echo -e '\033]2;ESE - Team 7 - Start Backend\007'
 
-cd backend
 
 #Autocompile backend
-npm run tsc -- --watch&
+start bash ./startBackendCompile.sh
 
 sleep 3
 
 #Auto refresh backend
-nodemon build/server.js&
-
-cd ..
-
+start bash ./startBackendRun.sh
 
 
 #start frontend
 echo -e '\033]2;ESE - Team 7 - Start Frontend\007'
 
-cd frontend
-
-ng serve --open
+start bash ./startFrontendRun.sh
 
 
