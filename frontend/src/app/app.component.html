@@ -1,8 +1,8 @@
 <h1>ESE - Team 7 - Job Portal</h1>
 <nav>
-  <a *ngFor="let menu of menus">
+  <span *ngFor="let menu of menus">
     <a *ngIf="menu.condition()" routerLink="{{menu.link}}" routerLinkActive="active">{{menu.text}}</a>
-    <a *ngIf="menu.condition()"> | </a>
-  </a>
+    <a *ngIf="menu.condition()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+  </span>
 </nav>
 <router-outlet></router-outlet>
