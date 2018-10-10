@@ -5,6 +5,10 @@
   <button mat-button (click)="onDestroy()">delete job</button>
   <br>
   <mat-form-field>
+    <input matInput placeholder="Company" [(ngModel)]="job.company" name="company" (ngModelChange)="onSave()">
+  </mat-form-field>
+  <br>
+  <mat-form-field>
     <textarea autosize matInput placeholder="Description" [(ngModel)]="job.description" name="description" (ngModelChange)="onSave()" style="resize: none;overflow: hidden;"></textarea>
   </mat-form-field>
   <br>

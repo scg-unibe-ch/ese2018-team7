@@ -9,7 +9,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./jobsView.component.css']
 })
 export class JobsViewComponent implements OnInit {
-  job: Job = new Job(null, '', '');
+  job: Job = new Job(null, '', '', '');
   jobs: Job[] = [];
   msg: String = '';
 
@@ -26,7 +26,7 @@ export class JobsViewComponent implements OnInit {
 
   ngOnInit() {
     this.httpClient.get('http://localhost:3000/jobView').subscribe((instances: any) => {
-      this.jobs = instances.map((instance) => new Job(instance.id, instance.title, instance.description));
+      this.jobs = instances.map((instance) => new Job(instance.id, instance.title, instance.company, instance.description));
 
       if (this.jobs.length === 0) {
         this.msg = 'Currently there are no Jobs available!';

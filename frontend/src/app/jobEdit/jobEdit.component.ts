@@ -31,7 +31,7 @@ export class JobEditComponent implements OnInit {
 
   onSave() {
     this.httpClient.put('http://localhost:3000/jobView/' + this.job.id, {
-      'title': this.job.title, 'description': this.job.description
+      'title': this.job.title, 'company': this.job.company, 'description': this.job.description
     }, {withCredentials: true}).subscribe();
   }
 

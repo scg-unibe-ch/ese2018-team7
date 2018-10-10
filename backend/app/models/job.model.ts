@@ -7,6 +7,9 @@ export class Job extends Model<Job> {
   @Column
   title!: string;
 
+  @Column
+  company!: string;
+
   @Column(DataType.TEXT)
   description!: string;
 
@@ -17,12 +20,14 @@ export class Job extends Model<Job> {
     return {
       'id': this.id,
       'title': this.title,
+      'company': this.company,
       'description': this.description,
     };
   }
 
   fromSimplification(simplification: any): void {
     this.title = simplification['title'];
+    this.company = simplification['company'];
     this.description = simplification['description'];
   }
 
