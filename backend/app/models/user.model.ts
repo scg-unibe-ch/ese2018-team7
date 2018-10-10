@@ -19,6 +19,9 @@ export class User extends Model<User> {
     return this.bcrypt.compareSync(passwordClear, this.password);
 
   }
+  setPassword(passwordClear: string) {
+    this.password = this.bcrypt.hashSync(passwordClear, this.saltRounds);
+  }
 
   toSimplification(): any {
     return {
@@ -30,7 +33,7 @@ export class User extends Model<User> {
 
   fromSimplification(simplification: any): void {
     this.username = simplification['username'];
-    this.password = this.bcrypt.hashSync(simplification['password'], this.saltRounds);
+    this.setPassword(simplification['password']);
     this.type = simplification['type'];
   }
 

@@ -21,6 +21,7 @@ import {RegisterComponent} from './register/register.component';
 import {PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import {AppRoutingModule } from './app-routing.module';
 import {LogoutComponent} from './logout/logout.component';
+import {ChangePasswordComponent} from './changePassword/changePassword.component';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import {LogoutComponent} from './logout/logout.component';
     LogoutComponent,
     RegisterComponent,
     PageNotFoundComponent,
+    ChangePasswordComponent,
   ],
   imports: [
     BrowserModule,

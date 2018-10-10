@@ -8,11 +8,13 @@ import {LoginComponent} from './login/login.component';
 import {JobsEditComponent} from './jobsEdit/jobsEdit.component';
 import {JobsViewComponent} from './jobsView/jobsView.component';
 import {LogoutComponent} from './logout/logout.component';
+import {ChangePasswordComponent} from './changePassword/changePassword.component';
 
 const appRoutes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent},
+  { path: 'changePassword', component: ChangePasswordComponent},
   { path: 'editJobs', component: JobsEditComponent },
   { path: 'viewJobs', component: JobsViewComponent },
   { path: '', redirectTo: '/viewJobs', pathMatch: 'full' },

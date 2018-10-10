@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
+import {AuthService} from './auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,15 @@ import {Router} from '@angular/router';
 })
 export class AppComponent implements OnInit {
 
+  menus = [
+    {link: '/viewJobs', text: 'View Jobs', condition: function() {return !AuthService.isLogin(); }},
+    {link: '/editJobs', text: 'Edit Jobs', condition: function() {return AuthService.isLogin(); }},
+    {link: '/changePassword', text: 'Change Password', condition: function() {return AuthService.isLogin(); }},
+    {link: '/login', text: 'Login', condition: function() {return !AuthService.isLogin(); }},
+    {link: '/logout', text: 'Logout', condition: function() {return AuthService.isLogin(); }},
+    ];
+
+// <a routerLink="/changePassword" routerLinkActive="{{changePassword}}">Change Password</a>
   loggedin = false;
 
   logInOutLink = '/login';
@@ -16,6 +26,8 @@ export class AppComponent implements OnInit {
 
   jobViewEditLink = '/viewJobs';
   jobViewEditText = 'View Jobs';
+
+  changePassword = 'disabled';
 
   constructor(private httpClient: HttpClient, router: Router) {
     this.onUpdate({'id': ''});
@@ -28,7 +40,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
   }
-
   onUpdate(params:  any) {
     console.log('update menu ' + params['id']);
 
@@ -41,6 +52,8 @@ export class AppComponent implements OnInit {
 
             this.jobViewEditLink = '/viewJobs';
             this.jobViewEditText = 'View Jobs';
+
+            this.changePassword = 'disabled';
           }
           this.loggedin = false;
 
@@ -51,6 +64,8 @@ export class AppComponent implements OnInit {
 
             this.jobViewEditLink = '/editJobs';
             this.jobViewEditText = 'Edit Jobs';
+
+            this.changePassword = 'active';
           }
 
           this.loggedin = true;

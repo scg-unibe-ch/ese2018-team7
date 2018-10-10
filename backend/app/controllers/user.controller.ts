@@ -106,6 +106,38 @@ router.post('/', async (req: Request, res: Response) => {
   }
 });
 
+// set new Password
+router.put('/password', async (req: Request, res: Response) => {
+
+  // if not logged in cant change
+  if (req.session == null) {
+    res.status(403).send({
+      errorMessage: 'Permission denied! - No Session'
+    });
+    return;
+  }
+  const instance = await User.findByPrimary(req.session.user.username);
+  if (instance == null) {
+    res.statusCode = 404;
+    res.json({
+      'message': 'not found'
+    });
+    return;
+  } else if (req.body.password == null || req.body.password === '') {
+    res.statusCode = 404;
+    res.json({
+      'message': 'no password is not allowed'
+    });
+    return;
+  }
+
+  instance.setPassword(req.body.password);
+  await instance.save();
+
+  res.statusCode = 200;
+  res.send({'value': 'true'});
+});
+
 
 // Update a user
 router.put('/', async (req: Request, res: Response) => {
