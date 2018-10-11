@@ -53,7 +53,23 @@ app.use('/jobView', JobController);
 app.use('/skillEdit', SkillController);
 app.use('/login', UserController);
 
+// Initialize first admin with default credentials
+async function initDefaultAdmin() {
+  try {
+    const users = await User.findAll();
+    if (users.length === 0) {
+      const u = new User();
+      u.fromSimplification({'username': 'admin', 'password': 'admin', 'type': '0', 'enabled': 'true'});
+      await u.save();
+    }
+  } catch (err) {
+    console.log('Error: ', err.message);
+  }
+}
 sequelize.sync().then(() => {
+
+  initDefaultAdmin();
+
 // start serving the application on the given port
   app.listen(port, () => {
     // success callback, log something to console as soon as the application has started

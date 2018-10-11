@@ -14,7 +14,7 @@ export class LogoutComponent implements OnInit {
   constructor(private httpClient: HttpClient, private router: Router) {
     this.httpClient.get('http://localhost:3000/login/logout', {withCredentials: true}).subscribe(
       (res: any) => {
-          AuthService.setLogin(false);
+          AuthService.setLogin(false, false);
           this.router.navigate(['/']);
       }
     );

@@ -9,6 +9,7 @@ import {JobsEditComponent} from './jobsEdit/jobsEdit.component';
 import {JobsViewComponent} from './jobsView/jobsView.component';
 import {LogoutComponent} from './logout/logout.component';
 import {ChangePasswordComponent} from './changePassword/changePassword.component';
+import {UsersEditComponent} from './usersEdit/usersEdit.component';
 
 const appRoutes: Routes = [
   { path: 'register', component: RegisterComponent },
@@ -17,6 +18,7 @@ const appRoutes: Routes = [
   { path: 'changePassword', component: ChangePasswordComponent},
   { path: 'editJobs', component: JobsEditComponent },
   { path: 'viewJobs', component: JobsViewComponent },
+  { path: 'editUsers', component: UsersEditComponent},
   { path: '', redirectTo: '/viewJobs', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent}
 ];
@@ -25,7 +27,7 @@ const appRoutes: Routes = [
   imports: [
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: true } // <-- debugging purposes only
+      { enableTracing: false } // <-- debugging purposes only
     )
   ],
   exports: [

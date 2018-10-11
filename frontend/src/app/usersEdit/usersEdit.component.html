@@ -1,0 +1,29 @@
+<table>
+  <thead>
+    <tr>
+      <th>username</th>
+      <th>type</th>
+      <th>Accept user</th>
+      <th>Reset Password</th>
+      <th>Delete User</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let u of users">
+      <td>{{u.username}}</td>
+      <td>{{u.type==0?'Administrator':'Employer'}}</td>
+      <td><span *ngIf="!u.enabled"><button mat-button (click)="onAcceptUser(u)">Accept user</button></span></td>
+      <td><input matInput placeholder="New Password" type="password" [(ngModel)]="u.password" (keyup.enter)="onResetPassword(u)"/></td>
+      <td><button mat-button (click)="onDeleteUser(u)">Delete user</button></td>
+    </tr>
+  </tbody>
+</table>
+<hr>
+<h3>Create new Administrator</h3>
+<mat-form-field>
+  <input matInput placeholder="username" [(ngModel)]="user.username" name="username">
+</mat-form-field>
+<mat-form-field>
+  <input matInput placeholder="password" type="password" [(ngModel)]="user.password" name="password">
+</mat-form-field>
+<button mat-button (click)="onCreateAdmin()">create Admin</button>

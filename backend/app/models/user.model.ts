@@ -15,6 +15,9 @@ export class User extends Model<User> {
   @Column
   type!: number;
 
+  @Column
+  enabled!: boolean;
+
   authentify(passwordClear: string): boolean {
     return this.bcrypt.compareSync(passwordClear, this.password);
 
@@ -22,12 +25,15 @@ export class User extends Model<User> {
   setPassword(passwordClear: string) {
     this.password = this.bcrypt.hashSync(passwordClear, this.saltRounds);
   }
+  enable() {
+    this.enabled = true;
+  }
 
   toSimplification(): any {
     return {
-      'id': this.id,
       'username': this.username,
       'type': this.type,
+      'enabled': this.enabled,
     };
   }
 
@@ -35,6 +41,7 @@ export class User extends Model<User> {
     this.username = simplification['username'];
     this.setPassword(simplification['password']);
     this.type = simplification['type'];
+    this.enabled = simplification['enabled'];
   }
 
 }

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Job} from '../job';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
+import {AuthService} from '../auth/auth.service';
 
 @Component({
   selector: 'app-jobs-edit',
@@ -13,15 +14,9 @@ export class JobsEditComponent implements OnInit {
   jobs: Job[] = [];
 
   constructor(private httpClient: HttpClient, private router: Router) {
-    this.httpClient.get('http://localhost:3000/login/check', {withCredentials: true}).subscribe(
-      (res: any) => {
-        console.log(res);
-        if (res.value === null || res.value !== 'true') {
-          this.router.navigate(['/login']);
-        }
-      }
-    );
-
+    if (!AuthService.isLogin()) {
+      this.router.navigate(['/login']);
+    }
   }
 
   ngOnInit() {

@@ -14,7 +14,7 @@ router.get('/', async (req: Request, res: Response) => {
 router.get('/check', async (req: Request, res: Response) => {
   if (req.session != null && req.session.user != null) {
     res.statusCode = 200;
-    res.send({'message': 'Session ok', 'value': 'true'});
+    res.send({'message': 'Session ok', 'value': 'true', 'admin': (req.session.user.type === 0 ? 'true' : 'false')});
   } else {
     res.statusCode = 200;
     res.send({'message': 'Session not ok', 'value': 'false'});
@@ -42,41 +42,58 @@ router.get('/:user/:pass', async (req: Request, res: Response) => {
     console.log('Couldn\'t find login: ' + username);
     res.statusCode = 404;
     res.json({
-      'message': 'not found'
+      'errorMessage': 'Permission denied! - User not found'
     });
     return;
   }
   console.log('User found!');
+
+  if (!instance.enabled) {
+    console.log('User not enabled');
+    res.status(403).send({
+      'errorMessage': 'Permission denied! - User not approved by administrator!'
+    });
+    return;
+  }
+
   if (instance.authentify(req.params.pass)) {
     console.log('password ok!');
       if (req.session) {
         req.session.user = instance;
         req.session.user.password = '';
         res.status(200).send(req.session.user);
+        return;
       } else {
         res.status(403).send({
-          errorMessage: 'Permission denied! - No Session'
+          errorMessage: 'Permission denied! - Problem creating session'
         });
         return;
       }
 
   } else {
       res.status(403).send({
-        errorMessage: 'Permission denied!'
+        errorMessage: 'Permission denied! - Wrong Username / Password'
       });
       return;
   }
-
-  res.statusCode = 500;
-  res.send({errorMessage: 'something failed...'});
 });
 
 // Register User
 router.post('/', async (req: Request, res: Response) => {
+  console.log('Register user: ' + req.body);
+  // if loggedin admin register then new is admin, else employer
+  if (req.session != null && req.session.user != null && req.session.user.type === 0) {
+    req.body.type = '0';
+    req.body.enabled = 'true';
+  } else {
+    req.body.type = '1';
+    req.body.enabled = 'false';
+  }
 
   // Get user from Request
   const instance = new User();
   instance.fromSimplification(req.body);
+
 
   // Check if that user already exists
   const checkInstance = await User.findByPrimary(req.body.username);
@@ -94,16 +111,16 @@ router.post('/', async (req: Request, res: Response) => {
   // Else save the new user
   await instance.save();
 
-  if (req.session) {
-    req.session.user = instance;
+  if (req.session != null && req.session.user != null && req.session.user.type === '0') {
     res.status(200).send(
-      instance.toSimplification()
+      {'message': 'Admin created'}
     );
   } else {
-    res.status(403).send({
-      errorMessage: 'Permission denied! - No Session'
-    });
+    res.status(200).send(
+      {'message': 'User registered, wait until an administrator approved your accout'}
+    );
   }
+
 });
 
 // set new Password
@@ -138,9 +155,8 @@ router.put('/password', async (req: Request, res: Response) => {
   res.send({'value': 'true'});
 });
 
-
-// Update a user
-router.put('/', async (req: Request, res: Response) => {
+// set new Password by admin
+router.put('/setPassword', async (req: Request, res: Response) => {
 
   // if not logged in cant change
   if (req.session == null) {
@@ -148,8 +164,50 @@ router.put('/', async (req: Request, res: Response) => {
       errorMessage: 'Permission denied! - No Session'
     });
     return;
+  } else if (req.session.user.type !== '0') {
+    res.status(403).send({
+      errorMessage: 'Permission denied!'
+    });
+    return;
   }
-  const instance = await User.findByPrimary(req.session.user.username);
+  const instance = await User.findByPrimary(req.body.username);
+  if (instance == null) {
+    res.statusCode = 404;
+    res.json({
+      'message': 'not found'
+    });
+    return;
+  } else if (req.body.password == null || req.body.password === '') {
+    res.statusCode = 404;
+    res.json({
+      'message': 'no password is not allowed'
+    });
+    return;
+  }
+
+  instance.setPassword(req.body.password);
+  await instance.save();
+
+  res.statusCode = 200;
+  res.send({'value': 'true'});
+});
+
+// Enable a user
+router.put('/accept', async (req: Request, res: Response) => {
+
+  // if not logged in cant change
+  if (req.session == null) {
+    res.status(403).send({
+      errorMessage: 'Permission denied! - No Session'
+    });
+    return;
+  } else if (req.session.user.type !== 0) {
+    res.status(403).send({
+      errorMessage: 'Permission denied!'
+    });
+    return;
+  }
+  const instance = await User.findByPrimary(req.body.username);
   if (instance == null) {
     res.statusCode = 404;
     res.json({
@@ -157,10 +215,10 @@ router.put('/', async (req: Request, res: Response) => {
     });
     return;
   }
-  instance.fromSimplification(req.body);
+  instance.enable();
   await instance.save();
   res.statusCode = 200;
-  res.send(instance.toSimplification());
+  res.send();
 });
 
 // Delete user
@@ -179,7 +237,32 @@ router.delete('/', async (req: Request, res: Response) => {
     });
     return;
   }
-  instance.fromSimplification(req.body);
+  await instance.destroy();
+  res.statusCode = 204;
+  res.send();
+});
+
+// Delete another user
+router.delete('/:username', async (req: Request, res: Response) => {
+  if (req.session == null) {
+    res.status(403).send({
+      errorMessage: 'Permission denied! - No Session'
+    });
+    return;
+  } else if (req.session.user.type !== 0) {
+    res.status(403).send({
+      errorMessage: 'Permission denied!'
+    });
+    return;
+  }
+  const instance = await User.findByPrimary(req.params.username);
+  if (instance == null) {
+    res.statusCode = 404;
+    res.json({
+      'message': 'not found'
+    });
+    return;
+  }
   await instance.destroy();
   res.statusCode = 204;
   res.send();

@@ -1,10 +1,11 @@
+<div ng-if="errorMessage" style="color:#ff0000;">{{ errorMessage }}</div>
 <mat-card>
   <mat-form-field>
     <input matInput placeholder="Username" [(ngModel)]="user.username" name="username">
   </mat-form-field>
   <mat-form-field>
-    <input matInput type="password" placeholder="Password" [(ngModel)]="user.password" name="password">
+    <input matInput type="password" placeholder="Password" (keydown.enter)="onLogin()" [(ngModel)]="user.password" name="password">
   </mat-form-field>
   <br>
-  <button mat-button (click)="onLogin()">Login</button><button mat-button (click)="toRegister()">Register</button>
+  <button mat-button (click)="onLogin()">Login</button><button mat-button (click)="toRegister()">Employer Register</button>
 </mat-card>

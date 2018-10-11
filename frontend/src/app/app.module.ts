@@ -22,6 +22,7 @@ import {PageNotFoundComponent } from './page-not-found/page-not-found.component'
 import {AppRoutingModule } from './app-routing.module';
 import {LogoutComponent} from './logout/logout.component';
 import {ChangePasswordComponent} from './changePassword/changePassword.component';
+import {UsersEditComponent} from './usersEdit/usersEdit.component';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import {ChangePasswordComponent} from './changePassword/changePassword.component
     RegisterComponent,
     PageNotFoundComponent,
     ChangePasswordComponent,
+    UsersEditComponent,
   ],
   imports: [
     BrowserModule,

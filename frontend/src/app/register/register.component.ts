@@ -1,9 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {User} from '../user';
-import {HttpClient, HttpParams} from '@angular/common/http';
-import {ajaxGetJSON} from 'rxjs/internal/observable/dom/AjaxObservable';
-import {jsonpFactory} from '@angular/http/src/http_module';
-import {serialize} from '@angular/compiler/src/i18n/serializers/xml_helper';
+import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {AuthService} from '../auth/auth.service';
 
@@ -14,29 +11,36 @@ import {AuthService} from '../auth/auth.service';
 })
 export class RegisterComponent implements OnInit {
 
+  errorMessage;
+
   @Input()
   user: User;
   @Output()
   destroy = new EventEmitter<User>();
 
   constructor(private httpClient: HttpClient, private router: Router) {
-
+    if (AuthService.isLogin()) {
+      this.router.navigate(['/']);
+    }
   }
 
   ngOnInit() {
-    this.user = new User(null, '', '', null);
+    this.user = new User( '', '', 1 , false);
   }
 
   onCreate() {
     this.httpClient.post('http://localhost:3000/login/', {
-      'username': this.user.username, 'password': this.user.password, 'type': this.user.type
+      'username': this.user.username, 'password': this.user.password, 'type': '1', 'enabled': 'false'
     }, {withCredentials: true}).subscribe((res: any) => {
         console.log(res);
-        AuthService.setLogin(true);
+        if (res.message != null) {
+          alert(res.message);
+        }
         this.router.navigate(['/']);
       },
       (err: any) => {
         console.error(err);
+        this.errorMessage = err.error.errorMessage;
         if (err.error.message != null) {
           alert(err.error.message);
         }
