@@ -6,6 +6,7 @@ export class Job {
     public title: string,
     public company: string,
     public description: string,
+    public approved: boolean,
   ) {
   }
 

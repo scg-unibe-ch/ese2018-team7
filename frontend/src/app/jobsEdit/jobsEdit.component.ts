@@ -9,33 +9,54 @@ import {AuthService} from '../auth/auth.service';
   templateUrl: './jobsEdit.component.html',
   styleUrls: ['./jobsEdit.component.css']
 })
+/**
+ * Component to display all Jobs editable for the current user
+ */
 export class JobsEditComponent implements OnInit {
-  job: Job = new Job(null, '', '', '');
+
+  // Object for creating a new Job
+  job: Job = new Job(null, '', '', '', false);
+
+  // Array of current jobs
   jobs: Job[] = [];
 
+  // Variable for return messages to the user
+  msg;
+
+
   constructor(private httpClient: HttpClient, private router: Router) {
-    if (!AuthService.isLogin()) {
-      this.router.navigate(['/login']);
-    }
+    // Only accessible for loggedin users
+    AuthService.allowOnlyLogin(httpClient, router);
   }
 
   ngOnInit() {
-    this.httpClient.get('http://localhost:3000/jobView').subscribe((instances: any) => {
-      this.jobs = instances.map((instance) => new Job(instance.id, instance.title, instance.company, instance.description));
+    // Load all editable jobs from the server
+    this.httpClient.get('http://localhost:3000/jobs/editable', {withCredentials: true}).subscribe((instances: any) => {
+      this.jobs = instances.map((instance) =>
+        new Job(instance.id, instance.title, instance.company, instance.description, instance.approved));
+      if (this.jobs.length === 0) {
+        this.msg = 'Currently you have no editable Jobs!';
+      }
     });
   }
 
-  onJobsCreate() {
-    this.httpClient.post('http://localhost:3000/jobView', {
+  /**
+   * Adding a new Job
+   */
+  onJobCreate() {
+    this.httpClient.post('http://localhost:3000/jobs', {
       'title': this.job.title, 'company': this.job.company, 'description': this.job.description,
-    }).subscribe((instance: any) => {
+    }, {withCredentials: true}).subscribe((instance: any) => {
       this.job.id = instance.id;
       this.jobs.push(this.job);
-      this.job = new Job(null, '', '', '');
+      this.job = new Job(null, '', '', '', false);
     });
   }
 
-  onJobsDestroy(job: Job) {
+  /**
+   * Removing a Job
+   */
+  onJobDestroy(job: Job) {
     this.jobs.splice(this.jobs.indexOf(job), 1);
   }
 

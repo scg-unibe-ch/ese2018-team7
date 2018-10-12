@@ -49,8 +49,8 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use('/jobView', JobController);
-app.use('/skillEdit', SkillController);
+app.use('/jobs', JobController);
+app.use('/skills', SkillController);
 app.use('/login', UserController);
 
 // Initialize first admin with default credentials

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {User} from '../user';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
@@ -9,25 +9,30 @@ import {AuthService} from '../auth/auth.service';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
+
+/**
+ * Component to register employer
+ */
 export class RegisterComponent implements OnInit {
 
   errorMessage;
 
-  @Input()
   user: User;
   @Output()
   destroy = new EventEmitter<User>();
 
   constructor(private httpClient: HttpClient, private router: Router) {
-    if (AuthService.isLogin()) {
-      this.router.navigate(['/']);
-    }
+    AuthService.allowOnlyPublic(httpClient, router);
   }
 
   ngOnInit() {
+    // Set 'empty' User
     this.user = new User( '', '', 1 , false);
   }
 
+  /**
+   * If the user wants to register with the given credentials
+   */
   onCreate() {
     this.httpClient.post('http://localhost:3000/login/', {
       'username': this.user.username, 'password': this.user.password, 'type': '1', 'enabled': 'false'

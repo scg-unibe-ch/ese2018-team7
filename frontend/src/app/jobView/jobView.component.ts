@@ -8,21 +8,27 @@ import {Skill} from '../skill';
   templateUrl: './jobView.component.html',
   styleUrls: ['./jobView.component.css']
 })
+/**
+ * Component to display one Job
+ */
 export class JobViewComponent implements OnInit {
 
+  // The Job
   @Input()
   job: Job;
-  skill: Skill = new Skill (null, '', null);
+
+  // The required Skills
   skills: Skill[] = [];
+
   @Output()
   destroy = new EventEmitter<Job>();
 
   constructor(private httpClient: HttpClient) {
-
   }
 
   ngOnInit() {
-    this.httpClient.get('http://localhost:3000/skillEdit', {
+    // Load the Skills from the Server
+    this.httpClient.get('http://localhost:3000/skills', {
       params:  new HttpParams().set('jobId', '' + this.job.id)
     }).subscribe((instances: any) => {
       this.skills = instances.map((instance) => new Skill(instance.id, instance.name, instance.jobId));

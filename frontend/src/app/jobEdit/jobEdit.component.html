@@ -3,6 +3,8 @@
     <input matInput placeholder="Title" [(ngModel)]="job.title" name="title" (ngModelChange)="onSave()">
   </mat-form-field>
   <button mat-button (click)="onDestroy()">delete job</button>
+  <button *ngIf="isApprovable()" mat-button (click)="onSave(true)">Approve Job</button>
+  <a *ngIf="!job.approved" style="color:#ff0000; font-size: 16px; font-weight: bold;">{{'This job isn\'t jet approved by an administrator!'}}</a>
   <br>
   <mat-form-field>
     <input matInput placeholder="Company" [(ngModel)]="job.company" name="company" (ngModelChange)="onSave()">

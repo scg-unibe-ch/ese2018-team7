@@ -1,7 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {User} from '../user';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {AuthService} from '../auth/auth.service';
 
 @Component({
@@ -9,12 +8,15 @@ import {AuthService} from '../auth/auth.service';
   templateUrl: './logout.component.html',
   styleUrls: ['./logout.component.css']
 })
+/**
+ * Logs the user out and redirect to /
+ */
 export class LogoutComponent implements OnInit {
 
   constructor(private httpClient: HttpClient, private router: Router) {
     this.httpClient.get('http://localhost:3000/login/logout', {withCredentials: true}).subscribe(
       (res: any) => {
-          AuthService.setLogin(false, false);
+          AuthService.forceUpdate(httpClient);
           this.router.navigate(['/']);
       }
     );

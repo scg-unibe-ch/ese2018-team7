@@ -10,6 +10,8 @@ import {AutosizeModule} from 'ngx-autosize';
 // Add css components from angular material
 import {MatButtonModule, MatCardModule, MatCheckboxModule, MatInputModule, MatListModule} from '@angular/material';
 import {FormsModule} from '@angular/forms';
+
+// Import all Components
 import {JobEditComponent} from './jobEdit/jobEdit.component';
 import {JobsEditComponent} from './jobsEdit/jobsEdit.component';
 import {JobViewComponent} from './jobView/jobView.component';

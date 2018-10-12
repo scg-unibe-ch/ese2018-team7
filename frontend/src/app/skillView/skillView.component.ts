@@ -1,12 +1,14 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Skill} from '../skill';
-import {HttpClient, HttpParams} from '@angular/common/http';
 
 @Component({
   selector: 'app-skill-view',
   templateUrl: './skillView.component.html',
   styleUrls: ['./skillView.component.css']
 })
+/**
+ * Component to display a Skill
+ */
 export class SkillViewComponent implements OnInit {
 
   @Input()
@@ -14,8 +16,7 @@ export class SkillViewComponent implements OnInit {
   @Output()
   destroy = new EventEmitter<Skill>();
 
-  constructor(private httpClient: HttpClient) {
-
+  constructor() {
   }
 
   ngOnInit() {
