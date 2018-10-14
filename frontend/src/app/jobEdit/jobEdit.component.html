@@ -14,6 +14,11 @@
     <input matInput placeholder="Place of work" [(ngModel)]="job.placeofwork" name="placeofwork" (ngModelChange)="onSave()">
   </mat-form-field>
   <br>
+  <div flex="10" layout layout-align="center center">
+    <span class="md-body-1">Workload</span>
+  </div>
+  <mat-slider min="0" max="100" step="5" value="100" tickInterval="2" thumbLabel [displayWith]="percentageLabel" name="workload" [(ngModel)]="job.workload" (ngModelChange)="onSave()"></mat-slider>
+  <br>
   <mat-form-field>
     <textarea autosize matInput placeholder="Description" [(ngModel)]="job.description" name="description" (ngModelChange)="onSave()" style="resize: none;overflow: hidden;"></textarea>
   </mat-form-field>

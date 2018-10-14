@@ -40,7 +40,7 @@ export class JobEditComponent implements OnInit {
    */
   onSave(approved: boolean = false) {
     this.httpClient.put('http://localhost:3000/jobs/' + this.job.id, {
-      'title': this.job.title, 'company': this.job.company, 'placeofwork': this.job.placeofwork,
+      'title': this.job.title, 'company': this.job.company, 'placeofwork': this.job.placeofwork, 'workload': this.job.workload,
       'description': this.job.description, 'approved': approved
     }, {withCredentials: true}).subscribe();
   }
@@ -74,6 +74,13 @@ export class JobEditComponent implements OnInit {
    */
   onSkillDestroy(skill: Skill) {
     this.skills.splice(this.skills.indexOf(skill), 1);
+  }
+
+  /**
+   * Custom label for workload percentage slider
+   */
+  percentageLabel(value: number | null) {
+    return value + '%';
   }
 
   /**

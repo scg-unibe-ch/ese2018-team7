@@ -8,7 +8,14 @@ import {HttpClientModule} from '@angular/common/http';
 import {AutosizeModule} from 'ngx-autosize';
 
 // Add css components from angular material
-import {MatButtonModule, MatCardModule, MatCheckboxModule, MatInputModule, MatListModule} from '@angular/material';
+import {
+  MatButtonModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatInputModule,
+  MatListModule,
+  MatSliderModule,
+} from '@angular/material';
 import {FormsModule} from '@angular/forms';
 
 // Import all Components
@@ -25,7 +32,6 @@ import {AppRoutingModule } from './app-routing.module';
 import {LogoutComponent} from './logout/logout.component';
 import {ChangePasswordComponent} from './changePassword/changePassword.component';
 import {UsersEditComponent} from './usersEdit/usersEdit.component';
-
 
 @NgModule({
   declarations: [
@@ -49,6 +55,7 @@ import {UsersEditComponent} from './usersEdit/usersEdit.component';
     FormsModule,
     HttpClientModule,
     MatButtonModule,
+    MatSliderModule,
     MatListModule,
     MatInputModule,
     MatCheckboxModule,

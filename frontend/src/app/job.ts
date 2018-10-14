@@ -6,6 +6,7 @@ export class Job {
     public title: string,
     public company: string,
     public placeofwork: string,
+    public workload: number,
     public description: string,
     public approved: boolean,
   ) {

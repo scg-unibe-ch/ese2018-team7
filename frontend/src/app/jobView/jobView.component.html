@@ -12,6 +12,11 @@
   </mat-form-field>
   <br>
   <mat-form-field>
+    <input matInput placeholder="Workload" [(ngModel)]="job.workload" name="workload" readonly>
+    <span matSuffix>%</span>
+  </mat-form-field>
+  <br>
+  <mat-form-field>
     <textarea autosize matInput placeholder="Description" [(ngModel)]="job.description" name="description" readonly style="resize: none;overflow: hidden;"></textarea>
   </mat-form-field>
   <br>
