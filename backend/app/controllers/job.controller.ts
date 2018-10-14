@@ -16,13 +16,13 @@ router.get('/', async (req: Request, res: Response) => {
 // Get All editable Jobs
 router.get('/editable', async (req: Request, res: Response) => {
 console.log("Editable");
-  // Admins can view all non Public Jobs
+  // Admins can view all non-public Jobs
   if (req.session != null && req.session.user != null && req.session.user.type === 0) {
     const instances = await Job.findAll();
     res.statusCode = 200;
     res.send(instances.map(e => e.toSimplification()));
 
-  // Employer can only view there own non public Jobs
+  // Employer can only view his own non-public Jobs
   } else if (req.session != null && req.session.user != null) {
     const instances = await Job.findAll({
       where: Sequelize.and(

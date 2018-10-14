@@ -40,7 +40,8 @@ export class JobEditComponent implements OnInit {
    */
   onSave(approved: boolean = false) {
     this.httpClient.put('http://localhost:3000/jobs/' + this.job.id, {
-      'title': this.job.title, 'company': this.job.company, 'description': this.job.description, 'approved': approved
+      'title': this.job.title, 'company': this.job.company, 'placeofwork': this.job.placeofwork,
+      'description': this.job.description, 'approved': approved
     }, {withCredentials: true}).subscribe();
   }
 

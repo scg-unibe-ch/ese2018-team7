@@ -15,7 +15,7 @@ import {AuthService} from '../auth/auth.service';
 export class JobsEditComponent implements OnInit {
 
   // Object for creating a new Job
-  job: Job = new Job(null, '', '', '', false);
+  job: Job = new Job(null, '', '', '', '', false);
 
   // Array of current jobs
   jobs: Job[] = [];
@@ -33,7 +33,7 @@ export class JobsEditComponent implements OnInit {
     // Load all editable jobs from the server
     this.httpClient.get('http://localhost:3000/jobs/editable', {withCredentials: true}).subscribe((instances: any) => {
       this.jobs = instances.map((instance) =>
-        new Job(instance.id, instance.title, instance.company, instance.description, instance.approved));
+        new Job(instance.id, instance.title, instance.company, instance.placeofwork, instance.description, instance.approved));
       if (this.jobs.length === 0) {
         this.msg = 'Currently you have no editable Jobs!';
       }
@@ -49,7 +49,7 @@ export class JobsEditComponent implements OnInit {
     }, {withCredentials: true}).subscribe((instance: any) => {
       this.job.id = instance.id;
       this.jobs.push(this.job);
-      this.job = new Job(null, '', '', '', false);
+      this.job = new Job(null, '', '', '', '', false);
     });
   }
 
