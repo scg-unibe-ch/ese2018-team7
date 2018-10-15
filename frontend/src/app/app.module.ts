@@ -15,6 +15,7 @@ import {
   MatInputModule,
   MatListModule,
   MatSliderModule,
+  MatDatepickerModule,
 } from '@angular/material';
 import {FormsModule} from '@angular/forms';
 
@@ -56,6 +57,7 @@ import {UsersEditComponent} from './usersEdit/usersEdit.component';
     HttpClientModule,
     MatButtonModule,
     MatSliderModule,
+    MatDatepickerModule,
     MatListModule,
     MatInputModule,
     MatCheckboxModule,

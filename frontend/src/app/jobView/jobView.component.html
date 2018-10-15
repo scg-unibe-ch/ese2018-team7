@@ -12,6 +12,10 @@
   </mat-form-field>
   <br>
   <mat-form-field>
+    <input matInput type="date" placeholder="Commencement of work" [(ngModel)]="job.startofwork" name="startofwork" readonly>
+  </mat-form-field>
+  <br>
+  <mat-form-field>
     <input matInput placeholder="Workload" [(ngModel)]="job.workload" name="workload" readonly>
     <span matSuffix>%</span>
   </mat-form-field>

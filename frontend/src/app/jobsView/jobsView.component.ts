@@ -27,8 +27,14 @@ export class JobsViewComponent implements OnInit {
     // Load the Jobs from the Server
     this.httpClient.get('http://localhost:3000/jobs').subscribe((instances: any) => {
       this.jobs = instances.map((instance) =>
-        new Job(instance.id, instance.title, instance.company, instance.placeofwork, instance.workload,
-          instance.description, instance.approved));
+        new Job(instance.id,
+          instance.title,
+          instance.company,
+          instance.placeofwork,
+          instance.startofwork,
+          instance.workload,
+          instance.description,
+          instance.approved));
 
       if (this.jobs.length === 0) {
         this.msg = 'Currently there are no Jobs available!';

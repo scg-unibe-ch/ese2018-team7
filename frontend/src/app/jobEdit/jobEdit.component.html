@@ -14,6 +14,10 @@
     <input matInput placeholder="Place of work" [(ngModel)]="job.placeofwork" name="placeofwork" (ngModelChange)="onSave()">
   </mat-form-field>
   <br>
+  <mat-form-field>
+    <input matInput type="date" placeholder="Commencement of work" [(ngModel)]="job.startofwork" name="startofwork" (ngModelChange)="onSave()">
+  </mat-form-field>
+  <br>
   <div flex="10" layout layout-align="center center">
     <span class="md-body-1">Workload</span>
   </div>

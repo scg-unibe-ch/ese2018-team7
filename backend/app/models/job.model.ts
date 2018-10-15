@@ -14,6 +14,9 @@ export class Job extends Model<Job> {
   @Column
   placeofwork!: string;
 
+  @Column
+  startofwork!: number;
+
   @Column(DataType.INTEGER)
   workload!: number;
 
@@ -35,6 +38,7 @@ export class Job extends Model<Job> {
       'title': this.title,
       'company': this.company,
       'placeofwork': this.placeofwork,
+      'startofwork': this.startofwork,
       'workload': this.workload,
       'description': this.description,
       'approved': this.approved,
@@ -45,6 +49,7 @@ export class Job extends Model<Job> {
     this.title = simplification['title'];
     this.company = simplification['company'];
     this.placeofwork = simplification['placeofwork'];
+    this.startofwork = simplification['startofwork'];
     this.workload = simplification['workload'];
     this.description = simplification['description'];
     if (simplification['owner'] != null) {
