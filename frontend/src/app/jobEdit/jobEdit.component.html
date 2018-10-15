@@ -15,7 +15,10 @@
   </mat-form-field>
   <br>
   <mat-form-field>
-    <input matInput type="date" placeholder="Commencement of work" [(ngModel)]="job.startofwork" name="startofwork" (ngModelChange)="onSave()">
+    <!-- <input matInput [matDatepicker]="startWork" placeholder="Commencement of work" [(ngModel)]="job.startofwork" name="startofwork" (ngModelChange)="onSave()"> -->
+    <input matInput [matDatepicker]="startWork" [(ngModel)]="job.startofwork" placeholder="Commencement of work" (focus)="startWork.open()" (dateInput)="onSave()" (dateChange)="onSave()">
+    <mat-datepicker #startWork startView="month" name="startofwork" ngDefaultControl></mat-datepicker>
+    <mat-datepicker-toggle matSuffix [for]="startWork"></mat-datepicker-toggle>
   </mat-form-field>
   <br>
   <div flex="10" layout layout-align="center center">

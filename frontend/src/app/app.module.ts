@@ -5,7 +5,6 @@ import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
 
-import {AutosizeModule} from 'ngx-autosize';
 
 // Add css components from angular material
 import {
@@ -15,9 +14,11 @@ import {
   MatInputModule,
   MatListModule,
   MatSliderModule,
-  MatDatepickerModule,
+  MatDatepickerModule, MAT_DATE_LOCALE,
 } from '@angular/material';
 import {FormsModule} from '@angular/forms';
+import {AutosizeModule} from 'ngx-autosize';
+import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule} from '@angular/material-moment-adapter';
 
 // Import all Components
 import {JobEditComponent} from './jobEdit/jobEdit.component';
@@ -63,9 +64,14 @@ import {UsersEditComponent} from './usersEdit/usersEdit.component';
     MatCheckboxModule,
     MatCardModule,
     AutosizeModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatDatepickerModule,
+    MatMomentDateModule,
   ],
-  providers: [],
+  providers: [
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
+    {provide: MAT_DATE_LOCALE, useValue: 'de-CH'}
+    ],
    bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -1,8 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Job} from '../job';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Skill} from '../skill';
 import {AuthService} from '../auth/auth.service';
+import {MatDatepicker} from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-job-edit',
@@ -20,6 +21,7 @@ export class JobEditComponent implements OnInit {
   skills: Skill[] = [];
   @Output()
   destroy = new EventEmitter<Job>();
+  @ViewChild(MatDatepicker) datepicker: MatDatepicker<Date>;
 
   constructor(private httpClient: HttpClient) {
   }
@@ -39,11 +41,12 @@ export class JobEditComponent implements OnInit {
    * Save changes to the Server
    */
   onSave(approved: boolean = false) {
+    console.log(this.job);
     this.httpClient.put('http://localhost:3000/jobs/' + this.job.id, {
       'title': this.job.title,
       'company': this.job.company,
       'placeofwork': this.job.placeofwork,
-      'startofwork': this.job.startofwork,
+      'startofwork': this.job.startofwork.unix(),
       'workload': this.job.workload,
       'description': this.job.description,
       'approved': approved

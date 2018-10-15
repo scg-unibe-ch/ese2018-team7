@@ -1,3 +1,4 @@
+import {Moment} from 'moment';
 
 export class Job {
 
@@ -6,7 +7,7 @@ export class Job {
     public title: string,
     public company: string,
     public placeofwork: string,
-    public startofwork: number,
+    public startofwork: Moment,
     public workload: number,
     public description: string,
     public approved: boolean,

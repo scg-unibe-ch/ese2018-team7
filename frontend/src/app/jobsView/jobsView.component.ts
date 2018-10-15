@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Job} from '../job';
 import {HttpClient} from '@angular/common/http';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-jobs-view',
@@ -31,7 +32,7 @@ export class JobsViewComponent implements OnInit {
           instance.title,
           instance.company,
           instance.placeofwork,
-          instance.startofwork,
+          moment(instance.startofwork, 'X'),
           instance.workload,
           instance.description,
           instance.approved));

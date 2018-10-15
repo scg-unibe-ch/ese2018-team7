@@ -16,6 +16,7 @@ export class JobViewComponent implements OnInit {
   // The Job
   @Input()
   job: Job;
+  formattedstartofwork: string;
 
   // The required Skills
   skills: Skill[] = [];
@@ -27,6 +28,7 @@ export class JobViewComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.formattedstartofwork = this.job.startofwork.format('YYYY-MM-DD');
     // Load the Skills from the Server
     this.httpClient.get('http://localhost:3000/skills', {
       params:  new HttpParams().set('jobId', '' + this.job.id)

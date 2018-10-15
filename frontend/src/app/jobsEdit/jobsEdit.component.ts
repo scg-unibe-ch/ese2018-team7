@@ -3,6 +3,7 @@ import {Job} from '../job';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {AuthService} from '../auth/auth.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-jobs-edit',
@@ -15,7 +16,7 @@ import {AuthService} from '../auth/auth.service';
 export class JobsEditComponent implements OnInit {
 
   // Object for creating a new Job
-  job: Job = new Job(null, '', '', '', 0, 100, '', false);
+  job: Job = new Job(null, '', '', '', moment() , 100, '', false);
 
   // Array of current jobs
   jobs: Job[] = [];
@@ -37,7 +38,7 @@ export class JobsEditComponent implements OnInit {
           instance.title,
           instance.company,
           instance.placeofwork,
-          instance.startofwork,
+          moment(instance.startofwork, 'X'),
           instance.workload,
           instance.description,
           instance.approved));
@@ -56,7 +57,7 @@ export class JobsEditComponent implements OnInit {
     }, {withCredentials: true}).subscribe((instance: any) => {
       this.job.id = instance.id;
       this.jobs.push(this.job);
-      this.job = new Job(null, '', '', '', 0, 100, '', false);
+      this.job = new Job(null, '', '', '', moment(), 100, '', false);
     });
   }
 
