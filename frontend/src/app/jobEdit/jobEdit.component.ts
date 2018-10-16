@@ -78,6 +78,7 @@ export class JobEditComponent implements OnInit {
       this.skills.push(this.skill);
       this.skill = new Skill(null, '', null);
     });
+    this.onSave();
   }
 
   /**
