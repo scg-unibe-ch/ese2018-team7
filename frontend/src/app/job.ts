@@ -10,6 +10,7 @@ export class Job {
     public startofwork: Moment,
     public workload: number,
     public description: string,
+    public contactinfo: string,
     public approved: boolean,
   ) {
   }

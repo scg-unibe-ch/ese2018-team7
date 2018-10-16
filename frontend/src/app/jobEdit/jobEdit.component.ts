@@ -49,6 +49,7 @@ export class JobEditComponent implements OnInit {
       'startofwork': this.job.startofwork.unix(),
       'workload': this.job.workload,
       'description': this.job.description,
+      'contactinfo': this.job.contactinfo,
       'approved': approved
     }, {withCredentials: true}).subscribe( res => {
         this.job.approved = approved;

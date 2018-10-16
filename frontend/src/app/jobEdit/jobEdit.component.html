@@ -17,7 +17,7 @@
   <mat-form-field>
     <!-- <input matInput [matDatepicker]="startWork" placeholder="Commencement of work" [(ngModel)]="job.startofwork" name="startofwork" (ngModelChange)="onSave()"> -->
     <input matInput [matDatepicker]="startWork" [(ngModel)]="job.startofwork" placeholder="Commencement of work" (focus)="startWork.open()" (dateInput)="onSave()" (dateChange)="onSave()">
-    <mat-datepicker #startWork startView="month" name="startofwork" ngDefaultControl></mat-datepicker>
+    <mat-datepicker #startWork touchUi startView="month" name="startofwork" ngDefaultControl></mat-datepicker>
     <mat-datepicker-toggle matSuffix [for]="startWork"></mat-datepicker-toggle>
   </mat-form-field>
   <br>
@@ -27,7 +27,11 @@
   <mat-slider min="0" max="100" step="5" value="100" tickInterval="2" thumbLabel [displayWith]="percentageLabel" name="workload" [(ngModel)]="job.workload" (ngModelChange)="onSave()"></mat-slider>
   <br>
   <mat-form-field>
-    <textarea autosize matInput placeholder="Description" [(ngModel)]="job.description" name="description" (ngModelChange)="onSave()" style="resize: none;overflow: hidden;"></textarea>
+  <textarea autosize matInput placeholder="Description" [(ngModel)]="job.description" name="description" (ngModelChange)="onSave()" style="resize: none;overflow: hidden;"></textarea>
+</mat-form-field>
+  <br>
+  <mat-form-field>
+    <textarea autosize matInput placeholder="Contact information" [(ngModel)]="job.contactinfo" name="contactinfo" (ngModelChange)="onSave()" style="resize: none;overflow: hidden;"></textarea>
   </mat-form-field>
   <br>
   <mat-list>

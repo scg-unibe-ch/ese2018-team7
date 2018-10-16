@@ -16,7 +16,7 @@ import * as moment from 'moment';
 export class JobsEditComponent implements OnInit {
 
   // Object for creating a new Job
-  job: Job = new Job(null, '', '', '', moment() , 100, '', false);
+  job: Job = new Job(null, '', '', '', moment() , 100, '', '', false);
 
   // Array of current jobs
   jobs: Job[] = [];
@@ -41,6 +41,7 @@ export class JobsEditComponent implements OnInit {
           moment(instance.startofwork, 'X'),
           instance.workload,
           instance.description,
+          instance.contactinfo,
           instance.approved));
       if (this.jobs.length === 0) {
         this.msg = 'Currently you have no editable Jobs!';
@@ -57,7 +58,7 @@ export class JobsEditComponent implements OnInit {
     }, {withCredentials: true}).subscribe((instance: any) => {
       this.job.id = instance.id;
       this.jobs.push(this.job);
-      this.job = new Job(null, '', '', '', moment(), 100, '', false);
+      this.job = new Job(null, '', '', '', moment(), 100, '', '', false);
     });
   }
 

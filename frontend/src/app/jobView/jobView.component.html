@@ -24,6 +24,10 @@
     <textarea autosize matInput placeholder="Description" [(ngModel)]="job.description" name="description" readonly style="resize: none;overflow: hidden;"></textarea>
   </mat-form-field>
   <br>
+  <mat-form-field>
+    <textarea autosize matInput placeholder="Contact information" [(ngModel)]="job.contactinfo" name="contactinfo" readonly style="resize: none;overflow: hidden;"></textarea>
+  </mat-form-field>
+  <br>
   <h3>Required Skills:</h3>
   <mat-list>
     <mat-list-item *ngFor="let skill of skills">

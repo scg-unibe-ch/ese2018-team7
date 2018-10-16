@@ -23,6 +23,9 @@ export class Job extends Model<Job> {
   @Column(DataType.TEXT)
   description!: string;
 
+  @Column(DataType.TEXT)
+  contactinfo!: string;
+
   @Column
   approved!: boolean;
 
@@ -41,6 +44,7 @@ export class Job extends Model<Job> {
       'startofwork': this.startofwork,
       'workload': this.workload,
       'description': this.description,
+      'contactinfo': this.contactinfo,
       'approved': this.approved,
     };
   }
@@ -52,6 +56,7 @@ export class Job extends Model<Job> {
     this.startofwork = simplification['startofwork'];
     this.workload = simplification['workload'];
     this.description = simplification['description'];
+    this.contactinfo = simplification['contactinfo'];
     if (simplification['owner'] != null) {
       this.owner = simplification['owner'];
     }
