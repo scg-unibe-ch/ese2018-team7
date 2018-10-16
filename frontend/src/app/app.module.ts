@@ -5,7 +5,6 @@ import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
 
-
 // Add css components from angular material
 import {
   MatButtonModule,
@@ -16,6 +15,7 @@ import {
   MatSliderModule,
   MatDatepickerModule, MAT_DATE_LOCALE,
 } from '@angular/material';
+
 import {FormsModule} from '@angular/forms';
 import {AutosizeModule} from 'ngx-autosize';
 import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule} from '@angular/material-moment-adapter';
