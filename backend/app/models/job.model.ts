@@ -27,6 +27,12 @@ export class Job extends Model<Job> {
   contactinfo!: string;
 
   @Column
+  startofpublication!: number;
+
+  @Column
+  endofpublication!: number;
+
+  @Column
   approved!: boolean;
 
   @HasMany(() => Skill)
@@ -45,6 +51,8 @@ export class Job extends Model<Job> {
       'workload': this.workload,
       'description': this.description,
       'contactinfo': this.contactinfo,
+      'startofpublication': this.startofpublication,
+      'endofpublication': this.endofpublication,
       'approved': this.approved,
     };
   }
@@ -57,6 +65,8 @@ export class Job extends Model<Job> {
     this.workload = simplification['workload'];
     this.description = simplification['description'];
     this.contactinfo = simplification['contactinfo'];
+    this.startofpublication = simplification['startofpublication'];
+    this.endofpublication = simplification['endofpublication'];
     if (simplification['owner'] != null) {
       this.owner = simplification['owner'];
     }

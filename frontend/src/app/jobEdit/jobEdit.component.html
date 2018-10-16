@@ -43,5 +43,17 @@
   <mat-form-field>
     <textarea autosize matInput placeholder="Contact information" [(ngModel)]="job.contactinfo" name="contactinfo" (ngModelChange)="onSave()" style="resize: none;overflow: hidden;"></textarea>
   </mat-form-field>
+  <br>
+  <mat-form-field>
+    <input matInput [matDatepicker]="startPublication" [(ngModel)]="job.startofpublication" placeholder="Start of publication" (focus)="startPublication.open()" (dateInput)="onSave()" (dateChange)="onSave()">
+    <mat-datepicker #startPublication touchUi startView="month" name="startofwork" ngDefaultControl></mat-datepicker>
+    <mat-datepicker-toggle matSuffix [for]="startPublication"></mat-datepicker-toggle>
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <input matInput [matDatepicker]="endPublication" [(ngModel)]="job.endofpublication" placeholder="End of publication" (focus)="endPublication.open()" (dateInput)="onSave()" (dateChange)="onSave()">
+    <mat-datepicker #endPublication touchUi startView="month" name="endofpublication" ngDefaultControl></mat-datepicker>
+    <mat-datepicker-toggle matSuffix [for]="endPublication"></mat-datepicker-toggle>
+  </mat-form-field>
   <hr>
 </mat-card>

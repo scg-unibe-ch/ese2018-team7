@@ -36,6 +36,8 @@ export class JobsViewComponent implements OnInit {
           instance.workload,
           instance.description,
           instance.contactinfo,
+          moment(instance.startofpublication, 'X'),
+          moment(instance.endofpublication, 'X'),
           instance.approved));
 
       if (this.jobs.length === 0) {

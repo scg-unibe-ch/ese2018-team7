@@ -11,6 +11,8 @@ export class Job {
     public workload: number,
     public description: string,
     public contactinfo: string,
+    public startofpublication: Moment,
+    public endofpublication: Moment,
     public approved: boolean,
   ) {
   }
