@@ -40,6 +40,7 @@ export class SkillEditComponent implements OnInit {
    */
   onDestroy() {
     this.httpClient.delete('http://localhost:3000/skills/' + this.skill.id, {withCredentials: true}).subscribe(() => {
+      this.job.onSave();
       this.destroy.emit(this.skill);
     });
   }
