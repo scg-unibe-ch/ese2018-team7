@@ -1,2 +1,38 @@
+<mat-form-field>
+  <input matInput placeholder="Search" [(ngModel)]="searchParam" name="search" (ngModelChange)="onEasySearch()" />
+</mat-form-field>
+<button mat-button (click)="openModal('extendedSearch')">Advanced Search</button>
+<button *ngIf="searched" mat-button (click)="resetSearch()">Reset Search</button>
 <app-job-view [job]="job" *ngFor="let job of jobs"></app-job-view>
 <h2 style="color:#ff0000;">{{msg}}</h2>
+<app-modal id="extendedSearch">
+  <div class="modal">
+    <div class="modal-body">
+      <h1 style="margin-top:-8px">Advanced Search</h1>
+      <mat-form-field>
+        <input matInput placeholder="Title" name="advTitle" type="text" [(ngModel)]="advSearchTitle" />
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+       <input matInput placeholder="Company" name="advCompany" type="text" [(ngModel)]="advSearchCompany" />
+      </mat-form-field>
+        <p>Workload:
+          <ng5-slider [options]="{'floor': 0, 'ceil': 100, 'step': 5, 'tickInterval': 2}" [manualRefresh]="advSearchRangeRefresh" [(value)]="advSearchWorkLoadGt" [(highValue)]="advSearchWorkLoadLt"></ng5-slider>
+        </p>
+      <mat-form-field>
+        <input matInput [max]="advSearchStartBefore" [matDatepicker]="startWorkAfter" [(ngModel)]="advSearchStartAfter" placeholder="Commencement of work after" (focus)="startWorkAfter.open()">
+        <mat-datepicker #startWorkAfter touchUi startView="month" name="startWorkAfter" ngDefaultControl></mat-datepicker>
+        <mat-datepicker-toggle matSuffix [for]="startWorkAfter"></mat-datepicker-toggle>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [min]="advSearchStartAfter" [matDatepicker]="startWorkBefore" [(ngModel)]="advSearchStartBefore" placeholder="Commencement of work before" (focus)="startWorkBefore.open()">
+        <mat-datepicker #startWorkBefore touchUi startView="month" name="startWorkBefore" ngDefaultControl></mat-datepicker>
+        <mat-datepicker-toggle matSuffix [for]="startWorkBefore"></mat-datepicker-toggle>
+      </mat-form-field>
+      <br>
+      <button mat-button (click)="onAdvancedSearch(); closeModal('extendedSearch');">Search</button>
+    </div>
+    <div class="modal-close">X</div>
+  </div>
+  <div class="modal-background"></div>
+</app-modal>

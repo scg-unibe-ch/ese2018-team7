@@ -19,7 +19,7 @@ import {
 import {FormsModule} from '@angular/forms';
 import {AutosizeModule} from 'ngx-autosize';
 import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule} from '@angular/material-moment-adapter';
-
+import { Ng5SliderModule } from 'ng5-slider';
 // Import all Components
 import {JobEditComponent} from './jobEdit/jobEdit.component';
 import {JobsEditComponent} from './jobsEdit/jobsEdit.component';
@@ -34,6 +34,8 @@ import {AppRoutingModule } from './app-routing.module';
 import {LogoutComponent} from './logout/logout.component';
 import {ChangePasswordComponent} from './changePassword/changePassword.component';
 import {UsersEditComponent} from './usersEdit/usersEdit.component';
+import {ModalComponent} from './modal/modal.component';
+import {ModalService} from './modal/modal.service';
 
 @NgModule({
   declarations: [
@@ -50,6 +52,7 @@ import {UsersEditComponent} from './usersEdit/usersEdit.component';
     PageNotFoundComponent,
     ChangePasswordComponent,
     UsersEditComponent,
+    ModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,10 +70,12 @@ import {UsersEditComponent} from './usersEdit/usersEdit.component';
     AppRoutingModule,
     MatDatepickerModule,
     MatMomentDateModule,
+    Ng5SliderModule,
   ],
   providers: [
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
-    {provide: MAT_DATE_LOCALE, useValue: 'de-CH'}
+    { provide: MAT_DATE_LOCALE, useValue: 'de-CH' },
+    ModalService
     ],
    bootstrap: [AppComponent]
 })
