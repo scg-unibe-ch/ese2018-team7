@@ -9,6 +9,8 @@ const router: Router = Router();
 router.get('/', async (req: Request, res: Response) => {
   const instances = await Job.findAll({where: Sequelize.and(
     {approved: true},
+    {startofpublication: {lte: Math.floor(Date.now() / 1000)}},
+    {endofpublication: {gte: Math.floor(Date.now() / 1000)}},
     )});
   res.statusCode = 200;
   res.send(instances.map(e => e.toSimplification()));

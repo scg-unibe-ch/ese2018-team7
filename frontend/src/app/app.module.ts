@@ -13,13 +13,14 @@ import {
   MatInputModule,
   MatListModule,
   MatSliderModule,
-  MatDatepickerModule, MAT_DATE_LOCALE,
 } from '@angular/material';
 
 import {FormsModule} from '@angular/forms';
 import {AutosizeModule} from 'ngx-autosize';
-import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule} from '@angular/material-moment-adapter';
+import {MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import { Ng5SliderModule } from 'ng5-slider';
+import {MatDatepickerModule, MatMomentDateModule, MAT_DATE_LOCALE, MAT_DATE_FORMATS} from '@coachcare/datepicker';
+import { MAT_MOMENT_DATE_FORMATS } from './customCHLocale/moment-date-formats';
 // Import all Components
 import {JobEditComponent} from './jobEdit/jobEdit.component';
 import {JobsEditComponent} from './jobsEdit/jobsEdit.component';
@@ -75,6 +76,7 @@ import {ModalService} from './modal/modal.service';
   providers: [
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
     { provide: MAT_DATE_LOCALE, useValue: 'de-CH' },
+    { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
     ModalService
     ],
    bootstrap: [AppComponent]
