@@ -7,7 +7,7 @@
   <a *ngIf="!job.approved" style="color:#ff0000; font-size: 16px; font-weight: bold;">{{'This job isn\'t jet approved by an administrator!'}}</a>
   <br>
   <mat-form-field>
-    <input matInput placeholder="Company" [(ngModel)]="job.company" name="company" (ngModelChange)="onSave()">
+    <input matInput placeholder="Department" [(ngModel)]="job.company" name="company" (ngModelChange)="onSave()">
   </mat-form-field>
   <br>
   <mat-form-field>

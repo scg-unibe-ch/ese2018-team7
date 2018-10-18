@@ -12,6 +12,7 @@ import {Sequelize} from 'sequelize-typescript';
 import {Job} from './models/job.model';
 import {Skill} from './models/skill.model';
 import {User} from './models/user.model';
+import {Company} from './models/company.model';
 
 const sequelize =  new Sequelize({
   database: 'development',
@@ -20,7 +21,7 @@ const sequelize =  new Sequelize({
   password: '',
   storage: 'db.sqlite'
 });
-sequelize.addModels([Job, Skill, User]);
+sequelize.addModels([Job, Skill, User, Company]);
 
 // create a new express application instance
 const app: Express.Application = Express();

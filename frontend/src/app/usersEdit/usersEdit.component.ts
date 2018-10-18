@@ -49,10 +49,11 @@ export class UsersEditComponent implements OnInit {
    * @param user
    */
   onDeleteUser(user: User) {
-    this.httpClient.delete('http://localhost:3000/login/' + user.username, {withCredentials: true}).subscribe(() => {
-      this.users.splice(this.users.indexOf(user), 1);
-    });
-
+    if (confirm('Do you really want to delete this user?')) {
+      this.httpClient.delete('http://localhost:3000/login/' + user.username, {withCredentials: true}).subscribe(() => {
+        this.users.splice(this.users.indexOf(user), 1);
+      });
+    }
   }
 
   /**

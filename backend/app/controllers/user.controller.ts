@@ -1,5 +1,6 @@
 import {Router, Request, Response} from 'express';
 import {User} from '../models/user.model';
+import {Company} from '../models/company.model';
 
 const router: Router = Router();
 
@@ -92,7 +93,12 @@ router.post('/', async (req: Request, res: Response) => {
 
   // Get user from Request
   const instance = new User();
-  instance.fromSimplification(req.body);
+  instance.fromSimplification({
+    'username': req.body.username,
+    'password': req.body.password,
+    'type': req.body.type,
+    'enabled': req.body.enabled
+  });
 
 
   // Check if that user already exists
@@ -110,6 +116,20 @@ router.post('/', async (req: Request, res: Response) => {
 
   // Else save the new user
   await instance.save();
+
+  // Save Company if necessary
+  if (req.body.company != null) {
+    const company = new Company();
+    company.fromSimplification({
+      'username': req.body.username,
+      'name': req.body.company,
+      'logo': req.body.logo
+    });
+
+    // Save Company
+    await company.save();
+
+  }
 
   if (req.session != null && req.session.user != null && req.session.user.type === '0') {
     res.status(200).send(

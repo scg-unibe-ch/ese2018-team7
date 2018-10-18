@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Job} from '../job';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Skill} from '../skill';
+import {Company} from '../company';
 
 @Component({
   selector: 'app-job-view',
@@ -16,6 +17,7 @@ export class JobViewComponent implements OnInit {
   // The Job
   @Input()
   job: Job;
+  company: Company;
   formattedstartofwork: string;
 
   // The required Skills
@@ -25,6 +27,7 @@ export class JobViewComponent implements OnInit {
   destroy = new EventEmitter<Job>();
 
   constructor(private httpClient: HttpClient) {
+    this.company = new Company('', '', '');
   }
 
   ngOnInit() {
@@ -34,6 +37,10 @@ export class JobViewComponent implements OnInit {
       params:  new HttpParams().set('jobId', '' + this.job.id)
     }).subscribe((instances: any) => {
       this.skills = instances.map((instance) => new Skill(instance.id, instance.name, instance.jobId));
+    });
+    // Load Company from the server
+    this.httpClient.get('http://localhost:3000/jobs/company/' + this.job.id).subscribe((instance: any) => {
+      this.company =  new Company('', instance.name, instance.logo);
     });
   }
 }
