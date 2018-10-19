@@ -3,8 +3,10 @@
     <input matInput placeholder="Title" [(ngModel)]="job.title" name="title" (ngModelChange)="onSave()">
   </mat-form-field>
   <button mat-button (click)="onDestroy()">delete job</button>
-  <button *ngIf="isApprovable()" mat-button (click)="onSave(true)">Approve Job</button>
+  <button *ngIf="isAdmin()&&!job.approved" mat-button (click)="approve()">Approve Job</button>
+  <button *ngIf="isAdmin()&&job.approved&&job.changed" mat-button (click)="approve()">Approve Changes</button>
   <a *ngIf="!job.approved" style="color:#ff0000; font-size: 16px; font-weight: bold;">{{'This job isn\'t jet approved by an administrator!'}}</a>
+  <a *ngIf="job.approved&&job.changed" style="color:#ff0000; font-size: 16px; font-weight: bold;">{{'This job has unapproved changes!'}}</a>
   <br>
   <mat-form-field>
     <input matInput placeholder="Department" [(ngModel)]="job.company" name="company" (ngModelChange)="onSave()">
@@ -15,7 +17,7 @@
   </mat-form-field>
   <br>
   <mat-form-field>
-   <input matInput [matDatepicker]="startWork" [(ngModel)]="job.startofwork" placeholder="Commencement of work" (focus)="startWork.open()" (dateInput)="onSave()" (dateChange)="onSave()">
+   <input matInput [min]='today' [matDatepicker]="startWork" [(ngModel)]="job.startofwork" placeholder="Commencement of work" (focus)="startWork.open()" (dateInput)="onSave()" (dateChange)="onSave()">
     <mat-datepicker #startWork touchUi startView="month" name="startofwork" ngDefaultControl></mat-datepicker>
     <mat-datepicker-toggle matSuffix [for]="startWork"></mat-datepicker-toggle>
   </mat-form-field>
@@ -45,13 +47,13 @@
   </mat-form-field>
   <br>
   <mat-form-field>
-    <input matInput [matDatepicker]="startPublication" [(ngModel)]="job.startofpublication" placeholder="Start of publication" (focus)="startPublication.open()" (dateInput)="onSave()" (dateChange)="onSave()">
+    <input matInput [matDatepicker]="startPublication" [max]="endPublication" [(ngModel)]="job.startofpublication" placeholder="Start of publication" (focus)="startPublication.open()" (dateInput)="onSave()" (dateChange)="onSave()">
     <mat-datepicker type="datetime" [clockStep]="5" [twelveHour]="false" #startPublication touchUi startView="month" name="startofwork" ngDefaultControl></mat-datepicker>
     <mat-datepicker-toggle matSuffix [for]="startPublication"></mat-datepicker-toggle>
   </mat-form-field>
   <br>
   <mat-form-field>
-    <input matInput [matDatepicker]="endPublication" [(ngModel)]="job.endofpublication" placeholder="End of publication" (focus)="endPublication.open()" (dateInput)="onSave()" (dateChange)="onSave()">
+    <input matInput [matDatepicker]="endPublication" [min]="startPublication" [(ngModel)]="job.endofpublication" placeholder="End of publication" (focus)="endPublication.open()" (dateInput)="onSave()" (dateChange)="onSave()">
     <mat-datepicker type="datetime" [clockStep]="5" [twelveHour]="false" #endPublication touchUi startView="month" name="endofpublication" ngDefaultControl></mat-datepicker>
     <mat-datepicker-toggle matSuffix [for]="endPublication"></mat-datepicker-toggle>
   </mat-form-field>

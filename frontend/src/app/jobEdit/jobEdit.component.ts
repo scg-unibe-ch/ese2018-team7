@@ -4,6 +4,8 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Skill} from '../skill';
 import {AuthService} from '../auth/auth.service';
 import {MatDatepicker} from '@angular/material/datepicker';
+import * as moment from 'moment';
+import {Moment} from 'moment';
 
 @Component({
   selector: 'app-job-edit',
@@ -19,6 +21,9 @@ export class JobEditComponent implements OnInit {
   job: Job;
   skill: Skill = new Skill (null, '', null);
   skills: Skill[] = [];
+
+  today: Moment = moment();
+
   @Output()
   destroy = new EventEmitter<Job>();
   @ViewChild(MatDatepicker) datepicker: MatDatepicker<Date>;
@@ -38,10 +43,9 @@ export class JobEditComponent implements OnInit {
   }
 
   /**
-   * Save changes to the Server
+   * Save changed to the Server
    */
-  onSave(approved: boolean = false) {
-    console.log(this.job);
+  onSave() {
     this.httpClient.put('http://localhost:3000/jobs/' + this.job.id, {
       'title': this.job.title,
       'company': this.job.company,
@@ -52,9 +56,10 @@ export class JobEditComponent implements OnInit {
       'contactinfo': this.job.contactinfo,
       'startofpublication': this.job.startofpublication.unix(),
       'endofpublication': this.job.endofpublication.unix(),
-      'approved': approved
-    }, {withCredentials: true}).subscribe( res => {
-        this.job.approved = approved;
+      'approved': this.job.approved
+    }, {withCredentials: true}).subscribe((answer: any) => {
+      console.log(answer);
+      this.job.changed = true;
     });
   }
 
@@ -100,8 +105,16 @@ export class JobEditComponent implements OnInit {
   /**
    * Returns if the job could be approved <=> isn't approved and user is admin
    */
-  isApprovable() {
-    return AuthService.isAdmin() && !this.job.approved;
+  isAdmin() {
+    return AuthService.isAdmin();
+  }
+
+  approve() {
+    if (AuthService.isAdmin()) {
+      this.httpClient.put('http://localhost:3000/jobs/apply/' + this.job.id, {}, {withCredentials: true}).subscribe(res => {
+        this.job.changed = false;
+      });
+    }
   }
 
 }

@@ -22,7 +22,22 @@ router.get('/editable', async (req: Request, res: Response) => {
   if (req.session != null && req.session.user != null && req.session.user.type === 0) {
     const instances = await Job.findAll();
     res.statusCode = 200;
-    res.send(instances.map(e => e.toSimplification()));
+    res.send(instances.map((e: any) => {
+      const cValue = JSON.parse(e['dataValues']['changes']);
+      let changed = false;
+      // Apply changes for user
+      for (const key in e['dataValues']) {
+        if (e['dataValues'].hasOwnProperty(key)) {
+          if (cValue[key] != null && e['dataValues'][key] !== cValue[key]) {
+            e['dataValues'][key] = cValue[key];
+            changed = true;
+          }
+        }
+      }
+      const val = e.toSimplification();
+      val['changed'] = changed;
+      return val;
+    }));
 
   // Employer can only view his own non-public Jobs
   } else if (req.session != null && req.session.user != null) {
@@ -32,12 +47,26 @@ router.get('/editable', async (req: Request, res: Response) => {
       )
     });
     res.statusCode = 200;
-    res.send(instances.map(e => e.toSimplification()));
+    res.send(instances.map((e: any) => {
+      const cValue = JSON.parse(e['dataValues']['changes']);
+      let changed = false;
+      for (const key in e['dataValues']) {
+        if (e['dataValues'].hasOwnProperty(key)) {
+          if (cValue[key] != null && e['dataValues'][key] !== cValue[key]) {
+            e['dataValues'][key] = cValue[key];
+            changed = true;
+          }
+        }
+      }
+      const val = e.toSimplification();
+      val['changed'] = changed;
+      return val;
+    }));
 
   // Everyone else has no editable job
   } else {
     res.statusCode = 200;
-    res.send();
+    res.send('[]');
   }
 });
 // Get if a job is approved
@@ -63,7 +92,7 @@ console.log('approved');
     res.send({approved: false});
   }
 });
-// Get if a job is approved
+// Get job company
 router.get('/company/:id', async (req: Request, res: Response) => {
   console.log('company');
 
@@ -164,6 +193,8 @@ router.post('/', async (req: Request, res: Response) => {
     // Set approved if an admin added job, and not approved else
     instance.approved = req.session.user.type === 0 ;
 
+    instance.changes = JSON.stringify(req.body);
+
     await instance.save();
     res.statusCode = 201;
     res.send(instance.toSimplification());
@@ -171,6 +202,30 @@ router.post('/', async (req: Request, res: Response) => {
   } else {
     res.statusCode = 403;
     res.send({'errorMessage': 'You\'re not allowed to create a Job'});
+  }
+});
+
+// Apply changed to Job
+router.put('/apply/:id', async (req: Request, res: Response) => {
+
+  if (req.session != null && req.session.user != null && req.session.user.type === 0) {
+    const id = parseInt(req.params.id);
+    const instance = await Job.findById(id);
+    if (instance == null) {
+      res.statusCode = 404;
+      res.json({
+        'message': 'not found'
+      });
+      return;
+
+    }
+    instance.applyChanges();
+    await instance.save();
+    res.statusCode = 200;
+    res.send(instance.toSimplification());
+  } else {
+    res.statusCode = 403;
+    res.send({'errorMessage': 'You\'re not allowed to update a Job'});
   }
 });
 
@@ -194,12 +249,12 @@ router.put('/:id', async (req: Request, res: Response) => {
       return;
     }
     // Employer can't approve Job
-    if (req.session.user.type !== 0 && !instance.approved) {
-      req.body.approved = false;
+    if (req.session.user.type !== 0) {
+      req.body.approved = instance.approved;
     }
     // Owner stays the same
     req.body.owner = instance.owner;
-    instance.fromSimplification(req.body);
+    instance.setChanges(req.body);
     await instance.save();
     res.statusCode = 200;
     res.send(instance.toSimplification());

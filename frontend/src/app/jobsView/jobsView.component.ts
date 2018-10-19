@@ -53,10 +53,7 @@ export class JobsViewComponent implements OnInit {
           moment(instance.startofwork, 'X'),
           instance.workload,
           instance.description,
-          instance.contactinfo,
-          moment(instance.startofpublication, 'X'),
-          moment(instance.endofpublication, 'X'),
-          instance.approved));
+          instance.contactinfo));
 
       if (this.jobs.length === 0) {
         this.msg = 'Currently there are no Jobs available!';
@@ -78,10 +75,7 @@ export class JobsViewComponent implements OnInit {
           moment(instance.startofwork, 'X'),
           instance.workload,
           instance.description,
-          instance.contactinfo,
-          moment(instance.startofpublication, 'X'),
-          moment(instance.endofpublication, 'X'),
-          instance.approved));
+          instance.contactinfo));
 
       if (this.jobs.length === 0) {
         this.msg = 'There are currently no Jobs available for your search!';
@@ -110,8 +104,7 @@ export class JobsViewComponent implements OnInit {
           instance.description,
           instance.contactinfo,
           moment(instance.startofpublication, 'X'),
-          moment(instance.endofpublication, 'X'),
-          instance.approved));
+          moment(instance.endofpublication, 'X')));
 
       if (this.jobs.length === 0) {
         this.msg = 'There are currently no Jobs available for your search!';
@@ -139,8 +132,7 @@ export class JobsViewComponent implements OnInit {
           instance.description,
           instance.contactinfo,
           moment(instance.startofpublication, 'X'),
-          moment(instance.endofpublication, 'X'),
-          instance.approved));
+          moment(instance.endofpublication, 'X')));
 
       if (this.jobs.length === 0) {
         this.msg = 'Currently there are no Jobs available!';

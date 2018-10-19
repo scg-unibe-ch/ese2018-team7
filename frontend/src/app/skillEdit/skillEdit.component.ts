@@ -25,7 +25,7 @@ export class SkillEditComponent implements OnInit {
   }
 
   /**
-   * Save the changes on the server
+   * Save the changed on the server
    */
   onSave() {
     this.httpClient.put('http://localhost:3000/skills/' + this.skill.id, {
