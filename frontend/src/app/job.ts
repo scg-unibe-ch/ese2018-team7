@@ -1,5 +1,6 @@
 import {Moment} from 'moment';
 import * as moment from 'moment';
+import {Skill} from './skill';
 
 export class Job {
 
@@ -11,6 +12,7 @@ export class Job {
     public startofwork: Moment = moment(),
     public workload: number = 100,
     public description: string = '',
+    public skills: Skill[] = [],
     public contactinfo: string = '',
     public startofpublication: Moment = moment(),
     public endofpublication: Moment = moment().add(3, 'M'),

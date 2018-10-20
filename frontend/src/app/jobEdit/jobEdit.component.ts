@@ -20,7 +20,6 @@ export class JobEditComponent implements OnInit {
   @Input()
   job: Job;
   skill: Skill = new Skill (null, '', null);
-  skills: Skill[] = [];
 
   today: Moment = moment();
 
@@ -32,14 +31,6 @@ export class JobEditComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    // Load the skills of this Job from the server
-    this.httpClient.get('http://localhost:3000/skills', {
-      params:  new HttpParams().set('jobId', '' + this.job.id), withCredentials: true
-    }).subscribe((instances: any) => {
-      this.skills = instances.map((instance) => new Skill(instance.id, instance.name, instance.jobId));
-    });
-
   }
 
   /**
@@ -53,6 +44,7 @@ export class JobEditComponent implements OnInit {
       'startofwork': this.job.startofwork.unix(),
       'workload': this.job.workload,
       'description': this.job.description,
+      'skills': JSON.stringify(this.job.skills),
       'contactinfo': this.job.contactinfo,
       'startofpublication': this.job.startofpublication.unix(),
       'endofpublication': this.job.endofpublication.unix(),
@@ -77,14 +69,8 @@ export class JobEditComponent implements OnInit {
    */
   onSkillCreate() {
     this.skill.jobId = this.job.id;
-    this.httpClient.post('http://localhost:3000/skills', {
-      'jobId': this.skill.jobId,
-      'name': this.skill.name
-    }, {withCredentials: true}).subscribe((instance: any) => {
-      this.skill.id = instance.id;
-      this.skills.push(this.skill);
-      this.skill = new Skill(null, '', null);
-    });
+    this.job.skills.push(this.skill);
+    this.skill = new Skill(null, '', null);
     this.onSave();
   }
 
@@ -92,7 +78,8 @@ export class JobEditComponent implements OnInit {
    * Deleting a Skill
    */
   onSkillDestroy(skill: Skill) {
-    this.skills.splice(this.skills.indexOf(skill), 1);
+    this.job.skills.splice(this.job.skills.indexOf(skill), 1);
+    this.onSave();
   }
 
   /**
@@ -112,6 +99,7 @@ export class JobEditComponent implements OnInit {
   approve() {
     if (AuthService.isAdmin()) {
       this.httpClient.put('http://localhost:3000/jobs/apply/' + this.job.id, {}, {withCredentials: true}).subscribe(res => {
+        this.job.approved = true;
         this.job.changed = false;
       });
     }

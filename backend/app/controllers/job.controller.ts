@@ -7,13 +7,17 @@ const router: Router = Router();
 
 // Get All Public Jobs
 router.get('/', async (req: Request, res: Response) => {
-  const instances = await Job.findAll({where: Sequelize.and(
-    {approved: true},
-    {startofpublication: {lte: Math.floor(Date.now() / 1000)}},
-    {endofpublication: {gte: Math.floor(Date.now() / 1000)}},
-    )});
+  const instances = await Job.findAll({
+    where: Sequelize.and(
+      {approved: true},
+      {startofpublication: {lte: Math.floor(Date.now() / 1000)}},
+      {endofpublication: {gte: Math.floor(Date.now() / 1000)}},
+      )
+  });
   res.statusCode = 200;
-  res.send(instances.map(e => e.toSimplification()));
+  res.send(instances.map((e: Job) => {
+    return e.toSimplification();
+  }));
 });
 
 // Get All editable Jobs
@@ -69,29 +73,7 @@ router.get('/editable', async (req: Request, res: Response) => {
     res.send('[]');
   }
 });
-// Get if a job is approved
-router.get('/approved/:id', async (req: Request, res: Response) => {
-console.log('approved');
 
-  if (req.session != null && req.session.user != null) {
-    const id = parseInt(req.params.id);
-    const instance = await Job.findById(id);
-    if (instance == null) {
-      res.statusCode = 404;
-      res.json({
-        'message': 'not found'
-      });
-      return;
-    }
-    res.statusCode = 200;
-    res.send({approved: instance.approved});
-    return;
-    // For everyone else it isn't approved
-  } else {
-    res.statusCode = 200;
-    res.send({approved: false});
-  }
-});
 // Get job company
 router.get('/company/:id', async (req: Request, res: Response) => {
   console.log('company');
@@ -220,6 +202,7 @@ router.put('/apply/:id', async (req: Request, res: Response) => {
 
     }
     instance.applyChanges();
+    instance.approved = true;
     await instance.save();
     res.statusCode = 200;
     res.send(instance.toSimplification());

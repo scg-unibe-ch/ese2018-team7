@@ -53,6 +53,7 @@ export class JobsViewComponent implements OnInit {
           moment(instance.startofwork, 'X'),
           instance.workload,
           instance.description,
+          JSON.parse(instance.skills),
           instance.contactinfo));
 
       if (this.jobs.length === 0) {
@@ -75,6 +76,7 @@ export class JobsViewComponent implements OnInit {
           moment(instance.startofwork, 'X'),
           instance.workload,
           instance.description,
+          JSON.parse(instance.skills),
           instance.contactinfo));
 
       if (this.jobs.length === 0) {
@@ -102,6 +104,7 @@ export class JobsViewComponent implements OnInit {
           moment(instance.startofwork, 'X'),
           instance.workload,
           instance.description,
+          JSON.parse(instance.skills),
           instance.contactinfo,
           moment(instance.startofpublication, 'X'),
           moment(instance.endofpublication, 'X')));
@@ -130,6 +133,7 @@ export class JobsViewComponent implements OnInit {
           moment(instance.startofwork, 'X'),
           instance.workload,
           instance.description,
+          JSON.parse(instance.skills),
           instance.contactinfo,
           moment(instance.startofpublication, 'X'),
           moment(instance.endofpublication, 'X')));

@@ -28,10 +28,10 @@ export class SkillEditComponent implements OnInit {
    * Save the changed on the server
    */
   onSave() {
-    this.httpClient.put('http://localhost:3000/skills/' + this.skill.id, {
+   /* this.httpClient.put('http://localhost:3000/skills/' + this.skill.id, {
       'name': this.skill.name, 'jobId': this.skill.jobId
     }, {withCredentials: true}).subscribe();
-
+*/
     this.job.onSave();
   }
 
@@ -39,10 +39,11 @@ export class SkillEditComponent implements OnInit {
    * Delete this skill
    */
   onDestroy() {
-    this.httpClient.delete('http://localhost:3000/skills/' + this.skill.id, {withCredentials: true}).subscribe(() => {
+    this.job.onSkillDestroy(this.skill);
+    /*this.httpClient.delete('http://localhost:3000/skills/' + this.skill.id, {withCredentials: true}).subscribe(() => {
       this.job.onSave();
       this.destroy.emit(this.skill);
-    });
+    });*/
   }
 
 }

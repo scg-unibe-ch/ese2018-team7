@@ -20,9 +20,6 @@ export class JobViewComponent implements OnInit {
   company: Company;
   formattedstartofwork: string;
 
-  // The required Skills
-  skills: Skill[] = [];
-
   @Output()
   destroy = new EventEmitter<Job>();
 
@@ -32,12 +29,7 @@ export class JobViewComponent implements OnInit {
 
   ngOnInit() {
     this.formattedstartofwork = this.job.startofwork.format('YYYY-MM-DD');
-    // Load the Skills from the Server
-    this.httpClient.get('http://localhost:3000/skills', {
-      params:  new HttpParams().set('jobId', '' + this.job.id)
-    }).subscribe((instances: any) => {
-      this.skills = instances.map((instance) => new Skill(instance.id, instance.name, instance.jobId));
-    });
+
     // Load Company from the server
     this.httpClient.get('http://localhost:3000/jobs/company/' + this.job.id).subscribe((instance: any) => {
       this.company =  new Company('', instance.name, instance.logo);

@@ -42,6 +42,7 @@ export class JobsEditComponent implements OnInit {
           moment(instance.startofwork, 'X'),
           instance.workload,
           instance.description,
+          JSON.parse(instance.skills),
           instance.contactinfo,
           moment(instance.startofpublication, 'X'),
           moment(instance.endofpublication, 'X'),
@@ -61,6 +62,7 @@ export class JobsEditComponent implements OnInit {
       'title': this.job.title,
       'startofwork': this.job.startofwork.unix(),
       'workload': this.job.workload,
+      'skills': JSON.stringify(this.job.skills),
       'startofpublication': this.job.startofpublication.unix(),
       'endofpublication': this.job.endofpublication.unix()
     }, {withCredentials: true}).subscribe((instance: any) => {

@@ -1,9 +1,10 @@
-import {Table, Column, Model, PrimaryKey, DataType} from 'sequelize-typescript';
+import {Table, Column, Model, PrimaryKey, DataType, ForeignKey} from 'sequelize-typescript';
+import {User} from './user.model';
 
 @Table
 export class Company extends Model<Company> {
 
-  @PrimaryKey @Column
+  @ForeignKey(() => User) @PrimaryKey @Column
   username!: string;
 
   @Column

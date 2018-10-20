@@ -1,5 +1,4 @@
-import {Table, Column, Model, HasMany, DataType, ForeignKey} from 'sequelize-typescript';
-import {Skill} from './skill.model';
+import {Table, Column, Model, DataType, ForeignKey} from 'sequelize-typescript';
 import {User} from './user.model';
 
 @Table
@@ -35,8 +34,8 @@ export class Job extends Model<Job> {
   @Column
   approved!: boolean;
 
-  @HasMany(() => Skill)
-  skills!: Skill[];
+  @Column(DataType.TEXT)
+  skills!: string;
 
   @ForeignKey(() => User) @Column
   owner!: string;
@@ -53,6 +52,7 @@ export class Job extends Model<Job> {
       'startofwork': this.startofwork,
       'workload': this.workload,
       'description': this.description,
+      'skills': this.skills,
       'contactinfo': this.contactinfo,
       'startofpublication': this.startofpublication,
       'endofpublication': this.endofpublication,
@@ -92,6 +92,7 @@ export class Job extends Model<Job> {
       this.startofwork = simplification['startofwork'];
       this.workload = simplification['workload'];
       this.description = simplification['description'];
+      this.skills = simplification['skills'];
       this.contactinfo = simplification['contactinfo'];
       this.startofpublication = simplification['startofpublication'];
       this.endofpublication = simplification['endofpublication'];
