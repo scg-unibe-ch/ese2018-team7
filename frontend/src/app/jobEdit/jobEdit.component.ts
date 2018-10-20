@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Job} from '../job';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Skill} from '../skill';
 import {AuthService} from '../auth/auth.service';
 import {MatDatepicker} from '@angular/material/datepicker';

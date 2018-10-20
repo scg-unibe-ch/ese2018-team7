@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import * as moment from 'moment';
 import {ModalService} from '../modal/modal.service';
 import {Moment} from 'moment';
+import {Company} from '../company';
 
 @Component({
   selector: 'app-jobs-view',
@@ -48,13 +49,14 @@ export class JobsViewComponent implements OnInit {
       this.jobs = instances.map((instance) =>
         new Job(instance.id,
           instance.title,
-          instance.company,
+          instance.departement,
           instance.placeofwork,
           moment(instance.startofwork, 'X'),
           instance.workload,
           instance.description,
           JSON.parse(instance.skills),
-          instance.contactinfo));
+          instance.contactinfo,
+          new Company('', instance.companyName, instance.companyLogo)));
 
       if (this.jobs.length === 0) {
         this.msg = 'Currently there are no Jobs available!';
@@ -71,13 +73,14 @@ export class JobsViewComponent implements OnInit {
       this.jobs = instances.map((instance) =>
         new Job(instance.id,
           instance.title,
-          instance.company,
+          instance.departement,
           instance.placeofwork,
           moment(instance.startofwork, 'X'),
           instance.workload,
           instance.description,
           JSON.parse(instance.skills),
-          instance.contactinfo));
+          instance.contactinfo,
+          new Company(instance.companyName, instance.companyLogo)));
 
       if (this.jobs.length === 0) {
         this.msg = 'There are currently no Jobs available for your search!';
@@ -99,13 +102,14 @@ export class JobsViewComponent implements OnInit {
       this.jobs = instances.map((instance) =>
         new Job(instance.id,
           instance.title,
-          instance.company,
+          instance.departement,
           instance.placeofwork,
           moment(instance.startofwork, 'X'),
           instance.workload,
           instance.description,
           JSON.parse(instance.skills),
           instance.contactinfo,
+          new Company(instance.companyName, instance.companyLogo),
           moment(instance.startofpublication, 'X'),
           moment(instance.endofpublication, 'X')));
 
@@ -128,13 +132,14 @@ export class JobsViewComponent implements OnInit {
       this.jobs = instances.map((instance) =>
         new Job(instance.id,
           instance.title,
-          instance.company,
+          instance.departement,
           instance.placeofwork,
           moment(instance.startofwork, 'X'),
           instance.workload,
           instance.description,
           JSON.parse(instance.skills),
           instance.contactinfo,
+          new Company(instance.companyName, instance.companyLogo),
           moment(instance.startofpublication, 'X'),
           moment(instance.endofpublication, 'X')));
 

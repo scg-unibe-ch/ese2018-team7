@@ -8,7 +8,7 @@ export class Job extends Model<Job> {
   title!: string;
 
   @Column
-  company!: string;
+  departement!: string;
 
   @Column
   placeofwork!: string;
@@ -47,7 +47,7 @@ export class Job extends Model<Job> {
     return {
       'id': this.id,
       'title': this.title,
-      'company': this.company,
+      'departement': this.departement,
       'placeofwork': this.placeofwork,
       'startofwork': this.startofwork,
       'workload': this.workload,
@@ -87,7 +87,7 @@ export class Job extends Model<Job> {
       if (simplification['title'] != null) {
         this.title = simplification['title'];
       }
-      this.company = simplification['company'];
+      this.departement = simplification['departement'];
       this.placeofwork = simplification['placeofwork'];
       this.startofwork = simplification['startofwork'];
       this.workload = simplification['workload'];

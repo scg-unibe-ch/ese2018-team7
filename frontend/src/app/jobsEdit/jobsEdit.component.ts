@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {AuthService} from '../auth/auth.service';
 import * as moment from 'moment';
+import {Company} from '../company';
 
 @Component({
   selector: 'app-jobs-edit',
@@ -37,13 +38,14 @@ export class JobsEditComponent implements OnInit {
       this.jobs = instances.map((instance) =>
         new Job(instance.id,
           instance.title,
-          instance.company,
+          instance.departement,
           instance.placeofwork,
           moment(instance.startofwork, 'X'),
           instance.workload,
           instance.description,
           JSON.parse(instance.skills),
           instance.contactinfo,
+          new Company('', instance.companyName, instance.companyLogo),
           moment(instance.startofpublication, 'X'),
           moment(instance.endofpublication, 'X'),
           instance.approved,

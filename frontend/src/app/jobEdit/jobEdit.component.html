@@ -9,7 +9,7 @@
   <a *ngIf="job.approved&&job.changed" style="color:#ff0000; font-size: 16px; font-weight: bold;">{{'This job has unapproved changes!'}}</a>
   <br>
   <mat-form-field>
-    <input matInput placeholder="Department" [(ngModel)]="job.company" name="company" (ngModelChange)="onSave()">
+    <input matInput placeholder="Department" [(ngModel)]="job.departement" name="departement" (ngModelChange)="onSave()">
   </mat-form-field>
   <br>
   <mat-form-field>
