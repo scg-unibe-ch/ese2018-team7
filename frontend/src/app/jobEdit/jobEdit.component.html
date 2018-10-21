@@ -3,6 +3,7 @@
     <input matInput placeholder="Title" [(ngModel)]="job.title" name="title" (ngModelChange)="onSave()">
   </mat-form-field>
   <button mat-button (click)="onDestroy()">delete job</button>
+  <button *ngIf="job.changed" mat-button (click)="resetJob()">Reset Job</button>
   <button *ngIf="isAdmin()&&!job.approved" mat-button (click)="approve()">Approve Job</button>
   <button *ngIf="isAdmin()&&job.approved&&job.changed" mat-button (click)="approve()">Approve Changes</button>
   <a *ngIf="!job.approved" style="color:#ff0000; font-size: 16px; font-weight: bold;">{{'This job isn\'t jet approved by an administrator!'}}</a>
@@ -47,13 +48,13 @@
   </mat-form-field>
   <br>
   <mat-form-field>
-    <input matInput [matDatepicker]="startPublication" [max]="endPublication" [(ngModel)]="job.startofpublication" placeholder="Start of publication" (focus)="startPublication.open()" (dateInput)="onSave()" (dateChange)="onSave()">
+    <input matInput [matDatepicker]="startPublication" [max]="job.endofpublication" [(ngModel)]="job.startofpublication" placeholder="Start of publication" (focus)="startPublication.open()" (dateInput)="onSave()" (dateChange)="onSave()">
     <mat-datepicker type="datetime" [clockStep]="5" [twelveHour]="false" #startPublication touchUi startView="month" name="startofwork" ngDefaultControl></mat-datepicker>
     <mat-datepicker-toggle matSuffix [for]="startPublication"></mat-datepicker-toggle>
   </mat-form-field>
   <br>
   <mat-form-field>
-    <input matInput [matDatepicker]="endPublication" [min]="startPublication" [(ngModel)]="job.endofpublication" placeholder="End of publication" (focus)="endPublication.open()" (dateInput)="onSave()" (dateChange)="onSave()">
+    <input matInput [matDatepicker]="endPublication" [min]="job.startofpublication" [(ngModel)]="job.endofpublication" placeholder="End of publication" (focus)="endPublication.open()" (dateInput)="onSave()" (dateChange)="onSave()">
     <mat-datepicker type="datetime" [clockStep]="5" [twelveHour]="false" #endPublication touchUi startView="month" name="endofpublication" ngDefaultControl></mat-datepicker>
     <mat-datepicker-toggle matSuffix [for]="endPublication"></mat-datepicker-toggle>
   </mat-form-field>

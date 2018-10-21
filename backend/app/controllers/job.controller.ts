@@ -195,6 +195,35 @@ router.put('/apply/:id', async (req: Request, res: Response) => {
     res.send({'errorMessage': 'You\'re not allowed to update a Job'});
   }
 });
+// Reset changed Job
+router.put('/reset/:id', async (req: Request, res: Response) => {
+
+  if (req.session != null && req.session.user != null) {
+    const id = parseInt(req.params.id);
+    const instance = await Job.findById(id);
+    if (instance == null) {
+      res.statusCode = 404;
+      res.json({
+        'message': 'not found'
+      });
+      return;
+
+    } else if (req.session.user.type !== 0 && req.session.user.username !== instance.owner) {
+      res.statusCode = 403;
+      res.send({'errorMessage': 'You\'re not allowed to update this Job'});
+      return;
+    }
+    instance.changes = '';
+    instance.changes = JSON.stringify(instance.toSimplification());
+    await instance.save();
+    res.statusCode = 200;
+    res.send(instance.toSimplification());
+
+  } else {
+    res.statusCode = 403;
+    res.send({'errorMessage': 'You\'re not allowed to update a Job'});
+  }
+});
 
 // Update a specific Job
 router.put('/:id', async (req: Request, res: Response) => {

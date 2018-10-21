@@ -6,6 +6,7 @@ import {AuthService} from '../auth/auth.service';
 import {MatDatepicker} from '@angular/material/datepicker';
 import * as moment from 'moment';
 import {Moment} from 'moment';
+import {Company} from '../company';
 
 @Component({
   selector: 'app-job-edit',
@@ -39,7 +40,7 @@ export class JobEditComponent implements OnInit {
   onSave() {
     this.httpClient.put('http://localhost:3000/jobs/' + this.job.id, {
       'title': this.job.title,
-      'company': this.job.company,
+      'departement': this.job.departement,
       'placeofwork': this.job.placeofwork,
       'startofwork': this.job.startofwork.unix(),
       'workload': this.job.workload,
@@ -103,6 +104,23 @@ export class JobEditComponent implements OnInit {
         this.job.changed = false;
       });
     }
+  }
+  resetJob() {
+    this.httpClient.put('http://localhost:3000/jobs/reset/' + this.job.id, {}, {withCredentials: true}).subscribe((res:any) => {
+      this.job.changed = false;
+      this.job.title = res.title;
+      this.job.departement = res.departement;
+      this.job.placeofwork = res.placeofwork;
+      this.job.startofwork = res.startofwork;
+      this.job.startofwork = moment(res.startofwork, 'X');
+      this.job.workload = res.workload;
+      this.job.description = res.description;
+      this.job.skills = JSON.parse(res.skills);
+      this.job.contactinfo = res.contactinfo;
+      this.job.startofpublication = moment(res.startofpublication, 'X');
+      this.job.endofpublication = moment(res.endofpublication, 'X');
+      this.job.approved = res.approved;
+    });
   }
 
 }

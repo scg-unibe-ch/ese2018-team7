@@ -7,10 +7,9 @@ export interface Request extends Express.Request {
 }
 
 // import all the controllers. If you add a new controller, make sure to import it here as well.
-import {JobController, SkillController, UserController} from './controllers';
+import {JobController, UserController} from './controllers';
 import {Sequelize} from 'sequelize-typescript';
 import {Job} from './models/job.model';
-import {Skill} from './models/skill.model';
 import {User} from './models/user.model';
 import {Company} from './models/company.model';
 
@@ -21,7 +20,7 @@ const sequelize =  new Sequelize({
   password: '',
   storage: 'db.sqlite'
 });
-sequelize.addModels([Job, Skill, User, Company]);
+sequelize.addModels([Job, User, Company]);
 
 // create a new express application instance
 const app: Express.Application = Express();
@@ -51,7 +50,6 @@ app.use(function (req, res, next) {
 });
 
 app.use('/jobs', JobController);
-app.use('/skills', SkillController);
 app.use('/login', UserController);
 
 // Initialize first admin with default credentials
