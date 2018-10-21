@@ -60,6 +60,8 @@ export class JobsViewComponent implements OnInit {
 
       if (this.jobs.length === 0) {
         this.msg = 'Currently there are no Jobs available!';
+      } else {
+        this.msg = '';
       }
       this.advSearchRangeRefresh.emit();
 
@@ -84,6 +86,8 @@ export class JobsViewComponent implements OnInit {
 
       if (this.jobs.length === 0) {
         this.msg = 'There are currently no Jobs available for your search!';
+      } else {
+        this.msg = '';
       }
       this.searched = true;
     });
@@ -115,6 +119,8 @@ export class JobsViewComponent implements OnInit {
 
       if (this.jobs.length === 0) {
         this.msg = 'There are currently no Jobs available for your search!';
+      } else {
+        this.msg = '';
       }
       this.searched = true;
     });
@@ -145,6 +151,8 @@ export class JobsViewComponent implements OnInit {
 
       if (this.jobs.length === 0) {
         this.msg = 'Currently there are no Jobs available!';
+      } else {
+        this.msg = '';
       }
       this.advSearchRangeRefresh.emit();
     });

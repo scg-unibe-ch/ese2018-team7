@@ -1,5 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Job} from '../job';
+import {HttpClient} from '@angular/common/http';
+import {ModalService} from '../modal/modal.service';
 
 @Component({
   selector: 'app-job-view',
@@ -19,10 +21,17 @@ export class JobViewComponent implements OnInit {
   @Output()
   destroy = new EventEmitter<Job>();
 
-  constructor() {
+  constructor(private modalService: ModalService) {
   }
 
   ngOnInit() {
-    this.formattedstartofwork = this.job.startofwork.format('YYYY-MM-DD');
+    this.formattedstartofwork = this.job.startofwork.format('DD.MM.YYYY');
+  }
+  openModal(id: string) {
+    this.modalService.open(id);
+  }
+
+  closeModal(id: string) {
+    this.modalService.close(id);
   }
 }
