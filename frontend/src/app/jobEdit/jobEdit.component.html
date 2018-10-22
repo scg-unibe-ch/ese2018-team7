@@ -1,13 +1,14 @@
 <mat-card>
+  <mat-list-item><a *ngIf="!job.approved" class="warning">{{'This job isn\'t jet approved by an administrator!'}}</a>
+  <a *ngIf="job.approved&&job.changed" class="warning">{{'This job has unapproved changes!'}}</a></mat-list-item>
+  <br *ngIf="!job.approved||job.changed">
   <mat-form-field>
     <input matInput placeholder="Title" [(ngModel)]="job.title" name="title" (ngModelChange)="onSave()">
   </mat-form-field>
-  <button mat-button (click)="onDestroy()">delete job</button>
+  <button mat-button (click)="onDestroy()" color="warn">Delete job</button>
   <button *ngIf="job.changed" mat-button (click)="resetJob()">Reset Job</button>
   <button *ngIf="isAdmin()&&!job.approved" mat-button (click)="approve()">Approve Job</button>
   <button *ngIf="isAdmin()&&job.approved&&job.changed" mat-button (click)="approve()">Approve Changes</button>
-  <a *ngIf="!job.approved" style="color:#ff0000; font-size: 16px; font-weight: bold;">{{'This job isn\'t jet approved by an administrator!'}}</a>
-  <a *ngIf="job.approved&&job.changed" style="color:#ff0000; font-size: 16px; font-weight: bold;">{{'This job has unapproved changes!'}}</a>
   <br>
   <mat-form-field>
     <input matInput placeholder="Department" [(ngModel)]="job.departement" name="departement" (ngModelChange)="onSave()">
@@ -17,7 +18,7 @@
     <input matInput placeholder="Place of work" [(ngModel)]="job.placeofwork" name="placeofwork" (ngModelChange)="onSave()">
   </mat-form-field>
   <br>
-  <mat-form-field>
+  <mat-form-field class="datepicker">
    <input matInput [min]='today' [matDatepicker]="startWork" [(ngModel)]="job.startofwork" placeholder="Commencement of work" (focus)="startWork.open()" (dateInput)="onSave()" (dateChange)="onSave()">
     <mat-datepicker #startWork touchUi startView="month" name="startofwork" ngDefaultControl></mat-datepicker>
     <mat-datepicker-toggle matSuffix [for]="startWork"></mat-datepicker-toggle>
@@ -29,8 +30,8 @@
   <mat-slider min="0" max="100" step="5" value="100" tickInterval="2" thumbLabel [displayWith]="percentageLabel" name="workload" [(ngModel)]="job.workload" (ngModelChange)="onSave()"></mat-slider>
   <br>
   <mat-form-field>
-  <textarea autosize matInput placeholder="Description" [(ngModel)]="job.description" name="description" (ngModelChange)="onSave()" style="resize: none;overflow: hidden;"></textarea>
-</mat-form-field>
+  <textarea autosize matInput placeholder="Description" [(ngModel)]="job.description" name="description" (ngModelChange)="onSave()" class="textarea"></textarea>
+  </mat-form-field>
   <br>
   <mat-list>
     <mat-list-item *ngFor="let skill of job.skills">
@@ -41,19 +42,19 @@
   <mat-form-field>
     <input matInput placeholder="Add Skill" [(ngModel)]="skill.name" name="name">
   </mat-form-field>
-  <button mat-button (click)="onSkillCreate()">add skill</button>
+  <button mat-button (click)="onSkillCreate()">Add skill</button>
   <br>
   <mat-form-field>
-    <textarea autosize matInput placeholder="Contact information" [(ngModel)]="job.contactinfo" name="contactinfo" (ngModelChange)="onSave()" style="resize: none;overflow: hidden;"></textarea>
+    <textarea autosize matInput placeholder="Contact information" [(ngModel)]="job.contactinfo" name="contactinfo" (ngModelChange)="onSave()" class="textarea"></textarea>
   </mat-form-field>
   <br>
-  <mat-form-field>
+  <mat-form-field class="datepicker">
     <input matInput [matDatepicker]="startPublication" [max]="job.endofpublication" [(ngModel)]="job.startofpublication" placeholder="Start of publication" (focus)="startPublication.open()" (dateInput)="onSave()" (dateChange)="onSave()">
     <mat-datepicker type="datetime" [clockStep]="5" [twelveHour]="false" #startPublication touchUi startView="month" name="startofwork" ngDefaultControl></mat-datepicker>
     <mat-datepicker-toggle matSuffix [for]="startPublication"></mat-datepicker-toggle>
   </mat-form-field>
   <br>
-  <mat-form-field>
+  <mat-form-field class="datepicker">
     <input matInput [matDatepicker]="endPublication" [min]="job.startofpublication" [(ngModel)]="job.endofpublication" placeholder="End of publication" (focus)="endPublication.open()" (dateInput)="onSave()" (dateChange)="onSave()">
     <mat-datepicker type="datetime" [clockStep]="5" [twelveHour]="false" #endPublication touchUi startView="month" name="endofpublication" ngDefaultControl></mat-datepicker>
     <mat-datepicker-toggle matSuffix [for]="endPublication"></mat-datepicker-toggle>

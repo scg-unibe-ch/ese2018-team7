@@ -1,10 +1,30 @@
-<div id="page">
-<h1>ESE - Team 7 - Job Portal</h1>
-<nav>
-  <span *ngFor="let menu of menus">
-    <a *ngIf="menu.condition()" routerLink="{{menu.link}}" routerLinkActive="active">{{menu.text}}</a>
-    <a *ngIf="menu.condition()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-  </span>
-</nav>
-<router-outlet></router-outlet>
-</div>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    fixedInViewport="true"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="!(isHandset$ | async)">
+    <mat-toolbar color="primary">Menu</mat-toolbar>
+    <mat-nav-list *ngFor="let menu of menus">
+      <a mat-list-item *ngIf="menu.condition()" routerLink="{{menu.link}}" routerLinkActive="active">{{menu.text}}</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>ESE Team 7 Job Portal</span>
+    </mat-toolbar>
+    <div id="content">
+    <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import {RegisterComponent} from './register/register.component';
+import {RegistrationComponent} from './registration/registration.component';
 import {LoginComponent} from './login/login.component';
 import {JobsEditComponent} from './jobsEdit/jobsEdit.component';
 import {JobsViewComponent} from './jobsView/jobsView.component';
@@ -12,7 +12,7 @@ import {ChangePasswordComponent} from './changePassword/changePassword.component
 import {UsersEditComponent} from './usersEdit/usersEdit.component';
 
 const appRoutes: Routes = [
-  { path: 'register', component: RegisterComponent },
+  { path: 'registration', component: RegistrationComponent },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent},
   { path: 'changePassword', component: ChangePasswordComponent},

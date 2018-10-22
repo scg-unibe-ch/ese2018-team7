@@ -7,11 +7,11 @@
 <app-modal id="details-{{job.id}}">
   <div class="modal">
     <div class="modal-body">
-      <h1 style="margin-top:-5px;">{{job.title}}</h1>
+      <h1>{{job.title}}</h1>
       <hr>
-      <p><span style="font-size: 12px; ">At {{job.company.name}} &#x25BA; {{job.departement}}</span><br><br>
-      <img [src]="job.company.logo" height="200" style="float:right; margin: 10px;">
-      You have to start at <b>{{formattedstartofwork}}</b> in <b>{{job.placeofwork}}</b> with a {{job.workload}}% workload.<br><br>
+      <p><span class="smalltext">At {{job.company.name}} &#x25BA; {{job.departement}}</span><br><br>
+      <img [src]="job.company.logo" height="200" class="company-logo">
+      You have to start at {{formattedstartofwork}} in {{job.placeofwork}} with a {{job.workload}}% workload.<br><br>
       The following skills are required for this job:<br>
       <mat-list>
         <mat-list-item *ngFor="let skill of job.skills">

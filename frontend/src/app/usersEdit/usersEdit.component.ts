@@ -14,6 +14,8 @@ import {AuthService} from '../auth/auth.service';
  */
 export class UsersEditComponent implements OnInit {
 
+  displayedColumns: string[] = ['username', 'type', 'accept', 'password', 'delete'];
+
   // Default new admin
   user: User = new User( '', '', 0, true);
 

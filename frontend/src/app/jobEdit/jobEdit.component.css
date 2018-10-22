@@ -1,3 +1,18 @@
-mat-slider {
-  width: 200px;
+.mat-slider {
+  width: 180px;
+}
+
+.datepicker {
+  width: 180px;
+}
+
+.warning {
+  color: var(--warn);
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.textarea {
+  resize: none;
+  overflow: hidden;
 }

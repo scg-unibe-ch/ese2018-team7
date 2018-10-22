@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
 html, body {
   height: 100%;
@@ -8,12 +9,28 @@ body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
   --bg-dialog: white;
-  --primary: rgba(73, 200, 242, 1);
+  --primary: rgba(63, 81, 181, 1);
   --primary-contrast: #fff;
-  --primary-a60: rgba(73, 200, 242, 0.6);
-  --primary-a80: rgba(73, 200, 242, 0.8);
+  --primary-a60: rgba(63, 81, 181, 0.6);
+  --primary-a80: rgba(63, 81, 181, 0.8);
+
+  --secondary: rgba(233, 30, 99, 1);
+  --secondary-contrast: #fff;
+
+  --warn: rgba(244,67,54, 1);
 }
 
+.primary-title {
+  color: var(--primary);
+}
+
+.secondary-title {
+  color: var(--secondary);
+}
+
+.error-text {
+  color: var(--warn);
+}
 
 /* MODAL STYLES
 -------------------------------*/
@@ -605,3 +622,15 @@ mat-clock-view{
   color:white;
   background-color:var(--primary-a80, #4d5ec1)
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: 'Roboto', sans-serif; }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: 'Roboto', sans-serif; }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: 'Roboto', sans-serif; }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: 'Roboto', sans-serif; }

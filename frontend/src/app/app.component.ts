@@ -1,4 +1,7 @@
 import {Component, OnInit} from '@angular/core';
+import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import {AuthService} from './auth/auth.service';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
@@ -23,7 +26,12 @@ export class AppComponent implements OnInit {
     {link: '/logout', text: 'Logout', condition: function() {return AuthService.isLogin(); }},
     ];
 
-  constructor(private httpClient: HttpClient, router: Router) {
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches)
+    );
+
+  constructor(private httpClient: HttpClient, router: Router, private breakpointObserver: BreakpointObserver) {
 
     // Initialize the Authservice and update on every page change
     AuthService.update(httpClient);

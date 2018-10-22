@@ -6,15 +6,15 @@ import {AuthService} from '../auth/auth.service';
 import {Company} from '../company';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  selector: 'app-registration',
+  templateUrl: './registration.component.html',
+  styleUrls: ['./registration.component.css']
 })
 
 /**
  * Component to register employer
  */
-export class RegisterComponent implements OnInit {
+export class RegistrationComponent implements OnInit {
 
   errorMessage;
 

@@ -4,11 +4,11 @@
 <button mat-button (click)="openModal('extendedSearch')">Advanced Search</button>
 <button *ngIf="searched" mat-button (click)="resetSearch()">Reset Search</button>
 <app-job-view [job]="job" *ngFor="let job of jobs"></app-job-view>
-<h2 style="color:#ff0000;">{{msg}}</h2>
+<h2 class="warning">{{msg}}</h2>
 <app-modal id="extendedSearch">
   <div class="modal">
     <div class="modal-body">
-      <h1 style="margin-top:-8px">Advanced Search</h1>
+      <h1>Advanced Search</h1>
       <mat-form-field>
         <input matInput placeholder="Title" name="advTitle" type="text" [(ngModel)]="advSearchTitle" />
       </mat-form-field>
@@ -24,6 +24,7 @@
         <mat-datepicker #startWorkAfter touchUi startView="month" name="startWorkAfter" ngDefaultControl></mat-datepicker>
         <mat-datepicker-toggle matSuffix [for]="startWorkAfter"></mat-datepicker-toggle>
       </mat-form-field>
+      <br>
       <mat-form-field>
         <input matInput [min]="advSearchStartAfter" [matDatepicker]="startWorkBefore" [(ngModel)]="advSearchStartBefore" placeholder="Commencement of work before" (focus)="startWorkBefore.open()">
         <mat-datepicker #startWorkBefore touchUi startView="month" name="startWorkBefore" ngDefaultControl></mat-datepicker>

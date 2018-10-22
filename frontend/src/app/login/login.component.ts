@@ -54,8 +54,8 @@ export class LoginComponent implements OnInit {
   /**
    * If the user wants to register -> Redirect
    */
-  toRegister() {
-    this.router.navigate(['/register']);
+  toRegistration() {
+    this.router.navigate(['/registration']);
   }
 
 }

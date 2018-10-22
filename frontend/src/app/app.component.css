@@ -1,3 +1,19 @@
-#page{
-  padding: 5px;
+#content{
+  padding: 10px;
+}
+
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  width: 150px;
+  background-color: ghostwhite;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  position: -webkit-sticky; /* For macOS/iOS Safari */
+  top: 0;
+  z-index: 1000; /* Ensure that your app's content doesn't overlap the toolbar */
 }

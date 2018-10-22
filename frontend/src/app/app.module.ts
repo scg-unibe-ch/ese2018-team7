@@ -13,6 +13,14 @@ import {
   MatInputModule,
   MatListModule,
   MatSliderModule,
+  MatToolbarModule,
+  MatSidenavModule,
+  MatIconModule,
+  MatTooltipModule,
+  MatProgressSpinnerModule,
+  MatTableModule,
+  MatSortModule,
+  MatPaginatorModule,
 } from '@angular/material';
 
 import {FormsModule} from '@angular/forms';
@@ -29,7 +37,7 @@ import {JobsViewComponent} from './jobsView/jobsView.component';
 import {SkillEditComponent} from './skillEdit/skillEdit.component';
 import {SkillViewComponent} from './skillView/skillView.component';
 import {LoginComponent} from './login/login.component';
-import {RegisterComponent} from './register/register.component';
+import {RegistrationComponent} from './registration/registration.component';
 import {PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import {AppRoutingModule } from './app-routing.module';
 import {LogoutComponent} from './logout/logout.component';
@@ -37,6 +45,8 @@ import {ChangePasswordComponent} from './changePassword/changePassword.component
 import {UsersEditComponent} from './usersEdit/usersEdit.component';
 import {ModalComponent} from './modal/modal.component';
 import {ModalService} from './modal/modal.service';
+import { LayoutModule } from '@angular/cdk/layout';
+import { CdkTableModule} from '@angular/cdk/table';
 
 @NgModule({
   declarations: [
@@ -49,7 +59,7 @@ import {ModalService} from './modal/modal.service';
     SkillEditComponent,
     LoginComponent,
     LogoutComponent,
-    RegisterComponent,
+    RegistrationComponent,
     PageNotFoundComponent,
     ChangePasswordComponent,
     UsersEditComponent,
@@ -72,6 +82,16 @@ import {ModalService} from './modal/modal.service';
     MatDatepickerModule,
     MatMomentDateModule,
     Ng5SliderModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatTooltipModule,
+    MatProgressSpinnerModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    CdkTableModule,
   ],
   providers: [
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
