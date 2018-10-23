@@ -27,7 +27,7 @@
   <div flex="10" layout layout-align="center center">
     <span class="md-body-1">Workload</span>
   </div>
-  <mat-slider min="0" max="100" step="5" value="100" tickInterval="2" thumbLabel [displayWith]="percentageLabel" name="workload" [(ngModel)]="job.workload" (ngModelChange)="onSave()"></mat-slider>
+  <mat-slider color="primary" min="0" max="100" step="5" value="100" tickInterval="2" thumbLabel [displayWith]="percentageLabel" name="workload" [(ngModel)]="job.workload" (ngModelChange)="onSave()"></mat-slider>
   <br>
   <mat-form-field>
   <textarea autosize matInput placeholder="Description" [(ngModel)]="job.description" name="description" (ngModelChange)="onSave()" class="textarea"></textarea>
@@ -43,6 +43,26 @@
     <input matInput placeholder="Add Skill" [(ngModel)]="skill.name" name="name">
   </mat-form-field>
   <button mat-button (click)="onSkillCreate()">Add skill</button>
+  <br>
+  <mat-form-field>
+    <input matInput type="tel" [formControl]="phoneFormControl" placeholder="Phone" [(ngModel)]="job.phone" name="phone" (ngModelChange)="onSave()" required>
+    <mat-error *ngIf="phoneFormControl.hasError('pattern') && !phoneFormControl.hasError('required')">
+      Please enter a valid phone number
+    </mat-error>
+    <mat-error *ngIf="phoneFormControl.hasError('required')">
+      Phone is required
+    </mat-error>
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <input matInput type="email" [formControl]="emailFormControl" placeholder="Email" [(ngModel)]="job.email" name="email" (ngModelChange)="onSave()" required>
+    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+      Please enter a valid email address
+    </mat-error>
+    <mat-error *ngIf="emailFormControl.hasError('required')">
+      Email is required
+    </mat-error>
+  </mat-form-field>
   <br>
   <mat-form-field>
     <textarea autosize matInput placeholder="Contact information" [(ngModel)]="job.contactinfo" name="contactinfo" (ngModelChange)="onSave()" class="textarea"></textarea>

@@ -23,12 +23,12 @@ import {
   MatPaginatorModule,
 } from '@angular/material';
 
-import {FormsModule} from '@angular/forms';
 import {AutosizeModule} from 'ngx-autosize';
 import {MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import { Ng5SliderModule } from 'ng5-slider';
 import {MatDatepickerModule, MatMomentDateModule, MAT_DATE_LOCALE, MAT_DATE_FORMATS} from '@coachcare/datepicker';
 import { MAT_MOMENT_DATE_FORMATS } from './customCHLocale/moment-date-formats';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 // Import all Components
 import {JobEditComponent} from './jobEdit/jobEdit.component';
 import {JobsEditComponent} from './jobsEdit/jobsEdit.component';
@@ -91,6 +91,7 @@ import { CdkTableModule} from '@angular/cdk/table';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    ReactiveFormsModule,
     CdkTableModule,
   ],
   providers: [

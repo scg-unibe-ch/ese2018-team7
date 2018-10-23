@@ -6,6 +6,7 @@ import {AuthService} from '../auth/auth.service';
 import {MatDatepicker} from '@angular/material/datepicker';
 import * as moment from 'moment';
 import {Moment} from 'moment';
+import {FormControl, Validators} from '@angular/forms';
 import {Company} from '../company';
 
 @Component({
@@ -17,6 +18,16 @@ import {Company} from '../company';
  * Component to edit one Job
  */
 export class JobEditComponent implements OnInit {
+
+  emailFormControl = new FormControl('', [
+    Validators.required,
+    Validators.email,
+  ]);
+
+  phoneFormControl = new FormControl('', [
+    Validators.required,
+    Validators.pattern('^(\\+?)(\\d{2,4})(\\s?)(\\-?)((\\(0\\))?)(\\s?)(\\d{2})(\\s?)(\\-?)(\\d{3})(\\s?)(\\-?)(\\d{2})(\\s?)(\\-?)(\\d{2})'),
+  ]);
 
   @Input()
   job: Job;
@@ -46,6 +57,8 @@ export class JobEditComponent implements OnInit {
       'workload': this.job.workload,
       'description': this.job.description,
       'skills': JSON.stringify(this.job.skills),
+      'phone': this.job.phone,
+      'emial': this.job.email,
       'contactinfo': this.job.contactinfo,
       'startofpublication': this.job.startofpublication.unix(),
       'endofpublication': this.job.endofpublication.unix(),
@@ -106,7 +119,7 @@ export class JobEditComponent implements OnInit {
     }
   }
   resetJob() {
-    this.httpClient.put('http://localhost:3000/jobs/reset/' + this.job.id, {}, {withCredentials: true}).subscribe((res:any) => {
+    this.httpClient.put('http://localhost:3000/jobs/reset/' + this.job.id, {}, {withCredentials: true}).subscribe((res: any) => {
       this.job.changed = false;
       this.job.title = res.title;
       this.job.departement = res.departement;
@@ -116,11 +129,12 @@ export class JobEditComponent implements OnInit {
       this.job.workload = res.workload;
       this.job.description = res.description;
       this.job.skills = JSON.parse(res.skills);
+      this.job.phone = res.phone;
+      this.job.email = res.email;
       this.job.contactinfo = res.contactinfo;
       this.job.startofpublication = moment(res.startofpublication, 'X');
       this.job.endofpublication = moment(res.endofpublication, 'X');
       this.job.approved = res.approved;
     });
   }
-
 }

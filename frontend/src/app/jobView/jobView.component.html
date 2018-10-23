@@ -1,9 +1,12 @@
 <mat-card>
-  <h2>{{job.title}}</h2>
-  <h5>at {{job.company.name}} in {{job.placeofwork}}</h5>
-  <p>{{job.description}}</p>
+  <mat-card-title>{{job.title}}</mat-card-title>
+  <mat-card-subtitle>at {{job.company.name}} in {{job.placeofwork}}</mat-card-subtitle>
+  <mat-card-content>{{job.description}}</mat-card-content>
+  <mat-card-actions>
   <button mat-button (click)="openModal('details-' + job.id)">Details</button>
+  </mat-card-actions>
 </mat-card>
+<br>
 <app-modal id="details-{{job.id}}">
   <div class="modal">
     <div class="modal-body">
@@ -20,6 +23,8 @@
       </mat-list>
       {{job.description}}
       <br><br>
+      Phone: {{job.phone}}<br>
+      Email: {{job.email}}<br>
       {{job.contactinfo}}</p>
     </div>
     <div class="modal-close">X</div>

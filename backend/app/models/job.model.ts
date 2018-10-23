@@ -22,6 +22,12 @@ export class Job extends Model<Job> {
   @Column(DataType.TEXT)
   description!: string;
 
+  @Column
+  phone!: string;
+
+  @Column
+  email!: string;
+
   @Column(DataType.TEXT)
   contactinfo!: string;
 

@@ -14,6 +14,8 @@ export class Job {
     public workload: number = 100,
     public description: string = '',
     public skills: Skill[] = [],
+    public phone: string = '',
+    public email: string = '',
     public contactinfo: string = '',
     public company: Company = new Company (),
     public startofpublication: Moment = moment(),
