@@ -15,7 +15,6 @@ echo -e '\033]2;ESE - Team 7 - Install Frontend\007'
 cd frontend
 npm install -g @angular/cli
 npm install
-ng add @angular/material
 cd ..
 clear
 
