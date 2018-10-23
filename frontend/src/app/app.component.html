@@ -22,6 +22,12 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span>ESE Team 7 Job Portal</span>
+      <span class="fill-space"></span>
+      <div *ngFor="let state of login">
+      <a mat-button *ngIf="state.condition()" routerLink="{{state.link}}" routerLinkActive="active" aria-label="Login / Logout">
+        {{state.text}}
+      </a>
+      </div>
     </mat-toolbar>
     <div id="content">
     <router-outlet></router-outlet>

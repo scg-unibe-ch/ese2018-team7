@@ -22,9 +22,12 @@ export class AppComponent implements OnInit {
     {link: '/editJobs', text: 'Edit Jobs', condition: function() {return AuthService.isLogin(); }},
     {link: '/editUsers', text: 'Edit Users', condition: function() {return AuthService.isAdmin(); }},
     {link: '/changePassword', text: 'Change Password', condition: function() {return AuthService.isLogin(); }},
+    ];
+
+  login = [
     {link: '/login', text: 'Login', condition: function() {return !AuthService.isLogin(); }},
     {link: '/logout', text: 'Logout', condition: function() {return AuthService.isLogin(); }},
-    ];
+  ];
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
