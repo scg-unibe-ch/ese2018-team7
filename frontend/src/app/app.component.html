@@ -8,7 +8,9 @@
     [opened]="!(isHandset$ | async)">
     <mat-toolbar color="primary">Menu</mat-toolbar>
     <mat-nav-list *ngFor="let menu of menus">
-      <a mat-list-item *ngIf="menu.condition()" routerLink="{{menu.link}}" routerLinkActive="active">{{menu.text}}</a>
+      <!-- Distinguish between mobile and desktop -->
+      <a mat-list-item *ngIf="menu.condition() && !(isHandset$ | async)" routerLink="{{menu.link}}" routerLinkActive="active">{{menu.text}}</a>
+      <a mat-list-item *ngIf="menu.condition() && (isHandset$ | async)" routerLink="{{menu.link}}" routerLinkActive="active" (click)="drawer.close()">{{menu.text}}</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

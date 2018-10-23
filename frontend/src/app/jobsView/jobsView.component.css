@@ -13,15 +13,12 @@
 }
 
 ::ng-deep .custom-slider .ng5-slider .ng5-slider-pointer {
-  /*top: auto;  to remove the default positioning */
-  bottom: 0;
+  width: 16px;
+  height: 16px;
+  top: auto; /* to remove the default positioning */
+  bottom: -6px;
   background-color: var(--primary);
-
-  width: 20px;
-  height: 20px;
-  border: 5px solid transparent;
-  border-radius: 50%;
-  transform: scale(.7);
+  border-radius: 12px;
 }
 
 ::ng-deep .custom-slider .ng5-slider .ng5-slider-pointer:after {
@@ -47,5 +44,5 @@
 }
 
 ::ng-deep .custom-slider .ng5-slider .ng5-slider-tick.ng5-slider-selected {
-  background: transparent;
+  background: var(--primary-a60);
 }

@@ -26,7 +26,8 @@ export class JobEditComponent implements OnInit {
 
   phoneFormControl = new FormControl('', [
     Validators.required,
-    Validators.pattern('^(\\+?)(\\d{2,4})(\\s?)(\\-?)((\\(0\\))?)(\\s?)(\\d{2})(\\s?)(\\-?)(\\d{3})(\\s?)(\\-?)(\\d{2})(\\s?)(\\-?)(\\d{2})'),
+    Validators.pattern('^(\\+?)(\\d{2,4})(\\s?)(\\-?)((\\(0\\))?)(\\s?)' +
+      '(\\d{2})(\\s?)(\\-?)(\\d{3})(\\s?)(\\-?)(\\d{2})(\\s?)(\\-?)(\\d{2})'),
   ]);
 
   @Input()
