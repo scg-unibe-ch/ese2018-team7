@@ -59,7 +59,7 @@ export class JobEditComponent implements OnInit {
       'description': this.job.description,
       'skills': JSON.stringify(this.job.skills),
       'phone': this.job.phone,
-      'emial': this.job.email,
+      'email': this.job.email,
       'contactinfo': this.job.contactinfo,
       'startofpublication': this.job.startofpublication.unix(),
       'endofpublication': this.job.endofpublication.unix(),

@@ -59,6 +59,8 @@ export class Job extends Model<Job> {
       'workload': this.workload,
       'description': this.description,
       'skills': this.skills,
+      'email': this.email,
+      'phone': this.phone,
       'contactinfo': this.contactinfo,
       'startofpublication': this.startofpublication,
       'endofpublication': this.endofpublication,
@@ -99,6 +101,8 @@ export class Job extends Model<Job> {
       this.workload = simplification['workload'];
       this.description = simplification['description'];
       this.skills = simplification['skills'];
+      this.email = simplification['email'];
+      this.phone = simplification['phone'];
       this.contactinfo = simplification['contactinfo'];
       this.startofpublication = simplification['startofpublication'];
       this.endofpublication = simplification['endofpublication'];
