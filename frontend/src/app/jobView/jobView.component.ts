@@ -18,6 +18,7 @@ export class JobViewComponent implements OnInit {
   job: Job;
   formattedstartofwork: string;
   formattedDescription: string;
+  obscuredMail: string;
 
   @Output()
   destroy = new EventEmitter<Job>();
@@ -28,6 +29,7 @@ export class JobViewComponent implements OnInit {
   ngOnInit() {
     this.formattedstartofwork = this.job.startofwork.format('DD.MM.YYYY');
     this.formattedDescription = this.job.description.replace('\n', '<br>');
+    this.obscuredMail = this.job.email.replace('@', ' [AT] ').replace('.', ' [DOT] ');
   }
   openModal(id: string) {
     this.modalService.open(id);
