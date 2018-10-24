@@ -1,7 +1,7 @@
 <mat-card>
   <mat-card-title>{{job.title}}</mat-card-title>
   <mat-card-subtitle>at {{job.company.name}} in {{job.placeofwork}}</mat-card-subtitle>
-  <mat-card-content>{{job.description}}</mat-card-content>
+  <mat-card-content [innerHTML]="formattedDescription"></mat-card-content>
   <mat-card-actions>
   <button mat-button (click)="openModal('details-' + job.id)">Details</button>
   </mat-card-actions>
@@ -21,7 +21,7 @@
           <app-skill-view [skill]="skill"></app-skill-view>
         </mat-list-item>
       </mat-list>
-      {{job.description}}
+      <a [innerHTML]="formattedDescription"></a>
       <br><br>
       Phone: {{job.phone}}<br>
       Email: {{job.email}}<br>
