@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {User} from '../user';
 import {AuthService} from '../auth/auth.service';
+import {Usergroup} from '../usergroup';
 
 @Component({
   selector: 'app-users-edit',
@@ -23,7 +24,7 @@ export class UsersEditComponent implements OnInit {
   users: User[] = [];
 
   constructor(private httpClient: HttpClient, private router: Router) {
-    AuthService.allowOnlyAdmin(httpClient, router);
+    AuthService.allowOnlyModsAndAdmin(httpClient, router);
   }
 
   ngOnInit() {
@@ -33,12 +34,18 @@ export class UsersEditComponent implements OnInit {
     });
   }
 
+  onCreateAdmin() {
+    this.onCreate(Usergroup.administrator);
+  }
+  onCreateMod() {
+    this.onCreate(Usergroup.moderator);
+  }
   /**
    * If the admin wants to add a new admin
    */
-  onCreateAdmin() {
+  onCreate(usertype: Usergroup) {
     this.httpClient.post('http://localhost:3000/login', {
-      'username': this.user.username, 'password': this.user.password, 'type': '0', 'enabled': 'true'
+      'username': this.user.username, 'password': this.user.password, 'type': usertype, 'enabled': 'true'
     }, {withCredentials: true}).subscribe(() => {
       this.user.password = '';
       this.users.push(this.user);
@@ -81,4 +88,11 @@ export class UsersEditComponent implements OnInit {
     });
   }
 
+  isAdmin() {
+    return AuthService.isAdmin();
+  }
+
+  getUserTypeString(type: Usergroup): string {
+    return Usergroup[type];
+  }
 }

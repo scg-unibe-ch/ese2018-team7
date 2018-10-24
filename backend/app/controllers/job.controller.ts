@@ -2,6 +2,7 @@ import {Router, Request, Response} from 'express';
 import {Job} from '../models/job.model';
 import {Sequelize} from 'sequelize-typescript';
 import {Company} from '../models/company.model';
+import {Usergroup} from '../enums/usergroup.enum';
 
 const router: Router = Router();
 
@@ -14,6 +15,8 @@ router.get('/', async (req: Request, res: Response) => {
       {endofpublication: {gte: Math.floor(Date.now() / 1000)}},
       )
   });
+
+  // Add Company details to Job
   const companys: Company[] = await Company.findAll();
   res.statusCode = 200;
   res.send(instances.map((e: Job) => {
@@ -36,8 +39,9 @@ router.get('/', async (req: Request, res: Response) => {
 
 // Get All editable Jobs
 router.get('/editable', async (req: Request, res: Response) => {
-  // Admins can view all non-public Jobs
-  if (req.session != null && req.session.user != null && req.session.user.type === 0) {
+
+  // Admins and Mods can view all non-public Jobs
+  if (req.session != null && req.session.user != null && req.session.user.type <= Usergroup.moderator) {
     const instances = await Job.findAll();
     res.statusCode = 200;
     res.send(instances.map((e: any) => {
@@ -90,8 +94,7 @@ router.get('/editable', async (req: Request, res: Response) => {
 
 // Search for Jobs
 router.get('/search', async (req: Request, res: Response) => {
-  console.log('search');
-  console.log(req.query);
+
   // Add % to create full text search on title
   const title = (req.query.title != null) ? '%' + req.query.title + '%' : '%';
 
@@ -125,6 +128,8 @@ router.get('/search', async (req: Request, res: Response) => {
     });
     return;
   }
+
+  // Add Company details to Job
   const companys: Company[] = await Company.findAll();
   res.statusCode = 200;
   res.send(results.map((e: Job) => {
@@ -171,8 +176,8 @@ router.post('/', async (req: Request, res: Response) => {
     // Set the owner
     instance.owner = req.session.user.username;
 
-    // Set approved if an admin added job, and not approved else
-    instance.approved = req.session.user.type === 0 ;
+    // Set approved if an admin or mod added job, and not approved else
+    instance.approved = req.session.user.type <= Usergroup.moderator ;
 
     instance.changes = JSON.stringify(req.body);
 
@@ -189,7 +194,7 @@ router.post('/', async (req: Request, res: Response) => {
 // Apply changed to Job
 router.put('/apply/:id', async (req: Request, res: Response) => {
 
-  if (req.session != null && req.session.user != null && req.session.user.type === 0) {
+  if (req.session != null && req.session.user != null && req.session.user.type <= Usergroup.moderator) {
     const id = parseInt(req.params.id);
     const instance = await Job.findById(id);
     if (instance == null) {
@@ -210,6 +215,7 @@ router.put('/apply/:id', async (req: Request, res: Response) => {
     res.send({'errorMessage': 'You\'re not allowed to update a Job'});
   }
 });
+
 // Reset changed Job
 router.put('/reset/:id', async (req: Request, res: Response) => {
 
@@ -223,7 +229,7 @@ router.put('/reset/:id', async (req: Request, res: Response) => {
       });
       return;
 
-    } else if (req.session.user.type !== 0 && req.session.user.username !== instance.owner) {
+    } else if (req.session.user.type > Usergroup.moderator && req.session.user.username !== instance.owner) {
       res.statusCode = 403;
       res.send({'errorMessage': 'You\'re not allowed to update this Job'});
       return;
@@ -254,15 +260,16 @@ router.put('/:id', async (req: Request, res: Response) => {
       return;
 
     // Employer can only edit there own Jobs
-    } else if (req.session.user.username !== instance.owner && req.session.user.type !== 0) {
+    } else if (req.session.user.username !== instance.owner && req.session.user.type > Usergroup.moderator) {
       res.statusCode = 403;
       res.send({'errorMessage': 'You\'re not allowed to update this Job'});
       return;
     }
     // Employer can't approve Job
-    if (req.session.user.type !== 0) {
+    if (req.session.user.type > Usergroup.moderator) {
       req.body.approved = instance.approved;
     }
+
     // Owner stays the same
     req.body.owner = instance.owner;
     instance.setChanges(req.body);
@@ -287,7 +294,7 @@ router.delete('/:id', async (req: Request, res: Response) => {
       });
       return;
     // Employer can only delete there own Jobs
-    } else if (req.session.user.username !== instance.owner && req.session.user.type !== 0) {
+    } else if (req.session.user.username !== instance.owner && req.session.user.type > Usergroup.moderator) {
       res.statusCode = 403;
       res.send({'errorMessage': 'You\'re not allowed to delete this Job'});
       return;

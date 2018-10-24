@@ -11,7 +11,7 @@
     <!-- Type Column -->
     <ng-container matColumnDef="type">
       <th mat-header-cell *matHeaderCellDef class="text-center tr-text">Type</th>
-      <td mat-cell *matCellDef="let u" class="tr-text"> {{u.type==0?'Administrator':'Employer'}} </td>
+      <td mat-cell *matCellDef="let u" class="tr-text"> {{getUserTypeString(u.type)}} </td>
     </ng-container>
 
     <!-- Accept User Column -->
@@ -36,13 +36,14 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 </mat-card>
-<mat-card>
-<h3>Create new Administrator</h3>
-<mat-form-field>
-  <input matInput placeholder="username" [(ngModel)]="user.username" name="username">
-</mat-form-field>
-<mat-form-field>
-  <input matInput placeholder="password" type="password" [(ngModel)]="user.password" name="password">
-</mat-form-field>
-<button mat-button (click)="onCreateAdmin()" color="primary">Create Admin</button>
+<mat-card *ngIf="isAdmin()">
+  <h3>Create new Administrator / Moderator</h3>
+  <mat-form-field>
+    <input matInput placeholder="username" [(ngModel)]="user.username" name="username">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="password" type="password" [(ngModel)]="user.password" name="password">
+  </mat-form-field>
+  <button mat-button (click)="onCreateAdmin()" color="primary">Create Admin</button>
+  <button mat-button (click)="onCreateMod()" color="primary">Create Moderator</button>
 </mat-card>

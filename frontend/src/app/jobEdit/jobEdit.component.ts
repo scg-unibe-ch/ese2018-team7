@@ -7,7 +7,6 @@ import {MatDatepicker} from '@angular/material/datepicker';
 import * as moment from 'moment';
 import {Moment} from 'moment';
 import {FormControl, Validators} from '@angular/forms';
-import {Company} from '../company';
 
 @Component({
   selector: 'app-job-edit',
@@ -108,11 +107,11 @@ export class JobEditComponent implements OnInit {
    * Returns if the job could be approved <=> isn't approved and user is admin
    */
   isAdmin() {
-    return AuthService.isAdmin();
+    return AuthService.isModOrAdmin();
   }
 
   approve() {
-    if (AuthService.isAdmin()) {
+    if (AuthService.isModOrAdmin()) {
       this.httpClient.put('http://localhost:3000/jobs/apply/' + this.job.id, {}, {withCredentials: true}).subscribe(res => {
         this.job.approved = true;
         this.job.changed = false;

@@ -1,6 +1,7 @@
 import {Router, Request, Response} from 'express';
 import {User} from '../models/user.model';
 import {Company} from '../models/company.model';
+import {Usergroup} from '../enums/usergroup.enum';
 
 const router: Router = Router();
 
@@ -15,7 +16,7 @@ router.get('/', async (req: Request, res: Response) => {
 router.get('/check', async (req: Request, res: Response) => {
   if (req.session != null && req.session.user != null) {
     res.statusCode = 200;
-    res.send({'message': 'Session ok', 'value': 'true', 'admin': (req.session.user.type === 0 ? 'true' : 'false')});
+    res.send({'message': 'Session ok', 'value': 'true', 'type': req.session.user.type , 'username': req.session.user.username});
   } else {
     res.statusCode = 200;
     res.send({'message': 'Session not ok', 'value': 'false'});
@@ -83,11 +84,10 @@ router.get('/:user/:pass', async (req: Request, res: Response) => {
 router.post('/', async (req: Request, res: Response) => {
   console.log('Register user: ' + req.body);
   // if loggedin admin register then new is admin, else employer
-  if (req.session != null && req.session.user != null && req.session.user.type === 0) {
-    req.body.type = '0';
+  if (req.session != null && req.session.user != null && req.session.user.type === Usergroup.administrator) {
     req.body.enabled = 'true';
   } else {
-    req.body.type = '1';
+    req.body.type = Usergroup.employee;
     req.body.enabled = 'false';
   }
 
@@ -131,13 +131,13 @@ router.post('/', async (req: Request, res: Response) => {
 
   }
 
-  if (req.session != null && req.session.user != null && req.session.user.type === '0') {
+  if (req.session != null && req.session.user != null && req.session.user.type === Usergroup.administrator) {
     res.status(200).send(
       {'message': 'Admin created'}
     );
   } else {
     res.status(200).send(
-      {'message': 'User registered, wait until an administrator approved your accout'}
+      {'message': 'User registered, wait until a moderator approved your accout'}
     );
   }
 
@@ -175,7 +175,7 @@ router.put('/password', async (req: Request, res: Response) => {
   res.send({'value': 'true'});
 });
 
-// set new Password by admin
+// set new Password by admin or mod
 router.put('/setPassword', async (req: Request, res: Response) => {
 
   // if not logged in cant change
@@ -184,7 +184,7 @@ router.put('/setPassword', async (req: Request, res: Response) => {
       errorMessage: 'Permission denied! - No Session'
     });
     return;
-  } else if (req.session.user.type !== '0') {
+  } else if (req.session.user.type > Usergroup.moderator) {
     res.status(403).send({
       errorMessage: 'Permission denied!'
     });
@@ -201,6 +201,12 @@ router.put('/setPassword', async (req: Request, res: Response) => {
     res.statusCode = 404;
     res.json({
       'message': 'no password is not allowed'
+    });
+    return;
+  } else if (instance.type < req.session.user.type) {
+    res.statusCode = 404;
+    res.json({
+      'message': 'not allowed to change password of a higher Level'
     });
     return;
   }
@@ -221,7 +227,7 @@ router.put('/accept', async (req: Request, res: Response) => {
       errorMessage: 'Permission denied! - No Session'
     });
     return;
-  } else if (req.session.user.type !== 0) {
+  } else if (req.session.user.type > Usergroup.moderator) {
     res.status(403).send({
       errorMessage: 'Permission denied!'
     });
@@ -269,7 +275,7 @@ router.delete('/:username', async (req: Request, res: Response) => {
       errorMessage: 'Permission denied! - No Session'
     });
     return;
-  } else if (req.session.user.type !== 0) {
+  } else if (req.session.user.type > Usergroup.moderator) {
     res.status(403).send({
       errorMessage: 'Permission denied!'
     });

@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   menus = [
     {link: '/viewJobs', text: 'View Jobs', condition: function() {return true; }},
     {link: '/editJobs', text: 'Edit Jobs', condition: function() {return AuthService.isLogin(); }},
-    {link: '/editUsers', text: 'Edit Users', condition: function() {return AuthService.isAdmin(); }},
+    {link: '/editUsers', text: 'Edit Users', condition: function() {return AuthService.isModOrAdmin(); }},
     {link: '/changePassword', text: 'Change Password', condition: function() {return AuthService.isLogin(); }},
     ];
 

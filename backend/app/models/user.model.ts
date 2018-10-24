@@ -1,4 +1,5 @@
 import {Table, Column, Model, PrimaryKey} from 'sequelize-typescript';
+import {Usergroup} from '../enums/usergroup.enum';
 
 @Table
 export class User extends Model<User> {
@@ -13,7 +14,7 @@ export class User extends Model<User> {
   password!: string;
 
   @Column
-  type!: number;
+  type!: Usergroup;
 
   @Column
   enabled!: boolean;

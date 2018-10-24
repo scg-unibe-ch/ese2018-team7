@@ -1,13 +1,14 @@
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
+import {Usergroup} from '../usergroup';
 
 /**
  * Provides the components if the user is login or admin and redirects if needed
  */
 export class AuthService {
 
-  private static login = false;
-  private static admin = false;
+  private static usergroup = Usergroup.public;
+  private static username = '';
   private static set = false;
 
   constructor() {}
@@ -26,8 +27,13 @@ export class AuthService {
   static async update(httpClient: HttpClient) {
     if (!this.set) {
       const response: any = await httpClient.get('http://localhost:3000/login/check', {withCredentials: true}).toPromise();
-      this.login = response.value === 'true' ;
-      this.admin = response.value === 'true' && response.admin === 'true';
+      if (response.value === 'true') {
+        this.usergroup = response.type;
+        this.username = response.user;
+      } else {
+        this.usergroup = Usergroup.public;
+        this.username = '';
+      }
       this.set = true;
     }
 
@@ -41,7 +47,7 @@ export class AuthService {
 
     await this.update(httpClient);
 
-    if (!this.login) {
+    if (this.usergroup >= Usergroup.public) {
       router.navigate(['/login']);
     }
 
@@ -50,11 +56,11 @@ export class AuthService {
   /**
    * If the current user isn't an admin -> redirect to the login-page
    */
-  static async allowOnlyAdmin(httpClient: HttpClient, router: Router) {
+  static async allowOnlyModsAndAdmin(httpClient: HttpClient, router: Router) {
 
     await this.update(httpClient);
 
-    if (!this.admin) {
+    if (this.usergroup > Usergroup.moderator) {
       router.navigate(['/login']);
     }
 
@@ -67,7 +73,7 @@ export class AuthService {
 
     await this.update(httpClient);
 
-    if (this.login) {
+    if (this.usergroup < Usergroup.public) {
       router.navigate(['/']);
     }
 
@@ -78,7 +84,15 @@ export class AuthService {
    * DOESN'T UPDATE STATUS!
    */
   static isLogin() {
-   return this.login;
+   return this.usergroup < Usergroup.public;
+  }
+
+  /**
+   * Returns the last status, if the user is an admin or mod
+   * DOESN'T UPDATE STATUS!
+   */
+  static isModOrAdmin() {
+    return this.usergroup <= Usergroup.moderator;
   }
 
   /**
@@ -86,7 +100,7 @@ export class AuthService {
    * DOESN'T UPDATE STATUS!
    */
   static isAdmin() {
-    return this.login && this.admin;
+    return this.usergroup <= Usergroup.administrator;
   }
 
 }

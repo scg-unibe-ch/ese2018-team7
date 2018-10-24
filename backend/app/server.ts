@@ -12,6 +12,7 @@ import {Sequelize} from 'sequelize-typescript';
 import {Job} from './models/job.model';
 import {User} from './models/user.model';
 import {Company} from './models/company.model';
+import {Usergroup} from './enums/usergroup.enum';
 
 const sequelize =  new Sequelize({
   database: 'development',
@@ -58,7 +59,7 @@ async function initDefaultAdmin() {
     const users = await User.findAll();
     if (users.length === 0) {
       const u = new User();
-      u.fromSimplification({'username': 'admin', 'password': 'admin', 'type': '0', 'enabled': 'true'});
+      u.fromSimplification({'username': 'admin', 'password': 'admin', 'type': Usergroup.administrator, 'enabled': 'true'});
       await u.save();
     }
   } catch (err) {

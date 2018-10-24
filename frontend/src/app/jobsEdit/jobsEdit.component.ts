@@ -73,6 +73,7 @@ export class JobsEditComponent implements OnInit {
       this.job.id = instance.id;
       this.jobs.push(this.job);
       this.job = new Job();
+      this.msg = '';
     });
   }
 

@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {AuthService} from '../auth/auth.service';
 import {Company} from '../company';
+import {Usergroup} from '../usergroup';
 
 @Component({
   selector: 'app-registration',
@@ -39,7 +40,7 @@ export class RegistrationComponent implements OnInit {
   onCreate() {
     this.company.username = this.user.username;
     this.httpClient.post('http://localhost:3000/login/', {
-      'username': this.user.username, 'password': this.user.password, 'type': '1',
+      'username': this.user.username, 'password': this.user.password, 'type': Usergroup.employee,
       'enabled': 'false', 'company': this.company.name, 'logo': this.company.logo
     }, {withCredentials: true}).subscribe((res: any) => {
         console.log(res);
