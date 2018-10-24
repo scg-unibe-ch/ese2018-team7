@@ -125,9 +125,24 @@ router.get('/search', async (req: Request, res: Response) => {
     });
     return;
   }
+  const companys: Company[] = await Company.findAll();
   res.statusCode = 200;
-  res.send(results);
-  return;
+  res.send(results.map((e: Job) => {
+    let company2: Company = new Company();
+    for (let i = 0; i < companys.length; i++) {
+      if (e.owner === companys[i].username) {
+        company2 = companys[i];
+        break;
+      }
+    }
+    const job = e.toSimplification();
+    if (company2 != null) {
+      job['companyName'] = company2.name;
+      job['companyLogo'] = company2.logo;
+    }
+
+    return job;
+  }));
 });
 
 // Get a specific Job
