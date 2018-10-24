@@ -95,4 +95,7 @@ export class UsersEditComponent implements OnInit {
   getUserTypeString(type: Usergroup): string {
     return Usergroup[type];
   }
+  isMe(user) {
+    return AuthService.isMe(user);
+  }
 }

@@ -29,7 +29,7 @@ export class AuthService {
       const response: any = await httpClient.get('http://localhost:3000/login/check', {withCredentials: true}).toPromise();
       if (response.value === 'true') {
         this.usergroup = response.type;
-        this.username = response.user;
+        this.username = response.username;
       } else {
         this.usergroup = Usergroup.public;
         this.username = '';
@@ -103,4 +103,7 @@ export class AuthService {
     return this.usergroup <= Usergroup.administrator;
   }
 
+  static isMe(user) {
+    return user === this.username;
+  }
 }
