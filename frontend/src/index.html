@@ -8,6 +8,25 @@
 <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+<script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#3f51b5",
+      "text": "#ffffff"
+    },
+    "button": {
+      "background": "#b2b9e1",
+      "text": "#000000"
+    }
+  },
+  "theme": "classic",
+  "position": "bottom-right"
+})});
+</script>
 </head>
 <body>
 <app-root></app-root>
