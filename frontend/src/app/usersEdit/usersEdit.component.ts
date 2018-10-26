@@ -34,7 +34,8 @@ export class UsersEditComponent implements OnInit {
     // Load all users from the server
     this.httpClient.get('http://localhost:3000/login/edit', {withCredentials: true}).subscribe((instances: any) => {
       this.users = instances.map((instance) => new User(instance.username, '', instance.type, instance.enabled, instance.suspended));
-      this.companys = instances.map((instance) => new Company(instance.username, instance.companyName, instance.companyLogo));
+      this.companys = instances.map((instance) =>
+        new Company(instance.username, instance.companyName, instance.companyLogo, instance.companyUnapprovedchanges));
     });
   }
 
@@ -104,6 +105,14 @@ export class UsersEditComponent implements OnInit {
       'username': user.username, 'password': user.password
     }, {withCredentials: true}).subscribe(() => {
       user.password = '';
+    });
+  }
+
+  onApproveCompany(company: Company) {
+    this.httpClient.put('http://localhost:3000/login/company/accept', {
+      'username': company.username
+    }, {withCredentials: true}).subscribe(() => {
+      company.unapprovedChanges = false;
     });
   }
 

@@ -21,6 +21,7 @@ export class AppComponent implements OnInit {
     {link: '/viewJobs', text: 'View Jobs', condition: function() {return true; }},
     {link: '/editJobs', text: 'Edit Jobs', condition: function() {return AuthService.isLogin(); }},
     {link: '/editUsers', text: 'Edit Users', condition: function() {return AuthService.isModOrAdmin(); }},
+    {link: '/editCompany', text: 'Edit Company', condition: function() {return AuthService.isEmployer(); }},
     {link: '/changePassword', text: 'Change Password', condition: function() {return AuthService.isLogin(); }},
     ];
 

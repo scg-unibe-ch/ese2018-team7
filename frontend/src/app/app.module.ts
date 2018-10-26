@@ -23,6 +23,9 @@ import {
   MatPaginatorModule,
 } from '@angular/material';
 
+import { LayoutModule } from '@angular/cdk/layout';
+import { CdkTableModule} from '@angular/cdk/table';
+
 import {AutosizeModule} from 'ngx-autosize';
 import {MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import { Ng5SliderModule } from 'ng5-slider';
@@ -45,8 +48,7 @@ import {ChangePasswordComponent} from './changePassword/changePassword.component
 import {UsersEditComponent} from './usersEdit/usersEdit.component';
 import {ModalComponent} from './modal/modal.component';
 import {ModalService} from './modal/modal.service';
-import { LayoutModule } from '@angular/cdk/layout';
-import { CdkTableModule} from '@angular/cdk/table';
+import {CompanyEditComponent} from './companyEdit/companyEdit.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +66,7 @@ import { CdkTableModule} from '@angular/cdk/table';
     ChangePasswordComponent,
     UsersEditComponent,
     ModalComponent,
+    CompanyEditComponent,
   ],
   imports: [
     BrowserModule,

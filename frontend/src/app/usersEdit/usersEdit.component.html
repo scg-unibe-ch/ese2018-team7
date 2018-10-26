@@ -51,11 +51,12 @@
   <app-modal id="companyDetails-{{company.username}}">
     <div class="modal">
       <div class="modal-body">
+        <button class='approveCompanyButton' *ngIf="company.unapprovedChanges" mat-button (click)="onApproveCompany(company)" color="primary">Approve Changes</button>
         <h1>{{company.username}}</h1>
         <hr>
         <h3>Name: {{company.name}}</h3>
         <img [src]="company.logo" height="200" class="company-logo">
-      </div>
+              </div>
       <div class="modal-close">X</div>
     </div>
     <div class="modal-background"></div>

@@ -80,6 +80,19 @@ export class AuthService {
   }
 
   /**
+   * If the current user isn't loggedin at all -> redirect to /
+   */
+  static async allowOnlyEmployer(httpClient: HttpClient, router: Router) {
+
+    await this.update(httpClient);
+
+    if (this.usergroup !== Usergroup.employer) {
+      router.navigate(['/']);
+    }
+
+  }
+
+  /**
    * Returns the last status, if the user is login
    * DOESN'T UPDATE STATUS!
    */
@@ -101,6 +114,14 @@ export class AuthService {
    */
   static isAdmin() {
     return this.usergroup <= Usergroup.administrator;
+  }
+
+  /**
+   * Returns the last status, if the user is an employer
+   * DOESN'T UPDATE STATUS!
+   */
+  static isEmployer() {
+    return this.usergroup === Usergroup.employer;
   }
 
   static isMe(user) {

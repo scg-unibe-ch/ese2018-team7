@@ -45,11 +45,18 @@ export class User extends Model<User> {
   }
 
   getAdminEditDetails(): any {
+    let unapprovedchanges = false;
     if (this.company.length === 0) {
       const c: Company = new Company();
       c.fromSimplification({'username': this.username, 'name': '', 'logo': ''});
       this.company.push(c);
+    } else {
+      const companyChanges = JSON.parse(this.company[0].changes);
+      unapprovedchanges = companyChanges.name !== this.company[0].name || companyChanges.logo !== this.company[0].logo;
+
+      this.company[0].applyChanges();
     }
+
     return {
       'username': this.username,
       'type': this.type,
@@ -57,6 +64,7 @@ export class User extends Model<User> {
       'suspended': this.suspended,
       'companyName': this.company[0].name,
       'companyLogo': this.company[0].logo,
+      'companyUnapprovedchanges': unapprovedchanges,
     };
   }
   toSimplification(): any {

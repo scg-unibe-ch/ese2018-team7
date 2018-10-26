@@ -41,6 +41,26 @@ router.get('/check', async (req: Request, res: Response) => {
   }
 });
 
+// Checks if the user is logged in
+router.get('/company', async (req: Request, res: Response) => {
+  if (req.session != null && req.session.user != null) {
+
+    let instance = await Company.findByPrimary(req.session.user.username);
+
+    // Create Fake Company for admins/mods...
+    if (instance == null) {
+      instance = new Company();
+      instance.fromSimplification({'username': req.session.user.username, 'name': '', 'logo': '', 'unapprovedchanges': false});
+    }
+
+    res.statusCode = 200;
+    res.send(instance.forEdit());
+  } else {
+    res.statusCode = 404;
+    res.send({'errorMessage': 'Permission denied!'});
+  }
+});
+
 // Logout a user
 router.get('/logout', async (req: Request, res: Response) => {
   if (req.session != null && req.session.user != null) {
@@ -150,6 +170,7 @@ router.post('/', async (req: Request, res: Response) => {
       'name': req.body.company,
       'logo': req.body.logo
     });
+    company.changes = JSON.stringify(company);
 
     // Save Company
     await company.save();
@@ -271,7 +292,38 @@ router.put('/accept', async (req: Request, res: Response) => {
   res.statusCode = 200;
   res.send();
 });
+
 // Enable a user
+router.put('/apply', async (req: Request, res: Response) => {
+
+  // if not logged in cant change
+  if (req.session == null) {
+    res.status(403).send({
+      errorMessage: 'Permission denied! - No Session'
+    });
+    return;
+  } else if (req.session.user.type > Usergroup.moderator) {
+    res.status(403).send({
+      errorMessage: 'Permission denied!'
+    });
+    return;
+  }
+  const instance = await Company.findByPrimary(req.body.username);
+  if (instance == null) {
+    res.statusCode = 404;
+    res.json({
+      'message': 'not found'
+    });
+    return;
+  }
+
+  instance.applyChanges();
+  await instance.save();
+  res.statusCode = 200;
+  res.send();
+});
+
+// Suspend a user
 router.put('/suspend', async (req: Request, res: Response) => {
 
   // if not logged in cant change
@@ -298,6 +350,83 @@ router.put('/suspend', async (req: Request, res: Response) => {
   await instance.save();
   res.statusCode = 200;
   res.send({'suspended': instance.suspended});
+});
+
+// Update Company
+router.put('/company', async (req: Request, res: Response) => {
+
+  // if not logged in cant change
+  if (req.session == null) {
+    res.status(403).send({
+      errorMessage: 'Permission denied!'
+    });
+    return;
+  }
+  const instance = await Company.findByPrimary(req.session.user.username);
+  if (instance == null) {
+    res.statusCode = 404;
+    res.json({
+      'message': 'not found'
+    });
+    return;
+  }
+
+  instance.setChanges(req.body);
+  await instance.save();
+  res.statusCode = 200;
+  res.send();
+});
+
+// Accept Company
+router.put('/company/accept', async (req: Request, res: Response) => {
+
+  // if not logged in cant change
+  if (req.session == null || req.session.user == null || req.session.user.type > Usergroup.moderator) {
+    res.status(403).send({
+      errorMessage: 'Permission denied!'
+    });
+    return;
+  }
+  const instance = await Company.findByPrimary(req.body.username);
+  if (instance == null) {
+    res.statusCode = 404;
+    res.json({
+      'message': 'not found'
+    });
+    return;
+  }
+
+  instance.applyChanges();
+
+  await instance.save();
+  res.statusCode = 200;
+  res.send();
+});
+
+// Reset Company
+router.put('/company/reset', async (req: Request, res: Response) => {
+
+  // if not logged in cant change
+  if (req.session == null) {
+    res.status(403).send({
+      errorMessage: 'Permission denied!'
+    });
+    return;
+  }
+  const instance = await Company.findByPrimary(req.session.user.username);
+  if (instance == null) {
+    res.statusCode = 404;
+    res.json({
+      'message': 'not found'
+    });
+    return;
+  }
+
+  instance.changes = '';
+  instance.changes = JSON.stringify(instance);
+  await instance.save();
+  res.statusCode = 200;
+  res.send(instance);
 });
 
 // Delete user
