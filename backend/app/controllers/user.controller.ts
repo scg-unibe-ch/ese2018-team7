@@ -83,8 +83,9 @@ router.get('/:user/:pass', async (req: Request, res: Response) => {
 // Register User
 router.post('/', async (req: Request, res: Response) => {
   console.log('Register user: ' + req.body);
+
   // if loggedin admin register then new is admin, else employer
-  if (req.session != null && req.session.user != null && req.session.user.type === Usergroup.administrator) {
+  if (req.session != null && req.session.user != null && req.session.user.type <= Usergroup.administrator) {
     req.body.enabled = 'true';
   } else {
     req.body.type = Usergroup.employee;
