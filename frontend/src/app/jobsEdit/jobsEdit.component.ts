@@ -26,7 +26,7 @@ export class JobsEditComponent implements OnInit {
   msg;
 
   constructor(private httpClient: HttpClient, private router: Router) {
-    // Only accessible for loggedin users
+    // Only accessible for logged-in users
     AuthService.allowOnlyLogin(httpClient, router);
   }
 
@@ -53,7 +53,7 @@ export class JobsEditComponent implements OnInit {
           instance.approved,
           instance.changed != null && instance.changed));
       if (this.jobs.length === 0) {
-        this.msg = 'Currently you have no editable Jobs!';
+        this.msg = 'Aktuell gibt es keine Jobs zu bearbeiten!';
       }
     });
   }

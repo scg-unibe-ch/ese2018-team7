@@ -1,36 +1,36 @@
 <mat-card>
-  <mat-list-item><a *ngIf="!job.approved" class="warning">{{'This job isn\'t jet approved by an administrator!'}}</a>
-  <a *ngIf="job.approved&&job.changed" class="warning">{{'This job has unapproved changes!'}}</a></mat-list-item>
+  <mat-list-item><a *ngIf="!job.approved" class="warning">{{'Job ist noch ungeprüft!'}}</a>
+  <a *ngIf="job.approved&&job.changed" class="warning">{{'Ungeprüfte Änderungen!'}}</a></mat-list-item>
   <br *ngIf="!job.approved||job.changed">
   <mat-form-field>
-    <input matInput placeholder="Title" [(ngModel)]="job.title" name="title" (ngModelChange)="onSave()">
+    <input matInput placeholder="Titel" [(ngModel)]="job.title" name="title" (ngModelChange)="onSave()">
   </mat-form-field>
-  <button mat-button (click)="onDestroy()" color="warn">Delete job</button>
-  <button *ngIf="job.changed" mat-button (click)="resetJob()">Reset Job</button>
-  <button *ngIf="isAdmin()&&!job.approved" mat-button (click)="approve()">Approve Job</button>
-  <button *ngIf="isAdmin()&&job.approved&&job.changed" mat-button (click)="approve()">Approve Changes</button>
+  <button mat-button (click)="onDestroy()" color="warn">Job löschen</button>
+  <button *ngIf="job.changed" mat-button (click)="resetJob()">Änderungen zurücksetzen</button>
+  <button *ngIf="isAdmin()&&!job.approved" mat-button (click)="approve()">Job akzeptieren</button>
+  <button *ngIf="isAdmin()&&job.approved&&job.changed" mat-button (click)="approve()">Änderungen akzeptieren</button>
   <br>
   <mat-form-field>
-    <input matInput placeholder="Department" [(ngModel)]="job.departement" name="departement" (ngModelChange)="onSave()">
+    <input matInput placeholder="Abteilung" [(ngModel)]="job.departement" name="departement" (ngModelChange)="onSave()">
   </mat-form-field>
   <br>
   <mat-form-field>
-    <input matInput placeholder="Place of work" [(ngModel)]="job.placeofwork" name="placeofwork" (ngModelChange)="onSave()">
+    <input matInput placeholder="Arbeitsort" [(ngModel)]="job.placeofwork" name="placeofwork" (ngModelChange)="onSave()">
   </mat-form-field>
   <br>
   <mat-form-field class="datepicker">
-   <input matInput [min]='today' [matDatepicker]="startWork" [(ngModel)]="job.startofwork" placeholder="Commencement of work" (focus)="startWork.open()" (dateInput)="onSave()" (dateChange)="onSave()">
+   <input matInput [min]='today' [matDatepicker]="startWork" [(ngModel)]="job.startofwork" placeholder="Stellenantritt" (focus)="startWork.open()" (dateInput)="onSave()" (dateChange)="onSave()">
     <mat-datepicker #startWork touchUi startView="month" name="startofwork" ngDefaultControl></mat-datepicker>
     <mat-datepicker-toggle matSuffix [for]="startWork"></mat-datepicker-toggle>
   </mat-form-field>
   <br>
   <div flex="10" layout layout-align="center center">
-    <span class="md-body-1">Workload</span>
+    <span class="md-body-1">Pensum</span>
   </div>
   <mat-slider color="primary" min="0" max="100" step="5" value="100" tickInterval="2" thumbLabel [displayWith]="percentageLabel" name="workload" [(ngModel)]="job.workload" (ngModelChange)="onSave()"></mat-slider>
   <br>
   <mat-form-field>
-  <textarea autosize matInput placeholder="Description" [(ngModel)]="job.description" name="description" (ngModelChange)="onSave()" class="textarea"></textarea>
+  <textarea autosize matInput placeholder="Detaillierte Beschreibung" [(ngModel)]="job.description" name="description" (ngModelChange)="onSave()" class="textarea"></textarea>
   </mat-form-field>
   <br>
   <mat-list>
@@ -40,42 +40,42 @@
 
   </mat-list>
   <mat-form-field>
-    <input matInput placeholder="Add Skill" [(ngModel)]="skill.name" name="name">
+    <input matInput placeholder="Anforderung" [(ngModel)]="skill.name" name="name">
   </mat-form-field>
-  <button mat-button (click)="onSkillCreate()">Add skill</button>
+  <button mat-button (click)="onSkillCreate()">Zusätzliche Anforderung</button>
   <br>
   <mat-form-field>
-    <input matInput type="tel" [formControl]="phoneFormControl" placeholder="Phone" [(ngModel)]="job.phone" name="phone" (ngModelChange)="onSave()" required>
+    <input matInput type="tel" [formControl]="phoneFormControl" placeholder="Telefon" [(ngModel)]="job.phone" name="phone" (ngModelChange)="onSave()" required>
     <mat-error *ngIf="phoneFormControl.hasError('pattern') && !phoneFormControl.hasError('required')">
-      Please enter a valid phone number
+      Ungültige Telefonnummer!
     </mat-error>
     <mat-error *ngIf="phoneFormControl.hasError('required')">
-      Phone is required
+      Eine Telefonnummer ist zwingend.
     </mat-error>
   </mat-form-field>
   <br>
   <mat-form-field>
     <input matInput type="email" [formControl]="emailFormControl" placeholder="Email" [(ngModel)]="job.email" name="email" (ngModelChange)="onSave()" required>
     <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-      Please enter a valid email address
+      Ungültige Email-Adresse!
     </mat-error>
     <mat-error *ngIf="emailFormControl.hasError('required')">
-      Email is required
+      Eine Email-Adresse ist zwingend.
     </mat-error>
   </mat-form-field>
   <br>
   <mat-form-field>
-    <textarea autosize matInput placeholder="Contact information" [(ngModel)]="job.contactinfo" name="contactinfo" (ngModelChange)="onSave()" class="textarea"></textarea>
+    <textarea autosize matInput placeholder="Weitere Kontaktinformationen" [(ngModel)]="job.contactinfo" name="contactinfo" (ngModelChange)="onSave()" class="textarea"></textarea>
   </mat-form-field>
   <br>
   <mat-form-field class="datepicker">
-    <input matInput [matDatepicker]="startPublication" [max]="job.endofpublication" [(ngModel)]="job.startofpublication" placeholder="Start of publication" (focus)="startPublication.open()" (dateInput)="onSave()" (dateChange)="onSave()">
+    <input matInput [matDatepicker]="startPublication" [max]="job.endofpublication" [(ngModel)]="job.startofpublication" placeholder="Publikation von" (focus)="startPublication.open()" (dateInput)="onSave()" (dateChange)="onSave()">
     <mat-datepicker type="datetime" [clockStep]="5" [twelveHour]="false" #startPublication touchUi startView="month" name="startofwork" ngDefaultControl></mat-datepicker>
     <mat-datepicker-toggle matSuffix [for]="startPublication"></mat-datepicker-toggle>
   </mat-form-field>
   <br>
   <mat-form-field class="datepicker">
-    <input matInput [matDatepicker]="endPublication" [min]="job.startofpublication" [(ngModel)]="job.endofpublication" placeholder="End of publication" (focus)="endPublication.open()" (dateInput)="onSave()" (dateChange)="onSave()">
+    <input matInput [matDatepicker]="endPublication" [min]="job.startofpublication" [(ngModel)]="job.endofpublication" placeholder="Publikation bis" (focus)="endPublication.open()" (dateInput)="onSave()" (dateChange)="onSave()">
     <mat-datepicker type="datetime" [clockStep]="5" [twelveHour]="false" #endPublication touchUi startView="month" name="endofpublication" ngDefaultControl></mat-datepicker>
     <mat-datepicker-toggle matSuffix [for]="endPublication"></mat-datepicker-toggle>
   </mat-form-field>

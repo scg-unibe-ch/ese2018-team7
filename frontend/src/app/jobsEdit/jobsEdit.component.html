@@ -1,6 +1,6 @@
 <mat-form-field>
-  <input matInput placeholder="Create Job" [(ngModel)]="job.title" name="title">
+  <input matInput placeholder="Job erstellen" [(ngModel)]="job.title" name="title">
 </mat-form-field>
-<button mat-button (click)="onJobCreate()">Create job</button>
+<button mat-button (click)="onJobCreate()">Job erstellen</button>
 <app-job-edit [job]="job" (destroy)="onJobDestroy($event)" *ngFor="let job of jobs"></app-job-edit>
 <h2 class="warning">{{msg}}</h2>

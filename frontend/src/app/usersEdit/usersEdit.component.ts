@@ -62,7 +62,7 @@ export class UsersEditComponent implements OnInit {
    * @param user
    */
   onDeleteUser(user: User) {
-    if (confirm('Do you really want to delete this user?')) {
+    if (confirm('Möchtest du diesen Benutzer wirklich löschen?')) {
       this.httpClient.delete('http://localhost:3000/login/' + user.username, {withCredentials: true}).subscribe(() => {
         this.users.splice(this.users.indexOf(user), 1);
       });
@@ -75,7 +75,7 @@ export class UsersEditComponent implements OnInit {
    * @param user
    */
   onSuspendUser(user: User) {
-    if (confirm('Do you really want to ' + (user.suspended ? 'enable' : 'suspend') + ' this user and all its job posting?')) {
+    if (confirm('Möchtest du diesen Benutzer und seine Jobs wirklich ' + (user.suspended ? 'reaktivieren' : 'sperren'))) {
       this.httpClient.put('http://localhost:3000/login/suspend/', {
         'username': user.username
       }, {withCredentials: true}).subscribe((res: any) => {

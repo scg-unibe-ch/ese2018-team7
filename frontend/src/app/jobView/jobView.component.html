@@ -1,6 +1,6 @@
 <mat-card>
   <mat-card-title>{{job.title}}</mat-card-title>
-  <mat-card-subtitle>at {{job.company.name}} in {{job.placeofwork}}</mat-card-subtitle>
+  <mat-card-subtitle>bei {{job.company.name}} in {{job.placeofwork}}</mat-card-subtitle>
   <mat-card-content [innerHTML]="formattedDescription"></mat-card-content>
   <mat-card-actions>
   <button mat-button (click)="openModal('details-' + job.id)">Details</button>
@@ -12,10 +12,10 @@
     <div class="modal-body">
       <h1>{{job.title}}</h1>
       <hr>
-      <p><span class="smalltext">At {{job.company.name}} &#x25BA; {{job.departement}}</span><br><br>
+      <p><span class="smalltext">Bei {{job.company.name}} &#x25BA; {{job.departement}}</span><br><br>
       <img [src]="job.company.logo" height="200" class="company-logo">
-      You have to start at {{formattedstartofwork}} in {{job.placeofwork}} with a {{job.workload}}% workload.<br><br>
-      The following skills are required for this job:<br>
+      Stellenantritt am {{formattedstartofwork}} in {{job.placeofwork}} mit einem {{job.workload}}% Pensum.<br><br>
+      Diese Anforderungen solltest du mitbringen:<br>
       <mat-list>
         <mat-list-item *ngFor="let skill of job.skills">
           <app-skill-view [skill]="skill"></app-skill-view>
@@ -23,7 +23,7 @@
       </mat-list>
       <a [innerHTML]="formattedDescription"></a>
       <br><br>
-      Phone: {{job.phone}}<br>
+      Telefon: {{job.phone}}<br>
       Email: {{obscuredMail}}<br>
       {{job.contactinfo}}</p>
     </div>

@@ -18,10 +18,10 @@ import {Router} from '@angular/router';
 export class AppComponent implements OnInit {
 
   menus = [
-    {link: '/viewJobs', text: 'View Jobs', condition: function() {return true; }},
-    {link: '/editJobs', text: 'Edit Jobs', condition: function() {return AuthService.isLogin(); }},
-    {link: '/editUsers', text: 'Edit Users', condition: function() {return AuthService.isModOrAdmin(); }},
-    {link: '/changePassword', text: 'Change Password', condition: function() {return AuthService.isLogin(); }},
+    {link: '/viewJobs', text: 'Job finden', condition: function() {return true; }},
+    {link: '/editJobs', text: 'Jobs verwalten', condition: function() {return AuthService.isLogin(); }},
+    {link: '/editUsers', text: 'Benutzerverwaltung', condition: function() {return AuthService.isModOrAdmin(); }},
+    {link: '/changePassword', text: 'Kontoeinstellungen', condition: function() {return AuthService.isLogin(); }},
     ];
 
   login = [

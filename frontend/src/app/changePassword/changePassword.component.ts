@@ -23,7 +23,7 @@ export class ChangePasswordComponent implements OnInit {
 
 
   constructor(private httpClient: HttpClient, private router: Router) {
-    // Only accessible for loggedin users
+    // Only accessible for logged-in users
     AuthService.allowOnlyLogin(httpClient, router);
   }
 
@@ -44,15 +44,15 @@ export class ChangePasswordComponent implements OnInit {
       this.httpClient.put('http://localhost:3000/login/password', {'password': this.password}, {withCredentials: true}).subscribe(
         res => {
           console.log(res);
-          this.msg = 'new Password saved';
+          this.msg = 'Neues Passwort gespeichert!';
         },
         err => {
           console.log('Error occurred:' + err);
-          this.msg = 'Failed to save the new Password!';
+          this.msg = 'Das neue Passwort konnte nicht gespeichert werden!';
         }
       );
     } else {
-      this.msg = 'Passwords not equal';
+      this.msg = 'Passwörter stimmen nicht überein!';
     }
   }
 

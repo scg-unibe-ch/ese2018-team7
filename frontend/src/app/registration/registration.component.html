@@ -2,20 +2,20 @@
 <mat-card>
   <div ng-if="errorMessage" class="error-text">{{ errorMessage }}</div>
   <mat-form-field>
-    <input matInput placeholder="Company name" [(ngModel)]="company.name" name="company">
+    <input matInput placeholder="Unternehmen" [(ngModel)]="company.name" name="company">
   </mat-form-field>
   <img *ngIf="company.logo!=''" [src]="company.logo" height="200" class="company-logo"> <br/>
-  <label for="logoUpload" matTooltip="Upload a logo for your company"><mat-icon>add_a_photo</mat-icon></label>
+  <label for="logoUpload" matTooltip="Unternehmenslogo hochladen"><mat-icon>add_a_photo</mat-icon></label>
   <input id="logoUpload" type='file' style="display:none;" (change)="onSelectLogo($event)">
-  <button mat-button (click)="onGenerateLogo()">Generate Logo</button>
+  <button mat-button (click)="onGenerateLogo()">Einfaches Logo generieren</button>
   <br>
   <mat-form-field>
-    <input matInput placeholder="Username" [(ngModel)]="user.username" name="username">
+    <input matInput placeholder="Benutzername" [(ngModel)]="user.username" name="username">
   </mat-form-field>
   <br>
   <mat-form-field>
     <input matInput type="password" placeholder="Password" [(ngModel)]="user.password" name="password">
   </mat-form-field>
   <br>
-  <button mat-button (click)="onCreate()" color="primary">Create Account</button>
+  <button mat-button (click)="onCreate()" color="primary">Registrieren</button>
 </mat-card>
