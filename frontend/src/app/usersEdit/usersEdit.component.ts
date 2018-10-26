@@ -4,6 +4,8 @@ import {Router} from '@angular/router';
 import {User} from '../user';
 import {AuthService} from '../auth/auth.service';
 import {Usergroup} from '../usergroup';
+import {Company} from '../company';
+import {ModalService} from '../modal/modal.service';
 
 @Component({
   selector: 'app-users-edit',
@@ -15,22 +17,24 @@ import {Usergroup} from '../usergroup';
  */
 export class UsersEditComponent implements OnInit {
 
-  displayedColumns: string[] = ['username', 'type', 'accept', 'password', 'delete'];
+  displayedColumns: string[] = ['username', 'type', 'password', 'action'];
 
   // Default new admin
   user: User = new User( '', '', 0, true);
 
   // Array of users
   users: User[] = [];
+  companys: Company[] = [];
 
-  constructor(private httpClient: HttpClient, private router: Router) {
+  constructor(private httpClient: HttpClient, private router: Router, private modalService: ModalService) {
     AuthService.allowOnlyModsAndAdmin(httpClient, router);
   }
 
   ngOnInit() {
     // Load all users from the server
-    this.httpClient.get('http://localhost:3000/login', {withCredentials: true}).subscribe((instances: any) => {
-      this.users = instances.map((instance) => new User(instance.username, '', instance.type, instance.enabled));
+    this.httpClient.get('http://localhost:3000/login/edit', {withCredentials: true}).subscribe((instances: any) => {
+      this.users = instances.map((instance) => new User(instance.username, '', instance.type, instance.enabled, instance.suspended));
+      this.companys = instances.map((instance) => new Company(instance.username, instance.companyName, instance.companyLogo));
     });
   }
 
@@ -61,6 +65,21 @@ export class UsersEditComponent implements OnInit {
     if (confirm('Do you really want to delete this user?')) {
       this.httpClient.delete('http://localhost:3000/login/' + user.username, {withCredentials: true}).subscribe(() => {
         this.users.splice(this.users.indexOf(user), 1);
+      });
+    }
+  }
+
+
+  /**
+   * If you want to suspend a user
+   * @param user
+   */
+  onSuspendUser(user: User) {
+    if (confirm('Do you really want to ' + (user.suspended ? 'enable' : 'suspend') + ' this user and all its job posting?')) {
+      this.httpClient.put('http://localhost:3000/login/suspend/', {
+        'username': user.username
+      }, {withCredentials: true}).subscribe((res: any) => {
+        user.suspended = res.suspended;
       });
     }
   }
@@ -97,5 +116,15 @@ export class UsersEditComponent implements OnInit {
   }
   isMe(user) {
     return AuthService.isMe(user);
+  }
+  isEmployer(user) {
+    return user.type === Usergroup.employer;
+  }
+  openModal(id: string) {
+    this.modalService.open(id);
+  }
+
+  closeModal(id: string) {
+    this.modalService.close(id);
   }
 }

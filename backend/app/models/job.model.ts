@@ -1,5 +1,6 @@
-import {Table, Column, Model, DataType, ForeignKey} from 'sequelize-typescript';
+import {Table, Column, Model, DataType, ForeignKey, BelongsTo} from 'sequelize-typescript';
 import {User} from './user.model';
+import {Company} from './company.model';
 
 @Table
 export class Job extends Model<Job> {
@@ -43,12 +44,43 @@ export class Job extends Model<Job> {
   @Column(DataType.TEXT)
   skills!: string;
 
-  @ForeignKey(() => User) @Column
+  @ForeignKey(() => User)
+  @Column
   owner!: string;
+
+  @BelongsTo(() => User)
+  user!: User;
 
   @Column(DataType.TEXT)
   changes!: string;
 
+  getWithCompanyData(): any {
+
+    if (this.user.company.length === 0) {
+      const c: Company = new Company();
+      c.fromSimplification({'username': this.owner, 'name': '', 'logo': ''});
+      this.user.company.push(c);
+    }
+
+    return {
+      'id': this.id,
+      'title': this.title,
+      'departement': this.departement,
+      'placeofwork': this.placeofwork,
+      'startofwork': this.startofwork,
+      'workload': this.workload,
+      'description': this.description,
+      'skills': this.skills,
+      'email': this.email,
+      'phone': this.phone,
+      'contactinfo': this.contactinfo,
+      'startofpublication': this.startofpublication,
+      'endofpublication': this.endofpublication,
+      'approved': this.approved,
+      'companyName': this.user.company[0].name,
+      'companyLogo': this.user.company[0].logo,
+    };
+  }
   toSimplification(): any {
     return {
       'id': this.id,

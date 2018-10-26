@@ -6,11 +6,29 @@ import {Usergroup} from '../enums/usergroup.enum';
 const router: Router = Router();
 
 // Just for debugging... -> Get all users
+// TODO
 router.get('/', async (req: Request, res: Response) => {
-  const instances = await User.findAll();
+  const instances = await User.findAll({include: [{model: Company}]});
   res.statusCode = 200;
-  res.send(instances.map(e => e.toSimplification()));
+  res.send(instances.map(e => JSON.stringify(e)));
 });
+
+// Get all users to edit
+router.get('/edit', async (req: Request, res: Response) => {
+
+  // Only allow Mods or admins
+  if (req.session != null && req.session.user != null && req.session.user.type <= Usergroup.moderator) {
+
+    const instances = await User.findAll({include: [{model: Company}]});
+    res.statusCode = 200;
+    res.send(instances.map(e => e.getAdminEditDetails()));
+
+  } else {
+    res.statusCode = 403;
+    res.send({'errorMessage': 'Permission denied!'});
+  }
+});
+
 
 // Checks if the user is logged in
 router.get('/check', async (req: Request, res: Response) => {
@@ -56,6 +74,12 @@ router.get('/:user/:pass', async (req: Request, res: Response) => {
       'errorMessage': 'Permission denied! - User not approved by administrator!'
     });
     return;
+  } else if (instance.suspended) {
+    console.log('User suspended');
+    res.status(403).send({
+      'errorMessage': 'Permission denied! - User suspended!'
+    });
+    return;
   }
 
   if (instance.authentify(req.params.pass)) {
@@ -88,7 +112,7 @@ router.post('/', async (req: Request, res: Response) => {
   if (req.session != null && req.session.user != null && req.session.user.type <= Usergroup.administrator) {
     req.body.enabled = 'true';
   } else {
-    req.body.type = Usergroup.employee;
+    req.body.type = Usergroup.employer;
     req.body.enabled = 'false';
   }
 
@@ -132,9 +156,9 @@ router.post('/', async (req: Request, res: Response) => {
 
   }
 
-  if (req.session != null && req.session.user != null && req.session.user.type === Usergroup.administrator) {
+  if (req.session != null && req.session.user != null && req.session.user.type <= Usergroup.administrator) {
     res.status(200).send(
-      {'message': 'Admin created'}
+      {'message': 'User created'}
     );
   } else {
     res.status(200).send(
@@ -246,6 +270,34 @@ router.put('/accept', async (req: Request, res: Response) => {
   await instance.save();
   res.statusCode = 200;
   res.send();
+});
+// Enable a user
+router.put('/suspend', async (req: Request, res: Response) => {
+
+  // if not logged in cant change
+  if (req.session == null) {
+    res.status(403).send({
+      errorMessage: 'Permission denied! - No Session'
+    });
+    return;
+  } else if (req.session.user.type > Usergroup.moderator) {
+    res.status(403).send({
+      errorMessage: 'Permission denied!'
+    });
+    return;
+  }
+  const instance = await User.findByPrimary(req.body.username);
+  if (instance == null) {
+    res.statusCode = 404;
+    res.json({
+      'message': 'not found'
+    });
+    return;
+  }
+  instance.suspend(!instance.suspended);
+  await instance.save();
+  res.statusCode = 200;
+  res.send({'suspended': instance.suspended});
 });
 
 // Delete user

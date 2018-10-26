@@ -5,7 +5,7 @@
     <!-- Username Column -->
     <ng-container matColumnDef="username" class="text-center">
       <th mat-header-cell *matHeaderCellDef>Username</th>
-      <td mat-cell *matCellDef="let u"> {{u.username}} </td>
+      <td mat-cell *matCellDef="let u" class="tr-text mat-cell {{u.suspended?'suspendedRow':''}}">{{u.username}} </td>
     </ng-container>
 
     <!-- Type Column -->
@@ -14,22 +14,21 @@
       <td mat-cell *matCellDef="let u" class="tr-text"> {{getUserTypeString(u.type)}} </td>
     </ng-container>
 
-    <!-- Accept User Column -->
-    <ng-container matColumnDef="accept">
-      <th mat-header-cell *matHeaderCellDef class="text-center">Accept User</th>
-      <td mat-cell *matCellDef="let u"> <span *ngIf="!u.enabled"><button mat-button (click)="onAcceptUser(u)" color="primary">Accept User</button></span> </td>
-    </ng-container>
-
     <!-- Reset Password Column -->
     <ng-container matColumnDef="password">
       <th mat-header-cell *matHeaderCellDef class="tr-text">Reset Password</th>
-      <td mat-cell *matCellDef="let u" class="tr-text"> <input matInput placeholder="New Password" type="password" [(ngModel)]="u.password" (keyup.enter)="onResetPassword(u)"/> </td>
+      <td mat-cell *matCellDef="let u" class="tr-text"> <input *ngIf="!u.suspended" matInput placeholder="New Password" type="password" [(ngModel)]="u.password" (keyup.enter)="onResetPassword(u)"/> </td>
     </ng-container>
 
-    <!-- Delete User Column -->
-    <ng-container matColumnDef="delete" *ngIf="isAdmin()">
-      <th mat-header-cell *matHeaderCellDef class="text-center">Delete User</th>
-      <td mat-cell *matCellDef="let u"> <button *ngIf="isAdmin()&&!isMe(u.username)" mat-button (click)="onDeleteUser(u)" color="warn">Delete User</button> </td>
+    <!-- Action User Column -->
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef class="text-center">Actions</th>
+      <td mat-cell *matCellDef="let u">
+        <button *ngIf="isEmployer(u)" mat-button (click)="openModal('companyDetails-'+u.username)" color="primary">Company Details</button>
+        <button *ngIf="!u.enabled" mat-button (click)="onAcceptUser(u)" color="primary">Accept User</button>
+        <button *ngIf="u.enabled&&!isMe(u.username)" mat-button (click)="onSuspendUser(u)" color="warn">{{u.suspended?'Enable':'Suspend'}} User</button>
+        <button *ngIf="isAdmin()&&!isMe(u.username)" mat-button (click)="onDeleteUser(u)" color="warn">Delete User</button>
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -47,3 +46,19 @@
   <button mat-button (click)="onCreateAdmin()" color="primary">Create Admin</button>
   <button mat-button (click)="onCreateMod()" color="primary">Create Moderator</button>
 </mat-card>
+<div *ngFor="let company of companys">
+
+  <app-modal id="companyDetails-{{company.username}}">
+    <div class="modal">
+      <div class="modal-body">
+        <h1>{{company.username}}</h1>
+        <hr>
+        <h3>Name: {{company.name}}</h3>
+        <img [src]="company.logo" height="200" class="company-logo">
+      </div>
+      <div class="modal-close">X</div>
+    </div>
+    <div class="modal-background"></div>
+  </app-modal>
+
+</div>

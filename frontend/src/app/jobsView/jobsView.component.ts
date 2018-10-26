@@ -73,7 +73,7 @@ export class JobsViewComponent implements OnInit {
   onEasySearch() {
 
     // Load the Jobs from the Server
-    this.httpClient.get('http://localhost:3000/jobs/search?title=' + this.searchParam).subscribe((instances: any) => {
+    this.httpClient.get('http://localhost:3000/jobs/?title=' + this.searchParam).subscribe((instances: any) => {
       this.jobs = instances.map((instance) =>
         new Job(instance.id,
           instance.title,
@@ -99,7 +99,7 @@ export class JobsViewComponent implements OnInit {
   onAdvancedSearch() {
 
     // Load the Jobs from the Server
-    this.httpClient.get('http://localhost:3000/jobs/search?' +
+    this.httpClient.get('http://localhost:3000/jobs/?' +
       'title=' + this.advSearchTitle + '&' +
       'company=' + this.advSearchCompany + '&' +
       'startAfter=' + this.advSearchStartAfter.unix() + '&' +

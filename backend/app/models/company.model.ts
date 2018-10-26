@@ -1,11 +1,16 @@
-import {Table, Column, Model, PrimaryKey, DataType, ForeignKey} from 'sequelize-typescript';
+import {Table, Column, Model, PrimaryKey, DataType, ForeignKey, BelongsTo} from 'sequelize-typescript';
 import {User} from './user.model';
 
 @Table
 export class Company extends Model<Company> {
 
-  @ForeignKey(() => User) @PrimaryKey @Column
+  @ForeignKey(() => User)
+  @PrimaryKey
+  @Column
   username!: string;
+
+  @BelongsTo(() => User)
+  user!: User;
 
   @Column
   name!: string;

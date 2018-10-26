@@ -1,5 +1,7 @@
-import {Table, Column, Model, PrimaryKey} from 'sequelize-typescript';
+import {Table, Column, Model, PrimaryKey, HasMany} from 'sequelize-typescript';
 import {Usergroup} from '../enums/usergroup.enum';
+import {Job} from './job.model';
+import {Company} from './company.model';
 
 @Table
 export class User extends Model<User> {
@@ -19,6 +21,15 @@ export class User extends Model<User> {
   @Column
   enabled!: boolean;
 
+  @Column({defaultValue: false})
+  suspended!: boolean;
+
+  @HasMany(() => Job)
+  jobs!: Job[];
+
+  @HasMany(() => Company)
+  company!: Company[];
+
   authentify(passwordClear: string): boolean {
     return this.bcrypt.compareSync(passwordClear, this.password);
 
@@ -29,7 +40,25 @@ export class User extends Model<User> {
   enable() {
     this.enabled = true;
   }
+  suspend(suspend: boolean) {
+    this.suspended = suspend;
+  }
 
+  getAdminEditDetails(): any {
+    if (this.company.length === 0) {
+      const c: Company = new Company();
+      c.fromSimplification({'username': this.username, 'name': '', 'logo': ''});
+      this.company.push(c);
+    }
+    return {
+      'username': this.username,
+      'type': this.type,
+      'enabled': this.enabled,
+      'suspended': this.suspended,
+      'companyName': this.company[0].name,
+      'companyLogo': this.company[0].logo,
+    };
+  }
   toSimplification(): any {
     return {
       'username': this.username,

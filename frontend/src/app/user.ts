@@ -7,6 +7,7 @@ export class User {
     public password: string,
     public type: Usergroup,
     public enabled: boolean,
+    public suspended: boolean = false,
   ) {
   }
 

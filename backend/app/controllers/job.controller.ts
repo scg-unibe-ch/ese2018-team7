@@ -3,38 +3,54 @@ import {Job} from '../models/job.model';
 import {Sequelize} from 'sequelize-typescript';
 import {Company} from '../models/company.model';
 import {Usergroup} from '../enums/usergroup.enum';
+import {User} from '../models/user.model';
 
 const router: Router = Router();
 
-// Get All Public Jobs
+// Get All Public Jobs (or with search applied)
 router.get('/', async (req: Request, res: Response) => {
+
+  // if the user wants to search
+
+  // Add % to create full text search on title
+  const title = (req.query.title != null) ? '%' + req.query.title + '%' : '%';
+
+  // Add % to create full text search on company
+  const company = (req.query.company != null) ? '%' + req.query.company + '%' : '%';
+
+  // Default start after is 1.1.1970
+  const startAfter = (req.query.startAfter != null) ? req.query.startAfter : 0;
+
+  // Default start before is now + 10 years
+  const startBefore = (req.query.startBefore != null) ? req.query.startBefore :
+    Math.floor(new Date(new Date().setFullYear(new Date().getFullYear() + 10)).getTime() / 1000);
+
+  // Default Workload is >= 0 and <= 100
+  const workloadGt = (req.query.workloadGt != null) ? req.query.workloadGt : 0;
+  const workloadLt = (req.query.workloadLt != null) ? req.query.workloadLt : 100;
+
   const instances = await Job.findAll({
     where: Sequelize.and(
+      {'title': {like: title}},
+      {'departement': {like: company}},
+      {'startofwork': {gte: startAfter}},
+      {'startofwork': {lte: startBefore}},
+      {'workload': {gte: workloadGt}},
+      {'workload': {lte: workloadLt}},
       {approved: true},
       {startofpublication: {lte: Math.floor(Date.now() / 1000)}},
       {endofpublication: {gte: Math.floor(Date.now() / 1000)}},
-      )
+      ),
+    include: [{
+      model: User,
+      where: {suspended: false},
+      include: [{model: Company}]
+    }]
   });
 
-  // Add Company details to Job
-  const companys: Company[] = await Company.findAll();
   res.statusCode = 200;
-  res.send(instances.map((e: Job) => {
-    let company: Company = new Company();
-    for (let i = 0; i < companys.length; i++) {
-      if (e.owner === companys[i].username) {
-        company = companys[i];
-        break;
-      }
-    }
-    const job = e.toSimplification();
-    if (company != null) {
-      job['companyName'] = company.name;
-      job['companyLogo'] = company.logo;
-    }
+  res.send(instances.map( e => e.getWithCompanyData()));
 
-    return job;
-  }));
 });
 
 // Get All editable Jobs
@@ -90,79 +106,6 @@ router.get('/editable', async (req: Request, res: Response) => {
     res.statusCode = 200;
     res.send('[]');
   }
-});
-
-// Search for Jobs
-router.get('/search', async (req: Request, res: Response) => {
-
-  // Add % to create full text search on title
-  const title = (req.query.title != null) ? '%' + req.query.title + '%' : '%';
-
-  // Add % to create full text search on company
-  const company = (req.query.company != null) ? '%' + req.query.company + '%' : '%';
-
-  // Default start after is 1.1.1970
-  const startAfter = (req.query.startAfter != null) ? req.query.startAfter : 0;
-
-  // Default start before is now + 10 years
-  const startBefore = (req.query.startBefore != null) ? req.query.startBefore :
-    Math.floor(new Date(new Date().setFullYear(new Date().getFullYear() + 10)).getTime() / 1000);
-
-  // Default Workload is >= 0 and <= 100
-  const workloadGt = (req.query.workloadGt != null) ? req.query.workloadGt : 0;
-  const workloadLt = (req.query.workloadLt != null) ? req.query.workloadLt : 100;
-
-  const results = await Job.findAll({where: Sequelize.and(
-    {'title': {like: title}},
-    {'departement': {like: company}},
-    {'startofwork': {gte: startAfter}},
-    {'startofwork': {lte: startBefore}},
-    {'workload': {gte: workloadGt}},
-    {'workload': {lte: workloadLt}}
-    )});
-
-  if (results == null) {
-    res.statusCode = 404;
-    res.json({
-      'message': 'not found'
-    });
-    return;
-  }
-
-  // Add Company details to Job
-  const companys: Company[] = await Company.findAll();
-  res.statusCode = 200;
-  res.send(results.map((e: Job) => {
-    let company2: Company = new Company();
-    for (let i = 0; i < companys.length; i++) {
-      if (e.owner === companys[i].username) {
-        company2 = companys[i];
-        break;
-      }
-    }
-    const job = e.toSimplification();
-    if (company2 != null) {
-      job['companyName'] = company2.name;
-      job['companyLogo'] = company2.logo;
-    }
-
-    return job;
-  }));
-});
-
-// Get a specific Job
-router.get('/:id', async (req: Request, res: Response) => {
-  const id = parseInt(req.params.id);
-  const instance = await Job.findById(id);
-  if (instance == null) {
-    res.statusCode = 404;
-    res.json({
-      'message': 'not found'
-    });
-    return;
-  }
-  res.statusCode = 200;
-  res.send(instance.toSimplification());
 });
 
 // Add a Job

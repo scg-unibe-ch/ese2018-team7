@@ -40,7 +40,7 @@ export class RegistrationComponent implements OnInit {
   onCreate() {
     this.company.username = this.user.username;
     this.httpClient.post('http://localhost:3000/login/', {
-      'username': this.user.username, 'password': this.user.password, 'type': Usergroup.employee,
+      'username': this.user.username, 'password': this.user.password, 'type': Usergroup.employer,
       'enabled': 'false', 'company': this.company.name, 'logo': this.company.logo
     }, {withCredentials: true}).subscribe((res: any) => {
         console.log(res);
