@@ -61,7 +61,7 @@ export class JobsViewComponent implements OnInit {
           new Company('', instance.companyName, instance.companyLogo)));
 
       if (this.jobs.length === 0) {
-        this.msg = 'Currently there are no Jobs available!';
+        this.msg = 'Aktuell sind keine Jobs verfügbar!';
       } else {
         this.msg = '';
       }
@@ -89,7 +89,7 @@ export class JobsViewComponent implements OnInit {
           new Company('', instance.companyName, instance.companyLogo)));
 
       if (this.jobs.length === 0) {
-        this.msg = 'There are currently no Jobs available for your search!';
+        this.msg = 'Zu dieser Suche wurden keine Jobs gefunden!';
       } else {
         this.msg = '';
       }
@@ -124,7 +124,7 @@ export class JobsViewComponent implements OnInit {
           moment(instance.endofpublication, 'X')));
 
       if (this.jobs.length === 0) {
-        this.msg = 'There are currently no Jobs available for your search!';
+        this.msg = 'Zu dieser Suche wurden keine Jobs gefunden!';
       } else {
         this.msg = '';
       }
@@ -158,7 +158,7 @@ export class JobsViewComponent implements OnInit {
           moment(instance.endofpublication, 'X')));
 
       if (this.jobs.length === 0) {
-        this.msg = 'Currently there are no Jobs available!';
+        this.msg = 'Aktuell sind keine Jobs verfügbar!';
       } else {
         this.msg = '';
       }
