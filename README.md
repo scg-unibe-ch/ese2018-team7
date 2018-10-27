@@ -1,22 +1,32 @@
 # ESE 2018 Team 7
-Welcome to the 2018 ESE course. You can use this scaffolding as a starting point for your group projects. It contains the following components:
-- [frontend](https://github.com/scg-unibe-ch/ese2018-team7/tree/master/frontend): an Angular application
-- [backend](https://github.com/scg-unibe-ch/ese2018-team7/tree/master/backend): a Node.js application written in TypeScript, using the express.js web framework 
 
-## Prerequisites
-- You should have [Node.js](https://nodejs.org/en/) and NPM installed (NPM is installed automatically with latest versions of Node.js) which are needed by both [frontend](https://github.com/scg-unibe-ch/ese2018-team7/tree/master/frontend) and [backend](https://github.com/scg-unibe-ch/ese2018-team7/tree/master/backend) projects. You can verify whether you have both by running `node -v` and `npm -v` in terminal or command prompt.
-- You should have [Angular CLI](https://cli.angular.io/) globally installed on your machine.
-- Get your WebStorm student license [from here](https://www.jetbrains.com/shop/eform/students) 
+This Repo was developed for the [ESE course at the University of Bern](http://scg.unibe.ch/teaching/ese).
 
-## Getting started
-- Clone this repo on your machine and immediately delete `.git` folder.
-- Decide among your team members, and create a new git repository on Github of your own. Push this project as an initial commit.
-- [frontend](https://github.com/scg-unibe-ch/ese2018-team7/tree/master/frontend) and [backend](https://github.com/scg-unibe-ch/ese2018-team7/tree/master/backend) contain instructions to set up the projects on your machines.
-- We encourage you to use [WebStorm](https://www.jetbrains.com/webstorm/) as an IDE for this project. Once you clone the project to your machine, refer [this](https://www.jetbrains.com/help/webstorm/angular.html) tutorial, specifically section 'Starting with an existing Angular application' to open and use the project in WebStorm. 
+## How to run
+Ensure that you have [Node.js](https://nodejs.org/en/) and NPM installed, then you can run the [install.sh](https://github.com/scg-unibe-ch/ese2018-team7/blob/master/install.sh) script. For further runs you can use the [start.sh](https://github.com/scg-unibe-ch/ese2018-team7/blob/master/start.sh) script.
 
+The frontend should open automatically, else you can find it under [localhost:4200](http://localhost:4200)
 
-## Understanding project structure
-- The main project folder contains two subfolders- frontend and backend. These two are projects on their own which you will run independently. 
-- The backend folder contains express project that serves as a REST API, exposes endpoints to accept HTTP requests. For received HTTP requests, it in turn returns JSON data.
-- The frontend folder contains Angular project, which makes HTTP requests to the backend and processes the JSON data received i.e. make changes if required and display it on the UI.
-- Projects are separated in this way because in the future one can easily replace either of them if the team decides to use another technology e.g. React JS for frontend or Django REST framework for backend.
+The backend runs at [localhost:3000](http://localhost:3000), but it should't be necessary to view that.
+
+The system uses a SQLite Database
+
+## Technologies
+We use a number of different technologies. Some of them are:
+- [Typescript](https://www.typescriptlang.org): Everything is written in Txpescript
+- [Angular 6](https://angular.io/): The frontend is build with Angular
+- [Angular Material](https://material.angular.io/): The design is heavily based on Angular Material
+- [Moment.js](https://momentjs.com/docs/): All the time/date stuff is managed with Moment
+- [Express](https://expressjs.com): The backend is build with Express
+- [Express Session](https://github.com/expressjs/session): To handle user login cookies we use Express Session
+- [SQLite](https://www.sqlite.org/): Database for this project
+- [Sequelize](http://docs.sequelizejs.com/): ORM to connect to the SQLite Database
+- [Bcrypt](https://github.com/kelektiv/node.bcrypt.js): Library to securely hash your password
+- [Webstorm](https://www.jetbrains.com/webstorm/) or [IntelliJ IDEA](https://www.jetbrains.com/idea/) as the [IDE](https://en.wikipedia.org/wiki/Integrated_development_environment)
+
+## Heroku
+This project runs on [Heroku](https://www.heroku.com/)
+
+~~- Frontend~~ (currently not available since Heroku has problems with our repo origin)
+
+~~- Backend~~ (currently not available since Heroku has problems with our repo origin)
