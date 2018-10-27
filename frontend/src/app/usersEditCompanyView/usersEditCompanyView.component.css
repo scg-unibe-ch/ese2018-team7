@@ -1,0 +1,17 @@
+.text-center {
+  text-align: center;
+}
+
+.tr-text {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.suspendedRow{
+  text-decoration: line-through;
+}
+.approveCompanyButton{
+  position: absolute;
+  top: 100px;
+  right: 50px;
+
+}

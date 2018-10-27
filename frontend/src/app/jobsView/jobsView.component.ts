@@ -2,9 +2,11 @@ import {Component, EventEmitter, OnInit} from '@angular/core';
 import {Job} from '../job';
 import {HttpClient} from '@angular/common/http';
 import * as moment from 'moment';
-import {ModalService} from '../modal/modal.service';
 import {Moment} from 'moment';
 import {Company} from '../company';
+import {JobViewDetailsComponent} from '../jobViewDetails/jobViewDetails.component';
+import {MatDialog} from '@angular/material';
+import {JobsAdvancedSearchComponent} from '../jobsAdvancedSearch/jobsAdvancedSearch.component';
 
 @Component({
   selector: 'app-jobs-view',
@@ -39,7 +41,7 @@ export class JobsViewComponent implements OnInit {
 
   searched = false;
 
-  constructor(private httpClient: HttpClient, private modalService: ModalService) {
+  constructor(private httpClient: HttpClient, private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -165,12 +167,32 @@ export class JobsViewComponent implements OnInit {
       this.advSearchRangeRefresh.emit();
     });
   }
-  openModal(id: string) {
-    this.advSearchRangeRefresh.emit();
-    this.modalService.open(id);
-  }
+  openAdvancedSearch (): void {
+    const dialogRef = this.dialog.open(JobsAdvancedSearchComponent, {
+      minWidth: '90%',
+      minHeight: '90%',
+      data: {
+        advSearchTitle: this.advSearchTitle,
+        advSearchCompany: this.advSearchCompany,
+        advSearchStartAfter: this.advSearchStartAfter,
+        advSearchStartBefore: this.advSearchStartBefore,
+        advSearchWorkLoadGt: this.advSearchWorkLoadGt,
+        advSearchWorkLoadLt: this.advSearchWorkLoadLt,
+        doSearch: false,
+      }
+    });
 
-  closeModal(id: string) {
-    this.modalService.close(id);
+    dialogRef.afterClosed().subscribe((result: any) => {
+      console.log('The dialog was closed');
+      this.advSearchTitle = result.advSearchTitle;
+      this.advSearchCompany = result.advSearchCompany;
+      this.advSearchStartAfter =  result.advSearchStartAfter;
+      this.advSearchStartBefore = result.advSearchStartBefore;
+      this.advSearchWorkLoadGt = result.advSearchWorkLoadGt;
+      this.advSearchWorkLoadLt = result.advSearchWorkLoadLt;
+      if (result.doSearch) {
+        this.onAdvancedSearch();
+      }
+    });
   }
 }

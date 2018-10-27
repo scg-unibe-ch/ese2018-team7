@@ -1,0 +1,48 @@
+.warning {
+  color: var(--warn);
+}
+
+/* Custom ng5 slider */
+
+::ng-deep .custom-slider .ng5-slider .ng5-slider-bar {
+  background: rgba(0,0,0,.38);
+  height: 2px;
+}
+::ng-deep .custom-slider .ng5-slider .ng5-slider-selection {
+  background: var(--primary);
+}
+
+::ng-deep .custom-slider .ng5-slider .ng5-slider-pointer {
+  width: 16px;
+  height: 16px;
+  top: auto; /* to remove the default positioning */
+  bottom: -6px;
+  background-color: var(--primary);
+  border-radius: 12px;
+}
+
+::ng-deep .custom-slider .ng5-slider .ng5-slider-pointer:after {
+  display: none;
+}
+
+::ng-deep .custom-slider .ng5-slider .ng5-slider-bubble {
+  bottom: 14px;
+}
+
+::ng-deep .custom-slider .ng5-slider .ng5-slider-limit {
+  font-weight: bold;
+  color: var(--primary);
+}
+
+::ng-deep .custom-slider .ng5-slider .ng5-slider-tick {
+  width: 1px;
+  height: 10px;
+  margin-left: 4px;
+  border-radius: 0;
+  background: var(--primary-a60);
+  top: -1px;
+}
+
+::ng-deep .custom-slider .ng5-slider .ng5-slider-tick.ng5-slider-selected {
+  background: var(--primary-a60);
+}

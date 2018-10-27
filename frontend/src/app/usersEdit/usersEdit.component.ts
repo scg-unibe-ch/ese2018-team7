@@ -5,7 +5,8 @@ import {User} from '../user';
 import {AuthService} from '../auth/auth.service';
 import {Usergroup} from '../usergroup';
 import {Company} from '../company';
-import {ModalService} from '../modal/modal.service';
+import {UsersEditCompanyViewComponent} from '../usersEditCompanyView/usersEditCompanyView.component';
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'app-users-edit',
@@ -26,7 +27,7 @@ export class UsersEditComponent implements OnInit {
   users: User[] = [];
   companys: Company[] = [];
 
-  constructor(private httpClient: HttpClient, private router: Router, private modalService: ModalService) {
+  constructor(private httpClient: HttpClient, private router: Router, private dialog: MatDialog) {
     AuthService.allowOnlyModsAndAdmin(httpClient, router);
   }
 
@@ -108,14 +109,6 @@ export class UsersEditComponent implements OnInit {
     });
   }
 
-  onApproveCompany(company: Company) {
-    this.httpClient.put('http://localhost:3000/login/company/accept', {
-      'username': company.username
-    }, {withCredentials: true}).subscribe(() => {
-      company.unapprovedChanges = false;
-    });
-  }
-
   isAdmin() {
     return AuthService.isAdmin();
   }
@@ -129,11 +122,14 @@ export class UsersEditComponent implements OnInit {
   isEmployer(user) {
     return user.type === Usergroup.employer;
   }
-  openModal(id: string) {
-    this.modalService.open(id);
-  }
-
-  closeModal(id: string) {
-    this.modalService.close(id);
+  openCompanyView(username) {
+    const c = this.companys.filter(e => e.username === username);
+    const dialogRef = this.dialog.open(UsersEditCompanyViewComponent, {
+      minWidth: '90%',
+      minHeight: '90%',
+      data: {
+        company: c[0],
+      }
+    });
   }
 }

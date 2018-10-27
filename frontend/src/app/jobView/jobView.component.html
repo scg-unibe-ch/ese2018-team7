@@ -3,31 +3,7 @@
   <mat-card-subtitle>bei {{job.company.name}} in {{job.placeOfWork}}</mat-card-subtitle>
   <mat-card-content [innerHTML]="formattedDescription"></mat-card-content>
   <mat-card-actions>
-  <button mat-button (click)="openModal('details-' + job.id)">Details</button>
+  <button mat-button (click)="openDetails()">Details</button>
   </mat-card-actions>
 </mat-card>
 <br>
-<app-modal id="details-{{job.id}}">
-  <div class="modal">
-    <div class="modal-body">
-      <h1>{{job.title}}</h1>
-      <hr>
-      <p><span class="smalltext">Bei {{job.company.name}} &#x25BA; {{job.department}}</span><br><br>
-      <img [src]="job.company.logo" height="200" class="company-logo">
-        Stellenantritt am {{formattedstartofwork}} in {{job.placeOfWork}} mit einem {{job.workload}}% Pensum.<br><br>
-      Diese Anforderungen solltest du mitbringen:<br>
-      <mat-list>
-        <mat-list-item *ngFor="let skill of job.skills">
-          <app-skill-view [skill]="skill"></app-skill-view>
-        </mat-list-item>
-      </mat-list>
-      <a [innerHTML]="formattedDescription"></a>
-      <br><br>
-      Telefon: {{job.phone}}<br>
-      Email: {{obscuredMail}}<br>
-      {{job.contactInfo}}</p>
-    </div>
-    <div class="modal-close">X</div>
-  </div>
-  <div class="modal-background"></div>
-</app-modal>

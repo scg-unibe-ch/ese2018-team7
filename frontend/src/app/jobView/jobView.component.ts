@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Job} from '../job';
-import {HttpClient} from '@angular/common/http';
-import {ModalService} from '../modal/modal.service';
+import {JobViewDetailsComponent} from '../jobViewDetails/jobViewDetails.component';
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'app-job-view',
@@ -16,26 +16,31 @@ export class JobViewComponent implements OnInit {
   // The Job
   @Input()
   job: Job;
-  formattedstartofwork: string;
+  formattedStartOfWork: string;
   formattedDescription: string;
   obscuredMail: string;
 
   @Output()
   destroy = new EventEmitter<Job>();
 
-  constructor(private modalService: ModalService) {
+  constructor(private dialog: MatDialog) {
   }
 
   ngOnInit() {
-    this.formattedstartofwork = this.job.startOfWork.format('DD.MM.YYYY');
+    this.formattedStartOfWork = this.job.startOfWork.format('DD.MM.YYYY');
     this.formattedDescription = this.job.description.replace('\n', '<br>');
     this.obscuredMail = this.job.email.replace('@', ' [AT] ').replace('.', ' [DOT] ');
   }
-  openModal(id: string) {
-    this.modalService.open(id);
-  }
-
-  closeModal(id: string) {
-    this.modalService.close(id);
+  openDetails(): void {
+    this.dialog.open(JobViewDetailsComponent, {
+      minWidth: '90%',
+      minHeight: '90%',
+      data: {
+        job: this.job,
+        formattedStartOfWork: this.formattedStartOfWork,
+        formattedDescription: this.formattedDescription,
+        obscuredMail: this.obscuredMail
+      }
+    });
   }
 }

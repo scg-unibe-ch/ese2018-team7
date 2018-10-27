@@ -24,7 +24,7 @@
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef class="text-center">Aktionen</th>
       <td mat-cell *matCellDef="let u">
-        <button *ngIf="isEmployer(u)" mat-button (click)="openModal('companyDetails-'+u.username)" color="primary">Details</button>
+        <button *ngIf="isEmployer(u)" mat-button (click)="openCompanyView(u.username)" color="primary">Details</button>
         <button *ngIf="!u.enabled" mat-button (click)="onAcceptUser(u)" color="primary">Benutzer freischalten</button>
         <button *ngIf="u.enabled&&!isMe(u.username)" mat-button (click)="onSuspendUser(u)" color="warn">Benutzer {{u.suspended?'reaktivieren':'sperren'}}</button>
         <button *ngIf="isAdmin()&&!isMe(u.username)" mat-button (click)="onDeleteUser(u)" color="warn">Benutzer löschen</button>
@@ -46,20 +46,3 @@
   <button mat-button (click)="onCreateAdmin()" color="primary">Admin erstellen</button>
   <button mat-button (click)="onCreateMod()" color="primary">Mod erstellen</button>
 </mat-card>
-<div *ngFor="let company of companys">
-
-  <app-modal id="companyDetails-{{company.username}}">
-    <div class="modal">
-      <div class="modal-body">
-        <button class='approveCompanyButton' *ngIf="company.unapprovedChanges" mat-button (click)="onApproveCompany(company)" color="primary">Approve Changes</button>
-        <h1>{{company.username}}</h1>
-        <hr>
-        <h3>Name: {{company.name}}</h3>
-        <img [src]="company.logo" height="200" class="company-logo">
-              </div>
-      <div class="modal-close">X</div>
-    </div>
-    <div class="modal-background"></div>
-  </app-modal>
-
-</div>

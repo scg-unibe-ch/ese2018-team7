@@ -1,0 +1,27 @@
+<h1>Erweiterte Suche</h1>
+<mat-form-field>
+  <input matInput placeholder="Job" name="advTitle" type="text" [(ngModel)]="data.advSearchTitle" />
+</mat-form-field>
+<br>
+<mat-form-field>
+ <input matInput placeholder="Unternehmen" name="advCompany" type="text" [(ngModel)]="data.advSearchCompany" />
+</mat-form-field>
+<mat-list-item>
+  Pensum:
+    <div class="custom-slider">
+    <ng5-slider [options]="{'floor': 0, 'ceil': 100, 'step': 5, 'tickInterval': 2}" [manualRefresh]="advSearchRangeRefresh" [(value)]="data.advSearchWorkLoadGt" [(highValue)]="data.advSearchWorkLoadLt"></ng5-slider>
+    </div>
+</mat-list-item>
+<mat-form-field>
+  <input matInput [max]="data.advSearchStartBefore" [matDatepicker]="startWorkAfter" [(ngModel)]="data.advSearchStartAfter" placeholder="Stellenantritt nach" (focus)="startWorkAfter.open()">
+  <mat-datepicker #startWorkAfter touchUi startView="month" name="startWorkAfter" ngDefaultControl></mat-datepicker>
+  <mat-datepicker-toggle matSuffix [for]="startWorkAfter"></mat-datepicker-toggle>
+</mat-form-field>
+<br>
+<mat-form-field>
+  <input matInput [min]="data.advSearchStartAfter" [matDatepicker]="startWorkBefore" [(ngModel)]="data.advSearchStartBefore" placeholder="Stellenantritt vor" (focus)="startWorkBefore.open()">
+  <mat-datepicker #startWorkBefore touchUi startView="month" name="startWorkBefore" ngDefaultControl></mat-datepicker>
+  <mat-datepicker-toggle matSuffix [for]="startWorkBefore"></mat-datepicker-toggle>
+</mat-form-field>
+<br>
+<button mat-button (click)="onAdvancedSearch();">Suchen</button>

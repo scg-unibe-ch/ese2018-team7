@@ -1,0 +1,7 @@
+
+<button class='approveCompanyButton' *ngIf="data.company.unapprovedChanges" mat-button (click)="onApproveCompany()" color="primary">Approve Changes</button>
+<h1>{{data.company.username}}</h1>
+<hr>
+<h3>Name: {{data.company.name}}</h3>
+<img [src]="data.company.logo" height="200" class="company-logo">
+

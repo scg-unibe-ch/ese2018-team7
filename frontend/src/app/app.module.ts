@@ -46,15 +46,18 @@ import {AppRoutingModule } from './app-routing.module';
 import {LogoutComponent} from './logout/logout.component';
 import {ChangePasswordComponent} from './changePassword/changePassword.component';
 import {UsersEditComponent} from './usersEdit/usersEdit.component';
-import {ModalComponent} from './modal/modal.component';
-import {ModalService} from './modal/modal.service';
 import {CompanyEditComponent} from './companyEdit/companyEdit.component';
+import {JobViewDetailsComponent} from './jobViewDetails/jobViewDetails.component';
+import {JobsAdvancedSearchComponent} from './jobsAdvancedSearch/jobsAdvancedSearch.component';
+import {UsersEditCompanyViewComponent} from './usersEditCompanyView/usersEditCompanyView.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     JobViewComponent,
+    JobViewDetailsComponent,
     JobsViewComponent,
+    JobsAdvancedSearchComponent,
     JobEditComponent,
     JobsEditComponent,
     SkillViewComponent,
@@ -65,7 +68,7 @@ import {CompanyEditComponent} from './companyEdit/companyEdit.component';
     PageNotFoundComponent,
     ChangePasswordComponent,
     UsersEditComponent,
-    ModalComponent,
+    UsersEditCompanyViewComponent,
     CompanyEditComponent,
   ],
   imports: [
@@ -97,11 +100,15 @@ import {CompanyEditComponent} from './companyEdit/companyEdit.component';
     ReactiveFormsModule,
     CdkTableModule,
   ],
+  entryComponents: [
+    JobViewDetailsComponent,
+    JobsAdvancedSearchComponent,
+    UsersEditCompanyViewComponent,
+  ],
   providers: [
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
     { provide: MAT_DATE_LOCALE, useValue: 'de-CH' },
     { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
-    ModalService
     ],
    bootstrap: [AppComponent]
 })
