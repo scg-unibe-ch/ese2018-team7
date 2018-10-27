@@ -35,7 +35,7 @@ export class UsersEditComponent implements OnInit {
     this.httpClient.get('http://localhost:3000/login/edit', {withCredentials: true}).subscribe((instances: any) => {
       this.users = instances.map((instance) => new User(instance.username, '', instance.type, instance.enabled, instance.suspended));
       this.companys = instances.map((instance) =>
-        new Company(instance.username, instance.companyName, instance.companyLogo, instance.companyUnapprovedchanges));
+        new Company(instance.username, instance.companyName, instance.companyLogo, instance.companyUnapprovedChanges));
     });
   }
 

@@ -51,17 +51,17 @@ export class JobEditComponent implements OnInit {
   onSave() {
     this.httpClient.put('http://localhost:3000/jobs/' + this.job.id, {
       'title': this.job.title,
-      'departement': this.job.departement,
-      'placeofwork': this.job.placeofwork,
-      'startofwork': this.job.startofwork.unix(),
+      'department': this.job.department,
+      'placeOfWork': this.job.placeOfWork,
+      'startOfWork': this.job.startOfWork.unix(),
       'workload': this.job.workload,
       'description': this.job.description,
       'skills': JSON.stringify(this.job.skills),
       'phone': this.job.phone,
       'email': this.job.email,
-      'contactinfo': this.job.contactinfo,
-      'startofpublication': this.job.startofpublication.unix(),
-      'endofpublication': this.job.endofpublication.unix(),
+      'contactInfo': this.job.contactInfo,
+      'startOfPublication': this.job.startOfPublication.unix(),
+      'endOfPublication': this.job.endOfPublication.unix(),
       'approved': this.job.approved
     }, {withCredentials: true}).subscribe((answer: any) => {
       console.log(answer);
@@ -122,18 +122,18 @@ export class JobEditComponent implements OnInit {
     this.httpClient.put('http://localhost:3000/jobs/reset/' + this.job.id, {}, {withCredentials: true}).subscribe((res: any) => {
       this.job.changed = false;
       this.job.title = res.title;
-      this.job.departement = res.departement;
-      this.job.placeofwork = res.placeofwork;
-      this.job.startofwork = res.startofwork;
-      this.job.startofwork = moment(res.startofwork, 'X');
+      this.job.department = res.department;
+      this.job.placeOfWork = res.placeOfWork;
+      this.job.startOfWork = res.startOfWork;
+      this.job.startOfWork = moment(res.startOfWork, 'X');
       this.job.workload = res.workload;
       this.job.description = res.description;
       this.job.skills = JSON.parse(res.skills);
       this.job.phone = res.phone;
       this.job.email = res.email;
-      this.job.contactinfo = res.contactinfo;
-      this.job.startofpublication = moment(res.startofpublication, 'X');
-      this.job.endofpublication = moment(res.endofpublication, 'X');
+      this.job.contactInfo = res.contactInfo;
+      this.job.startOfPublication = moment(res.startOfPublication, 'X');
+      this.job.endOfPublication = moment(res.endOfPublication, 'X');
       this.job.approved = res.approved;
     });
   }

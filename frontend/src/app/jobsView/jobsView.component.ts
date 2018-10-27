@@ -49,15 +49,15 @@ export class JobsViewComponent implements OnInit {
       this.jobs = instances.map((instance) =>
         new Job(instance.id,
           instance.title,
-          instance.departement,
-          instance.placeofwork,
-          moment(instance.startofwork, 'X'),
+          instance.department,
+          instance.placeOfWork,
+          moment(instance.startOfWork, 'X'),
           instance.workload,
           instance.description,
           JSON.parse(instance.skills),
           instance.phone,
           instance.email,
-          instance.contactinfo,
+          instance.contactInfo,
           new Company('', instance.companyName, instance.companyLogo)));
 
       if (this.jobs.length === 0) {
@@ -77,15 +77,15 @@ export class JobsViewComponent implements OnInit {
       this.jobs = instances.map((instance) =>
         new Job(instance.id,
           instance.title,
-          instance.departement,
-          instance.placeofwork,
-          moment(instance.startofwork, 'X'),
+          instance.department,
+          instance.placeOfWork,
+          moment(instance.startOfWork, 'X'),
           instance.workload,
           instance.description,
           JSON.parse(instance.skills),
           instance.phone,
           instance.email,
-          instance.contactinfo,
+          instance.contactInfo,
           new Company('', instance.companyName, instance.companyLogo)));
 
       if (this.jobs.length === 0) {
@@ -110,18 +110,18 @@ export class JobsViewComponent implements OnInit {
       this.jobs = instances.map((instance) =>
         new Job(instance.id,
           instance.title,
-          instance.departement,
-          instance.placeofwork,
-          moment(instance.startofwork, 'X'),
+          instance.department,
+          instance.placeOfWork,
+          moment(instance.startOfWork, 'X'),
           instance.workload,
           instance.description,
           JSON.parse(instance.skills),
           instance.phone,
           instance.email,
-          instance.contactinfo,
+          instance.contactInfo,
           new Company('', instance.companyName, instance.companyLogo),
-          moment(instance.startofpublication, 'X'),
-          moment(instance.endofpublication, 'X')));
+          moment(instance.startOfPublication, 'X'),
+          moment(instance.endOfPublication, 'X')));
 
       if (this.jobs.length === 0) {
         this.msg = 'Zu dieser Suche wurden keine Jobs gefunden!';
@@ -144,18 +144,18 @@ export class JobsViewComponent implements OnInit {
       this.jobs = instances.map((instance) =>
         new Job(instance.id,
           instance.title,
-          instance.departement,
-          instance.placeofwork,
-          moment(instance.startofwork, 'X'),
+          instance.department,
+          instance.placeOfWork,
+          moment(instance.startOfWork, 'X'),
           instance.workload,
           instance.description,
           JSON.parse(instance.skills),
           instance.phone,
           instance.email,
-          instance.contactinfo,
+          instance.contactInfo,
           new Company('', instance.companyName, instance.companyLogo),
-          moment(instance.startofpublication, 'X'),
-          moment(instance.endofpublication, 'X')));
+          moment(instance.startOfPublication, 'X'),
+          moment(instance.endOfPublication, 'X')));
 
       if (this.jobs.length === 0) {
         this.msg = 'Aktuell sind keine Jobs verfügbar!';

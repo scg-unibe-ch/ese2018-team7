@@ -21,33 +21,43 @@ export class Company extends Model<Company> {
   @Column(DataType.TEXT)
   changes!: string;
 
-  setChanges(change: any) {
+
+  addChanges(change: any) {
+
     const company: Company = new Company();
     let c: string;
+
     try {
       c = JSON.parse(company.changes);
     } catch (e) {
       c = '';
     }
-    company.fromSimplification(c);
-    company.fromSimplification(change);
 
-    this.changes = JSON.stringify(company.toSimplification());
+    company.createCompany(c);
+    company.createCompany(change);
+
+    this.changes = company.changes;
+
   }
+
   applyChanges() {
+
     let c: string;
+
     try {
       c = JSON.parse(this.changes);
     } catch (e) {
       c = '';
     }
-    this.fromSimplification(c);
-    this.changes = JSON.stringify(this.toSimplification());
+
+    this.createCompany(c);
+
   }
 
   forEdit(): any {
+
     const changes = JSON.parse(this.changes);
-    const unapprovedchanges = changes.name !== this.name || changes.logo !== this.logo;
+    const unapprovedChanges = changes.name !== this.name || changes.logo !== this.logo;
 
     this.applyChanges();
 
@@ -55,27 +65,33 @@ export class Company extends Model<Company> {
       'username': this.username,
       'name': this.name,
       'logo': this.logo,
-      'unapprovedchanges': unapprovedchanges
+      'unapprovedChanges': unapprovedChanges
     };
+
   }
 
-  toSimplification(): any {
-    return {
+  getJSONforChange(): any {
+    return JSON.stringify({
       'username': this.username,
       'name': this.name,
       'logo': this.logo,
-    };
+    });
   }
 
 
-  fromSimplification(simplification: any): void {
-    this.username = simplification['username'];
-    this.name = simplification['name'];
-    if (simplification['logo'] != null) {
-      this.logo = simplification['logo'];
+  createCompany(data: any): void {
+    if (data['username'] != null) {
+      this.username = data['username'];
     }
-    this.changes = '';
-    this.changes = JSON.stringify(this);
+    if (data['name'] != null) {
+      this.name = data['name'];
+    }
+    if (data['logo'] != null) {
+      this.logo = data['logo'];
+    }
+
+    this.changes = this.getJSONforChange();
+
   }
 
 }

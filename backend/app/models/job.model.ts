@@ -9,13 +9,13 @@ export class Job extends Model<Job> {
   title!: string;
 
   @Column
-  departement!: string;
+  department!: string;
 
   @Column
-  placeofwork!: string;
+  placeOfWork!: string;
 
   @Column
-  startofwork!: number;
+  startOfWork!: number;
 
   @Column(DataType.INTEGER)
   workload!: number;
@@ -30,13 +30,13 @@ export class Job extends Model<Job> {
   email!: string;
 
   @Column(DataType.TEXT)
-  contactinfo!: string;
+  contactInfo!: string;
 
   @Column
-  startofpublication!: number;
+  startOfPublication!: number;
 
   @Column
-  endofpublication!: number;
+  endOfPublication!: number;
 
   @Column
   approved!: boolean;
@@ -54,97 +54,159 @@ export class Job extends Model<Job> {
   @Column(DataType.TEXT)
   changes!: string;
 
+
+
   getWithCompanyData(): any {
 
     if (this.user.company.length === 0) {
+
       const c: Company = new Company();
-      c.fromSimplification({'username': this.owner, 'name': '', 'logo': ''});
+      c.createCompany({'username': this.owner, 'name': '', 'logo': ''});
       this.user.company.push(c);
+
     }
 
     return {
       'id': this.id,
       'title': this.title,
-      'departement': this.departement,
-      'placeofwork': this.placeofwork,
-      'startofwork': this.startofwork,
+      'department': this.department,
+      'placeOfWork': this.placeOfWork,
+      'startOfWork': this.startOfWork,
       'workload': this.workload,
       'description': this.description,
       'skills': this.skills,
       'email': this.email,
       'phone': this.phone,
-      'contactinfo': this.contactinfo,
-      'startofpublication': this.startofpublication,
-      'endofpublication': this.endofpublication,
+      'contactInfo': this.contactInfo,
+      'startOfPublication': this.startOfPublication,
+      'endOfPublication': this.endOfPublication,
       'approved': this.approved,
       'companyName': this.user.company[0].name,
       'companyLogo': this.user.company[0].logo,
     };
+
   }
-  toSimplification(): any {
+
+  getSimpleJob(): any {
+
     return {
       'id': this.id,
       'title': this.title,
-      'departement': this.departement,
-      'placeofwork': this.placeofwork,
-      'startofwork': this.startofwork,
+      'department': this.department,
+      'placeOfWork': this.placeOfWork,
+      'startOfWork': this.startOfWork,
       'workload': this.workload,
       'description': this.description,
       'skills': this.skills,
       'email': this.email,
       'phone': this.phone,
-      'contactinfo': this.contactinfo,
-      'startofpublication': this.startofpublication,
-      'endofpublication': this.endofpublication,
+      'contactInfo': this.contactInfo,
+      'startOfPublication': this.startOfPublication,
+      'endOfPublication': this.endOfPublication,
       'approved': this.approved,
     };
+
   }
-  setChanges(change: any) {
+
+  getJSONforChange() {
+    return JSON.stringify(this.getSimpleJob());
+  }
+
+  addChanges(change: any) {
+
     const job: Job = new Job();
     let c: string;
+
     try {
       c = JSON.parse(job.changes);
     } catch (e) {
       c = '';
     }
-    job.fromSimplification(c);
-    job.fromSimplification(change);
 
-    this.changes = JSON.stringify(job.toSimplification());
+    job.createJob(c);
+    job.createJob(change);
+
+    this.changes = job.getJSONforChange();
+
   }
+
   applyChanges() {
+
     let c: string;
+
     try {
       c = JSON.parse(this.changes);
     } catch (e) {
       c = '';
     }
-    this.fromSimplification(c);
-    this.changes = JSON.stringify(this.toSimplification());
+
+    this.createJob(c);
+
   }
-  fromSimplification(simplification: any): void {
+
+
+  createJob(simplification: any): void {
+
     if (simplification != null) {
+
       if (simplification['title'] != null) {
         this.title = simplification['title'];
       }
-      this.departement = simplification['departement'];
-      this.placeofwork = simplification['placeofwork'];
-      this.startofwork = simplification['startofwork'];
-      this.workload = simplification['workload'];
-      this.description = simplification['description'];
-      this.skills = simplification['skills'];
-      this.email = simplification['email'];
-      this.phone = simplification['phone'];
-      this.contactinfo = simplification['contactinfo'];
-      this.startofpublication = simplification['startofpublication'];
-      this.endofpublication = simplification['endofpublication'];
+
+      if (simplification['department'] != null) {
+        this.department = simplification['department'];
+      }
+
+      if (simplification['placeOfWork'] != null) {
+        this.placeOfWork = simplification['placeOfWork'];
+      }
+
+      if (simplification['startOfWork'] != null) {
+        this.startOfWork = simplification['startOfWork'];
+      }
+
+      if (simplification['workload'] != null) {
+        this.workload = simplification['workload'];
+      }
+
+      if (simplification['description'] != null) {
+        this.description = simplification['description'];
+      }
+
+      if (simplification['skills'] != null) {
+        this.skills = simplification['skills'];
+      }
+
+      if (simplification['email'] != null) {
+        this.email = simplification['email'];
+      }
+
+      if (simplification['phone'] != null) {
+        this.phone = simplification['phone'];
+      }
+
+      if (simplification['contactInfo'] != null) {
+        this.contactInfo = simplification['contactInfo'];
+      }
+
+      if (simplification['startOfPublication'] != null) {
+        this.startOfPublication = simplification['startOfPublication'];
+      }
+
+      if (simplification['endOfPublication'] != null) {
+        this.endOfPublication = simplification['endOfPublication'];
+      }
+
       if (simplification['owner'] != null) {
         this.owner = simplification['owner'];
       }
+
       if (simplification['approved'] != null) {
         this.approved = simplification['approved'];
       }
-      this.changes = '';
+
+      this.changes = this.getJSONforChange();
+
     }
 
   }

@@ -38,18 +38,18 @@ export class JobsEditComponent implements OnInit {
       this.jobs = instances.map((instance) =>
         new Job(instance.id,
           instance.title,
-          instance.departement,
-          instance.placeofwork,
-          moment(instance.startofwork, 'X'),
+          instance.department,
+          instance.placeOfWork,
+          moment(instance.startOfWork, 'X'),
           instance.workload,
           instance.description,
           JSON.parse(instance.skills),
           instance.phone,
           instance.email,
-          instance.contactinfo,
+          instance.contactInfo,
           new Company('', instance.companyName, instance.companyLogo),
-          moment(instance.startofpublication, 'X'),
-          moment(instance.endofpublication, 'X'),
+          moment(instance.startOfPublication, 'X'),
+          moment(instance.endOfPublication, 'X'),
           instance.approved,
           instance.changed != null && instance.changed));
       if (this.jobs.length === 0) {
@@ -64,11 +64,11 @@ export class JobsEditComponent implements OnInit {
   onJobCreate() {
     this.httpClient.post('http://localhost:3000/jobs', {
       'title': this.job.title,
-      'startofwork': this.job.startofwork.unix(),
+      'startOfWork': this.job.startOfWork.unix(),
       'workload': this.job.workload,
       'skills': JSON.stringify(this.job.skills),
-      'startofpublication': this.job.startofpublication.unix(),
-      'endofpublication': this.job.endofpublication.unix()
+      'startOfPublication': this.job.startOfPublication.unix(),
+      'endOfPublication': this.job.endOfPublication.unix()
     }, {withCredentials: true}).subscribe((instance: any) => {
       this.job.id = instance.id;
       this.jobs.push(this.job);
