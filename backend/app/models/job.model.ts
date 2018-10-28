@@ -15,6 +15,9 @@ export class Job extends Model<Job> {
   placeOfWork!: string;
 
   @Column
+  contractType!: string;
+
+  @Column
   startOfWork!: number;
 
   @Column(DataType.INTEGER)
@@ -71,6 +74,7 @@ export class Job extends Model<Job> {
       'title': this.title,
       'department': this.department,
       'placeOfWork': this.placeOfWork,
+      'contractType': this.contractType,
       'startOfWork': this.startOfWork,
       'workload': this.workload,
       'description': this.description,
@@ -94,6 +98,7 @@ export class Job extends Model<Job> {
       'title': this.title,
       'department': this.department,
       'placeOfWork': this.placeOfWork,
+      'contractType': this.contractType,
       'startOfWork': this.startOfWork,
       'workload': this.workload,
       'description': this.description,
@@ -159,6 +164,10 @@ export class Job extends Model<Job> {
 
       if (simplification['placeOfWork'] != null) {
         this.placeOfWork = simplification['placeOfWork'];
+      }
+
+      if (simplification['contractType'] != null) {
+        this.contractType = simplification['contractType'];
       }
 
       if (simplification['startOfWork'] != null) {

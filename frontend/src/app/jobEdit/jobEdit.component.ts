@@ -53,6 +53,7 @@ export class JobEditComponent implements OnInit {
       'title': this.job.title,
       'department': this.job.department,
       'placeOfWork': this.job.placeOfWork,
+      'contractType': this.job.contractType,
       'startOfWork': this.job.startOfWork.unix(),
       'workload': this.job.workload,
       'description': this.job.description,
@@ -124,6 +125,7 @@ export class JobEditComponent implements OnInit {
       this.job.title = res.title;
       this.job.department = res.department;
       this.job.placeOfWork = res.placeOfWork;
+      this.job.contractType = res.contractType;
       this.job.startOfWork = res.startOfWork;
       this.job.startOfWork = moment(res.startOfWork, 'X');
       this.job.workload = res.workload;

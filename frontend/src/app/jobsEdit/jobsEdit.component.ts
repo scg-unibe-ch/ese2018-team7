@@ -40,6 +40,7 @@ export class JobsEditComponent implements OnInit {
           instance.title,
           instance.department,
           instance.placeOfWork,
+          instance.contractType,
           moment(instance.startOfWork, 'X'),
           instance.workload,
           instance.description,

@@ -10,6 +10,7 @@ export class Job {
     public title: string = '',
     public department: string = '',
     public placeOfWork: string = '',
+    public contractType: string = '',
     public startOfWork: Moment = moment(),
     public workload: number = 100,
     public description: string = '',

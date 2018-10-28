@@ -36,7 +36,7 @@ export class JobsViewComponent implements OnInit {
   advSearchWorkLoadGt = 0;
   advSearchWorkLoadLt = 100;
 
-  // To manually refreh Range bar -> needed...
+  // To manually refresh range bar -> needed...
   advSearchRangeRefresh: EventEmitter<void> = new EventEmitter<void>();
 
   searched = false;
@@ -53,6 +53,7 @@ export class JobsViewComponent implements OnInit {
           instance.title,
           instance.department,
           instance.placeOfWork,
+          instance.contractType,
           moment(instance.startOfWork, 'X'),
           instance.workload,
           instance.description,
@@ -81,6 +82,7 @@ export class JobsViewComponent implements OnInit {
           instance.title,
           instance.department,
           instance.placeOfWork,
+          instance.contractType,
           moment(instance.startOfWork, 'X'),
           instance.workload,
           instance.description,
@@ -114,6 +116,7 @@ export class JobsViewComponent implements OnInit {
           instance.title,
           instance.department,
           instance.placeOfWork,
+          instance.contractType,
           moment(instance.startOfWork, 'X'),
           instance.workload,
           instance.description,
@@ -148,6 +151,7 @@ export class JobsViewComponent implements OnInit {
           instance.title,
           instance.department,
           instance.placeOfWork,
+          instance.contractType,
           moment(instance.startOfWork, 'X'),
           instance.workload,
           instance.description,

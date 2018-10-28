@@ -18,6 +18,15 @@
     <input matInput placeholder="Arbeitsort" [(ngModel)]="job.placeOfWork" name="placeofwork" (ngModelChange)="onSave()">
   </mat-form-field>
   <br>
+  <mat-radio-group name="contracttype" [(ngModel)]="job.contractType" (ngModelChange)="onSave()">
+    <mat-radio-button value="temporary">
+      befristet
+    </mat-radio-button>
+    <mat-radio-button value="unlimited">
+      unbefristet
+    </mat-radio-button>
+  </mat-radio-group>
+  <br>
   <mat-form-field class="datepicker">
    <input matInput [min]='today' [matDatepicker]="startWork" [(ngModel)]="job.startOfWork" placeholder="Stellenantritt" (focus)="startWork.open()" (dateInput)="onSave()" (dateChange)="onSave()">
     <mat-datepicker #startWork touchUi startView="month" name="startofwork" ngDefaultControl></mat-datepicker>
@@ -37,7 +46,6 @@
     <mat-list-item *ngFor="let skill of job.skills">
       <app-skill-edit [skill]="skill" (destroy)="onSkillDestroy($event)"></app-skill-edit>
     </mat-list-item>
-
   </mat-list>
   <mat-form-field>
     <input matInput placeholder="Anforderung" [(ngModel)]="skill.name" name="name">
