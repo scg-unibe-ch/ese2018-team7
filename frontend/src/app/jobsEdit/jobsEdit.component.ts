@@ -32,7 +32,7 @@ export class JobsEditComponent implements OnInit {
 
   ngOnInit() {
     // Load all editable jobs from the server
-    this.httpClient.get('http://localhost:3000/jobs/editable', {withCredentials: true}).subscribe((instances: any) => {
+    this.httpClient.get('/jobs/editable', {withCredentials: true}).subscribe((instances: any) => {
 
       console.log(instances);
       this.jobs = instances.map((instance) =>
@@ -63,7 +63,7 @@ export class JobsEditComponent implements OnInit {
    * Adding a new Job
    */
   onJobCreate() {
-    this.httpClient.post('http://localhost:3000/jobs', {
+    this.httpClient.post('/jobs', {
       'title': this.job.title,
       'startOfWork': this.job.startOfWork.unix(),
       'workload': this.job.workload,

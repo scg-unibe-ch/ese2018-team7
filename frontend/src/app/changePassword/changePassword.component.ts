@@ -41,7 +41,7 @@ export class ChangePasswordComponent implements OnInit {
       this.msg = '';
 
       // Save to Server
-      this.httpClient.put('http://localhost:3000/login/password', {'password': this.password}, {withCredentials: true}).subscribe(
+      this.httpClient.put('/login/password', {'password': this.password}, {withCredentials: true}).subscribe(
         res => {
           console.log(res);
           this.msg = 'Neues Passwort gespeichert!';

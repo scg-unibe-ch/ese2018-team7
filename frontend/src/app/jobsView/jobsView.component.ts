@@ -47,7 +47,7 @@ export class JobsViewComponent implements OnInit {
   ngOnInit() {
 
     // Load the Jobs from the Server
-    this.httpClient.get('http://localhost:3000/jobs').subscribe((instances: any) => {
+    this.httpClient.get('/jobs').subscribe((instances: any) => {
       this.jobs = instances.map((instance) =>
         new Job(instance.id,
           instance.title,
@@ -76,7 +76,7 @@ export class JobsViewComponent implements OnInit {
   onEasySearch() {
 
     // Load the Jobs from the Server
-    this.httpClient.get('http://localhost:3000/jobs/?title=' + this.searchParam).subscribe((instances: any) => {
+    this.httpClient.get('/jobs/?title=' + this.searchParam).subscribe((instances: any) => {
       this.jobs = instances.map((instance) =>
         new Job(instance.id,
           instance.title,
@@ -103,7 +103,7 @@ export class JobsViewComponent implements OnInit {
   onAdvancedSearch() {
 
     // Load the Jobs from the Server
-    this.httpClient.get('http://localhost:3000/jobs/?' +
+    this.httpClient.get('/jobs/?' +
       'title=' + this.advSearchTitle + '&' +
       'company=' + this.advSearchCompany + '&' +
       'startAfter=' + this.advSearchStartAfter.unix() + '&' +
@@ -145,7 +145,7 @@ export class JobsViewComponent implements OnInit {
     this.advSearchWorkLoadGt = 0;
     this.advSearchWorkLoadLt = 100;
     this.searched = false;
-    this.httpClient.get('http://localhost:3000/jobs').subscribe((instances: any) => {
+    this.httpClient.get('/jobs').subscribe((instances: any) => {
       this.jobs = instances.map((instance) =>
         new Job(instance.id,
           instance.title,

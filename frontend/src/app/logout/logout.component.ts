@@ -14,7 +14,7 @@ import {AuthService} from '../auth/auth.service';
 export class LogoutComponent implements OnInit {
 
   constructor(private httpClient: HttpClient, private router: Router) {
-    this.httpClient.get('http://localhost:3000/login/logout', {withCredentials: true}).subscribe(
+    this.httpClient.get('/login/logout', {withCredentials: true}).subscribe(
       (res: any) => {
           AuthService.forceUpdate(httpClient);
           this.router.navigate(['/']);

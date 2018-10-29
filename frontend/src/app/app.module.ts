@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 // Add css components from angular material
 import {
@@ -51,6 +51,7 @@ import {CompanyEditComponent} from './companyEdit/companyEdit.component';
 import {JobViewDetailsComponent} from './jobViewDetails/jobViewDetails.component';
 import {JobsAdvancedSearchComponent} from './jobsAdvancedSearch/jobsAdvancedSearch.component';
 import {UsersEditCompanyViewComponent} from './usersEditCompanyView/usersEditCompanyView.component';
+import {APIInterceptor} from './apiInterceptor/apiInterceptor';
 
 @NgModule({
   declarations: [
@@ -111,6 +112,7 @@ import {UsersEditCompanyViewComponent} from './usersEditCompanyView/usersEditCom
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
     { provide: MAT_DATE_LOCALE, useValue: 'de-CH' },
     { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
+    { provide: HTTP_INTERCEPTORS,  useClass: APIInterceptor, multi: true }
     ],
    bootstrap: [AppComponent]
 })

@@ -49,7 +49,7 @@ export class JobEditComponent implements OnInit {
    * Save changed to the Server
    */
   onSave() {
-    this.httpClient.put('http://localhost:3000/jobs/' + this.job.id, {
+    this.httpClient.put('/jobs/' + this.job.id, {
       'title': this.job.title,
       'department': this.job.department,
       'placeOfWork': this.job.placeOfWork,
@@ -74,7 +74,7 @@ export class JobEditComponent implements OnInit {
    * Deletes the Job from the Server
    */
   onDestroy() {
-    this.httpClient.delete('http://localhost:3000/jobs/' + this.job.id, {withCredentials: true}).subscribe(() => {
+    this.httpClient.delete('/jobs/' + this.job.id, {withCredentials: true}).subscribe(() => {
       this.destroy.emit(this.job);
     });
   }
@@ -113,14 +113,14 @@ export class JobEditComponent implements OnInit {
 
   approve() {
     if (AuthService.isModOrAdmin()) {
-      this.httpClient.put('http://localhost:3000/jobs/apply/' + this.job.id, {}, {withCredentials: true}).subscribe(res => {
+      this.httpClient.put('/jobs/apply/' + this.job.id, {}, {withCredentials: true}).subscribe(res => {
         this.job.approved = true;
         this.job.changed = false;
       });
     }
   }
   resetJob() {
-    this.httpClient.put('http://localhost:3000/jobs/reset/' + this.job.id, {}, {withCredentials: true}).subscribe((res: any) => {
+    this.httpClient.put('/jobs/reset/' + this.job.id, {}, {withCredentials: true}).subscribe((res: any) => {
       this.job.changed = false;
       this.job.title = res.title;
       this.job.department = res.department;

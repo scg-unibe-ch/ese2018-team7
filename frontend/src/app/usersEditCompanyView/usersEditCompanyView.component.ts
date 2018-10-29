@@ -23,7 +23,7 @@ export class UsersEditCompanyViewComponent implements OnInit {
 
   onApproveCompany() {
 
-    this.httpClient.put('http://localhost:3000/login/company/accept', {
+    this.httpClient.put('/login/company/accept', {
       'username': this.data.company.username
     }, {withCredentials: true}).subscribe(() => {
       this.data.company.unapprovedChanges = false;

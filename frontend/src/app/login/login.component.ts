@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
    * If the user wants to login with the given credentials
    */
   onLogin() {
-    this.httpClient.get('http://localhost:3000/login/' + this.user.username + '/' + this.user.password, {withCredentials: true}).subscribe(
+    this.httpClient.get('/login/' + this.user.username + '/' + this.user.password, {withCredentials: true}).subscribe(
       (res: User) => {
         console.log(res);
         AuthService.forceUpdate(this.httpClient);

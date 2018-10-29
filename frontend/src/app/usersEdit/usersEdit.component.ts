@@ -33,7 +33,7 @@ export class UsersEditComponent implements OnInit {
 
   ngOnInit() {
     // Load all users from the server
-    this.httpClient.get('http://localhost:3000/login/edit', {withCredentials: true}).subscribe((instances: any) => {
+    this.httpClient.get('/login/edit', {withCredentials: true}).subscribe((instances: any) => {
       this.users = instances.map((instance) => new User(instance.username, '', instance.type, instance.enabled, instance.suspended));
       this.companys = instances.map((instance) =>
         new Company(instance.username, instance.companyName, instance.companyLogo, instance.companyUnapprovedChanges));
@@ -50,7 +50,7 @@ export class UsersEditComponent implements OnInit {
    * If the admin wants to add a new admin
    */
   onCreate(usertype: Usergroup) {
-    this.httpClient.post('http://localhost:3000/login', {
+    this.httpClient.post('/login', {
       'username': this.user.username, 'password': this.user.password, 'type': usertype, 'enabled': 'true'
     }, {withCredentials: true}).subscribe(() => {
       this.user.password = '';
@@ -65,7 +65,7 @@ export class UsersEditComponent implements OnInit {
    */
   onDeleteUser(user: User) {
     if (confirm('Möchtest du diesen Benutzer wirklich löschen?')) {
-      this.httpClient.delete('http://localhost:3000/login/' + user.username, {withCredentials: true}).subscribe(() => {
+      this.httpClient.delete('/login/' + user.username, {withCredentials: true}).subscribe(() => {
         this.users.splice(this.users.indexOf(user), 1);
       });
     }
@@ -78,7 +78,7 @@ export class UsersEditComponent implements OnInit {
    */
   onSuspendUser(user: User) {
     if (confirm('Möchtest du diesen Benutzer und seine Jobs wirklich ' + (user.suspended ? 'reaktivieren' : 'sperren'))) {
-      this.httpClient.put('http://localhost:3000/login/suspend/', {
+      this.httpClient.put('/login/suspend/', {
         'username': user.username
       }, {withCredentials: true}).subscribe((res: any) => {
         user.suspended = res.suspended;
@@ -90,7 +90,7 @@ export class UsersEditComponent implements OnInit {
    * If the admin accepts an employer
    */
   onAcceptUser(user: User) {
-    this.httpClient.put('http://localhost:3000/login/accept', {
+    this.httpClient.put('/login/accept', {
       'username': user.username
     }, {withCredentials: true}).subscribe(() => {
       user.enabled = true;
@@ -102,7 +102,7 @@ export class UsersEditComponent implements OnInit {
    */
   onResetPassword(user: User) {
     console.log(user);
-    this.httpClient.put('http://localhost:3000/login/setPassword', {
+    this.httpClient.put('/login/setPassword', {
       'username': user.username, 'password': user.password
     }, {withCredentials: true}).subscribe(() => {
       user.password = '';

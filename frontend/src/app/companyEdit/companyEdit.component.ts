@@ -30,7 +30,7 @@ export class CompanyEditComponent implements OnInit {
 
 
   ngOnInit() {
-    this.httpClient.get('http://localhost:3000/login/company', {withCredentials: true}).subscribe((res: any) => {
+    this.httpClient.get('/login/company', {withCredentials: true}).subscribe((res: any) => {
       this.company = new Company(res.username, res.name, res.logo, res.unapprovedChanges);
     });
   }
@@ -41,7 +41,7 @@ export class CompanyEditComponent implements OnInit {
   onSave() {
 
     // Save to Server
-    this.httpClient.put('http://localhost:3000/login/company', {
+    this.httpClient.put('/login/company', {
       'name': this.company.name,
       'logo': this.company.logo
     }, {withCredentials: true}).subscribe(res => {
@@ -50,7 +50,7 @@ export class CompanyEditComponent implements OnInit {
 
   }
   onReset() {
-    this.httpClient.put('http://localhost:3000/login/company/reset', {}, {withCredentials: true}).subscribe((res: any) => {
+    this.httpClient.put('/login/company/reset', {}, {withCredentials: true}).subscribe((res: any) => {
       this.company = new Company(res.username, res.name, res.logo, res.unapprovedChanges);
     });
   }

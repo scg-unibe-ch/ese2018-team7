@@ -26,7 +26,7 @@ export class AuthService {
    */
   static async update(httpClient: HttpClient) {
     if (!this.set) {
-      const response: any = await httpClient.get('http://localhost:3000/login/check', {withCredentials: true}).toPromise();
+      const response: any = await httpClient.get('/login/check', {withCredentials: true}).toPromise();
       if (response.value === 'true') {
         this.usergroup = response.type;
         this.username = response.username;

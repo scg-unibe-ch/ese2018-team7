@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
 import {Skill} from '../skill';
-import {HttpClient} from '@angular/common/http';
 import {JobEditComponent} from '../jobEdit/jobEdit.component';
 
 @Component({
@@ -18,7 +17,7 @@ export class SkillEditComponent implements OnInit {
   @Output()
   destroy = new EventEmitter<Skill>();
 
-  constructor(private httpClient: HttpClient, @Inject(JobEditComponent) private job: JobEditComponent) {
+  constructor(@Inject(JobEditComponent) private job: JobEditComponent) {
   }
 
   ngOnInit() {
@@ -28,10 +27,6 @@ export class SkillEditComponent implements OnInit {
    * Save the changed on the server
    */
   onSave() {
-   /* this.httpClient.put('http://localhost:3000/skills/' + this.skill.id, {
-      'name': this.skill.name, 'jobId': this.skill.jobId
-    }, {withCredentials: true}).subscribe();
-*/
     this.job.onSave();
   }
 
@@ -40,10 +35,6 @@ export class SkillEditComponent implements OnInit {
    */
   onDestroy() {
     this.job.onSkillDestroy(this.skill);
-    /*this.httpClient.delete('http://localhost:3000/skills/' + this.skill.id, {withCredentials: true}).subscribe(() => {
-      this.job.onSave();
-      this.destroy.emit(this.skill);
-    });*/
   }
 
 }
