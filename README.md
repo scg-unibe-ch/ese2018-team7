@@ -13,7 +13,7 @@ The system uses a SQLite Database
 
 ## Technologies
 We use a number of different technologies. Some of them are:
-- [Typescript](https://www.typescriptlang.org): Everything is written in Txpescript
+- [Typescript](https://www.typescriptlang.org): Everything is written in Typescript
 - [Angular 6](https://angular.io/): The frontend is build with Angular
 - [Angular Material](https://material.angular.io/): The design is heavily based on Angular Material
 - [Moment.js](https://momentjs.com/docs/): All the time/date stuff is managed with Moment
