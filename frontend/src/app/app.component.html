@@ -24,7 +24,7 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span>Job Portal</span>
-      <img src="../assets/mibLogo-large.png" height="50px">
+      <img class='mibLogo' src="../assets/mibLogo-large.png" height="50px" />
       <span class="fill-space"></span>
       <div *ngFor="let state of login">
       <a mat-button *ngIf="state.condition()" routerLink="{{state.link}}" routerLinkActive="active" aria-label="Login / Logout">
