@@ -65,11 +65,50 @@ export class RegistrationComponent implements OnInit {
       reader.readAsDataURL(event.target.files[0]); // read file as data url
 
       reader.onload = (res: any) => { // called once readAsDataURL is completed
-        console.log(res.target.result);
-        this.company.logo = res.target.result;
+
+        // Create an image element and assign the uploaded image
+        const img = new Image();
+        img.src = res.target.result;
+        img.onload = () => {
+
+          // Get dimensions
+          let width = img.width;
+          let height = img.height;
+
+          // Define max hight and width
+          const MAX_WIDTH = 400;
+          const MAX_HEIGHT = 200;
+
+          // Calculate new size
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height *= MAX_WIDTH / width;
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width *= MAX_HEIGHT / height;
+              height = MAX_HEIGHT;
+            }
+          }
+
+          // Create Canvas and get context
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          // Apply new size
+          canvas.width = width;
+          canvas.height = height;
+
+          // Draw image again, but now with new dimensions
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // Get the data from the canvas
+          this.company.logo = canvas.toDataURL('image/png');
+        };
       };
     }
   }
+
   onGenerateLogo() {
     // create canvas element
     const canvas = document.createElement('canvas');
