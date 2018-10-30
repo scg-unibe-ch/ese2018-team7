@@ -70,6 +70,7 @@ export class RegistrationComponent implements OnInit {
       };
     }
   }
+
   onGenerateLogo() {
     // create canvas element
     const canvas = document.createElement('canvas');
