@@ -5,20 +5,29 @@ import {User} from '../user';
 import {AuthService} from '../auth/auth.service';
 import {Usergroup} from '../usergroup';
 import {Company} from '../company';
-import {UsersEditCompanyViewComponent} from '../usersEditCompanyView/usersEditCompanyView.component';
 import {MatDialog} from '@angular/material';
+import {UsersEdit} from './usersEdit.interface';
+import {UsersEditDataProvider} from './usersEdit.dataProvider';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-users-edit',
   templateUrl: './usersEdit.component.html',
-  styleUrls: ['./usersEdit.component.css']
+  styleUrls: ['./usersEdit.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0', maxHeight: '0px', display: 'none'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 /**
  * Component to allow admins to manage the users
  */
 export class UsersEditComponent implements OnInit {
 
-  displayedColumns: string[] = ['username', 'type', 'password', 'action'];
+  displayedColumns: string[] = ['username', 'type'];
 
   // Default new admin
   user: User = new User( '', '', 0, true);
@@ -26,6 +35,8 @@ export class UsersEditComponent implements OnInit {
   // Array of users
   users: User[] = [];
   companys: Company[] = [];
+  dataProvider: UsersEditDataProvider;
+  expandedElement: UsersEdit;
 
   constructor(private httpClient: HttpClient, private router: Router, private dialog: MatDialog) {
     AuthService.allowOnlyModsAndAdmin(httpClient, router);
@@ -37,16 +48,26 @@ export class UsersEditComponent implements OnInit {
       this.users = instances.map((instance) => new User(instance.username, '', instance.type, instance.enabled, instance.suspended));
       this.companys = instances.map((instance) =>
         new Company(instance.username, instance.companyName, instance.companyLogo, instance.companyUnapprovedChanges));
+
+      this.updateDataProvider();
     });
+  }
+
+  updateDataProvider() {
+    const data: UsersEdit[] = [];
+    this.users.map((u) => {
+      const comp: Company = this.companys.filter(e => e.username === u.username)[0];
+      data.push({user: u, company: comp});
+    });
+    this.dataProvider = new UsersEditDataProvider(data);
+
   }
 
   onCreateAdmin() {
     this.onCreate(Usergroup.administrator);
-    location.reload();
   }
   onCreateMod() {
     this.onCreate(Usergroup.moderator);
-    location.reload();
   }
   /**
    * If the admin wants to add a new admin
@@ -58,6 +79,7 @@ export class UsersEditComponent implements OnInit {
       this.user.password = '';
       this.users.push(this.user);
       this.user = new User( '', '',  0, true);
+      this.updateDataProvider();
     });
   }
 
@@ -69,9 +91,9 @@ export class UsersEditComponent implements OnInit {
     if (confirm('Möchtest du diesen Benutzer wirklich löschen?')) {
       this.httpClient.delete('/login/' + user.username, {withCredentials: true}).subscribe(() => {
         this.users.splice(this.users.indexOf(user), 1);
+        this.updateDataProvider();
       });
     }
-    location.reload();
   }
 
 
@@ -85,8 +107,8 @@ export class UsersEditComponent implements OnInit {
         'username': user.username
       }, {withCredentials: true}).subscribe((res: any) => {
         user.suspended = res.suspended;
+        this.updateDataProvider();
       });
-      location.reload();
     }
   }
 
@@ -98,8 +120,8 @@ export class UsersEditComponent implements OnInit {
       'username': user.username
     }, {withCredentials: true}).subscribe(() => {
       user.enabled = true;
+      this.updateDataProvider();
     });
-    location.reload();
   }
 
   /**
@@ -111,6 +133,7 @@ export class UsersEditComponent implements OnInit {
       'username': user.username, 'password': user.password
     }, {withCredentials: true}).subscribe(() => {
       user.password = '';
+      this.updateDataProvider();
     });
   }
 
@@ -127,14 +150,15 @@ export class UsersEditComponent implements OnInit {
   isEmployer(user) {
     return user.type === Usergroup.employer;
   }
-  openCompanyView(username) {
-    const c = this.companys.filter(e => e.username === username);
-    const dialogRef = this.dialog.open(UsersEditCompanyViewComponent, {
-      minWidth: '90%',
-      minHeight: '90%',
-      data: {
-        company: c[0],
-      }
+
+  onApproveCompany(company: Company) {
+
+    this.httpClient.put('/login/company/accept', {
+      'username': company.username
+    }, {withCredentials: true}).subscribe(() => {
+      company.unapprovedChanges = false;
     });
+
   }
+
 }
