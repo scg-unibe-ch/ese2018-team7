@@ -2,6 +2,10 @@
   color: var(--warn);
 }
 
+.fullsize {
+  width: calc(100% - 70px);
+  height: calc(100% - 70px);
+}
 /* Custom ng5 slider */
 
 ::ng-deep .custom-slider .ng5-slider .ng5-slider-bar {

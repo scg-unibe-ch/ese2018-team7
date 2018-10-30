@@ -1,7 +1,7 @@
 <h1>{{job.title}}</h1>
 <hr>
 <p><span class="smalltext">Bei {{job.company.name}} &#x25BA; {{job.department}}</span><br><br>
-<img [src]="job.company.logo" height="200" class="company-logo">
+<img [src]="job.company.logo" class="company-logo">
   Stellenantritt am {{formattedStartOfWork}} in {{job.placeOfWork}} mit einem {{job.workload}}% Pensum.<br>
   Diese Stelle ist {{job.contractType=='temporary'?'befristet':'unbefristet'}}.<br><br>
 Diese Anforderungen solltest du mitbringen:<br>

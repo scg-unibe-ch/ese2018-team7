@@ -1,3 +1,13 @@
 .warning {
   color: var(--warn);
 }
+
+.header-alignment .mat-expansion-panel-header-title,
+.header-alignment .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.header-alignment .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}

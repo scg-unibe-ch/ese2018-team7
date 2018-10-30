@@ -1,9 +1,9 @@
-.company-logo {
-  float:right;
-  margin-outside: 20px;
-  margin-right: -10px;
+.mat-card-header .mat-card-title {
+  font-size: 18px;
 }
 
-.smalltext {
-  font-size: 12px;
+.company-logo {
+  max-height: 30px;
+  max-width: 100%;
+  padding-top: 10px;
 }

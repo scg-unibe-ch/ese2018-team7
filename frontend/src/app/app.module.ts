@@ -22,6 +22,9 @@ import {
   MatSortModule,
   MatPaginatorModule,
   MatRadioModule,
+  MatExpansionModule,
+  MatStepperModule,
+  MatGridListModule,
 } from '@angular/material';
 
 import { LayoutModule } from '@angular/cdk/layout';
@@ -101,6 +104,9 @@ import {APIInterceptor} from './apiInterceptor/apiInterceptor';
     MatSortModule,
     ReactiveFormsModule,
     MatRadioModule,
+    MatExpansionModule,
+    MatStepperModule,
+    MatGridListModule,
     CdkTableModule,
   ],
   entryComponents: [

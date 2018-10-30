@@ -1,6 +1,9 @@
-<mat-form-field ngif="allowCreateJob();">
+<mat-form-field *ngIf="allowCreateJob()">
   <input matInput placeholder="Job erstellen" [(ngModel)]="job.title" name="title">
 </mat-form-field>
-<button ngif="allowCreateJob();" mat-button (click)="onJobCreate()">Job erstellen</button>
-<app-job-edit [job]="job" (destroy)="onJobDestroy($event)" *ngFor="let job of jobs"></app-job-edit>
+<button *ngIf="allowCreateJob()" mat-button (click)="onJobCreate()">Job erstellen</button>
+<mat-accordion class="header-alignment">
+  <app-job-edit [job]="job" (destroy)="onJobDestroy($event)" *ngFor="let job of jobs">
+  </app-job-edit>
+</mat-accordion>
 <h2 class="warning">{{msg}}</h2>

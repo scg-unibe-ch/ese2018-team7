@@ -7,6 +7,9 @@ import {Company} from '../company';
 import {JobViewDetailsComponent} from '../jobViewDetails/jobViewDetails.component';
 import {MatDialog} from '@angular/material';
 import {JobsAdvancedSearchComponent} from '../jobsAdvancedSearch/jobsAdvancedSearch.component';
+import {Observable} from 'rxjs';
+import {BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-jobs-view',
@@ -28,6 +31,21 @@ export class JobsViewComponent implements OnInit {
   // Easy Search query variable
   searchParam = '';
 
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches)
+    );
+
+  isTablet$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Tablet)
+    .pipe(
+      map(result => result.matches)
+    );
+
+  isWeb$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Web)
+    .pipe(
+      map(result => result.matches)
+    );
+
   // Advanced Search variables
   advSearchTitle = '';
   advSearchCompany = '';
@@ -42,7 +60,7 @@ export class JobsViewComponent implements OnInit {
 
   searched = false;
 
-  constructor(private httpClient: HttpClient, private dialog: MatDialog) {
+  constructor(private httpClient: HttpClient, private dialog: MatDialog, private breakpointObserver: BreakpointObserver) {
   }
 
   ngOnInit() {
@@ -70,6 +88,7 @@ export class JobsViewComponent implements OnInit {
         this.msg = '';
       }
       this.advSearchRangeRefresh.emit();
+
 
     });
   }

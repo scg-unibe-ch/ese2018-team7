@@ -1,9 +1,9 @@
 .mat-slider {
-  width: 180px;
+  width: 100%;
 }
 
 .datepicker {
-  width: 180px;
+  width: 100%;
 }
 
 .warning {
@@ -16,3 +16,24 @@
   resize: none;
   overflow: hidden;
 }
+
+.header-alignment .mat-expansion-panel-header-title,
+.header-alignment .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.header-alignment .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.inputForm {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.input-full-width {
+  width: 100%;
+}
+

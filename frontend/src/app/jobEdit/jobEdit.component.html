@@ -1,32 +1,41 @@
-<mat-card>
-  <mat-list-item><a *ngIf="!job.approved" class="warning">{{'Job ist noch ungeprüft!'}}</a>
-  <a *ngIf="job.approved&&job.changed" class="warning">{{'Ungeprüfte Änderungen!'}}</a></mat-list-item>
-  <br *ngIf="!job.approved||job.changed">
-  <mat-form-field>
+<mat-expansion-panel class="header-alignment" hideToggle>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      {{job.title}}
+    </mat-panel-title>
+    <mat-panel-description>
+    <span *ngIf="!job.approved" class="warning">{{'Job ist noch ungeprüft!'}}</span>
+    <span *ngIf="job.approved&&job.changed" class="warning">{{'Ungeprüfte Änderungen!'}}</span>
+    <span *ngIf="job.approved&&!job.changed"></span>
+    <mat-icon>work</mat-icon>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <div class="inputForm">
+  <mat-form-field class="input-full-width">
     <input matInput placeholder="Titel" [(ngModel)]="job.title" name="title" (ngModelChange)="onSave()">
   </mat-form-field>
-  <button mat-button (click)="onDestroy()" color="warn">Job löschen</button>
-  <button *ngIf="job.changed" mat-button (click)="resetJob()">Änderungen zurücksetzen</button>
-  <button *ngIf="isAdmin()&&!job.approved" mat-button (click)="approve()">Job akzeptieren</button>
-  <button *ngIf="isAdmin()&&job.approved&&job.changed" mat-button (click)="approve()">Änderungen akzeptieren</button>
   <br>
-  <mat-form-field>
+  <mat-form-field class="input-full-width">
     <input matInput placeholder="Abteilung" [(ngModel)]="job.department" name="departement" (ngModelChange)="onSave()">
   </mat-form-field>
   <br>
-  <mat-form-field>
+  <mat-form-field class="input-full-width">
     <input matInput placeholder="Arbeitsort" [(ngModel)]="job.placeOfWork" name="placeofwork" (ngModelChange)="onSave()">
   </mat-form-field>
   <br>
-  <mat-radio-group name="contracttype" [(ngModel)]="job.contractType" (ngModelChange)="onSave()">
-    <mat-radio-button value="temporary">
+  <div flex="10" layout layout-align="center center">
+    <span class="md-body-1">Vertrag</span>
+  </div>
+  <mat-radio-group name="contracttype" [(ngModel)]="job.contractType" (ngModelChange)="onSave()" class="input-full-width">
+    <mat-radio-button value="temporary" color="primary">
       befristet
     </mat-radio-button>
-    <mat-radio-button value="unlimited">
+    <br>
+    <mat-radio-button value="unlimited" color="primary">
       unbefristet
     </mat-radio-button>
   </mat-radio-group>
-  <br>
+  <br><br>
   <mat-form-field class="datepicker">
    <input matInput [min]='today' [matDatepicker]="startWork" [(ngModel)]="job.startOfWork" placeholder="Stellenantritt" (focus)="startWork.open()" (dateInput)="onSave()" (dateChange)="onSave()">
     <mat-datepicker #startWork touchUi startView="month" name="startofwork" ngDefaultControl></mat-datepicker>
@@ -34,11 +43,11 @@
   </mat-form-field>
   <br>
   <div flex="10" layout layout-align="center center">
-    <span class="md-body-1">Pensum</span>
+  <span class="md-body-1">Pensum</span>
   </div>
   <mat-slider color="primary" min="0" max="100" step="5" value="100" tickInterval="2" thumbLabel [displayWith]="percentageLabel" name="workload" [(ngModel)]="job.workload" (ngModelChange)="onSave()"></mat-slider>
   <br>
-  <mat-form-field>
+  <mat-form-field class="input-full-width">
   <textarea autosize matInput placeholder="Detaillierte Beschreibung" [(ngModel)]="job.description" name="description" (ngModelChange)="onSave()" class="textarea"></textarea>
   </mat-form-field>
   <br>
@@ -47,12 +56,13 @@
       <app-skill-edit [skill]="skill" (destroy)="onSkillDestroy($event)"></app-skill-edit>
     </mat-list-item>
   </mat-list>
+  <br>
   <mat-form-field>
     <input matInput placeholder="Anforderung" [(ngModel)]="skill.name" name="name">
   </mat-form-field>
-  <button mat-button (click)="onSkillCreate()">Zusätzliche Anforderung</button>
+  <button mat-icon-button (click)="onSkillCreate()"><mat-icon aria-label="Zusätzliche Anforderung">add</mat-icon></button>
   <br>
-  <mat-form-field>
+  <mat-form-field class="input-full-width">
     <input matInput type="tel" [formControl]="phoneFormControl" placeholder="Telefon" [(ngModel)]="job.phone" name="phone" (ngModelChange)="onSave()" required>
     <mat-error *ngIf="phoneFormControl.hasError('pattern') && !phoneFormControl.hasError('required')">
       Ungültige Telefonnummer!
@@ -62,7 +72,7 @@
     </mat-error>
   </mat-form-field>
   <br>
-  <mat-form-field>
+  <mat-form-field class="input-full-width">
     <input matInput type="email" [formControl]="emailFormControl" placeholder="Email" [(ngModel)]="job.email" name="email" (ngModelChange)="onSave()" required>
     <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
       Ungültige Email-Adresse!
@@ -72,7 +82,7 @@
     </mat-error>
   </mat-form-field>
   <br>
-  <mat-form-field>
+  <mat-form-field class="input-full-width">
     <textarea autosize matInput placeholder="Weitere Kontaktinformationen" [(ngModel)]="job.contactInfo" name="contactinfo" (ngModelChange)="onSave()" class="textarea"></textarea>
   </mat-form-field>
   <br>
@@ -87,5 +97,11 @@
     <mat-datepicker type="datetime" [clockStep]="5" [twelveHour]="false" #endPublication touchUi startView="month" name="endofpublication" ngDefaultControl></mat-datepicker>
     <mat-datepicker-toggle matSuffix [for]="endPublication"></mat-datepicker-toggle>
   </mat-form-field>
-  <hr>
-</mat-card>
+  </div>
+  <mat-action-row>
+    <button mat-button (click)="onDestroy()" color="warn">Job löschen</button>
+    <button *ngIf="job.changed" mat-button (click)="resetJob()"><mat-icon>undo</mat-icon></button>
+    <button *ngIf="isAdmin()&&!job.approved" mat-button (click)="approve()">Job akzeptieren</button>
+    <button *ngIf="isAdmin()&&job.approved&&job.changed" mat-button (click)="approve()"><mat-icon>done</mat-icon></button>
+  </mat-action-row>
+</mat-expansion-panel>
