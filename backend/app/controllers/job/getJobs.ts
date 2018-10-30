@@ -13,8 +13,9 @@ module.exports = asyncRoute(async (req: Request, res: Response) => {
   // Add % to create full text search on title
   const title = (req.query.title != null) ? '%' + req.query.title + '%' : '%';
 
-  // Add % to create full text search on company
+  // Add % to create full text search on company and departement
   const company = (req.query.company != null) ? '%' + req.query.company + '%' : '%';
+  const department = (req.query.department != null) ? '%' + req.query.department + '%' : '%';
 
   // Default start after is 1.1.1970
   const startAfter = (req.query.startAfter != null) ? req.query.startAfter : 0;
@@ -31,7 +32,7 @@ module.exports = asyncRoute(async (req: Request, res: Response) => {
   const instances = await Job.findAll({
     where: Sequelize.and(
       {'title': {like: title}},
-      {'department': {like: company}},
+      {'department': {like: department}},
       {'startOfWork': {gte: startAfter}},
       {'startOfWork': {lte: startBefore}},
       {'workload': {gte: workloadGt}},
@@ -43,7 +44,10 @@ module.exports = asyncRoute(async (req: Request, res: Response) => {
     include: [{
       model: User,
       where: {suspended: false},
-      include: [{model: Company}]
+      include: [{
+        model: Company,
+        where: {name: {like: company}},
+      }]
     }]
   });
 

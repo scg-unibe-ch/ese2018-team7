@@ -31,6 +31,7 @@ export class JobsViewComponent implements OnInit {
   // Advanced Search variables
   advSearchTitle = '';
   advSearchCompany = '';
+  advSearchDepartment = '';
   advSearchStartAfter: Moment =  moment().subtract(1, 'w');
   advSearchStartBefore: Moment = moment().add(1, 'y');
   advSearchWorkLoadGt = 0;
@@ -106,6 +107,7 @@ export class JobsViewComponent implements OnInit {
     this.httpClient.get('/jobs/?' +
       'title=' + this.advSearchTitle + '&' +
       'company=' + this.advSearchCompany + '&' +
+      'department=' + this.advSearchDepartment + '&' +
       'startAfter=' + this.advSearchStartAfter.unix() + '&' +
       'startBefore=' + this.advSearchStartBefore.unix() + '&' +
       'workloadGt=' + this.advSearchWorkLoadGt + '&' +
@@ -140,6 +142,7 @@ export class JobsViewComponent implements OnInit {
     this.searchParam = '';
     this.advSearchTitle = '';
     this.advSearchCompany = '';
+    this.advSearchDepartment = '';
     this.advSearchStartAfter =  moment().subtract(1, 'w');
     this.advSearchStartBefore = moment().add(1, 'y');
     this.advSearchWorkLoadGt = 0;
@@ -178,6 +181,7 @@ export class JobsViewComponent implements OnInit {
       data: {
         advSearchTitle: this.advSearchTitle,
         advSearchCompany: this.advSearchCompany,
+        advSearchDepartment: this.advSearchDepartment,
         advSearchStartAfter: this.advSearchStartAfter,
         advSearchStartBefore: this.advSearchStartBefore,
         advSearchWorkLoadGt: this.advSearchWorkLoadGt,
@@ -191,6 +195,7 @@ export class JobsViewComponent implements OnInit {
       if (result != null) {
         this.advSearchTitle = result.advSearchTitle;
         this.advSearchCompany = result.advSearchCompany;
+        this.advSearchDepartment = result.advSearchDepartment;
         this.advSearchStartAfter = result.advSearchStartAfter;
         this.advSearchStartBefore = result.advSearchStartBefore;
         this.advSearchWorkLoadGt = result.advSearchWorkLoadGt;

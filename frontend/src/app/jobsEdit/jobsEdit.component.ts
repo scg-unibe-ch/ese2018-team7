@@ -85,4 +85,7 @@ export class JobsEditComponent implements OnInit {
     this.jobs.splice(this.jobs.indexOf(job), 1);
   }
 
+  allowCreateJob() {
+    return AuthService.isEmployer();
+  }
 }
