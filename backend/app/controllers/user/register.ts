@@ -23,7 +23,7 @@ module.exports = asyncRoute(async (req: Request, res: Response) => {
   const instance = new User();
 
   instance.createUser({
-    'username': req.body.username,
+    'username': req.body.username.toLowerCase(),
     'password': req.body.password,
     'type': req.body.type,
     'enabled': req.body.enabled
@@ -31,7 +31,7 @@ module.exports = asyncRoute(async (req: Request, res: Response) => {
 
 
   // Check if that user already exists
-  const checkInstance = await User.findByPrimary(req.body.username);
+  const checkInstance = await User.findByPrimary(req.body.username.toLowerCase());
 
   // Reject if user exists
   if (checkInstance != null) {

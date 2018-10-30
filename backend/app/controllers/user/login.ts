@@ -5,7 +5,7 @@ import {asyncRoute} from '../../helper/async.helper';
 
 module.exports = asyncRoute(async (req: Request, res: Response) => {
 
-  const username = req.params.user;
+  const username = req.params.user.toLowerCase();
   const instance = await User.findByPrimary(username);
 
   if (instance == null) {
