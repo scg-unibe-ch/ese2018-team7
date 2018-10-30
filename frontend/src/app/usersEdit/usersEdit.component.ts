@@ -42,9 +42,11 @@ export class UsersEditComponent implements OnInit {
 
   onCreateAdmin() {
     this.onCreate(Usergroup.administrator);
+    location.reload();
   }
   onCreateMod() {
     this.onCreate(Usergroup.moderator);
+    location.reload();
   }
   /**
    * If the admin wants to add a new admin
@@ -69,6 +71,7 @@ export class UsersEditComponent implements OnInit {
         this.users.splice(this.users.indexOf(user), 1);
       });
     }
+    location.reload();
   }
 
 
@@ -83,6 +86,7 @@ export class UsersEditComponent implements OnInit {
       }, {withCredentials: true}).subscribe((res: any) => {
         user.suspended = res.suspended;
       });
+      location.reload();
     }
   }
 
@@ -95,6 +99,7 @@ export class UsersEditComponent implements OnInit {
     }, {withCredentials: true}).subscribe(() => {
       user.enabled = true;
     });
+    location.reload();
   }
 
   /**
