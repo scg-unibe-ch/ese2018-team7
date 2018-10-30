@@ -188,14 +188,16 @@ export class JobsViewComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: any) => {
       console.log('The dialog was closed');
-      this.advSearchTitle = result.advSearchTitle;
-      this.advSearchCompany = result.advSearchCompany;
-      this.advSearchStartAfter =  result.advSearchStartAfter;
-      this.advSearchStartBefore = result.advSearchStartBefore;
-      this.advSearchWorkLoadGt = result.advSearchWorkLoadGt;
-      this.advSearchWorkLoadLt = result.advSearchWorkLoadLt;
-      if (result.doSearch) {
-        this.onAdvancedSearch();
+      if (result != null) {
+        this.advSearchTitle = result.advSearchTitle;
+        this.advSearchCompany = result.advSearchCompany;
+        this.advSearchStartAfter = result.advSearchStartAfter;
+        this.advSearchStartBefore = result.advSearchStartBefore;
+        this.advSearchWorkLoadGt = result.advSearchWorkLoadGt;
+        this.advSearchWorkLoadLt = result.advSearchWorkLoadLt;
+        if (result.doSearch) {
+          this.onAdvancedSearch();
+        }
       }
     });
   }
