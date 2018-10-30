@@ -1,13 +1,15 @@
 
 <mat-card>
-  <h2 class="error-text" *ngIf="company.unapprovedChanges">There are unapproved changes!</h2>
+  <h2 class="error-text" *ngIf="company.unapprovedChanges">Ungeprüfte Änderungen!</h2>
   <mat-form-field>
-    <input matInput placeholder="Company Name" [(ngModel)]="company.name" name="name">
+    <input matInput placeholder="Unternehmen" [(ngModel)]="company.name" name="name">
   </mat-form-field>
   <img *ngIf="company.logo!=''" [src]="company.logo" height="150" class="company-logo"> <br/>
-  <label for="logoUpload" matTooltip="Upload a logo for your company"><mat-icon>add_a_photo</mat-icon></label>
+  <label for="logoUpload" matTooltip="Unternehmenslogo hochladen"><mat-icon>add_a_photo</mat-icon></label>
   <input id="logoUpload" type='file' style="display:none;" (change)="onSelectLogo($event)">
   <br>
-  <button mat-button (click)="onSave()">Save</button>
-  <button *ngIf="company.unapprovedChanges" mat-button (click)="onReset()" color="warn">Reset Changes</button>
+  <button mat-button (click)="onSave()">Speichern</button>
+  <button mat-icon-button *ngIf="company.unapprovedChanges" (click)="onReset()" color="warn">
+    <mat-icon>undo</mat-icon>
+  </button>
 </mat-card>
