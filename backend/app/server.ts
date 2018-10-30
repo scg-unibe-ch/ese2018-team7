@@ -11,7 +11,6 @@ import {User} from './models/user.model';
 import {Company} from './models/company.model';
 import {Usergroup} from './enums/usergroup.enum';
 import {MainController} from './controllers';
-import {Func} from 'continuation-local-storage';
 
 // Set Database
 const sequelize =  new Sequelize({
@@ -36,22 +35,13 @@ app.use(ExpressSession({
   saveUninitialized: true
 }));
 
-// const whitelist = ['http://example1.com', 'http://example2.com'];
-
 app.use(cors(function (req: any, callback: Function) {
 
   callback(null, {
     origin: true,
     credentials: true,
   });
-  /*
-  let corsOptions;
-  if (whitelist.indexOf(req.header('Origin')) !== -1) {
-    corsOptions = { origin: true }; // reflect (enable) the requested origin in the CORS response
-  } else {
-    corsOptions = { origin: false }; // disable CORS for this request
-  }
-  callback(null, corsOptions); // callback expects two parameters: error and options*/
+
 }));
 
 // define the port the express app will listen on
@@ -59,22 +49,6 @@ let port = 3000;
 if (process.env.PORT !== undefined) {
   port = parseInt(process.env.PORT);
 }
-
-/*
-app.use(function (req, res, next) {
-  if (req.header.origin == null) {
-    req.header['origin'] = '*';
-  }
-  // Mustn't be '*' because then credentials are not working! need to be exact protocol, hostname and port
-  res.header('Access-Control-Allow-Origin',  (req.headers.origin).toString());
-  res.header('Access-Control-Allow-Credentials', 'true');
-
-  // Must be explicit, because * seems not to be allowed
-  res.header('Access-Control-Allow-Methods', '"GET, POST, PUT, DELETE');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
-});
-*/
 
 // Add mai controller
 app.use('/', MainController);
