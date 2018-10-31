@@ -1,4 +1,4 @@
-#content{
+.content{
   padding: 10px;
 }
 
@@ -7,7 +7,6 @@
 }
 
 .sidenav {
-  width: 150px;
   background-color: ghostwhite;
 }
 
