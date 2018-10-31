@@ -35,20 +35,24 @@ export class LoginComponent implements OnInit {
    * If the user wants to login with the given credentials
    */
   onLogin() {
-    this.httpClient.get('/login/' + this.user.username + '/' + this.user.password, {withCredentials: true}).subscribe(
-      (res: User) => {
-        console.log(res);
-        AuthService.forceUpdate(this.httpClient);
-        this.router.navigate(['/']);
-      },
-      err => {
-        console.log('Error occurred:' + err);
-        this.errorMessage = err.error.errorMessage;
-        if (err.error.message != null) {
-          alert(err.error.message);
+    if (this.checkForCookie()) {
+      this.httpClient.get('/login/' + this.user.username + '/' + this.user.password, {withCredentials: true}).subscribe(
+        (res: User) => {
+          console.log(res);
+          AuthService.forceUpdate(this.httpClient);
+          this.router.navigate(['/']);
+        },
+        err => {
+          console.log('Error occurred:' + err);
+          this.errorMessage = err.error.errorMessage;
+          if (err.error.message != null) {
+            alert(err.error.message);
+          }
         }
-      }
-    );
+      );
+    } else {
+      alert('Du musst zuerst Cookies akzeptieren!');
+    }
   }
 
   /**
@@ -56,6 +60,21 @@ export class LoginComponent implements OnInit {
    */
   toRegistration() {
     this.router.navigate(['/registration']);
+  }
+
+  checkForCookie(): boolean {
+    const name = 'cookieconsent_status=';
+    const ca = document.cookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) === ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) === 0) {
+        return true;
+      }
+    }
+    return false;
   }
 
 }
