@@ -20,11 +20,13 @@
 .fill-space {
   flex: 1 1 auto;
 }
+
 .mibLogo{
   content: url('../assets/mibLogo-large.png');
   height: 50px;
   width: auto;
 }
+
 @media only screen and (max-width: 670px) {
   .mibLogo {
     content: url('../assets/mibLogo-small.png');

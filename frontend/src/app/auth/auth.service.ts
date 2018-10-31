@@ -49,7 +49,7 @@ export class AuthService {
   }
 
   /**
-   * If the current user isn't loggedin -> redirect to the login-page
+   * If the current user isn't logged in -> redirect to the login-page
    */
   static async allowOnlyLogin(httpClient: HttpClient, router: Router) {
 
@@ -75,7 +75,7 @@ export class AuthService {
   }
 
   /**
-   * If the current user isn't loggedin at all -> redirect to /
+   * If the current user isn't logged in at all -> redirect to /
    */
   static async allowOnlyPublic(httpClient: HttpClient, router: Router) {
 
@@ -88,7 +88,7 @@ export class AuthService {
   }
 
   /**
-   * If the current user isn't loggedin at all -> redirect to /
+   * If the current user isn't logged in at all -> redirect to /
    */
   static async allowOnlyEmployer(httpClient: HttpClient, router: Router) {
 

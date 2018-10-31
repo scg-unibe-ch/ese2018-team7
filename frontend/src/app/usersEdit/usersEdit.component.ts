@@ -103,7 +103,7 @@ export class UsersEditComponent implements OnInit {
    * @param user
    */
   onSuspendUser(user: User) {
-    if (confirm('Möchtest du diesen Benutzer und seine Jobs wirklich ' + (user.suspended ? 'reaktivieren' : 'sperren'))) {
+    if (confirm('Möchtest du diesen Benutzer und seine Jobs wirklich ' + (user.suspended ? 'reaktivieren' : 'sperren') + '?')) {
       this.httpClient.put('/login/suspend/', {
         'username': user.username
       }, {withCredentials: true}).subscribe((res: any) => {
@@ -136,6 +136,7 @@ export class UsersEditComponent implements OnInit {
       user.password = '';
       this.updateDataProvider();
     });
+    alert('Das Passwort von ' + user.username + ' wurde geändert.');
   }
 
   isAdmin() {
@@ -145,11 +146,17 @@ export class UsersEditComponent implements OnInit {
   getUserTypeString(type: Usergroup): string {
     return Usergroup[type];
   }
+
   isMe(user) {
     return AuthService.isMe(user);
   }
+
   isEmployer(user) {
     return user.type === Usergroup.employer;
+  }
+
+  isUserAdmin(user) {
+    return user.type === Usergroup.administrator;
   }
 
   onApproveCompany(company: Company) {
