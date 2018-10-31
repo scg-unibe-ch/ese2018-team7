@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {debounceTime, map, tap} from 'rxjs/operators';
 import {AuthService} from './auth/auth.service';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
+import {MatSidenav, MatSidenavContainer} from '@angular/material';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,12 @@ import {Router} from '@angular/router';
  * Component with the Head and Menu, merging everything together
  */
 export class AppComponent implements OnInit {
+
+  @ViewChild(MatSidenavContainer)
+  matSidenavContainer: MatSidenavContainer;
+
+  @ViewChild(MatSidenav)
+  matSidenav: MatSidenav;
 
   menus = [
     {link: '/viewJobs', text: 'Job finden', condition: function() {return true; }},
@@ -45,6 +52,12 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.matSidenavContainer._contentMarginChanges.pipe(
+      debounceTime(250), tap(() => {
+        if (this.matSidenav.mode === 'side') {
+          this.matSidenavContainer._contentMargins.left = this.matSidenav._width;
+        }
+      }),
+    ).subscribe();
   }
-
 }
