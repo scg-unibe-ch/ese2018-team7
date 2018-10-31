@@ -77,8 +77,9 @@ export class UsersEditComponent implements OnInit {
       'username': this.user.username, 'password': this.user.password, 'type': usertype, 'enabled': 'true'
     }, {withCredentials: true}).subscribe(() => {
       this.user.password = '';
+      this.user.type = usertype;
       this.users.push(this.user);
-      this.user = new User( '', '',  0, true);
+      this.user = new User( '', '',  Usergroup.moderator, true);
       this.updateDataProvider();
     });
   }
