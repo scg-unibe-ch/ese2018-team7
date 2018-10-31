@@ -1,6 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {Usergroup} from '../usergroup';
+import {Observable, of} from 'rxjs';
 
 /**
  * Provides the components if the user is login or admin and redirects if needed
@@ -10,8 +11,14 @@ export class AuthService {
   private static usergroup = Usergroup.public;
   private static username = '';
   private static set = false;
+  private static observerEl;
+  private static observable: Observable<Boolean> = new Observable(obs => {
+    AuthService.observerEl = obs;
+  });
 
-  constructor() {}
+  constructor() {
+    AuthService.observable = of(AuthService.set);
+  }
 
   /**
    * Forces to ask the server for the current status
@@ -35,6 +42,7 @@ export class AuthService {
         this.username = '';
       }
       this.set = true;
+      this.observerEl.next();
     }
 
     return true;
@@ -126,5 +134,9 @@ export class AuthService {
 
   static isMe(user) {
     return user === this.username;
+  }
+
+  static observer(): Observable<Boolean> {
+    return this.observable;
   }
 }

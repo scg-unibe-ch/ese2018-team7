@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import {debounceTime, map, tap} from 'rxjs/operators';
 import {AuthService} from './auth/auth.service';
@@ -49,13 +49,19 @@ export class AppComponent implements OnInit {
     router.events.subscribe(() => {
       AuthService.forceUpdate(httpClient);
     });
+
+    AuthService.observer().subscribe(() => {
+      if (this.matSidenavContainer !== undefined && this.matSidenav !== undefined && this.matSidenav.mode === 'side') {
+        this.matSidenavContainer._contentMargins.left = this.matSidenav._width - 1;
+      }
+    });
   }
 
   ngOnInit() {
     this.matSidenavContainer._contentMarginChanges.pipe(
       debounceTime(250), tap(() => {
         if (this.matSidenav.mode === 'side') {
-          this.matSidenavContainer._contentMargins.left = this.matSidenav._width;
+          this.matSidenavContainer._contentMargins.left = this.matSidenav._width - 1;
         }
       }),
     ).subscribe();
