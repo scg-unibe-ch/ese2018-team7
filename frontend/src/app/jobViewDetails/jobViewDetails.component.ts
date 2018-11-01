@@ -16,6 +16,7 @@ export class JobViewDetailsComponent implements OnInit {
   @Input()
     job: Job;
   formattedStartOfWork: string;
+  formattedEndOfWork: string;
   formattedDescription: string;
   obscuredMail: string;
 
@@ -25,6 +26,7 @@ export class JobViewDetailsComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<JobViewDetailsComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
     this.job = this.data.job;
     this.formattedStartOfWork = this.data.formattedStartOfWork;
+    this.formattedEndOfWork = this.data.formattedEndOfWork;
     this.formattedDescription = this.data.formattedDescription;
     this.obscuredMail = this.data.obscuredMail;
   }

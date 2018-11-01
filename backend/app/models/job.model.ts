@@ -20,6 +20,9 @@ export class Job extends Model<Job> {
   @Column
   startOfWork!: number;
 
+  @Column
+  endOfWork!: number;
+
   @Column(DataType.INTEGER)
   workload!: number;
 
@@ -76,6 +79,7 @@ export class Job extends Model<Job> {
       'placeOfWork': this.placeOfWork,
       'contractType': this.contractType,
       'startOfWork': this.startOfWork,
+      'endOfWork': this.endOfWork,
       'workload': this.workload,
       'description': this.description,
       'skills': this.skills,
@@ -100,6 +104,7 @@ export class Job extends Model<Job> {
       'placeOfWork': this.placeOfWork,
       'contractType': this.contractType,
       'startOfWork': this.startOfWork,
+      'endOfWork': this.endOfWork,
       'workload': this.workload,
       'description': this.description,
       'skills': this.skills,
@@ -172,6 +177,10 @@ export class Job extends Model<Job> {
 
       if (simplification['startOfWork'] != null) {
         this.startOfWork = simplification['startOfWork'];
+      }
+
+      if (simplification['endOfWork'] != null) {
+        this.endOfWork = simplification['endOfWork'];
       }
 
       if (simplification['workload'] != null) {

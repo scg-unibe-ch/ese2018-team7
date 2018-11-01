@@ -17,6 +17,7 @@ export class JobViewComponent implements OnInit {
   @Input()
   job: Job;
   formattedStartOfWork: string;
+  formattedEndOfWork: string;
   formattedDescription: string;
   obscuredMail: string;
 
@@ -28,6 +29,7 @@ export class JobViewComponent implements OnInit {
 
   ngOnInit() {
     this.formattedStartOfWork = this.job.startOfWork.format('DD.MM.YYYY');
+    this.formattedEndOfWork = this.job.endOfWork.format('DD.MM.YYYY');
     this.formattedDescription = this.job.description.replace('\n', '<br>');
     this.obscuredMail = this.job.email.replace('@', ' [AT] ').replace('.', ' [DOT] ');
   }
@@ -38,6 +40,7 @@ export class JobViewComponent implements OnInit {
       data: {
         job: this.job,
         formattedStartOfWork: this.formattedStartOfWork,
+        formattedEndOfWork: this.formattedEndOfWork,
         formattedDescription: this.formattedDescription,
         obscuredMail: this.obscuredMail
       }

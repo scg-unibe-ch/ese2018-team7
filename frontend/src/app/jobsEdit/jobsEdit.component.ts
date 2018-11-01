@@ -42,6 +42,7 @@ export class JobsEditComponent implements OnInit {
           instance.placeOfWork,
           instance.contractType,
           moment(instance.startOfWork, 'X'),
+          moment(instance.endOfWork, 'X'),
           instance.workload,
           instance.description,
           JSON.parse(instance.skills),
@@ -66,6 +67,7 @@ export class JobsEditComponent implements OnInit {
     this.httpClient.post('/jobs', {
       'title': this.job.title,
       'startOfWork': this.job.startOfWork.unix(),
+      'endOfWork': this.job.endOfWork.unix(),
       'workload': this.job.workload,
       'skills': JSON.stringify(this.job.skills),
       'startOfPublication': this.job.startOfPublication.unix(),

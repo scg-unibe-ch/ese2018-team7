@@ -31,7 +31,7 @@
       befristet
     </mat-radio-button>
     <br>
-    <mat-radio-button value="unlimited" color="primary">
+    <mat-radio-button value="unlimited" color="primary" >
       unbefristet
     </mat-radio-button>
   </mat-radio-group>
@@ -40,6 +40,12 @@
    <input matInput [min]='today' [matDatepicker]="startWork" [(ngModel)]="job.startOfWork" placeholder="Stellenantritt" (focus)="startWork.open()" (dateInput)="onSave()" (dateChange)="onSave()">
     <mat-datepicker #startWork touchUi startView="month" name="startofwork" ngDefaultControl></mat-datepicker>
     <mat-datepicker-toggle matSuffix [for]="startWork"></mat-datepicker-toggle>
+  </mat-form-field>
+  <br>
+  <mat-form-field class="datepicker" *ngIf="job.contractType === 'temporary'">
+    <input matInput [min]='today' [matDatepicker]="endWork" [(ngModel)]="job.endOfWork" placeholder="Letzter Arbeitstag" (focus)="endWork.open()" (dateInput)="onSave()" (dateChange)="onSave()">
+    <mat-datepicker #endWork touchUi startView="month" name="endofwork" ngDefaultControl></mat-datepicker>
+    <mat-datepicker-toggle matSuffix [for]="endWork"></mat-datepicker-toggle>
   </mat-form-field>
   <br>
   <div flex="10" layout layout-align="center center">
