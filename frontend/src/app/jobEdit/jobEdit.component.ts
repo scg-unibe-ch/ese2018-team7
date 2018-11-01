@@ -57,6 +57,7 @@ export class JobEditComponent implements OnInit {
       'startOfWork': this.job.startOfWork.unix(),
       'endOfWork': (this.job.contractType === 'limited' ? this.job.endOfWork.unix() : null),
       'workload': this.job.workload,
+      'shortDescription': this.job.shortDescription,
       'description': this.job.description,
       'skills': JSON.stringify(this.job.skills),
       'phone': this.job.phone,
@@ -132,6 +133,7 @@ export class JobEditComponent implements OnInit {
       this.job.endOfWork = res.endOfWork;
       this.job.endOfWork = moment(res.endOfWork, 'X');
       this.job.workload = res.workload;
+      this.job.shortDescription = res.shortDescription;
       this.job.description = res.description;
       this.job.skills = JSON.parse(res.skills);
       this.job.phone = res.phone;

@@ -14,6 +14,7 @@ export class Job {
     public startOfWork: Moment = moment(),
     public endOfWork: Moment = moment(),
     public workload: number = 100,
+    public shortDescription: string = '',
     public description: string = '',
     public skills: Skill[] = [],
     public phone: string = '',

@@ -44,6 +44,7 @@ export class JobsEditComponent implements OnInit {
           moment(instance.startOfWork, 'X'),
           moment(instance.endOfWork, 'X'),
           instance.workload,
+          instance.shortDescription,
           instance.description,
           JSON.parse(instance.skills),
           instance.phone,
