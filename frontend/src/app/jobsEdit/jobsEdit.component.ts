@@ -86,6 +86,9 @@ export class JobsEditComponent implements OnInit {
    */
   onJobDestroy(job: Job) {
     this.jobs.splice(this.jobs.indexOf(job), 1);
+    if (this.jobs.length === 0) {
+      this.msg = 'Aktuell gibt es keine Jobs zu bearbeiten!';
+    }
   }
 
   allowCreateJob() {
