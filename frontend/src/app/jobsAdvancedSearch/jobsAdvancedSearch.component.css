@@ -2,6 +2,9 @@
   color: var(--warn);
 }
 
+.close-button {
+   float: right;
+}
 /* Custom ng5 slider */
 
 ::ng-deep .custom-slider .ng5-slider .ng5-slider-bar {

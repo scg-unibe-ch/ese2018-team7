@@ -6,6 +6,10 @@
   width: auto;
 }
 
+.close-button {
+  float: right;
+}
+
 .smalltext {
   font-size: 12px;
 }
