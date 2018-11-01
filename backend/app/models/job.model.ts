@@ -175,7 +175,7 @@ export class Job extends Model<Job> {
     let c: string;
 
     try {
-      c = JSON.parse(job.changes);
+      c = JSON.parse(this.changes);
     } catch (e) {
       c = '';
     }
