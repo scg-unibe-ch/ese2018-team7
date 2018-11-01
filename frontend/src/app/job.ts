@@ -12,7 +12,7 @@ export class Job {
     public placeOfWork: string = '',
     public contractType: string = 'unlimited',
     public startOfWork: Moment = moment(),
-    public endOfWork: Moment = moment(),
+    public endOfWork: Moment = moment(0),
     public workload: number = 100,
     public shortDescription: string = '',
     public description: string = '',

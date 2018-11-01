@@ -45,6 +45,16 @@ export class JobEditComponent implements OnInit {
   ngOnInit() {
   }
 
+  onSaveContractType() {
+    if (this.job.contractType === 'temporary') {
+      this.job.endOfWork = moment().add(1, 'y');
+    } else {
+      this.job.endOfWork = moment(0);
+    }
+
+    this.onSave();
+  }
+
   /**
    * Save changed to the Server
    */

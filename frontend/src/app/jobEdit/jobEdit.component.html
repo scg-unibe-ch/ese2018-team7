@@ -26,7 +26,7 @@
   <div flex="10" layout layout-align="center center">
     <span class="md-body-1">Vertrag</span>
   </div>
-  <mat-radio-group name="contracttype" [(ngModel)]="job.contractType" (ngModelChange)="onSave()" class="input-full-width">
+  <mat-radio-group name="contracttype" [(ngModel)]="job.contractType" (ngModelChange)="onSaveContractType()" class="input-full-width">
     <mat-radio-button value="temporary" color="primary">
       befristet
     </mat-radio-button>
