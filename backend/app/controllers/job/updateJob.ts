@@ -36,6 +36,6 @@ module.exports = asyncRoute(async (req: Request, res: Response) => {
 
   await instance.save();
 
-  res.status(200).send(instance.getSimpleJob());
+  res.status(200).send(instance.getJobWithAdditionalDetails());
 
 });

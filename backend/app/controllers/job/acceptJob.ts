@@ -16,12 +16,12 @@ module.exports = asyncRoute(async (req: Request, res: Response) => {
 
   }
 
+  // instance.approved = true;
+  instance.addChanges({'approved': true});
   instance.applyChanges();
-
-  instance.approved = true;
 
   await instance.save();
 
-  res.status(200).send(instance.getSimpleJob());
+  res.status(200).send(instance.getJobWithAdditionalDetails());
 
 });

@@ -122,9 +122,51 @@ export class Job extends Model<Job> {
     };
 
   }
+  getJobWithAdditionalDetails(): any {
+    console.log(this.changes);
+    console.log(this.getJSONforChange());
+    return {
+      'id': this.id,
+      'title': this.title,
+      'department': this.department,
+      'placeOfWork': this.placeOfWork,
+      'contractType': this.contractType,
+      'startOfWork': this.startOfWork,
+      'endOfWork': this.endOfWork,
+      'workload': this.workload,
+      'shortDescription': this.shortDescription,
+      'description': this.description,
+      'skills': this.skills,
+      'email': this.email,
+      'phone': this.phone,
+      'contactInfo': this.contactInfo,
+      'startOfPublication': this.startOfPublication,
+      'endOfPublication': this.endOfPublication,
+      'approved': this.approved,
+      'changed': this.changes !== this.getJSONforChange(),
+    };
+
+  }
 
   getJSONforChange() {
-    return JSON.stringify(this.getSimpleJob());
+    return JSON.stringify({
+      'title': this.title,
+      'department': this.department,
+      'placeOfWork': this.placeOfWork,
+      'contractType': this.contractType,
+      'startOfWork': this.startOfWork,
+      'endOfWork': this.endOfWork,
+      'workload': this.workload,
+      'shortDescription': this.shortDescription,
+      'description': this.description,
+      'skills': this.skills,
+      'email': this.email,
+      'phone': this.phone,
+      'contactInfo': this.contactInfo,
+      'startOfPublication': this.startOfPublication,
+      'endOfPublication': this.endOfPublication,
+      'approved': this.approved,
+    });
   }
 
   addChanges(change: any) {
@@ -186,6 +228,8 @@ export class Job extends Model<Job> {
 
       if (simplification['endOfWork'] != null) {
         this.endOfWork = simplification['endOfWork'];
+      } else {
+        console.error('End of work is undefined');
       }
 
       if (simplification['workload'] != null) {

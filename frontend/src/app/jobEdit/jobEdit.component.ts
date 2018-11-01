@@ -55,7 +55,7 @@ export class JobEditComponent implements OnInit {
       'placeOfWork': this.job.placeOfWork,
       'contractType': this.job.contractType,
       'startOfWork': this.job.startOfWork.unix(),
-      'endOfWork': (this.job.contractType === 'limited' ? this.job.endOfWork.unix() : null),
+      'endOfWork': this.job.endOfWork.unix(),
       'workload': this.job.workload,
       'shortDescription': this.job.shortDescription,
       'description': this.job.description,
@@ -68,7 +68,8 @@ export class JobEditComponent implements OnInit {
       'approved': this.job.approved
     }, {withCredentials: true}).subscribe((answer: any) => {
       console.log(answer);
-      this.job.changed = true;
+      this.job.changed = answer.changed;
+      this.job.approved = answer.approved;
     });
   }
 
@@ -115,15 +116,14 @@ export class JobEditComponent implements OnInit {
 
   approve() {
     if (AuthService.isModOrAdmin()) {
-      this.httpClient.put('/jobs/apply/' + this.job.id, {}, {withCredentials: true}).subscribe(res => {
-        this.job.approved = true;
-        this.job.changed = false;
+      this.httpClient.put('/jobs/apply/' + this.job.id, {}, {withCredentials: true}).subscribe((res: any) => {
+        this.job.approved = res.approved;
+        this.job.changed = res.changed;
       });
     }
   }
   resetJob() {
     this.httpClient.put('/jobs/reset/' + this.job.id, {}, {withCredentials: true}).subscribe((res: any) => {
-      this.job.changed = false;
       this.job.title = res.title;
       this.job.department = res.department;
       this.job.placeOfWork = res.placeOfWork;
@@ -142,6 +142,7 @@ export class JobEditComponent implements OnInit {
       this.job.startOfPublication = moment(res.startOfPublication, 'X');
       this.job.endOfPublication = moment(res.endOfPublication, 'X');
       this.job.approved = res.approved;
+      this.job.changed = res.changed;
     });
   }
 }

@@ -25,8 +25,6 @@ module.exports = asyncRoute(async (req: Request, res: Response) => {
 
   }
 
-  instance.createJob(req.body);
-
   await instance.destroy();
 
   res.status(200).send();

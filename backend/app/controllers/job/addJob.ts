@@ -15,9 +15,7 @@ module.exports = asyncRoute(async (req: Request, res: Response) => {
   // Set approved if an admin or mod added job, and not approved else
   instance.approved = req.session.user.type <= Usergroup.moderator ;
 
-  instance.changes = JSON.stringify(req.body);
-
   await instance.save();
-  res.status(200).send(instance.getSimpleJob());
+  res.status(200).send(instance.getJobWithAdditionalDetails());
 
 });

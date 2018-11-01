@@ -4,8 +4,8 @@
       {{job.title}}
     </mat-panel-title>
     <mat-panel-description>
-    <span *ngIf="!job.approved" class="warning">{{'Job ist noch ungeprüft!'}}</span>
-    <span *ngIf="job.approved&&job.changed" class="warning">{{'Ungeprüfte Änderungen!'}}</span>
+    <span *ngIf="!job.approved" class="warning">{{'Job ist noch freigegeben!'}}</span>
+    <span *ngIf="job.approved&&job.changed" class="warning">{{'Job hat ungeprüfte Änderungen!'}}</span>
     <span *ngIf="job.approved&&!job.changed"></span>
     <mat-icon>work</mat-icon>
     </mat-panel-description>
