@@ -53,7 +53,6 @@ import {UsersEditComponent} from './usersEdit/usersEdit.component';
 import {CompanyEditComponent} from './companyEdit/companyEdit.component';
 import {JobViewDetailsComponent} from './jobViewDetails/jobViewDetails.component';
 import {JobsAdvancedSearchComponent} from './jobsAdvancedSearch/jobsAdvancedSearch.component';
-import {UsersEditCompanyViewComponent} from './usersEditCompanyView/usersEditCompanyView.component';
 import {APIInterceptor} from './apiInterceptor/apiInterceptor';
 
 @NgModule({
@@ -73,7 +72,6 @@ import {APIInterceptor} from './apiInterceptor/apiInterceptor';
     PageNotFoundComponent,
     ChangePasswordComponent,
     UsersEditComponent,
-    UsersEditCompanyViewComponent,
     CompanyEditComponent,
   ],
   imports: [
@@ -112,7 +110,6 @@ import {APIInterceptor} from './apiInterceptor/apiInterceptor';
   entryComponents: [
     JobViewDetailsComponent,
     JobsAdvancedSearchComponent,
-    UsersEditCompanyViewComponent,
   ],
   providers: [
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
