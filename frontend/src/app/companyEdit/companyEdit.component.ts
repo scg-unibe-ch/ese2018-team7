@@ -4,6 +4,7 @@ import {User} from '../user';
 import {HttpClient} from '@angular/common/http';
 import {AuthService} from '../auth/auth.service';
 import {Company} from '../company';
+import {Message} from '../message';
 
 @Component({
   selector: 'app-company-edit',
@@ -46,12 +47,18 @@ export class CompanyEditComponent implements OnInit {
       'logo': this.company.logo
     }, {withCredentials: true}).subscribe(res => {
       this.company.unapprovedChanges = true;
-    }  );
+    }, err => {
+      console.error(err.error.message);
+      alert(Message.getMessage(err.error.code));
+    } );
 
   }
   onReset() {
     this.httpClient.put('/login/company/reset', {}, {withCredentials: true}).subscribe((res: any) => {
       this.company = new Company(res.username, res.name, res.logo, res.unapprovedChanges);
+    }, err => {
+      console.error(err.error.message);
+      alert(Message.getMessage(err.error.code));
     });
   }
 

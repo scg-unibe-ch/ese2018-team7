@@ -2,6 +2,7 @@ import {User} from '../../models/user.model';
 import {Response} from 'express';
 import {Request} from '../../interfaces/request.interface';
 import {asyncRoute} from '../../helper/async.helper';
+import {Message} from '../../enums/message.enum';
 
 module.exports = asyncRoute(async (req: Request, res: Response) => {
 
@@ -10,25 +11,21 @@ module.exports = asyncRoute(async (req: Request, res: Response) => {
 
   if (instance == null) {
 
-    res.status(404).send({'errorMessage': 'not found'});
+    res.status(403).send(Message.error.permissionDeniedUserNotExist);
     return;
 
   }
 
   if (!instance.enabled) {
 
-    res.status(403).send({
-      'errorMessage': 'Permission denied! - User not approved by administrator!'
-    });
+    res.status(403).send(Message.error.permissionDeniedUserNotApproved);
     return;
 
   }
 
   if (instance.suspended) {
 
-    res.status(403).send({
-      'errorMessage': 'Permission denied! - User suspended!'
-    });
+    res.status(403).send(Message.error.permissionDeniedUserSuspended);
     return;
 
   }
@@ -44,17 +41,13 @@ module.exports = asyncRoute(async (req: Request, res: Response) => {
 
     } else {
 
-      res.status(403).send({
-        errorMessage: 'Permission denied! - Problem creating session'
-      });
+      res.status(403).send(Message.error.permissionDeniedSessionProblem);
       return;
 
     }
 
   }
 
-  res.status(403).send({
-    errorMessage: 'Permission denied! - Wrong Username / Password'
-  });
+  res.status(403).send(Message.error.permissionDeniedWrongPassword);
 
 });

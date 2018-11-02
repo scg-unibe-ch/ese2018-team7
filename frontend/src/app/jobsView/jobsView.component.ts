@@ -10,6 +10,7 @@ import {JobsAdvancedSearchComponent} from '../jobsAdvancedSearch/jobsAdvancedSea
 import {Observable} from 'rxjs';
 import {BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import {map} from 'rxjs/operators';
+import {Message} from '../message';
 
 @Component({
   selector: 'app-jobs-view',
@@ -92,6 +93,9 @@ export class JobsViewComponent implements OnInit {
       this.advSearchRangeRefresh.emit();
 
 
+    }, err => {
+      console.error(err.error.message);
+      alert(Message.getMessage(err.error.code));
     });
   }
 
@@ -122,6 +126,9 @@ export class JobsViewComponent implements OnInit {
         this.msg = '';
       }
       this.searched = true;
+    }, err => {
+      console.error(err.error.message);
+      alert(Message.getMessage(err.error.code));
     });
   }
   onAdvancedSearch() {
@@ -161,6 +168,9 @@ export class JobsViewComponent implements OnInit {
         this.msg = '';
       }
       this.searched = true;
+    }, err => {
+      console.error(err.error.message);
+      alert(Message.getMessage(err.error.code));
     });
   }
   resetSearch() {
@@ -199,6 +209,9 @@ export class JobsViewComponent implements OnInit {
         this.msg = '';
       }
       this.advSearchRangeRefresh.emit();
+    }, err => {
+      console.error(err.error.message);
+      alert(Message.getMessage(err.error.code));
     });
   }
   openAdvancedSearch (): void {

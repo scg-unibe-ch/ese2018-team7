@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {AuthService} from '../auth/auth.service';
 import * as moment from 'moment';
 import {Company} from '../company';
+import {Message} from '../message';
 
 @Component({
   selector: 'app-jobs-edit',
@@ -58,6 +59,9 @@ export class JobsEditComponent implements OnInit {
       if (this.jobs.length === 0) {
         this.msg = 'Aktuell gibt es keine Jobs zu bearbeiten!';
       }
+    }, err => {
+      console.error(err.error.message);
+      alert(Message.getMessage(err.error.code));
     });
   }
 
@@ -78,6 +82,9 @@ export class JobsEditComponent implements OnInit {
       this.jobs.push(this.job);
       this.job = new Job();
       this.msg = '';
+    }, err => {
+      console.error(err.error.message);
+      alert(Message.getMessage(err.error.code));
     });
   }
 

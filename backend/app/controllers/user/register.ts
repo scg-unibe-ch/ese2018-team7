@@ -4,6 +4,7 @@ import {Company} from '../../models/company.model';
 import {Response} from 'express';
 import {Request} from '../../interfaces/request.interface';
 import {asyncRoute} from '../../helper/async.helper';
+import {Message} from '../../enums/message.enum';
 
 module.exports = asyncRoute(async (req: Request, res: Response) => {
 
@@ -16,6 +17,13 @@ module.exports = asyncRoute(async (req: Request, res: Response) => {
 
     req.body.type = Usergroup.employer;
     req.body.enabled = 'false';
+
+  }
+
+  if (req.body.username === '') {
+
+    res.status(403).send(Message.error.emptyUsernameNotAllowed);
+    return;
 
   }
 
@@ -36,9 +44,7 @@ module.exports = asyncRoute(async (req: Request, res: Response) => {
   // Reject if user exists
   if (checkInstance != null) {
 
-    res.status(403).send({
-      'errorMessage': 'User \'' + req.body.username + '\' already exists!'
-    });
+    res.status(403).send(Message.error.userAlreadyExist);
     return;
 
   }
@@ -62,13 +68,9 @@ module.exports = asyncRoute(async (req: Request, res: Response) => {
   }
 
   if (req.session != null && req.session.user != null && req.session.user.type <= Usergroup.administrator) {
-    res.status(200).send(
-      {'message': 'User created'}
-    );
+    res.status(200).send(Message.success.userCreated);
   } else {
-    res.status(200).send(
-      {'message': 'User registered, wait until a moderator approved your account'}
-    );
+    res.status(200).send(Message.success.userRegisteredNeedsApproval);
   }
 
 });

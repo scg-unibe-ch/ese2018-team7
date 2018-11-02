@@ -7,6 +7,7 @@ import {MatDatepicker} from '@angular/material/datepicker';
 import * as moment from 'moment';
 import {Moment} from 'moment';
 import {FormControl, Validators} from '@angular/forms';
+import {Message} from '../message';
 
 @Component({
   selector: 'app-job-edit',
@@ -80,6 +81,9 @@ export class JobEditComponent implements OnInit {
       console.log(answer);
       this.job.changed = answer.changed;
       this.job.approved = answer.approved;
+    }, err => {
+      console.error(err.error.message);
+      alert(Message.getMessage(err.error.code));
     });
   }
 
@@ -89,6 +93,9 @@ export class JobEditComponent implements OnInit {
   onDestroy() {
     this.httpClient.delete('/jobs/' + this.job.id, {withCredentials: true}).subscribe(() => {
       this.destroy.emit(this.job);
+    }, err => {
+      console.error(err.error.message);
+      alert(Message.getMessage(err.error.code));
     });
   }
 
@@ -129,6 +136,9 @@ export class JobEditComponent implements OnInit {
       this.httpClient.put('/jobs/apply/' + this.job.id, {}, {withCredentials: true}).subscribe((res: any) => {
         this.job.approved = res.approved;
         this.job.changed = res.changed;
+      }, err => {
+        console.error(err.error.message);
+        alert(Message.getMessage(err.error.code));
       });
     }
   }
@@ -153,6 +163,9 @@ export class JobEditComponent implements OnInit {
       this.job.endOfPublication = moment(res.endOfPublication, 'X');
       this.job.approved = res.approved;
       this.job.changed = res.changed;
+    }, err => {
+      console.error(err.error.message);
+      alert(Message.getMessage(err.error.code));
     });
   }
 }

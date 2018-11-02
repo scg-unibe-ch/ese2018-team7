@@ -9,6 +9,7 @@ import {MatDialog} from '@angular/material';
 import {UsersEdit} from './usersEdit.interface';
 import {UsersEditDataProvider} from './usersEdit.dataProvider';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {Message} from '../message';
 
 @Component({
   selector: 'app-users-edit',
@@ -50,6 +51,9 @@ export class UsersEditComponent implements OnInit {
         new Company(instance.username, instance.companyName, instance.companyLogo, instance.companyUnapprovedChanges));
 
       this.updateDataProvider();
+    }, err => {
+      console.error(err.error.message);
+      alert(Message.getMessage(err.error.code));
     });
   }
 
@@ -81,6 +85,9 @@ export class UsersEditComponent implements OnInit {
       this.users.push(this.user);
       this.user = new User( '', '',  Usergroup.moderator, true);
       this.updateDataProvider();
+    }, err => {
+      console.error(err.error.message);
+      alert(Message.getMessage(err.error.code));
     });
   }
 
@@ -93,6 +100,9 @@ export class UsersEditComponent implements OnInit {
       this.httpClient.delete('/login/' + user.username, {withCredentials: true}).subscribe(() => {
         this.users.splice(this.users.indexOf(user), 1);
         this.updateDataProvider();
+      }, err => {
+        console.error(err.error.message);
+        alert(Message.getMessage(err.error.code));
       });
     }
   }
@@ -109,6 +119,9 @@ export class UsersEditComponent implements OnInit {
       }, {withCredentials: true}).subscribe((res: any) => {
         user.suspended = res.suspended;
         this.updateDataProvider();
+      }, err => {
+        console.error(err.error.message);
+        alert(Message.getMessage(err.error.code));
       });
     }
   }
@@ -122,6 +135,9 @@ export class UsersEditComponent implements OnInit {
     }, {withCredentials: true}).subscribe(() => {
       user.enabled = true;
       this.updateDataProvider();
+    }, err => {
+      console.error(err.error.message);
+      alert(Message.getMessage(err.error.code));
     });
   }
 
@@ -135,6 +151,9 @@ export class UsersEditComponent implements OnInit {
     }, {withCredentials: true}).subscribe(() => {
       user.password = '';
       this.updateDataProvider();
+    }, err => {
+      console.error(err.error.message);
+      alert(Message.getMessage(err.error.code));
     });
     alert('Das Passwort von ' + user.username + ' wurde geändert.');
   }
@@ -165,6 +184,9 @@ export class UsersEditComponent implements OnInit {
       'username': company.username
     }, {withCredentials: true}).subscribe(() => {
       company.unapprovedChanges = false;
+    }, err => {
+      console.error(err.error.message);
+      alert(Message.getMessage(err.error.code));
     });
 
   }

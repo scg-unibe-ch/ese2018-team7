@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {User} from '../user';
 import {HttpClient} from '@angular/common/http';
 import {AuthService} from '../auth/auth.service';
+import {Message} from '../message';
 
 @Component({
   selector: 'app-change-password',
@@ -47,8 +48,8 @@ export class ChangePasswordComponent implements OnInit {
           this.msg = 'Neues Passwort gespeichert!';
         },
         err => {
-          console.log('Error occurred:' + err);
-          this.msg = 'Das neue Passwort konnte nicht gespeichert werden!';
+          console.log('Error occurred:' + err.error);
+          this.msg = 'Das neue Passwort konnte nicht gespeichert werden! -> ' + Message.getMessage(err.error);
         }
       );
     } else {

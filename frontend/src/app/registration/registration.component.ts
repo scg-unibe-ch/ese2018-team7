@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {AuthService} from '../auth/auth.service';
 import {Company} from '../company';
 import {Usergroup} from '../usergroup';
+import {Message} from '../message';
 
 @Component({
   selector: 'app-registration',
@@ -50,11 +51,8 @@ export class RegistrationComponent implements OnInit {
         this.router.navigate(['/']);
       },
       (err: any) => {
-        console.error(err);
-        this.errorMessage = err.error.errorMessage;
-        if (err.error.message != null) {
-          alert(err.error.message);
-        }
+        console.error(err.error);
+        this.errorMessage = Message.getMessage(err.error);
       });
   }
   onSelectLogo(event) {
