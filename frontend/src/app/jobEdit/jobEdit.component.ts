@@ -48,7 +48,8 @@ export class JobEditComponent implements OnInit {
 
   onSaveContractType() {
     if (this.job.contractType === 'temporary') {
-      this.job.endOfWork = moment().add(1, 'y');
+      this.job.endOfWork = moment(this.job.startOfWork.unix(), 'X');
+      this.job.endOfWork.add(1, 'y').subtract(1, 'd').endOf('day');
     } else {
       this.job.endOfWork = moment(0);
     }
@@ -65,8 +66,8 @@ export class JobEditComponent implements OnInit {
       'department': this.job.department,
       'placeOfWork': this.job.placeOfWork,
       'contractType': this.job.contractType,
-      'startOfWork': this.job.startOfWork.unix(),
-      'endOfWork': this.job.endOfWork.unix(),
+      'startOfWork': this.job.startOfWork.startOf('day').unix(),
+      'endOfWork': this.job.endOfWork.endOf('day').unix(),
       'workload': this.job.workload,
       'shortDescription': this.job.shortDescription,
       'description': this.job.description,
@@ -149,9 +150,9 @@ export class JobEditComponent implements OnInit {
       this.job.placeOfWork = res.placeOfWork;
       this.job.contractType = res.contractType;
       this.job.startOfWork = res.startOfWork;
-      this.job.startOfWork = moment(res.startOfWork, 'X');
+      this.job.startOfWork = moment(res.startOfWork, 'X').startOf('day');
       this.job.endOfWork = res.endOfWork;
-      this.job.endOfWork = moment(res.endOfWork, 'X');
+      this.job.endOfWork = moment(res.endOfWork, 'X').endOf('day');
       this.job.workload = res.workload;
       this.job.shortDescription = res.shortDescription;
       this.job.description = res.description;

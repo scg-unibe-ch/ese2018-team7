@@ -11,7 +11,7 @@ export class Job {
     public department: string = '',
     public placeOfWork: string = '',
     public contractType: string = 'unlimited',
-    public startOfWork: Moment = moment(),
+    public startOfWork: Moment = moment().startOf('day'),
     public endOfWork: Moment = moment(0),
     public workload: number = 100,
     public shortDescription: string = '',

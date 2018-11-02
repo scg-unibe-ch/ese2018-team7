@@ -71,8 +71,8 @@ export class JobsEditComponent implements OnInit {
   onJobCreate() {
     this.httpClient.post('/jobs', {
       'title': this.job.title,
-      'startOfWork': this.job.startOfWork.unix(),
-      'endOfWork': this.job.endOfWork.unix(),
+      'startOfWork': this.job.startOfWork.startOf('day').unix(),
+      'endOfWork': this.job.endOfWork.endOf('day').unix(),
       'workload': this.job.workload,
       'skills': JSON.stringify(this.job.skills),
       'startOfPublication': this.job.startOfPublication.unix(),
