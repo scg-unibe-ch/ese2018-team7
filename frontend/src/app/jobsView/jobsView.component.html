@@ -3,7 +3,7 @@
 </mat-form-field>
 <button mat-button (click)="openAdvancedSearch()">Erweiterte Suche</button>
 <button *ngIf="searched" mat-button (click)="resetSearch()">Suche zurücksetzen</button>
-<mat-grid-list cols="{{(isHandset$ | async) ? 1 : ((isTablet$ | async) ? 2 : 3)}}" rowHeight="1:1" *ngIf="this.jobs.length > 0">
-  <mat-grid-tile *ngFor="let job of jobs"><app-job-view [job]="job" class="fullsize"></app-job-view></mat-grid-tile>
-</mat-grid-list>
-<h2 class="warning">{{msg}}</h2>
+
+<div class="card-deck-container">
+  <div *ngFor="let job of jobs" class="card-item"><app-job-view [job]="job"></app-job-view></div>
+</div>
