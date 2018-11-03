@@ -30,7 +30,7 @@ export class JobViewComponent implements OnInit {
   ngOnInit() {
     this.formattedStartOfWork = this.job.startOfWork.format('DD.MM.YYYY');
     this.formattedEndOfWork = this.job.endOfWork.format('DD.MM.YYYY');
-    this.formattedDescription = this.job.description.replace('\n', '<br>');
+    this.formattedDescription = this.job.description.replace(/\n/g, '<br>');
     this.obscuredMail = this.job.email.replace('@', ' [AT] ').replace('.', ' [DOT] ');
   }
   openDetails(): void {

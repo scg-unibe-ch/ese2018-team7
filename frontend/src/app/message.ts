@@ -14,14 +14,15 @@ export class Message {
     userAlreadyExist: new Msg(1007, 'Benutzer existiert bereits!'),
     emptyUsernameNotAllowed: new Msg(1008, 'Leerer Benutzername ist nicht erlaubt!'),
     emptyPasswordNotAllowed: new Msg(1009, 'Leeres Passwort ist nicht erlaubt!'),
-    permissionDeniedChangePasswordHigherLevel: new Msg(1010, 'Du bist nicht berechtigt diesem Benutzer das Passwort zu ändern!'),
+    permissionDeniedChangePasswordHigherLevel: new Msg(1010, 'Du bist nicht berechtigt das Passwort für diesen Benutzer zu ändern!'),
 
   };
   public static success = {
     success: new Msg(2000, 'Erfolgreich'),
     userLoggedOut: new Msg(2001, 'Erfolgreich abgemeldet'),
     userCreated: new Msg(2002, 'Benutzer erfolgreich erstellt'),
-    userRegisteredNeedsApproval: new Msg(2003, 'Benutzer erfolgreich registiert, warte bis ein Moderator dein Account freigeschalten hat!'),
+    userRegisteredNeedsApproval: new Msg(2003, 'Benutzer erfolgreich registiert, warte bis ein Moderator' +
+      ' deinen Account freigeschalten hat!'),
   };
 
   public static getMessage(msgNummer: number) {
