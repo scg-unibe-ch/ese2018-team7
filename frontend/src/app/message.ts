@@ -29,7 +29,7 @@ export class Message {
     const variables = ['error', 'success'];
     for (let i = 0; i < variables.length; ++i) {
       for (const tag in Message[variables[i]]) {
-        if (Message[variables[i]][tag].code = msgNummer) {
+        if (Message[variables[i]][tag].code === msgNummer) {
           return Message[variables[i]][tag].message;
         }
       }

@@ -45,14 +45,12 @@ export class RegistrationComponent implements OnInit {
       'enabled': 'false', 'company': this.company.name, 'logo': this.company.logo
     }, {withCredentials: true}).subscribe((res: any) => {
         console.log(res);
-        if (res.message != null) {
-          alert(res.message);
-        }
+        alert(Message.getMessage(res.code));
         this.router.navigate(['/']);
       },
       (err: any) => {
-        console.error(err.error);
-        this.errorMessage = Message.getMessage(err.error);
+        console.error(err.error.message);
+        this.errorMessage = Message.getMessage(err.error.code);
       });
   }
   onSelectLogo(event) {

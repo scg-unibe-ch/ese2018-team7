@@ -48,8 +48,8 @@ export class ChangePasswordComponent implements OnInit {
           this.msg = 'Neues Passwort gespeichert!';
         },
         err => {
-          console.log('Error occurred:' + err.error);
-          this.msg = 'Das neue Passwort konnte nicht gespeichert werden! -> ' + Message.getMessage(err.error);
+          console.log('Error occurred:' + err.error.message);
+          this.msg = 'Das neue Passwort konnte nicht gespeichert werden! -> ' + Message.getMessage(err.error.code);
         }
       );
     } else {

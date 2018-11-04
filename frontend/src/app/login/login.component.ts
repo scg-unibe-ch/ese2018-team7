@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {User} from '../user';
 import {HttpClient} from '@angular/common/http';
 import {AuthService} from '../auth/auth.service';
+import {Message} from '../message';
 
 @Component({
   selector: 'app-login',
@@ -43,11 +44,9 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/']);
         },
         err => {
-          console.log('Error occurred:' + err);
-          this.errorMessage = err.error.errorMessage;
-          if (err.error.message != null) {
-            alert(err.error.message);
-          }
+          console.log('Error occurred:' + err.error.message);
+          this.errorMessage = Message.getMessage(err.error.code);
+          alert(Message.getMessage(err.error.code));
         }
       );
     } else {
