@@ -1,5 +1,6 @@
 <button mat-icon-button (click)="dialogRef.close()" class="close-button" tabindex="-1"><mat-icon aria-label="Schliessen">close</mat-icon></button>
 <h1>Erweiterte Suche</h1>
+<div class="mat-dialog-content">
 <mat-form-field>
   <input matInput placeholder="Job" name="advTitle" type="text" [(ngModel)]="data.advSearchTitle" />
 </mat-form-field>
@@ -29,3 +30,4 @@
 </mat-form-field>
 <br>
 <button mat-button (click)="onAdvancedSearch();">Suchen</button>
+</div>
