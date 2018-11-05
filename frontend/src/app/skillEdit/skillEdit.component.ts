@@ -27,7 +27,7 @@ export class SkillEditComponent implements OnInit {
    * Save the changed on the server
    */
   onSave() {
-    this.job.onSave();
+    this.job.onSaveSkills();
   }
 
   /**
