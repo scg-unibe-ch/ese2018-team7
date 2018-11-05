@@ -19,6 +19,7 @@ export class JobViewComponent implements OnInit {
   formattedStartOfWork: string;
   formattedEndOfWork: string;
   formattedDescription: string;
+  formattedContactInfo: string;
   obscuredMail: string;
 
   @Output()
@@ -31,6 +32,7 @@ export class JobViewComponent implements OnInit {
     this.formattedStartOfWork = this.job.startOfWork.format('DD.MM.YYYY');
     this.formattedEndOfWork = this.job.endOfWork.format('DD.MM.YYYY');
     this.formattedDescription = this.job.description.replace(/\n/g, '<br>');
+    this.formattedContactInfo = this.job.contactInfo.replace(/\n/g, '<br>');
     this.obscuredMail = this.job.email.replace('@', ' [AT] ').replace('.', ' [DOT] ');
   }
   openDetails(): void {
@@ -42,6 +44,7 @@ export class JobViewComponent implements OnInit {
         formattedStartOfWork: this.formattedStartOfWork,
         formattedEndOfWork: this.formattedEndOfWork,
         formattedDescription: this.formattedDescription,
+        formattedContactInfo: this.formattedContactInfo,
         obscuredMail: this.obscuredMail
       }
     });

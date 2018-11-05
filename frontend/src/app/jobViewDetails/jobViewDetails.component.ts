@@ -18,6 +18,7 @@ export class JobViewDetailsComponent implements OnInit {
   formattedStartOfWork: string;
   formattedEndOfWork: string;
   formattedDescription: string;
+  formattedContactInfo: string;
   obscuredMail: string;
 
   @Output()
@@ -28,6 +29,7 @@ export class JobViewDetailsComponent implements OnInit {
     this.formattedStartOfWork = this.data.formattedStartOfWork;
     this.formattedEndOfWork = this.data.formattedEndOfWork;
     this.formattedDescription = this.data.formattedDescription;
+    this.formattedContactInfo = this.data.formattedContactInfo;
     this.obscuredMail = this.data.obscuredMail;
   }
 
