@@ -6,7 +6,6 @@ import {AuthService} from '../auth/auth.service';
 import {MatDatepicker} from '@angular/material/datepicker';
 import * as moment from 'moment';
 import {Moment} from 'moment';
-import {FormControl, Validators} from '@angular/forms';
 import {Message} from '../message';
 
 @Component({
@@ -18,17 +17,6 @@ import {Message} from '../message';
  * Component to edit one Job
  */
 export class JobEditComponent implements OnInit {
-
-  emailFormControl = new FormControl('', [
-    Validators.required,
-    Validators.email,
-  ]);
-
-  phoneFormControl = new FormControl('', [
-    Validators.required,
-    Validators.pattern('^(\\+?)(\\d{2,4})(\\s?)(\\-?)((\\(0\\))?)(\\s?)' +
-      '(\\d{2})(\\s?)(\\-?)(\\d{3})(\\s?)(\\-?)(\\d{2})(\\s?)(\\-?)(\\d{2})'),
-  ]);
 
   @Input()
   job: Job;
@@ -46,6 +34,21 @@ export class JobEditComponent implements OnInit {
   ngOnInit() {
   }
 
+  onSaveSingle(type: string, value: string) {
+
+    this.httpClient.put('/jobs/' + this.job.id, {
+      [type]: value,
+      'approved': this.job.approved
+    }, {withCredentials: true}).subscribe((answer: any) => {
+      console.log(answer);
+      this.job.changed = answer.changed;
+      this.job.approved = answer.approved;
+    }, err => {
+      console.error(err.error.message);
+      alert(Message.getMessage(err.error.code));
+    });
+  }
+
   onSaveContractType() {
     if (this.job.contractType === 'temporary') {
       this.job.endOfWork = moment(this.job.startOfWork.unix(), 'X');
@@ -54,29 +57,54 @@ export class JobEditComponent implements OnInit {
       this.job.endOfWork = moment(0);
     }
 
-    this.onSave();
+    this.onSaveEndOfWork();
   }
 
-  /**
-   * Save changed to the Server
-   */
-  onSave() {
+  onSaveStartOfWork() {
     this.httpClient.put('/jobs/' + this.job.id, {
-      'title': this.job.title,
-      'department': this.job.department,
-      'placeOfWork': this.job.placeOfWork,
-      'contractType': this.job.contractType,
       'startOfWork': this.job.startOfWork.startOf('day').unix(),
+      'approved': this.job.approved
+    }, {withCredentials: true}).subscribe((answer: any) => {
+      console.log(answer);
+      this.job.changed = answer.changed;
+      this.job.approved = answer.approved;
+    }, err => {
+      console.error(err.error.message);
+      alert(Message.getMessage(err.error.code));
+    });
+  }
+
+  onSaveEndOfWork() {
+    this.httpClient.put('/jobs/' + this.job.id, {
       'endOfWork': this.job.endOfWork.endOf('day').unix(),
-      'workload': this.job.workload,
-      'shortDescription': this.job.shortDescription,
-      'description': this.job.description,
+      'approved': this.job.approved
+    }, {withCredentials: true}).subscribe((answer: any) => {
+      console.log(answer);
+      this.job.changed = answer.changed;
+      this.job.approved = answer.approved;
+    }, err => {
+      console.error(err.error.message);
+      alert(Message.getMessage(err.error.code));
+    });
+  }
+
+  onSaveSkills() {
+    this.httpClient.put('/jobs/' + this.job.id, {
       'skills': JSON.stringify(this.job.skills),
-      'phone': this.job.phone,
-      'email': this.job.email,
-      'contactInfo': this.job.contactInfo,
-      'startOfPublication': this.job.startOfPublication.unix(),
-      'endOfPublication': this.job.endOfPublication.unix(),
+      'approved': this.job.approved
+    }, {withCredentials: true}).subscribe((answer: any) => {
+      console.log(answer);
+      this.job.changed = answer.changed;
+      this.job.approved = answer.approved;
+    }, err => {
+      console.error(err.error.message);
+      alert(Message.getMessage(err.error.code));
+    });
+  }
+
+  onSaveDateOfPublication(type: string, value: Moment) {
+    this.httpClient.put('/jobs/' + this.job.id, {
+      [type]: value.unix(),
       'approved': this.job.approved
     }, {withCredentials: true}).subscribe((answer: any) => {
       console.log(answer);
@@ -107,7 +135,7 @@ export class JobEditComponent implements OnInit {
     this.skill.jobId = this.job.id;
     this.job.skills.push(this.skill);
     this.skill = new Skill(null, '', null);
-    this.onSave();
+    this.onSaveSkills();
   }
 
   /**
@@ -115,7 +143,7 @@ export class JobEditComponent implements OnInit {
    */
   onSkillDestroy(skill: Skill) {
     this.job.skills.splice(this.job.skills.indexOf(skill), 1);
-    this.onSave();
+    this.onSaveSkills();
   }
 
   /**
@@ -130,6 +158,12 @@ export class JobEditComponent implements OnInit {
    */
   isAdmin() {
     return AuthService.isModOrAdmin();
+  }
+  isValid() {
+    return this.job.phone.match('[0-9+ ]+') && this.job.email.match('[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$');
+  }
+  block() {
+    alert('Nicht alle obligatorischen Felder ausgefüllt!');
   }
 
   approve() {
