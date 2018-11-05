@@ -35,7 +35,7 @@ import {MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter'
 import { Ng5SliderModule } from 'ng5-slider';
 import {MatDatepickerModule, MatMomentDateModule, MAT_DATE_LOCALE, MAT_DATE_FORMATS} from '@coachcare/datepicker';
 import { MAT_MOMENT_DATE_FORMATS } from './customCHLocale/moment-date-formats';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, Validators} from '@angular/forms';
 // Import all Components
 import {JobEditComponent} from './jobEdit/jobEdit.component';
 import {JobsEditComponent} from './jobsEdit/jobsEdit.component';
@@ -100,7 +100,6 @@ import {APIInterceptor} from './apiInterceptor/apiInterceptor';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    ReactiveFormsModule,
     MatRadioModule,
     MatExpansionModule,
     MatStepperModule,

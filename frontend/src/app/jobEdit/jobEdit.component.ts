@@ -6,7 +6,6 @@ import {AuthService} from '../auth/auth.service';
 import {MatDatepicker} from '@angular/material/datepicker';
 import * as moment from 'moment';
 import {Moment} from 'moment';
-import {FormControl, Validators} from '@angular/forms';
 import {Message} from '../message';
 
 @Component({
@@ -18,17 +17,6 @@ import {Message} from '../message';
  * Component to edit one Job
  */
 export class JobEditComponent implements OnInit {
-
-  emailFormControl = new FormControl('', [
-    Validators.required,
-    Validators.email,
-  ]);
-
-  phoneFormControl = new FormControl('', [
-    Validators.required,
-    Validators.pattern('^(\\+?)(\\d{2,4})(\\s?)(\\-?)((\\(0\\))?)(\\s?)' +
-      '(\\d{2})(\\s?)(\\-?)(\\d{3})(\\s?)(\\-?)(\\d{2})(\\s?)(\\-?)(\\d{2})'),
-  ]);
 
   @Input()
   job: Job;
@@ -46,6 +34,48 @@ export class JobEditComponent implements OnInit {
   ngOnInit() {
   }
 
+  onSaveTitle() {
+    this.httpClient.put('/jobs/' + this.job.id, {
+      'title': this.job.title,
+      'approved': this.job.approved
+    }, {withCredentials: true}).subscribe((answer: any) => {
+      console.log(answer);
+      this.job.changed = answer.changed;
+      this.job.approved = answer.approved;
+    }, err => {
+      console.error(err.error.message);
+      alert(Message.getMessage(err.error.code));
+    });
+  }
+
+  onSaveDepartment() {
+    this.httpClient.put('/jobs/' + this.job.id, {
+      'department': this.job.department,
+      'approved': this.job.approved
+    }, {withCredentials: true}).subscribe((answer: any) => {
+      console.log(answer);
+      this.job.changed = answer.changed;
+      this.job.approved = answer.approved;
+    }, err => {
+      console.error(err.error.message);
+      alert(Message.getMessage(err.error.code));
+    });
+  }
+
+  onSavePlaceOfWork() {
+    this.httpClient.put('/jobs/' + this.job.id, {
+      'placeOfWork': this.job.placeOfWork,
+      'approved': this.job.approved
+    }, {withCredentials: true}).subscribe((answer: any) => {
+      console.log(answer);
+      this.job.changed = answer.changed;
+      this.job.approved = answer.approved;
+    }, err => {
+      console.error(err.error.message);
+      alert(Message.getMessage(err.error.code));
+    });
+  }
+
   onSaveContractType() {
     if (this.job.contractType === 'temporary') {
       this.job.endOfWork = moment(this.job.startOfWork.unix(), 'X');
@@ -54,11 +84,166 @@ export class JobEditComponent implements OnInit {
       this.job.endOfWork = moment(0);
     }
 
-    this.onSave();
+    this.onSaveEndOfWork();
+  }
+
+  onSaveStartOfWork() {
+    this.httpClient.put('/jobs/' + this.job.id, {
+      'startOfWork': this.job.startOfWork.startOf('day').unix(),
+      'approved': this.job.approved
+    }, {withCredentials: true}).subscribe((answer: any) => {
+      console.log(answer);
+      this.job.changed = answer.changed;
+      this.job.approved = answer.approved;
+    }, err => {
+      console.error(err.error.message);
+      alert(Message.getMessage(err.error.code));
+    });
+  }
+
+  onSaveEndOfWork() {
+    this.httpClient.put('/jobs/' + this.job.id, {
+      'endOfWork': this.job.endOfWork.endOf('day').unix(),
+      'approved': this.job.approved
+    }, {withCredentials: true}).subscribe((answer: any) => {
+      console.log(answer);
+      this.job.changed = answer.changed;
+      this.job.approved = answer.approved;
+    }, err => {
+      console.error(err.error.message);
+      alert(Message.getMessage(err.error.code));
+    });
+  }
+
+  onSaveWorkload() {
+    this.httpClient.put('/jobs/' + this.job.id, {
+      'workload': this.job.workload,
+      'approved': this.job.approved
+    }, {withCredentials: true}).subscribe((answer: any) => {
+      console.log(answer);
+      this.job.changed = answer.changed;
+      this.job.approved = answer.approved;
+    }, err => {
+      console.error(err.error.message);
+      alert(Message.getMessage(err.error.code));
+    });
+  }
+
+  onSaveShortDescription() {
+    this.httpClient.put('/jobs/' + this.job.id, {
+      'shortDescription': this.job.shortDescription,
+      'approved': this.job.approved
+    }, {withCredentials: true}).subscribe((answer: any) => {
+      console.log(answer);
+      this.job.changed = answer.changed;
+      this.job.approved = answer.approved;
+    }, err => {
+      console.error(err.error.message);
+      alert(Message.getMessage(err.error.code));
+    });
+  }
+
+  onSaveDescription() {
+    this.httpClient.put('/jobs/' + this.job.id, {
+      'description': this.job.description,
+      'approved': this.job.approved
+    }, {withCredentials: true}).subscribe((answer: any) => {
+      console.log(answer);
+      this.job.changed = answer.changed;
+      this.job.approved = answer.approved;
+    }, err => {
+      console.error(err.error.message);
+      alert(Message.getMessage(err.error.code));
+    });
+  }
+
+  onSaveSkills() {
+    this.httpClient.put('/jobs/' + this.job.id, {
+      'skills': JSON.stringify(this.job.skills),
+      'approved': this.job.approved
+    }, {withCredentials: true}).subscribe((answer: any) => {
+      console.log(answer);
+      this.job.changed = answer.changed;
+      this.job.approved = answer.approved;
+    }, err => {
+      console.error(err.error.message);
+      alert(Message.getMessage(err.error.code));
+    });
+  }
+
+  onSavePhone() {
+    this.httpClient.put('/jobs/' + this.job.id, {
+      'phone': this.job.phone,
+      'approved': this.job.approved
+    }, {withCredentials: true}).subscribe((answer: any) => {
+      console.log(answer);
+      this.job.changed = answer.changed;
+      this.job.approved = answer.approved;
+    }, err => {
+      console.error(err.error.message);
+      alert(Message.getMessage(err.error.code));
+    });
+  }
+
+  onSaveEmail() {
+    this.httpClient.put('/jobs/' + this.job.id, {
+      'email': this.job.email,
+      'approved': this.job.approved
+    }, {withCredentials: true}).subscribe((answer: any) => {
+      console.log(answer);
+      this.job.changed = answer.changed;
+      this.job.approved = answer.approved;
+    }, err => {
+      console.error(err.error.message);
+      alert(Message.getMessage(err.error.code));
+    });
+  }
+
+  onSaveContactInfo() {
+    this.httpClient.put('/jobs/' + this.job.id, {
+      'contactInfo': this.job.contactInfo,
+      'approved': this.job.approved
+    }, {withCredentials: true}).subscribe((answer: any) => {
+      console.log(answer);
+      this.job.changed = answer.changed;
+      this.job.approved = answer.approved;
+    }, err => {
+      console.error(err.error.message);
+      alert(Message.getMessage(err.error.code));
+    });
+  }
+
+  onSaveStartOfPublication() {
+    this.httpClient.put('/jobs/' + this.job.id, {
+      'startOfPublication': this.job.startOfPublication.unix(),
+      'approved': this.job.approved
+    }, {withCredentials: true}).subscribe((answer: any) => {
+      console.log(answer);
+      this.job.changed = answer.changed;
+      this.job.approved = answer.approved;
+    }, err => {
+      console.error(err.error.message);
+      alert(Message.getMessage(err.error.code));
+    });
+  }
+
+  onSaveEndOfPublication() {
+    this.httpClient.put('/jobs/' + this.job.id, {
+      'endOfPublication': this.job.endOfPublication.unix(),
+      'approved': this.job.approved
+    }, {withCredentials: true}).subscribe((answer: any) => {
+      console.log(answer);
+      this.job.changed = answer.changed;
+      this.job.approved = answer.approved;
+    }, err => {
+      console.error(err.error.message);
+      alert(Message.getMessage(err.error.code));
+    });
   }
 
   /**
    * Save changed to the Server
+   * Currently unused but kept in code if needed later
    */
   onSave() {
     this.httpClient.put('/jobs/' + this.job.id, {
@@ -107,7 +292,7 @@ export class JobEditComponent implements OnInit {
     this.skill.jobId = this.job.id;
     this.job.skills.push(this.skill);
     this.skill = new Skill(null, '', null);
-    this.onSave();
+    this.onSaveSkills();
   }
 
   /**
@@ -115,7 +300,7 @@ export class JobEditComponent implements OnInit {
    */
   onSkillDestroy(skill: Skill) {
     this.job.skills.splice(this.job.skills.indexOf(skill), 1);
-    this.onSave();
+    this.onSaveSkills();
   }
 
   /**
