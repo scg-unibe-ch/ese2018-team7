@@ -8,23 +8,26 @@ import {Message} from '../message';
 
 @Component({
   selector: 'app-company-edit',
-  templateUrl: './companyEdit.component.html',
-  styleUrls: ['./companyEdit.component.css']
+  templateUrl: './accountSettings.component.html',
+  styleUrls: ['./accountSettings.component.css']
 })
 /**
  * Form to change the password of the current user
  */
-export class CompanyEditComponent implements OnInit {
+export class AccountSettingsComponent implements OnInit {
 
   @Input()
   company: Company;
+  msg: String;
+  password: String;
+  password2: String;
   @Output()
   destroy = new EventEmitter<User>();
 
 
   constructor(private httpClient: HttpClient, private router: Router) {
     // Only accessible for employer
-    AuthService.allowOnlyEmployer(httpClient, router);
+    AuthService.allowOnlyLogin(httpClient, router);
 
     this.company = new Company();
   }
@@ -36,10 +39,49 @@ export class CompanyEditComponent implements OnInit {
     });
   }
 
+  isEmployer() {
+    return AuthService.isEmployer();
+  }
+
+  isMessage() {
+    return this.msg === '';
+  }
+
+  messageClass() {
+    return (this.msg === 'Neues Passwort gespeichert!' ? 'success' : 'error-text');
+  }
+
   /**
    * Try to save the new password
    */
-  onSave() {
+  onSavePassword() {
+
+    // Check if the passwords are identical
+    if (this.password === this.password2) {
+      this.msg = '';
+
+      // Save to Server
+      this.httpClient.put('/login/password', {'password': this.password}, {withCredentials: true}).subscribe(
+        res => {
+          console.log(res);
+          this.msg = 'Neues Passwort gespeichert!';
+          this.password = '';
+          this.password2 = '';
+        },
+        err => {
+          console.log('Error occurred:' + err.error.message);
+          this.msg = 'Das neue Passwort konnte nicht gespeichert werden! -> ' + Message.getMessage(err.error.code);
+        }
+      );
+    } else {
+      this.msg = 'Passwörter stimmen nicht überein!';
+    }
+  }
+
+  /**
+   * Try to save the new company
+   */
+  onSaveCompany() {
 
     // Save to Server
     this.httpClient.put('/login/company', {

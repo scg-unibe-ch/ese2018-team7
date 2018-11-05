@@ -28,8 +28,7 @@ export class AppComponent implements OnInit {
     {link: '/viewJobs', text: 'Job finden', condition: function() {return true; }},
     {link: '/editJobs', text: 'Jobs verwalten', condition: function() {return AuthService.isLogin(); }},
     {link: '/editUsers', text: 'Benutzerverwaltung', condition: function() {return AuthService.isModOrAdmin(); }},
-    {link: '/editCompany', text: 'Firma verwalten', condition: function() {return AuthService.isEmployer(); }},
-    {link: '/changePassword', text: 'Kontoeinstellungen', condition: function() {return AuthService.isLogin(); }},
+    {link: '/editAccount', text: 'Kontoeinstellungen', condition: function() {return AuthService.isLogin(); }},
     ];
 
   login = [

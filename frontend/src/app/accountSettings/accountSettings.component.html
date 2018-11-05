@@ -1,5 +1,5 @@
 
-<mat-card>
+<mat-card *ngIf="isEmployer()">
   <h2 class="error-text" *ngIf="company.unapprovedChanges">Ungeprüfte Änderungen!</h2>
   <mat-form-field>
     <input matInput placeholder="Unternehmen" [(ngModel)]="company.name" name="name">
@@ -8,8 +8,20 @@
   <label for="logoUpload" matTooltip="Unternehmenslogo hochladen"><mat-icon>add_a_photo</mat-icon></label>
   <input id="logoUpload" type='file' style="display:none;" (change)="onSelectLogo($event)">
   <br>
-  <button mat-button (click)="onSave()">Speichern</button>
+  <button mat-button (click)="onSaveCompany()">Speichern</button>
   <button mat-icon-button *ngIf="company.unapprovedChanges" (click)="onReset()" color="warn">
     <mat-icon>undo</mat-icon>
   </button>
+</mat-card>
+<br>
+<mat-card>
+  <h2 [ngClass]="messageClass()">{{msg}}</h2>
+  <mat-form-field>
+    <input matInput type="password" placeholder="Neues Password" [(ngModel)]="this.password" name="password">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="password" placeholder="Neues Passwort bestätigen" [(ngModel)]="this.password2" name="password2">
+  </mat-form-field>
+  <br>
+  <button mat-button (click)="onSavePassword()">Speichern</button>
 </mat-card>

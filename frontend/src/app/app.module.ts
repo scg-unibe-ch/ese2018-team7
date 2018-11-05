@@ -50,7 +50,7 @@ import {AppRoutingModule } from './app-routing.module';
 import {LogoutComponent} from './logout/logout.component';
 import {ChangePasswordComponent} from './changePassword/changePassword.component';
 import {UsersEditComponent} from './usersEdit/usersEdit.component';
-import {CompanyEditComponent} from './companyEdit/companyEdit.component';
+import {AccountSettingsComponent} from './accountSettings/accountSettings.component';
 import {JobViewDetailsComponent} from './jobViewDetails/jobViewDetails.component';
 import {JobsAdvancedSearchComponent} from './jobsAdvancedSearch/jobsAdvancedSearch.component';
 import {APIInterceptor} from './apiInterceptor/apiInterceptor';
@@ -72,7 +72,7 @@ import {APIInterceptor} from './apiInterceptor/apiInterceptor';
     PageNotFoundComponent,
     ChangePasswordComponent,
     UsersEditComponent,
-    CompanyEditComponent,
+    AccountSettingsComponent,
   ],
   imports: [
     BrowserModule,

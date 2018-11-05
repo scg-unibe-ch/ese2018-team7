@@ -10,7 +10,7 @@ import {JobsViewComponent} from './jobsView/jobsView.component';
 import {LogoutComponent} from './logout/logout.component';
 import {ChangePasswordComponent} from './changePassword/changePassword.component';
 import {UsersEditComponent} from './usersEdit/usersEdit.component';
-import {CompanyEditComponent} from './companyEdit/companyEdit.component';
+import {AccountSettingsComponent} from './accountSettings/accountSettings.component';
 
 const appRoutes: Routes = [
   { path: 'registration', component: RegistrationComponent },
@@ -20,7 +20,7 @@ const appRoutes: Routes = [
   { path: 'editJobs', component: JobsEditComponent },
   { path: 'viewJobs', component: JobsViewComponent },
   { path: 'editUsers', component: UsersEditComponent},
-  { path: 'editCompany', component: CompanyEditComponent},
+  { path: 'editAccount', component: AccountSettingsComponent},
   { path: '', redirectTo: '/viewJobs', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent}
 ];
