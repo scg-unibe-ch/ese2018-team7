@@ -12,18 +12,18 @@
   </mat-expansion-panel-header>
   <div class="inputForm">
   <mat-form-field class="input-full-width">
-    <input matInput required #title="ngModel" name="title"  placeholder="Titel" [(ngModel)]="job.title" (ngModelChange)="title.valid && onSaveTitle()">
+    <input matInput required #title="ngModel" name="title"  placeholder="Titel" [(ngModel)]="job.title" (ngModelChange)="title.valid && onSaveSingle('title',job.title)">
     <mat-error *ngIf="title.hasError('required')">
       Titel ist zwingend
     </mat-error>
   </mat-form-field>
   <br>
   <mat-form-field class="input-full-width">
-    <input matInput name="departement" placeholder="Abteilung" [(ngModel)]="job.department" (ngModelChange)="onSaveDepartment()">
+    <input matInput name="departement" placeholder="Abteilung" [(ngModel)]="job.department" (ngModelChange)="onSaveSingle('department',job.department)">
   </mat-form-field>
   <br>
   <mat-form-field class="input-full-width">
-    <input matInput name="placeofwork" placeholder="Arbeitsort" [(ngModel)]="job.placeOfWork" (ngModelChange)="onSavePlaceOfWork()">
+    <input matInput name="placeofwork" placeholder="Arbeitsort" [(ngModel)]="job.placeOfWork" (ngModelChange)="onSaveSingle('placeOfWork',job.placeOfWork)">
   </mat-form-field>
   <br>
   <div flex="10" layout layout-align="center center">
@@ -54,14 +54,14 @@
   <div flex="10" layout layout-align="center center">
     Pensum
   </div>
-  <mat-slider name="workload" color="primary" min="0" max="100" step="5" value="100" tickInterval="2" thumbLabel [displayWith]="percentageLabel" [(ngModel)]="job.workload" (ngModelChange)="onSaveWorkload()"></mat-slider>
+  <mat-slider name="workload" color="primary" min="0" max="100" step="5" value="100" tickInterval="2" thumbLabel [displayWith]="percentageLabel" [(ngModel)]="job.workload" (ngModelChange)="onSaveSingle('workload',job.workload)"></mat-slider>
   <br>
   <mat-form-field class="input-full-width">
-    <textarea #shortDescription name="shortDescription" autosize matInput placeholder="Kurzbeschreibung" [(ngModel)]="job.shortDescription" (ngModelChange)="onSaveShortDescription()" class="textarea" maxlength="250"></textarea>
+    <textarea #shortDescription name="shortDescription" autosize matInput placeholder="Kurzbeschreibung" [(ngModel)]="job.shortDescription" (ngModelChange)="onSaveSingle('shortDescription',job.shortDescription)" class="textarea" maxlength="250"></textarea>
     <mat-hint align="end">{{shortDescription.value.length}} / 250</mat-hint>
   </mat-form-field>
   <mat-form-field class="input-full-width">
-  <textarea name="description" autosize matInput placeholder="Detaillierte Beschreibung" [(ngModel)]="job.description" (ngModelChange)="onSaveDescription()" class="textarea"></textarea>
+  <textarea name="description" autosize matInput placeholder="Detaillierte Beschreibung" [(ngModel)]="job.description" (ngModelChange)="onSaveSingle('description',job.description)" class="textarea"></textarea>
   </mat-form-field>
   <br>
   <mat-list>
@@ -76,7 +76,7 @@
   <button mat-icon-button (click)="onSkillCreate()"><mat-icon aria-label="Zusätzliche Anforderung">add</mat-icon></button>
   <br>
   <mat-form-field class="input-full-width">
-    <input matInput required name="phone" #phone="ngModel" type="tel" placeholder="Telefon" [(ngModel)]="job.phone" (ngModelChange)="phone.valid && onSavePhone()"
+    <input matInput required name="phone" #phone="ngModel" type="tel" placeholder="Telefon" [(ngModel)]="job.phone" (ngModelChange)="phone.valid && onSaveSingle('phone',job.phone)"
            pattern="[0-9+ ]+">
     <mat-error *ngIf="phone.hasError('required')">
       Telefon ist zwingend
@@ -87,7 +87,7 @@
   </mat-form-field>
   <br>
   <mat-form-field class="input-full-width">
-    <input matInput required name="email" #email="ngModel" type="email" placeholder="Email" [(ngModel)]="job.email" (ngModelChange)="email.valid && onSaveEmail()"
+    <input matInput required name="email" #email="ngModel" type="email" placeholder="Email" [(ngModel)]="job.email" (ngModelChange)="email.valid && onSaveSingle('email',job.email)"
            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$">
     <mat-error *ngIf="email.hasError('required')">
       Email ist zwingend
@@ -98,11 +98,11 @@
   </mat-form-field>
   <br>
   <mat-form-field class="input-full-width">
-    <textarea autosize matInput placeholder="Weitere Kontaktinformationen" [(ngModel)]="job.contactInfo" name="contactinfo" (ngModelChange)="onSaveContactInfo()" class="textarea"></textarea>
+    <textarea autosize matInput placeholder="Weitere Kontaktinformationen" [(ngModel)]="job.contactInfo" name="contactinfo" (ngModelChange)="onSaveSingle('contactInfo',job.contactInfo)" class="textarea"></textarea>
   </mat-form-field>
   <br>
   <mat-form-field class="datepicker">
-    <input matInput required #startpublication="ngModel" [matDatepicker]="startPublication" [max]="job.endOfPublication" [(ngModel)]="job.startOfPublication" placeholder="Publikation von" (focus)="startPublication.open()" (dateInput)="onSaveStartOfPublication()" (dateChange)="startpublication.valid && onSaveStartOfPublication()">
+    <input matInput required #startpublication="ngModel" [matDatepicker]="startPublication" [max]="job.endOfPublication" [(ngModel)]="job.startOfPublication" placeholder="Publikation von" (focus)="startPublication.open()" (dateInput)="onSaveDateOfPublication('startOfPublication',job.startOfPublication)" (dateChange)="startpublication.valid && onSaveDateOfPublication('startOfPublication',job.startOfPublication)">
     <mat-datepicker type="datetime" [clockStep]="5" [twelveHour]="false" #startPublication touchUi startView="month" name="startofwork" ngDefaultControl></mat-datepicker>
     <mat-datepicker-toggle matSuffix [for]="startPublication"></mat-datepicker-toggle>
     <mat-error *ngIf="startpublication.hasError('required')">
@@ -111,7 +111,7 @@
   </mat-form-field>
   <br>
   <mat-form-field class="datepicker">
-    <input matInput required #endpublication="ngModel" [matDatepicker]="endPublication" [min]="job.startOfPublication" [(ngModel)]="job.endOfPublication" placeholder="Publikation bis" (focus)="endPublication.open()" (dateInput)="onSaveEndOfPublication()" (dateChange)="endpublication.valid && onSaveEndOfPublication()">
+    <input matInput required #endpublication="ngModel" [matDatepicker]="endPublication" [min]="job.startOfPublication" [(ngModel)]="job.endOfPublication" placeholder="Publikation bis" (focus)="endPublication.open()" (dateInput)="onSaveDateOfPublication('endOfPublication',job.endOfPublication)" (dateChange)="endpublication.valid && onSaveDateOfPublication('endOfPublication',job.endOfPublication)">
     <mat-datepicker type="datetime" [clockStep]="5" [twelveHour]="false" #endPublication touchUi startView="month" name="endofpublication" ngDefaultControl></mat-datepicker>
     <mat-datepicker-toggle matSuffix [for]="endPublication"></mat-datepicker-toggle>
     <mat-error *ngIf="endpublication.hasError('required')">
@@ -122,7 +122,9 @@
   <mat-action-row>
     <button mat-button (click)="onDestroy()" color="warn">Job löschen</button>
     <button *ngIf="job.changed" mat-button (click)="resetJob()"><mat-icon>undo</mat-icon></button>
-    <button *ngIf="isAdmin()&&!job.approved" mat-button (click)="approve()">Job akzeptieren</button>
-    <button *ngIf="isAdmin()&&job.approved&&job.changed" mat-button (click)="approve()"><mat-icon>done</mat-icon></button>
+    <button *ngIf="isValid()&&isAdmin()&&!job.approved" mat-button (click)="approve()">Job akzeptieren</button>
+    <button *ngIf="isValid()&&isAdmin()&&job.approved&&job.changed" mat-button (click)="approve()"><mat-icon>done</mat-icon></button>
+    <button *ngIf="!isValid()&&isAdmin()&&!job.approved" mat-button (click)="block()">Job akzeptieren</button>
+    <button *ngIf="!isValid()&&isAdmin()&&job.approved&&job.changed" mat-button (click)="block()"><mat-icon>done</mat-icon></button>
   </mat-action-row>
 </mat-expansion-panel>

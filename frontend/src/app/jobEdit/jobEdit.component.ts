@@ -34,37 +34,10 @@ export class JobEditComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSaveTitle() {
-    this.httpClient.put('/jobs/' + this.job.id, {
-      'title': this.job.title,
-      'approved': this.job.approved
-    }, {withCredentials: true}).subscribe((answer: any) => {
-      console.log(answer);
-      this.job.changed = answer.changed;
-      this.job.approved = answer.approved;
-    }, err => {
-      console.error(err.error.message);
-      alert(Message.getMessage(err.error.code));
-    });
-  }
+  onSaveSingle(type: string, value: string) {
 
-  onSaveDepartment() {
     this.httpClient.put('/jobs/' + this.job.id, {
-      'department': this.job.department,
-      'approved': this.job.approved
-    }, {withCredentials: true}).subscribe((answer: any) => {
-      console.log(answer);
-      this.job.changed = answer.changed;
-      this.job.approved = answer.approved;
-    }, err => {
-      console.error(err.error.message);
-      alert(Message.getMessage(err.error.code));
-    });
-  }
-
-  onSavePlaceOfWork() {
-    this.httpClient.put('/jobs/' + this.job.id, {
-      'placeOfWork': this.job.placeOfWork,
+      [type]: value,
       'approved': this.job.approved
     }, {withCredentials: true}).subscribe((answer: any) => {
       console.log(answer);
@@ -115,48 +88,6 @@ export class JobEditComponent implements OnInit {
     });
   }
 
-  onSaveWorkload() {
-    this.httpClient.put('/jobs/' + this.job.id, {
-      'workload': this.job.workload,
-      'approved': this.job.approved
-    }, {withCredentials: true}).subscribe((answer: any) => {
-      console.log(answer);
-      this.job.changed = answer.changed;
-      this.job.approved = answer.approved;
-    }, err => {
-      console.error(err.error.message);
-      alert(Message.getMessage(err.error.code));
-    });
-  }
-
-  onSaveShortDescription() {
-    this.httpClient.put('/jobs/' + this.job.id, {
-      'shortDescription': this.job.shortDescription,
-      'approved': this.job.approved
-    }, {withCredentials: true}).subscribe((answer: any) => {
-      console.log(answer);
-      this.job.changed = answer.changed;
-      this.job.approved = answer.approved;
-    }, err => {
-      console.error(err.error.message);
-      alert(Message.getMessage(err.error.code));
-    });
-  }
-
-  onSaveDescription() {
-    this.httpClient.put('/jobs/' + this.job.id, {
-      'description': this.job.description,
-      'approved': this.job.approved
-    }, {withCredentials: true}).subscribe((answer: any) => {
-      console.log(answer);
-      this.job.changed = answer.changed;
-      this.job.approved = answer.approved;
-    }, err => {
-      console.error(err.error.message);
-      alert(Message.getMessage(err.error.code));
-    });
-  }
-
   onSaveSkills() {
     this.httpClient.put('/jobs/' + this.job.id, {
       'skills': JSON.stringify(this.job.skills),
@@ -171,97 +102,9 @@ export class JobEditComponent implements OnInit {
     });
   }
 
-  onSavePhone() {
+  onSaveDateOfPublication(type: string, value: Moment) {
     this.httpClient.put('/jobs/' + this.job.id, {
-      'phone': this.job.phone,
-      'approved': this.job.approved
-    }, {withCredentials: true}).subscribe((answer: any) => {
-      console.log(answer);
-      this.job.changed = answer.changed;
-      this.job.approved = answer.approved;
-    }, err => {
-      console.error(err.error.message);
-      alert(Message.getMessage(err.error.code));
-    });
-  }
-
-  onSaveEmail() {
-    this.httpClient.put('/jobs/' + this.job.id, {
-      'email': this.job.email,
-      'approved': this.job.approved
-    }, {withCredentials: true}).subscribe((answer: any) => {
-      console.log(answer);
-      this.job.changed = answer.changed;
-      this.job.approved = answer.approved;
-    }, err => {
-      console.error(err.error.message);
-      alert(Message.getMessage(err.error.code));
-    });
-  }
-
-  onSaveContactInfo() {
-    this.httpClient.put('/jobs/' + this.job.id, {
-      'contactInfo': this.job.contactInfo,
-      'approved': this.job.approved
-    }, {withCredentials: true}).subscribe((answer: any) => {
-      console.log(answer);
-      this.job.changed = answer.changed;
-      this.job.approved = answer.approved;
-    }, err => {
-      console.error(err.error.message);
-      alert(Message.getMessage(err.error.code));
-    });
-  }
-
-  onSaveStartOfPublication() {
-    this.httpClient.put('/jobs/' + this.job.id, {
-      'startOfPublication': this.job.startOfPublication.unix(),
-      'approved': this.job.approved
-    }, {withCredentials: true}).subscribe((answer: any) => {
-      console.log(answer);
-      this.job.changed = answer.changed;
-      this.job.approved = answer.approved;
-    }, err => {
-      console.error(err.error.message);
-      alert(Message.getMessage(err.error.code));
-    });
-  }
-
-  onSaveEndOfPublication() {
-    this.httpClient.put('/jobs/' + this.job.id, {
-      'endOfPublication': this.job.endOfPublication.unix(),
-      'approved': this.job.approved
-    }, {withCredentials: true}).subscribe((answer: any) => {
-      console.log(answer);
-      this.job.changed = answer.changed;
-      this.job.approved = answer.approved;
-    }, err => {
-      console.error(err.error.message);
-      alert(Message.getMessage(err.error.code));
-    });
-  }
-
-  /**
-   * Save changed to the Server
-   * Currently unused but kept in code if needed later
-   */
-  onSave() {
-    this.httpClient.put('/jobs/' + this.job.id, {
-      'title': this.job.title,
-      'department': this.job.department,
-      'placeOfWork': this.job.placeOfWork,
-      'contractType': this.job.contractType,
-      'startOfWork': this.job.startOfWork.startOf('day').unix(),
-      'endOfWork': this.job.endOfWork.endOf('day').unix(),
-      'workload': this.job.workload,
-      'shortDescription': this.job.shortDescription,
-      'description': this.job.description,
-      'skills': JSON.stringify(this.job.skills),
-      'phone': this.job.phone,
-      'email': this.job.email,
-      'contactInfo': this.job.contactInfo,
-      'startOfPublication': this.job.startOfPublication.unix(),
-      'endOfPublication': this.job.endOfPublication.unix(),
+      [type]: value.unix(),
       'approved': this.job.approved
     }, {withCredentials: true}).subscribe((answer: any) => {
       console.log(answer);
@@ -315,6 +158,12 @@ export class JobEditComponent implements OnInit {
    */
   isAdmin() {
     return AuthService.isModOrAdmin();
+  }
+  isValid() {
+    return this.job.phone.match('[0-9+ ]+') && this.job.email.match('[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$');
+  }
+  block() {
+    alert('Nicht alle obligatorischen Felder ausgefüllt!');
   }
 
   approve() {
