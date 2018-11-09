@@ -21,14 +21,20 @@
   flex: 1 1 auto;
 }
 
-.mibLogo{
-  content: url('../assets/mibLogo-large.png');
+.mibLogoImg{
+  content: url('../assets/mibLogo-img.svg');
   height: 50px;
   width: auto;
 }
+.mibLogo{
+  content: url('../assets/mibLogo-large.svg');
+  height: 50px;
+  width: auto;
+  padding-left: 10px;
+}
 
-@media only screen and (max-width: 670px) {
+@media only screen and (max-width: 810px) {
   .mibLogo {
-    content: url('../assets/mibLogo-small.png');
+    content: url('../assets/mibLogo-small.svg');
   }
 }

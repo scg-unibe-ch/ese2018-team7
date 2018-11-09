@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
     {link: '/logout', text: 'Logout', condition: function() {return AuthService.isLogin(); }},
   ];
 
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe('(max-width: 767px)')
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe('(max-width: 950px)')
     .pipe(
       map(result => result.matches)
     );
