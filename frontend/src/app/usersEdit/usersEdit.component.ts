@@ -5,7 +5,7 @@ import {User} from '../user';
 import {AuthService} from '../auth/auth.service';
 import {Usergroup} from '../usergroup';
 import {Company} from '../company';
-import {MatDialog} from '@angular/material';
+import {MatDialog, MatSnackBar} from '@angular/material';
 import {UsersEdit} from './usersEdit.interface';
 import {UsersEditDataProvider} from './usersEdit.dataProvider';
 import {animate, state, style, transition, trigger} from '@angular/animations';
@@ -39,7 +39,7 @@ export class UsersEditComponent implements OnInit {
   dataProvider: UsersEditDataProvider;
   expandedElement: UsersEdit;
 
-  constructor(private httpClient: HttpClient, private router: Router, private dialog: MatDialog) {
+  constructor(private httpClient: HttpClient, private router: Router, private dialog: MatDialog, private snackBar: MatSnackBar) {
     AuthService.allowOnlyModsAndAdmin(httpClient, router);
   }
 
@@ -53,7 +53,7 @@ export class UsersEditComponent implements OnInit {
       this.updateDataProvider();
     }, err => {
       console.error(err.error.message);
-      alert(Message.getMessage(err.error.code));
+      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
     });
   }
 
@@ -87,7 +87,7 @@ export class UsersEditComponent implements OnInit {
       this.updateDataProvider();
     }, err => {
       console.error(err.error.message);
-      alert(Message.getMessage(err.error.code));
+      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
     });
   }
 
@@ -102,7 +102,7 @@ export class UsersEditComponent implements OnInit {
         this.updateDataProvider();
       }, err => {
         console.error(err.error.message);
-        alert(Message.getMessage(err.error.code));
+        this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
       });
     }
   }
@@ -121,7 +121,7 @@ export class UsersEditComponent implements OnInit {
         this.updateDataProvider();
       }, err => {
         console.error(err.error.message);
-        alert(Message.getMessage(err.error.code));
+        this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
       });
     }
   }
@@ -137,7 +137,7 @@ export class UsersEditComponent implements OnInit {
       this.updateDataProvider();
     }, err => {
       console.error(err.error.message);
-      alert(Message.getMessage(err.error.code));
+      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
     });
   }
 
@@ -153,9 +153,9 @@ export class UsersEditComponent implements OnInit {
       this.updateDataProvider();
     }, err => {
       console.error(err.error.message);
-      alert(Message.getMessage(err.error.code));
+      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
     });
-    alert('Das Passwort von ' + user.username + ' wurde geändert.');
+    this.snackBar.open('Das Passwort von ' + user.username + ' wurde geändert.', null, {duration: 3000});
   }
 
   isAdmin() {
@@ -186,7 +186,7 @@ export class UsersEditComponent implements OnInit {
       company.unapprovedChanges = false;
     }, err => {
       console.error(err.error.message);
-      alert(Message.getMessage(err.error.code));
+      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
     });
 
   }

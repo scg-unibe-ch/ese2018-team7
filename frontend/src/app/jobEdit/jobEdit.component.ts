@@ -7,6 +7,7 @@ import {MatDatepicker} from '@angular/material/datepicker';
 import * as moment from 'moment';
 import {Moment} from 'moment';
 import {Message} from '../message';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-job-edit',
@@ -28,7 +29,7 @@ export class JobEditComponent implements OnInit {
   destroy = new EventEmitter<Job>();
   @ViewChild(MatDatepicker) datepicker: MatDatepicker<Date>;
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -45,7 +46,7 @@ export class JobEditComponent implements OnInit {
       this.job.approved = answer.approved;
     }, err => {
       console.error(err.error.message);
-      alert(Message.getMessage(err.error.code));
+      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
     });
   }
 
@@ -70,7 +71,7 @@ export class JobEditComponent implements OnInit {
       this.job.approved = answer.approved;
     }, err => {
       console.error(err.error.message);
-      alert(Message.getMessage(err.error.code));
+      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
     });
   }
 
@@ -84,7 +85,7 @@ export class JobEditComponent implements OnInit {
       this.job.approved = answer.approved;
     }, err => {
       console.error(err.error.message);
-      alert(Message.getMessage(err.error.code));
+      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
     });
   }
 
@@ -98,7 +99,7 @@ export class JobEditComponent implements OnInit {
       this.job.approved = answer.approved;
     }, err => {
       console.error(err.error.message);
-      alert(Message.getMessage(err.error.code));
+      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
     });
   }
 
@@ -112,7 +113,7 @@ export class JobEditComponent implements OnInit {
       this.job.approved = answer.approved;
     }, err => {
       console.error(err.error.message);
-      alert(Message.getMessage(err.error.code));
+      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
     });
   }
 
@@ -124,7 +125,7 @@ export class JobEditComponent implements OnInit {
       this.destroy.emit(this.job);
     }, err => {
       console.error(err.error.message);
-      alert(Message.getMessage(err.error.code));
+      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
     });
   }
 
@@ -163,7 +164,7 @@ export class JobEditComponent implements OnInit {
     return this.job.phone.match('[0-9+ ]+') && this.job.email.match('[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$');
   }
   block() {
-    alert('Nicht alle obligatorischen Felder ausgefüllt!');
+    this.snackBar.open('Nicht alle obligatorischen Felder ausgefüllt!', null, {duration: 3000});
   }
 
   approve() {
@@ -173,7 +174,7 @@ export class JobEditComponent implements OnInit {
         this.job.changed = res.changed;
       }, err => {
         console.error(err.error.message);
-        alert(Message.getMessage(err.error.code));
+        this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
       });
     }
   }
@@ -200,7 +201,7 @@ export class JobEditComponent implements OnInit {
       this.job.changed = res.changed;
     }, err => {
       console.error(err.error.message);
-      alert(Message.getMessage(err.error.code));
+      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
     });
   }
 }

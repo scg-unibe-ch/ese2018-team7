@@ -5,6 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import {AuthService} from '../auth/auth.service';
 import {Company} from '../company';
 import {Message} from '../message';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-company-edit',
@@ -25,7 +26,7 @@ export class AccountSettingsComponent implements OnInit {
   destroy = new EventEmitter<User>();
 
 
-  constructor(private httpClient: HttpClient, private router: Router) {
+  constructor(private httpClient: HttpClient, private router: Router, private snackBar: MatSnackBar) {
     // Only accessible for employer
     AuthService.allowOnlyLogin(httpClient, router);
 
@@ -91,7 +92,7 @@ export class AccountSettingsComponent implements OnInit {
       this.company.unapprovedChanges = true;
     }, err => {
       console.error(err.error.message);
-      alert(Message.getMessage(err.error.code));
+      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
     } );
 
   }
@@ -100,7 +101,7 @@ export class AccountSettingsComponent implements OnInit {
       this.company = new Company(res.username, res.name, res.logo, res.unapprovedChanges);
     }, err => {
       console.error(err.error.message);
-      alert(Message.getMessage(err.error.code));
+      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
     });
   }
 

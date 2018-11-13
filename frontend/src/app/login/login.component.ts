@@ -4,6 +4,7 @@ import {User} from '../user';
 import {HttpClient} from '@angular/common/http';
 import {AuthService} from '../auth/auth.service';
 import {Message} from '../message';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,7 @@ export class LoginComponent implements OnInit {
   @Output()
   destroy = new EventEmitter<User>();
 
-  constructor(private httpClient: HttpClient, private router: Router) {
+  constructor(private httpClient: HttpClient, private router: Router, private snackBar: MatSnackBar) {
     // Only allow non registered users to visit
     AuthService.allowOnlyPublic(httpClient, router);
 
@@ -46,11 +47,11 @@ export class LoginComponent implements OnInit {
         err => {
           console.log('Error occurred:' + err.error.message);
           this.errorMessage = Message.getMessage(err.error.code);
-          alert(Message.getMessage(err.error.code));
+          this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
         }
       );
     } else {
-      alert('Du musst zuerst Cookies akzeptieren!');
+      this.snackBar.open('Du musst zuerst Cookies akzeptieren!', null, {duration: 3000});
     }
   }
 

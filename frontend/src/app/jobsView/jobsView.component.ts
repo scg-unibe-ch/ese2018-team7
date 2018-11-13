@@ -5,7 +5,7 @@ import * as moment from 'moment';
 import {Moment} from 'moment';
 import {Company} from '../company';
 import {JobViewDetailsComponent} from '../jobViewDetails/jobViewDetails.component';
-import {MatDialog} from '@angular/material';
+import {MatDialog, MatSnackBar} from '@angular/material';
 import {JobsAdvancedSearchComponent} from '../jobsAdvancedSearch/jobsAdvancedSearch.component';
 import {Observable} from 'rxjs';
 import {BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
@@ -61,7 +61,7 @@ export class JobsViewComponent implements OnInit {
 
   searched = false;
 
-  constructor(private httpClient: HttpClient, private dialog: MatDialog, private breakpointObserver: BreakpointObserver) {
+  constructor(private httpClient: HttpClient, private dialog: MatDialog, private breakpointObserver: BreakpointObserver, private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -95,7 +95,7 @@ export class JobsViewComponent implements OnInit {
 
     }, err => {
       console.error(err.error.message);
-      alert(Message.getMessage(err.error.code));
+      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
     });
   }
 
@@ -128,7 +128,7 @@ export class JobsViewComponent implements OnInit {
       this.searched = true;
     }, err => {
       console.error(err.error.message);
-      alert(Message.getMessage(err.error.code));
+      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
     });
   }
   onAdvancedSearch() {
@@ -170,7 +170,7 @@ export class JobsViewComponent implements OnInit {
       this.searched = true;
     }, err => {
       console.error(err.error.message);
-      alert(Message.getMessage(err.error.code));
+      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
     });
   }
   resetSearch() {
@@ -211,7 +211,7 @@ export class JobsViewComponent implements OnInit {
       this.advSearchRangeRefresh.emit();
     }, err => {
       console.error(err.error.message);
-      alert(Message.getMessage(err.error.code));
+      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
     });
   }
   openAdvancedSearch (): void {
