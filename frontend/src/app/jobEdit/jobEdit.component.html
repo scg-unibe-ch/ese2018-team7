@@ -1,6 +1,7 @@
 <mat-expansion-panel class="header-alignment" hideToggle>
   <mat-expansion-panel-header>
     <mat-panel-title>
+      <span *ngIf="isAdmin()">{{job.company.name}}&nbsp;&mdash;&nbsp;</span>
       {{job.title}}
     </mat-panel-title>
     <mat-panel-description>

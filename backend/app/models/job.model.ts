@@ -122,6 +122,32 @@ export class Job extends Model<Job> {
     };
 
   }
+  getJobForEdit(): any {
+    const oldJson: string = this.getJSONforChange();
+    this.applyChanges();
+    return {
+      'id': this.id,
+      'title': this.title,
+      'department': this.department,
+      'placeOfWork': this.placeOfWork,
+      'contractType': this.contractType,
+      'startOfWork': this.startOfWork,
+      'endOfWork': this.endOfWork,
+      'workload': this.workload,
+      'shortDescription': this.shortDescription,
+      'description': this.description,
+      'skills': this.skills,
+      'email': this.email,
+      'phone': this.phone,
+      'contactInfo': this.contactInfo,
+      'startOfPublication': this.startOfPublication,
+      'endOfPublication': this.endOfPublication,
+      'approved': this.approved,
+      'companyName': this.user.company[0].name,
+      'changed': oldJson !== this.getJSONforChange(),
+    };
+  }
+
   getJobWithAdditionalDetails(): any {
     console.log(this.changes);
     console.log(this.getJSONforChange());

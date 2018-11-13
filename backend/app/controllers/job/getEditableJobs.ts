@@ -4,6 +4,8 @@ import {Sequelize} from 'sequelize-typescript';
 import {Response} from 'express';
 import {Request} from '../../interfaces/request.interface';
 import {asyncRoute} from '../../helper/async.helper';
+import {User} from '../../models/user.model';
+import {Company} from '../../models/company.model';
 
 module.exports = asyncRoute(async (req: Request, res: Response) => {
 
@@ -11,16 +13,32 @@ module.exports = asyncRoute(async (req: Request, res: Response) => {
 
   let options = {where: Sequelize.and(
       {owner: req.session.user.username},
-    )};
+    ),
+    include: [{
+      model: User,
+      where: {suspended: false},
+      include: [{
+        model: Company,
+      }]
+    }]};
 
   if (req.session.user.type <= Usergroup.moderator) {
       options = {where: Sequelize.and(
           {'workload': {gte: 0}},
-        )};
+        ),
+        include: [{
+      model: User,
+      where: {suspended: false},
+      include: [{
+        model: Company,
+      }]
+    }]};
   }
 
   const instances = await Job.findAll(options);
 
+  res.status(200).send(instances.map(e => e.getJobForEdit()));
+/*
   res.status(200).send(instances.map((e: any) => {
 
     const cValue = JSON.parse(e['dataValues']['changes']);
@@ -49,5 +67,5 @@ module.exports = asyncRoute(async (req: Request, res: Response) => {
     return val;
 
   }));
-
+*/
 });
