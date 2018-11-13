@@ -39,6 +39,9 @@ export class Job extends Model<Job> {
   email!: string;
 
   @Column(DataType.TEXT)
+  website!: string;
+
+  @Column(DataType.TEXT)
   contactInfo!: string;
 
   @Column
@@ -89,6 +92,7 @@ export class Job extends Model<Job> {
       'skills': this.skills,
       'email': this.email,
       'phone': this.phone,
+      'website': this.website,
       'contactInfo': this.contactInfo,
       'startOfPublication': this.startOfPublication,
       'endOfPublication': this.endOfPublication,
@@ -115,6 +119,7 @@ export class Job extends Model<Job> {
       'skills': this.skills,
       'email': this.email,
       'phone': this.phone,
+      'website': this.website,
       'contactInfo': this.contactInfo,
       'startOfPublication': this.startOfPublication,
       'endOfPublication': this.endOfPublication,
@@ -139,6 +144,7 @@ export class Job extends Model<Job> {
       'skills': this.skills,
       'email': this.email,
       'phone': this.phone,
+      'website': this.website,
       'contactInfo': this.contactInfo,
       'startOfPublication': this.startOfPublication,
       'endOfPublication': this.endOfPublication,
@@ -165,6 +171,7 @@ export class Job extends Model<Job> {
       'skills': this.skills,
       'email': this.email,
       'phone': this.phone,
+      'website': this.website,
       'contactInfo': this.contactInfo,
       'startOfPublication': this.startOfPublication,
       'endOfPublication': this.endOfPublication,
@@ -188,6 +195,7 @@ export class Job extends Model<Job> {
       'skills': this.skills,
       'email': this.email,
       'phone': this.phone,
+      'website': this.website,
       'contactInfo': this.contactInfo,
       'startOfPublication': this.startOfPublication,
       'endOfPublication': this.endOfPublication,
@@ -234,18 +242,26 @@ export class Job extends Model<Job> {
 
       if (simplification['title'] != null) {
         this.title = simplification['title'];
+      } else if (this.title == null) {
+        this.title = '';
       }
 
       if (simplification['department'] != null) {
         this.department = simplification['department'];
+      } else if (this.department == null) {
+        this.department = '';
       }
 
       if (simplification['placeOfWork'] != null) {
         this.placeOfWork = simplification['placeOfWork'];
+      } else if (this.placeOfWork == null) {
+        this.placeOfWork = '';
       }
 
       if (simplification['contractType'] != null) {
         this.contractType = simplification['contractType'];
+      } else if (this.contractType == null) {
+        this.contractType = 'unlimited';
       }
 
       if (simplification['startOfWork'] != null) {
@@ -264,26 +280,44 @@ export class Job extends Model<Job> {
 
       if (simplification['shortDescription'] != null) {
         this.shortDescription = simplification['shortDescription'];
+      } else if (this.shortDescription == null) {
+        this.shortDescription = '';
       }
 
       if (simplification['description'] != null) {
         this.description = simplification['description'];
+      } else if (this.description == null) {
+        this.description = '';
       }
 
       if (simplification['skills'] != null) {
         this.skills = simplification['skills'];
+      } else if (this.skills == null) {
+        this.skills = '[]';
       }
 
       if (simplification['email'] != null) {
         this.email = simplification['email'];
+      } else if (this.email == null) {
+        this.email = '';
       }
 
       if (simplification['phone'] != null) {
         this.phone = simplification['phone'];
+      } else if (this.phone == null) {
+        this.phone = '';
+      }
+
+      if (simplification['website'] != null) {
+        this.website = simplification['website'];
+      } else if (this.website == null) {
+        this.website = '';
       }
 
       if (simplification['contactInfo'] != null) {
         this.contactInfo = simplification['contactInfo'];
+      } else if (this.contactInfo == null) {
+        this.contactInfo = '';
       }
 
       if (simplification['startOfPublication'] != null) {

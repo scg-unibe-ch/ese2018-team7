@@ -19,6 +19,7 @@ export class Job {
     public skills: Skill[] = [],
     public phone: string = '',
     public email: string = '',
+    public website: string = '',
     public contactInfo: string = '',
     public company: Company = new Company (),
     public startOfPublication: Moment = moment(),

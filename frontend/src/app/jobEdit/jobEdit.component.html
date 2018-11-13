@@ -98,6 +98,17 @@
     </mat-error>
   </mat-form-field>
   <br>
+    <mat-form-field class="input-full-width">
+      <input matInput required name="website" type="url" #website="ngModel" placeholder="Website" [(ngModel)]="job.website" (ngModelChange)="website.valid && onSaveSingle('website',job.website)"
+             pattern="^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?">
+      <mat-error *ngIf="website.hasError('required')">
+        Website ist zwingend
+      </mat-error>
+      <mat-error *ngIf="website.hasError('pattern')">
+        Ungültiger Link
+      </mat-error>
+    </mat-form-field>
+    <br>
   <mat-form-field class="input-full-width">
     <textarea autosize matInput placeholder="Weitere Kontaktinformationen" [(ngModel)]="job.contactInfo" name="contactinfo" (ngModelChange)="onSaveSingle('contactInfo',job.contactInfo)" class="textarea"></textarea>
   </mat-form-field>

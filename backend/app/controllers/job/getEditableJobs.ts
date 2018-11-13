@@ -38,34 +38,5 @@ module.exports = asyncRoute(async (req: Request, res: Response) => {
   const instances = await Job.findAll(options);
 
   res.status(200).send(instances.map(e => e.getJobForEdit()));
-/*
-  res.status(200).send(instances.map((e: any) => {
 
-    const cValue = JSON.parse(e['dataValues']['changes']);
-
-    let changed = false;
-
-    // Apply changes for user
-    for (const key in e['dataValues']) {
-
-      if (e['dataValues'].hasOwnProperty(key)) {
-
-        if (cValue[key] != null && e['dataValues'][key] !== cValue[key]) {
-
-          e['dataValues'][key] = cValue[key];
-          changed = true;
-
-        }
-
-      }
-
-    }
-
-    const val = e.getSimpleJob();
-    val['changed'] = changed;
-
-    return val;
-
-  }));
-*/
 });

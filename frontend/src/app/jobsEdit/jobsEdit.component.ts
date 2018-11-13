@@ -51,6 +51,7 @@ export class JobsEditComponent implements OnInit {
           JSON.parse(instance.skills),
           instance.phone == null ? '' : instance.phone,
           instance.email == null ? '' : instance.email,
+          instance.website == null ? '' : instance.website,
           instance.contactInfo == null ? '' : instance.contactInfo,
           new Company('', instance.companyName, instance.companyLogo),
           moment(instance.startOfPublication, 'X'),

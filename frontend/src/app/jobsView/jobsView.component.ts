@@ -61,7 +61,8 @@ export class JobsViewComponent implements OnInit {
 
   searched = false;
 
-  constructor(private httpClient: HttpClient, private dialog: MatDialog, private breakpointObserver: BreakpointObserver, private snackBar: MatSnackBar) {
+  constructor(private httpClient: HttpClient, private dialog: MatDialog, private breakpointObserver: BreakpointObserver,
+              private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -82,11 +83,13 @@ export class JobsViewComponent implements OnInit {
           JSON.parse(instance.skills),
           instance.phone,
           instance.email,
+          instance.website,
           instance.contactInfo,
           new Company('', instance.companyName, instance.companyLogo)));
 
       if (this.jobs.length === 0) {
         this.msg = 'Aktuell sind keine Jobs verfügbar!';
+        console.log('No jobs available');
       } else {
         this.msg = '';
       }
@@ -117,6 +120,7 @@ export class JobsViewComponent implements OnInit {
           JSON.parse(instance.skills),
           instance.phone,
           instance.email,
+          instance.website,
           instance.contactInfo,
           new Company('', instance.companyName, instance.companyLogo)));
 
@@ -157,6 +161,7 @@ export class JobsViewComponent implements OnInit {
           JSON.parse(instance.skills),
           instance.phone,
           instance.email,
+          instance.website,
           instance.contactInfo,
           new Company('', instance.companyName, instance.companyLogo),
           moment(instance.startOfPublication, 'X'),
@@ -198,6 +203,7 @@ export class JobsViewComponent implements OnInit {
           JSON.parse(instance.skills),
           instance.phone,
           instance.email,
+          instance.website,
           instance.contactInfo,
           new Company('', instance.companyName, instance.companyLogo),
           moment(instance.startOfPublication, 'X'),

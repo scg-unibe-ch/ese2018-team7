@@ -194,6 +194,7 @@ export class JobEditComponent implements OnInit {
       this.job.skills = JSON.parse(res.skills);
       this.job.phone = res.phone;
       this.job.email = res.email;
+      this.job.website = res.website;
       this.job.contactInfo = res.contactInfo;
       this.job.startOfPublication = moment(res.startOfPublication, 'X');
       this.job.endOfPublication = moment(res.endOfPublication, 'X');
