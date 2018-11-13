@@ -55,6 +55,7 @@ import {AccountSettingsComponent} from './accountSettings/accountSettings.compon
 import {JobViewDetailsComponent} from './jobViewDetails/jobViewDetails.component';
 import {JobsAdvancedSearchComponent} from './jobsAdvancedSearch/jobsAdvancedSearch.component';
 import {APIInterceptor} from './apiInterceptor/apiInterceptor';
+import {ConfirmDialogComponent} from './confirmDialog/confirmDialog.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import {APIInterceptor} from './apiInterceptor/apiInterceptor';
     ChangePasswordComponent,
     UsersEditComponent,
     AccountSettingsComponent,
+    ConfirmDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -111,6 +113,7 @@ import {APIInterceptor} from './apiInterceptor/apiInterceptor';
   entryComponents: [
     JobViewDetailsComponent,
     JobsAdvancedSearchComponent,
+    ConfirmDialogComponent,
   ],
   providers: [
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },

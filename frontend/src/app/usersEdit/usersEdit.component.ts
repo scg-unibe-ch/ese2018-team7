@@ -10,6 +10,7 @@ import {UsersEdit} from './usersEdit.interface';
 import {UsersEditDataProvider} from './usersEdit.dataProvider';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Message} from '../message';
+import {ConfirmDialogComponent} from '../confirmDialog/confirmDialog.component';
 
 @Component({
   selector: 'app-users-edit',
@@ -96,15 +97,23 @@ export class UsersEditComponent implements OnInit {
    * @param user
    */
   onDeleteUser(user: User) {
-    if (confirm('Möchtest du diesen Benutzer wirklich löschen?')) {
-      this.httpClient.delete('/login/' + user.username, {withCredentials: true}).subscribe(() => {
-        this.users.splice(this.users.indexOf(user), 1);
-        this.updateDataProvider();
-      }, err => {
-        console.error(err.error.message);
-        this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
-      });
-    }
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        msg: 'Möchtest du diesen Benutzer wirklich löschen?'
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      // NOTE: The result can also be nothing if the user presses the `esc` key or clicks outside the dialog
+      if (result === 'confirm') {
+        this.httpClient.delete('/login/' + user.username, {withCredentials: true}).subscribe(() => {
+          this.users.splice(this.users.indexOf(user), 1);
+          this.updateDataProvider();
+        }, err => {
+          console.error(err.error.message);
+          this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
+        });
+      }
+    });
   }
 
 
@@ -113,17 +122,25 @@ export class UsersEditComponent implements OnInit {
    * @param user
    */
   onSuspendUser(user: User) {
-    if (confirm('Möchtest du diesen Benutzer und seine Jobs wirklich ' + (user.suspended ? 'reaktivieren' : 'sperren') + '?')) {
-      this.httpClient.put('/login/suspend/', {
-        'username': user.username
-      }, {withCredentials: true}).subscribe((res: any) => {
-        user.suspended = res.suspended;
-        this.updateDataProvider();
-      }, err => {
-        console.error(err.error.message);
-        this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
-      });
-    }
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+     data: {
+        msg: 'Möchtest du diesen Benutzer und seine Jobs wirklich ' + (user.suspended ? 'reaktivieren' : 'sperren') + '?',
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      // NOTE: The result can also be nothing if the user presses the `esc` key or clicks outside the dialog
+      if (result === 'confirm') {
+        this.httpClient.put('/login/suspend/', {
+          'username': user.username
+        }, {withCredentials: true}).subscribe((res: any) => {
+          user.suspended = res.suspended;
+          this.updateDataProvider();
+        }, err => {
+          console.error(err.error.message);
+          this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
+        });
+      }
+    });
   }
 
   /**
