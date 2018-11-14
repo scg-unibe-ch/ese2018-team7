@@ -9,8 +9,12 @@
     <mat-toolbar color="primary"><div class="mibLogoImg"></div></mat-toolbar>
     <mat-nav-list *ngFor="let menu of menus">
       <!-- Distinguish between mobile and desktop -->
-      <a mat-list-item *ngIf="menu.condition() && !(isHandset$ | async)" routerLink="{{menu.link}}" routerLinkActive="active">{{menu.text}}</a>
-      <a mat-list-item *ngIf="menu.condition() && (isHandset$ | async)" routerLink="{{menu.link}}" routerLinkActive="active" (click)="drawer.close()">{{menu.text}}</a>
+      <a mat-list-item *ngIf="menu.condition() && !(isHandset$ | async)" routerLink="{{menu.link}}" routerLinkActive="active">
+        {{menu.text}}
+      </a>
+      <a mat-list-item *ngIf="menu.condition() && (isHandset$ | async)" routerLink="{{menu.link}}" routerLinkActive="active" (click)="drawer.close()">
+       {{menu.text}}
+      </a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -24,7 +28,7 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span>Job Portal</span>
-      <img class='mibLogo' src="../assets/mibLogo-large.png" height="50px" />
+      <img class='mibLogo' src="../assets/mibLogo-large.svg" height="50px" />
       <span class="fill-space"></span>
       <div *ngFor="let state of login">
       <a mat-button *ngIf="state.condition()" routerLink="{{state.link}}" routerLinkActive="active" aria-label="Login / Logout">

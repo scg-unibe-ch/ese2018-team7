@@ -3,7 +3,13 @@
 </mat-form-field>
 <button *ngIf="allowCreateJob()" mat-button (click)="onJobCreate()">Job erstellen</button>
 <mat-accordion class="header-alignment">
-  <app-job-edit [job]="job" (destroy)="onJobDestroy($event)" *ngFor="let job of jobs">
+  <app-job-edit [job]="job" (destroy)="onJobDestroy($event)" *ngFor="let job of jobs | jobsPageinatorPipe:pageEvent">
   </app-job-edit>
 </mat-accordion>
 <h2 class="warning">{{msg}}</h2>
+<mat-paginator [length]="jobs.length"
+               [pageSize]="10"
+               [pageSizeOptions]="[5, 10, 25, 100]"
+               (page)="pageEvent = $event"
+               class="paginator">
+</mat-paginator>

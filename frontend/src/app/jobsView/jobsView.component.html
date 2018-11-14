@@ -3,8 +3,24 @@
 </mat-form-field>
 <button mat-button (click)="openAdvancedSearch()">Erweiterte Suche</button>
 <button *ngIf="searched" mat-button (click)="resetSearch()">Suche zurücksetzen</button>
-
+<mat-form-field>
+  <mat-label>Sortieren nach:</mat-label>
+  <mat-select [(value)]="sorting">
+    <mat-option value="titleASC">Alphabet aufsteigend</mat-option>
+    <mat-option value="titleDESC">Alphabet absteigend</mat-option>
+    <mat-option value="workloadASC">Pensum aufsteigend</mat-option>
+    <mat-option value="workloadDESC">Pensum absteigend</mat-option>
+    <mat-option value="startworkASC">Arbeitsbeginn aufsteigend</mat-option>
+    <mat-option value="startworkDESC">Arbeitsbeginn absteigend</mat-option>
+  </mat-select>
+</mat-form-field>
 <div class="card-deck-container">
   <div *ngIf="msg"><h2 class="warning">{{msg}}</h2> </div>
-  <div *ngFor="let job of jobs" class="card-item"><app-job-view [job]="job"></app-job-view></div>
+  <div *ngFor="let job of ((jobs | jobsSortPipe:sorting) | jobsPageinatorPipe:pageEvent)" class="card-item"><app-job-view [job]="job"></app-job-view></div>
 </div>
+<mat-paginator [length]="jobs.length"
+               [pageSize]="10"
+               [pageSizeOptions]="[5, 10, 25, 100]"
+               (page)="pageEvent = $event"
+                class="paginator">
+</mat-paginator>

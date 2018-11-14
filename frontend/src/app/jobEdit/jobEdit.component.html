@@ -132,6 +132,7 @@
   </mat-form-field>
   </div>
   <mat-action-row>
+    <button mat-button (click)="showPreview()">Vorschau</button>
     <button mat-button (click)="onDestroy()" color="warn">Job löschen</button>
     <button *ngIf="job.changed" mat-button (click)="resetJob()"><mat-icon>undo</mat-icon></button>
     <button *ngIf="isValid()&&isAdmin()&&!job.approved" mat-button (click)="approve()">Job akzeptieren</button>

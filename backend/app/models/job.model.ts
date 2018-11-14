@@ -150,6 +150,7 @@ export class Job extends Model<Job> {
       'endOfPublication': this.endOfPublication,
       'approved': this.approved,
       'companyName': this.user.company[0].name,
+      'companyLogo': this.user.company[0].logo,
       'changed': oldJson !== this.getJSONforChange(),
     };
   }
