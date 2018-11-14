@@ -80,8 +80,5 @@
   background: var(--primary-a60);
 }
 .paginator{
-  position: fixed;
-  bottom: 5px;
-  right: 5px;
   background: ghostwhite;
 }

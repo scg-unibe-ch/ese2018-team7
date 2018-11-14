@@ -26,7 +26,10 @@ import {
   MatStepperModule,
   MatGridListModule,
   MatSnackBarModule,
-  MatBadgeModule, MAT_PAGINATOR_INTL_PROVIDER, MatPaginatorIntl,
+  MatBadgeModule,
+  MAT_PAGINATOR_INTL_PROVIDER,
+  MatPaginatorIntl,
+  MatSelectModule,
 } from '@angular/material';
 
 import { LayoutModule } from '@angular/cdk/layout';
@@ -59,6 +62,7 @@ import {APIInterceptor} from './apiInterceptor/apiInterceptor';
 import {ConfirmDialogComponent} from './confirmDialog/confirmDialog.component';
 import {JobsPageinatorPipe} from './jobsView/jobsPageinator.pipe';
 import {CustomMatPaginatorIntl} from './customCHLocale/CustomMatPaginatorIntl';
+import {JobsSortPipe} from './jobsView/jobsSort.pipe';
 
 @NgModule({
   declarations: [
@@ -80,6 +84,7 @@ import {CustomMatPaginatorIntl} from './customCHLocale/CustomMatPaginatorIntl';
     AccountSettingsComponent,
     ConfirmDialogComponent,
     JobsPageinatorPipe,
+    JobsSortPipe,
   ],
   imports: [
     BrowserModule,
@@ -114,6 +119,7 @@ import {CustomMatPaginatorIntl} from './customCHLocale/CustomMatPaginatorIntl';
     MatBadgeModule,
     CdkTableModule,
     MatSnackBarModule,
+    MatSelectModule,
   ],
   entryComponents: [
     JobViewDetailsComponent,

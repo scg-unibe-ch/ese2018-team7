@@ -62,6 +62,7 @@ export class JobsViewComponent implements OnInit {
   searched = false;
 
   pageEvent: PageEvent;
+  sorting = 'titleASC';
 
   constructor(private httpClient: HttpClient, private dialog: MatDialog, private breakpointObserver: BreakpointObserver,
               private snackBar: MatSnackBar) {
