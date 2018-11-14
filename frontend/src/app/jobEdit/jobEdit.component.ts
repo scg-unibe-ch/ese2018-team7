@@ -209,7 +209,7 @@ export class JobEditComponent implements OnInit {
     });
   }
   showPreview() {
-    const dialogRef = this.dialog.open(JobViewComponent,{
+    const dialogRef = this.dialog.open(JobViewComponent, {
       minWidth: '70%',
     });
     dialogRef.componentInstance.job = this.job;
