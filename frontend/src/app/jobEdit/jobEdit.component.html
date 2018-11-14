@@ -89,7 +89,7 @@
   <br>
   <mat-form-field class="input-full-width">
     <input matInput required name="email" #email="ngModel" type="email" placeholder="Email" [(ngModel)]="job.email" (ngModelChange)="email.valid && onSaveSingle('email',job.email)"
-           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$">
+           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,10}$">
     <mat-error *ngIf="email.hasError('required')">
       Email ist zwingend
     </mat-error>

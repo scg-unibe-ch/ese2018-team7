@@ -161,7 +161,9 @@ export class JobEditComponent implements OnInit {
     return AuthService.isModOrAdmin();
   }
   isValid() {
-    return this.job.phone.match('[0-9+ ]+') && this.job.email.match('[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$');
+    return (this.job.phone.match('[0-9+ ]+') &&
+            this.job.email.match('[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,10}$') &&
+            this.job.website.match('^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?'));
   }
   block() {
     this.snackBar.open('Nicht alle obligatorischen Felder ausgefüllt!', null, {duration: 3000});
