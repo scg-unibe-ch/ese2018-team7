@@ -62,6 +62,10 @@ export class JobsViewComponent implements OnInit {
   searched = false;
 
   pageEvent: PageEvent;
+
+  // Paginator page size
+  pageSize = ((this.getCookie('pageSize') === '') ? 10 : parseInt(this.getCookie('pageSize'), 10));
+
   sorting = 'titleASC';
 
   constructor(private httpClient: HttpClient, private dialog: MatDialog, private breakpointObserver: BreakpointObserver,
@@ -105,7 +109,7 @@ export class JobsViewComponent implements OnInit {
     });
 
     this.pageEvent = new PageEvent();
-    this.pageEvent.pageSize = 10;
+    this.pageEvent.pageSize = this.pageSize;
     this.pageEvent.pageIndex = 0;
     this.pageEvent.length = this.jobs.length;
 
@@ -260,5 +264,26 @@ export class JobsViewComponent implements OnInit {
         }
       }
     });
+  }
+
+  getCookie(cname) {
+    const name = cname + '=';
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const ca = decodedCookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) === ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) === 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return '';
+  }
+
+  setPageSizeCookie(newPageSize) {
+     document.cookie = 'pageSize=' + newPageSize;
+     console.log('Changed jobs per page to ' + newPageSize);
   }
 }

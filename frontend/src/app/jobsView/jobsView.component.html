@@ -19,8 +19,8 @@
   <div *ngFor="let job of ((jobs | jobsSortPipe:sorting) | jobsPageinatorPipe:pageEvent)" class="card-item"><app-job-view [job]="job"></app-job-view></div>
 </div>
 <mat-paginator [length]="jobs.length"
-               [pageSize]="10"
+               [pageSize]="pageSize"
                [pageSizeOptions]="[5, 10, 25, 100]"
-               (page)="pageEvent = $event"
-                class="paginator">
+               (page)="pageEvent = $event; setPageSizeCookie($event.pageSize);"
+               class="paginator">
 </mat-paginator>

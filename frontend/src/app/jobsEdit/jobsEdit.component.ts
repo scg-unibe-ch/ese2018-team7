@@ -27,7 +27,11 @@ export class JobsEditComponent implements OnInit {
   // Variable for return messages to the user
   msg;
 
+  // Paginator event
   pageEvent: PageEvent;
+
+  // Paginator page size
+  pageSize = ((this.getCookie('pageSize') === '') ? 10 : parseInt(this.getCookie('pageSize'), 10));
 
   constructor(private httpClient: HttpClient, private router: Router, private snackBar: MatSnackBar) {
     // Only accessible for logged-in users
@@ -69,7 +73,7 @@ export class JobsEditComponent implements OnInit {
     });
 
     this.pageEvent = new PageEvent();
-    this.pageEvent.pageSize = 10;
+    this.pageEvent.pageSize = this.pageSize;
     this.pageEvent.pageIndex = 0;
     this.pageEvent.length = this.jobs.length;
   }
@@ -110,5 +114,26 @@ export class JobsEditComponent implements OnInit {
 
   allowCreateJob() {
     return AuthService.isEmployer();
+  }
+
+  getCookie(cname) {
+    const name = cname + '=';
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const ca = decodedCookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) === ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) === 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return '';
+  }
+
+  setPageSizeCookie(newPageSize) {
+    document.cookie = 'pageSize=' + newPageSize;
+    console.log('Changed jobs per page to ' + newPageSize);
   }
 }
