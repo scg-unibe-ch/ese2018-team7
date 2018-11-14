@@ -5,6 +5,6 @@
 <button *ngIf="searched" mat-button (click)="resetSearch()">Suche zurücksetzen</button>
 
 <div class="card-deck-container">
-  <div *ngIf="msg"><span class="warning">{{msg}}</span> </div>
+  <div *ngIf="msg"><h2 class="warning">{{msg}}</h2> </div>
   <div *ngFor="let job of jobs" class="card-item"><app-job-view [job]="job"></app-job-view></div>
 </div>
