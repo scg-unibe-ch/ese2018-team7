@@ -64,7 +64,7 @@ export class JobsViewComponent implements OnInit {
   pageEvent: PageEvent;
 
   // Paginator page size
-  pageSize = ((this.getCookie('pageSize') === '') ? 10 : parseInt(this.getCookie('pageSize'), 10));
+  pageSize = ((this.getCookie('pageSize') === '') ? 8 : parseInt(this.getCookie('pageSize'), 10));
 
   sorting = 'titleASC';
 

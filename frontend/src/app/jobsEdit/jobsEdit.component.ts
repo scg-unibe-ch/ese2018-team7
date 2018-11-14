@@ -31,7 +31,7 @@ export class JobsEditComponent implements OnInit {
   pageEvent: PageEvent;
 
   // Paginator page size
-  pageSize = ((this.getCookie('pageSize') === '') ? 10 : parseInt(this.getCookie('pageSize'), 10));
+  pageSize = ((this.getCookie('pageSize') === '') ? 8 : parseInt(this.getCookie('pageSize'), 10));
 
   constructor(private httpClient: HttpClient, private router: Router, private snackBar: MatSnackBar) {
     // Only accessible for logged-in users

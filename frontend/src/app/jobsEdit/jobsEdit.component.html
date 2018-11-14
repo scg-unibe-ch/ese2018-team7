@@ -11,7 +11,7 @@
 <h2 class="warning" *ngIf="msg">{{msg}}</h2>
 <mat-paginator [length]="jobs.length"
                [pageSize]="pageSize"
-               [pageSizeOptions]="[5, 10, 25, 100]"
+               [pageSizeOptions]="[8, 16, 32, 64]"
                (page)="pageEvent = $event; setPageSizeCookie($event.pageSize);"
                class="paginator">
 </mat-paginator>
