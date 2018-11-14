@@ -25,6 +25,14 @@ export class MenuCountService {
         (res: any) => {
           MenuCountService.jobCount = res.jobs;
           MenuCountService.userCount = res.users;
+
+          if (MenuCountService.jobCount === 0) {
+            MenuCountService.jobCount = null;
+          }
+          if (MenuCountService.userCount === 0) {
+            MenuCountService.userCount = null;
+          }
+
         },
         err => {
           MenuCountService.jobCount = null;
