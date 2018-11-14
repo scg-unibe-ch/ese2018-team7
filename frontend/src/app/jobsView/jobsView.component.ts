@@ -5,7 +5,7 @@ import * as moment from 'moment';
 import {Moment} from 'moment';
 import {Company} from '../company';
 import {JobViewDetailsComponent} from '../jobViewDetails/jobViewDetails.component';
-import {MatDialog, MatSnackBar} from '@angular/material';
+import {MatDialog, MatPaginator, MatSnackBar, PageEvent} from '@angular/material';
 import {JobsAdvancedSearchComponent} from '../jobsAdvancedSearch/jobsAdvancedSearch.component';
 import {Observable} from 'rxjs';
 import {BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
@@ -61,6 +61,8 @@ export class JobsViewComponent implements OnInit {
 
   searched = false;
 
+  pageEvent: PageEvent;
+
   constructor(private httpClient: HttpClient, private dialog: MatDialog, private breakpointObserver: BreakpointObserver,
               private snackBar: MatSnackBar) {
   }
@@ -100,6 +102,12 @@ export class JobsViewComponent implements OnInit {
       console.error(err.error.message);
       this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
     });
+
+    this.pageEvent = new PageEvent();
+    this.pageEvent.pageSize = 10;
+    this.pageEvent.pageIndex = 0;
+    this.pageEvent.length = this.jobs.length;
+
   }
 
   onEasySearch() {

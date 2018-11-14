@@ -6,7 +6,7 @@ import {AuthService} from '../auth/auth.service';
 import * as moment from 'moment';
 import {Company} from '../company';
 import {Message} from '../message';
-import {MatSnackBar} from '@angular/material';
+import {MatSnackBar, PageEvent} from '@angular/material';
 
 @Component({
   selector: 'app-jobs-edit',
@@ -26,6 +26,8 @@ export class JobsEditComponent implements OnInit {
 
   // Variable for return messages to the user
   msg;
+
+  pageEvent: PageEvent;
 
   constructor(private httpClient: HttpClient, private router: Router, private snackBar: MatSnackBar) {
     // Only accessible for logged-in users
@@ -65,6 +67,11 @@ export class JobsEditComponent implements OnInit {
       console.error(err.error.message);
       this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
     });
+
+    this.pageEvent = new PageEvent();
+    this.pageEvent.pageSize = 10;
+    this.pageEvent.pageIndex = 0;
+    this.pageEvent.length = this.jobs.length;
   }
 
   /**

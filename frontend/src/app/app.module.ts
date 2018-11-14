@@ -26,7 +26,7 @@ import {
   MatStepperModule,
   MatGridListModule,
   MatSnackBarModule,
-  MatBadgeModule,
+  MatBadgeModule, MAT_PAGINATOR_INTL_PROVIDER, MatPaginatorIntl,
 } from '@angular/material';
 
 import { LayoutModule } from '@angular/cdk/layout';
@@ -57,6 +57,8 @@ import {JobViewDetailsComponent} from './jobViewDetails/jobViewDetails.component
 import {JobsAdvancedSearchComponent} from './jobsAdvancedSearch/jobsAdvancedSearch.component';
 import {APIInterceptor} from './apiInterceptor/apiInterceptor';
 import {ConfirmDialogComponent} from './confirmDialog/confirmDialog.component';
+import {JobsPageinatorPipe} from './jobsView/jobsPageinator.pipe';
+import {CustomMatPaginatorIntl} from './customCHLocale/CustomMatPaginatorIntl';
 
 @NgModule({
   declarations: [
@@ -77,6 +79,7 @@ import {ConfirmDialogComponent} from './confirmDialog/confirmDialog.component';
     UsersEditComponent,
     AccountSettingsComponent,
     ConfirmDialogComponent,
+    JobsPageinatorPipe,
   ],
   imports: [
     BrowserModule,
@@ -122,7 +125,8 @@ import {ConfirmDialogComponent} from './confirmDialog/confirmDialog.component';
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
     { provide: MAT_DATE_LOCALE, useValue: 'de-CH' },
     { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
-    { provide: HTTP_INTERCEPTORS,  useClass: APIInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS,  useClass: APIInterceptor, multi: true },
+    { provide: MatPaginatorIntl, useClass: CustomMatPaginatorIntl }
     ],
    bootstrap: [AppComponent]
 })

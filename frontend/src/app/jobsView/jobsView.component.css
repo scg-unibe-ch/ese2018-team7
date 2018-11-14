@@ -79,3 +79,9 @@
 ::ng-deep .custom-slider .ng5-slider .ng5-slider-tick.ng5-slider-selected {
   background: var(--primary-a60);
 }
+.paginator{
+  position: fixed;
+  bottom: 5px;
+  right: 5px;
+  background: ghostwhite;
+}
