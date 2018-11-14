@@ -7,7 +7,10 @@ import {MatDatepicker} from '@angular/material/datepicker';
 import * as moment from 'moment';
 import {Moment} from 'moment';
 import {Message} from '../message';
-import {MatSnackBar} from '@angular/material';
+import {MatDialog, MatSnackBar} from '@angular/material';
+import {JobsAdvancedSearchComponent} from '../jobsAdvancedSearch/jobsAdvancedSearch.component';
+import {JobViewDetailsComponent} from '../jobViewDetails/jobViewDetails.component';
+import {JobViewComponent} from '../jobView/jobView.component';
 
 @Component({
   selector: 'app-job-edit',
@@ -29,7 +32,7 @@ export class JobEditComponent implements OnInit {
   destroy = new EventEmitter<Job>();
   @ViewChild(MatDatepicker) datepicker: MatDatepicker<Date>;
 
-  constructor(private httpClient: HttpClient, private snackBar: MatSnackBar) {
+  constructor(private httpClient: HttpClient, private snackBar: MatSnackBar, private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -205,4 +208,11 @@ export class JobEditComponent implements OnInit {
       this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
     });
   }
+  showPreview() {
+    const dialogRef = this.dialog.open(JobViewComponent,{
+      minWidth: '70%',
+    });
+    dialogRef.componentInstance.job = this.job;
+  }
+
 }

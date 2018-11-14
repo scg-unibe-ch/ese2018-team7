@@ -114,6 +114,7 @@ import {ConfirmDialogComponent} from './confirmDialog/confirmDialog.component';
   ],
   entryComponents: [
     JobViewDetailsComponent,
+    JobViewComponent,
     JobsAdvancedSearchComponent,
     ConfirmDialogComponent,
   ],
