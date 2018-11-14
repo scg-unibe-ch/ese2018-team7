@@ -5,7 +5,10 @@
     <!-- Username Column -->
     <ng-container matColumnDef="username" class="text-center">
       <th mat-header-cell *matHeaderCellDef>Benutzername</th>
-      <td mat-cell *matCellDef="let u" class="tr-text mat-cell {{u.user.suspended?'suspendedRow':''}}">{{u.user.username}}</td>
+      <td mat-cell *matCellDef="let u" class="tr-text mat-cell {{u.user.suspended?'suspendedRow':''}}">
+        {{u.user.username}}
+        <mat-icon *ngIf="u.company.unapprovedChanges" class="warning">warning</mat-icon>
+      </td>
     </ng-container>
 
     <!-- Type Column -->
@@ -20,6 +23,7 @@
              [@detailExpand]="u == expandedElement ? 'expanded' : 'collapsed'">
           <div *ngIf="!isUserAdmin(u.user)||!isMe(u.user.username)">
             <mat-action-row>
+              <button mat-button *ngIf="u.company.unapprovedChanges" (click)="onApproveCompany(u.company)" color="primary">Änderungen akzeptieren</button>
               <button mat-button *ngIf="!u.user.enabled" (click)="onAcceptUser(u.user)" color="primary">Benutzer freischalten</button>
               <button mat-button *ngIf="u.user.enabled&&!isMe(u.user.username)" (click)="onSuspendUser(u.user)" color="warn">Benutzer {{u.user.suspended?'reaktivieren':'sperren'}}</button>
               <button mat-button *ngIf="isAdmin()&&!isMe(u.user.username)" (click)="onDeleteUser(u.user)" color="warn">Benutzer löschen</button>
@@ -32,8 +36,6 @@
           <div *ngIf="isEmployer(u.user)">
             <h3>Unternehmensname: {{u.company.name}}</h3>
             <img [src]="u.company.logo" width="100">
-            <br>
-            <button class='approveCompanyButton' *ngIf="u.company.unapprovedChanges" mat-button (click)="onApproveCompany(u.company)" color="primary">Änderungen akzeptieren</button>
             <br>
           </div>
         </div>
@@ -50,6 +52,7 @@
     <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
   </table>
 </mat-card>
+<br>
 <mat-card *ngIf="isAdmin()">
   <h3>Neue Administratoren und Moderatoren erstellen</h3>
   <mat-form-field>
