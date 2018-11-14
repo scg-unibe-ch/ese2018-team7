@@ -40,6 +40,11 @@ export class User extends Model<User> {
     this.password = this.bcrypt.hashSync(passwordClear, this.saltRounds);
   }
 
+  getJobCount(): number {
+    console.log('length of job array:' + this.jobs.length);
+    return this.jobs.length;
+  }
+
   getAdminEditDetails(): any {
 
     let unapprovedChanges = false;

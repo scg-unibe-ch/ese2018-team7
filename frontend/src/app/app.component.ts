@@ -6,6 +6,7 @@ import {AuthService} from './auth/auth.service';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {MatSidenav, MatSidenavContainer} from '@angular/material';
+import {Message} from './message';
 
 @Component({
   selector: 'app-root',
@@ -24,16 +25,42 @@ export class AppComponent implements OnInit {
   @ViewChild(MatSidenav)
   matSidenav: MatSidenav;
 
+  jobCount: number;
+
   menus = [
-    {link: '/viewJobs', text: 'Job finden', condition: function() {return true; }},
-    {link: '/editJobs', text: 'Jobs verwalten', condition: function() {return AuthService.isLogin(); }},
-    {link: '/editUsers', text: 'Benutzerverwaltung', condition: function() {return AuthService.isModOrAdmin(); }},
-    {link: '/editAccount', text: 'Kontoeinstellungen', condition: function() {return AuthService.isLogin(); }},
-    ];
+    {
+      link: '/viewJobs', text: 'Job finden', condition: function () {
+        return true;
+      }
+    },
+    {
+      link: '/editJobs', text: 'Jobs verwalten', condition: function () {
+        return AuthService.isLogin();
+      }
+    },
+    {
+      link: '/editUsers', text: 'Benutzerverwaltung', condition: function () {
+        return AuthService.isModOrAdmin();
+      }
+    },
+    {
+      link: '/editAccount', text: 'Kontoeinstellungen', condition: function () {
+        return AuthService.isLogin();
+      }
+    },
+  ];
 
   login = [
-    {link: '/login', text: 'Login', condition: function() {return !AuthService.isLogin(); }},
-    {link: '/logout', text: 'Logout', condition: function() {return AuthService.isLogin(); }},
+    {
+      link: '/login', text: 'Login', condition: function () {
+        return !AuthService.isLogin();
+      }
+    },
+    {
+      link: '/logout', text: 'Logout', condition: function () {
+        return AuthService.isLogin();
+      }
+    },
   ];
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe('(max-width: 950px)')
@@ -64,5 +91,21 @@ export class AppComponent implements OnInit {
         }
       }),
     ).subscribe();
+  }
+
+  getJobCount() {
+    if (AuthService.isLogin() && this.jobCount == null) {
+      this.httpClient.get('/login/jobCount', {withCredentials: true}).subscribe(
+        (res: number) => {
+          console.log(res);
+          this.jobCount = res;
+        },
+        err => {
+          this.jobCount = null;
+          console.log('Error occurred:' + err.error.message);
+        }
+      );
+    }
+    return this.jobCount;
   }
 }

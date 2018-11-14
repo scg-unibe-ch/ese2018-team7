@@ -26,6 +26,7 @@ import {
   MatStepperModule,
   MatGridListModule,
   MatSnackBarModule,
+  MatBadgeModule,
 } from '@angular/material';
 
 import { LayoutModule } from '@angular/cdk/layout';
@@ -107,6 +108,7 @@ import {ConfirmDialogComponent} from './confirmDialog/confirmDialog.component';
     MatExpansionModule,
     MatStepperModule,
     MatGridListModule,
+    MatBadgeModule,
     CdkTableModule,
     MatSnackBarModule,
   ],

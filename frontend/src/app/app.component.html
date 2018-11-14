@@ -9,8 +9,16 @@
     <mat-toolbar color="primary"><div class="mibLogoImg"></div></mat-toolbar>
     <mat-nav-list *ngFor="let menu of menus">
       <!-- Distinguish between mobile and desktop -->
-      <a mat-list-item *ngIf="menu.condition() && !(isHandset$ | async)" routerLink="{{menu.link}}" routerLinkActive="active">{{menu.text}}</a>
-      <a mat-list-item *ngIf="menu.condition() && (isHandset$ | async)" routerLink="{{menu.link}}" routerLinkActive="active" (click)="drawer.close()">{{menu.text}}</a>
+      <a mat-list-item *ngIf="menu.condition() && !(isHandset$ | async)" routerLink="{{menu.link}}" routerLinkActive="active">
+        <span [matBadge]="menu.link === '/editJobs' ? getJobCount() : null" [matBadgeOverlap]="menu.link === '/editJobs' ? false : null">
+          {{menu.text}}
+        </span>
+      </a>
+      <a mat-list-item *ngIf="menu.condition() && (isHandset$ | async)" routerLink="{{menu.link}}" routerLinkActive="active" (click)="drawer.close()">
+        <span [matBadge]="menu.link === '/editJobs' ? 10 : null" [matBadgeOverlap]="menu.link === '/editJobs' ? false : null">
+        {{menu.text}}
+        </span>
+      </a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
