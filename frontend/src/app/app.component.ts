@@ -92,20 +92,4 @@ export class AppComponent implements OnInit {
       }),
     ).subscribe();
   }
-
-  getJobCount() {
-    if (AuthService.isLogin() && this.jobCount == null) {
-      this.httpClient.get('/login/jobCount', {withCredentials: true}).subscribe(
-        (res: number) => {
-          console.log(res);
-          this.jobCount = res;
-        },
-        err => {
-          this.jobCount = null;
-          console.log('Error occurred:' + err.error.message);
-        }
-      );
-    }
-    return this.jobCount;
-  }
 }
