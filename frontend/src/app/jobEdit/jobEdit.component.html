@@ -61,9 +61,10 @@
     <textarea #shortDescription name="shortDescription" autosize matInput placeholder="Kurzbeschreibung" [(ngModel)]="job.shortDescription" (ngModelChange)="onSaveSingle('shortDescription',job.shortDescription)" class="textarea" maxlength="250"></textarea>
     <mat-hint align="end">{{shortDescription.value.length}} / 250</mat-hint>
   </mat-form-field>
-  <mat-form-field class="input-full-width">
-  <textarea name="description" autosize matInput placeholder="Detaillierte Beschreibung" [(ngModel)]="job.description" (ngModelChange)="onSaveSingle('description',job.description)" class="textarea"></textarea>
-  </mat-form-field>
+  <angular-markdown-editor
+    textareaId="description" rows="12" (onChange)="onSaveSingle('description',job.description)"
+    name="markdownText" [(ngModel)]="job.description" [locale]="locale" [options]="editorOptions">
+  </angular-markdown-editor>
   <br>
   <mat-list>
     <mat-list-item *ngFor="let skill of job.skills">
