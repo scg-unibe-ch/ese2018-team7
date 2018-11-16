@@ -3,6 +3,9 @@ import {Usergroup} from '../../enums/usergroup.enum';
 import {Response} from 'express';
 import {Request} from '../../interfaces/request.interface';
 import {asyncRoute} from '../../helper/async.helper';
+import {User} from '../../models/user.model';
+import {Company} from '../../models/company.model';
+import {Message} from '../../enums/message.enum';
 
 module.exports = asyncRoute(async (req: Request, res: Response) => {
 
@@ -16,6 +19,17 @@ module.exports = asyncRoute(async (req: Request, res: Response) => {
   instance.approved = req.session.user.type <= Usergroup.moderator ;
 
   await instance.save();
-  res.status(200).send(instance.getJobWithAdditionalDetails());
+
+  const returnInstance = await Job.findById(instance.id, {include: [{
+      model: User,
+      include: [{
+        model: Company,
+      }]
+    }]});
+  if (returnInstance == null) {
+    res.status(404).send(Message.error.notFound);
+    return;
+  }
+  res.status(200).send(returnInstance.getJobForEdit());
 
 });

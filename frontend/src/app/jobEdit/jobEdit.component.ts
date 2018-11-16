@@ -8,8 +8,6 @@ import * as moment from 'moment';
 import {Moment} from 'moment';
 import {Message} from '../message';
 import {MatDialog, MatSnackBar} from '@angular/material';
-import {JobsAdvancedSearchComponent} from '../jobsAdvancedSearch/jobsAdvancedSearch.component';
-import {JobViewDetailsComponent} from '../jobViewDetails/jobViewDetails.component';
 import {JobViewComponent} from '../jobView/jobView.component';
 
 @Component({
@@ -54,13 +52,14 @@ export class JobEditComponent implements OnInit {
   }
 
   onSaveContractType() {
+    console.log('save: ' + this.job.contractType);
     if (this.job.contractType === 'temporary') {
       this.job.endOfWork = moment(this.job.startOfWork.unix(), 'X');
       this.job.endOfWork.add(1, 'y').subtract(1, 'd').endOf('day');
     } else {
       this.job.endOfWork = moment(0);
     }
-
+    this.onSaveSingle('contractType', this.job.contractType);
     this.onSaveEndOfWork();
   }
 
