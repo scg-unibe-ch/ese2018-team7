@@ -8,6 +8,7 @@ import * as moment from 'moment';
 import {Moment} from 'moment';
 import {Message} from '../message';
 import {MatSnackBar} from '@angular/material';
+import {MenuCountService} from '../menuCount/menuCount.service';
 
 @Component({
   selector: 'app-job-edit',
@@ -44,6 +45,7 @@ export class JobEditComponent implements OnInit {
       console.log(answer);
       this.job.changed = answer.changed;
       this.job.approved = answer.approved;
+      MenuCountService.update(this.httpClient);
     }, err => {
       console.error(err.error.message);
       this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
@@ -69,6 +71,7 @@ export class JobEditComponent implements OnInit {
       console.log(answer);
       this.job.changed = answer.changed;
       this.job.approved = answer.approved;
+      MenuCountService.update(this.httpClient);
     }, err => {
       console.error(err.error.message);
       this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
@@ -83,6 +86,7 @@ export class JobEditComponent implements OnInit {
       console.log(answer);
       this.job.changed = answer.changed;
       this.job.approved = answer.approved;
+      MenuCountService.update(this.httpClient);
     }, err => {
       console.error(err.error.message);
       this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
@@ -97,6 +101,7 @@ export class JobEditComponent implements OnInit {
       console.log(answer);
       this.job.changed = answer.changed;
       this.job.approved = answer.approved;
+      MenuCountService.update(this.httpClient);
     }, err => {
       console.error(err.error.message);
       this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
@@ -111,6 +116,7 @@ export class JobEditComponent implements OnInit {
       console.log(answer);
       this.job.changed = answer.changed;
       this.job.approved = answer.approved;
+      MenuCountService.update(this.httpClient);
     }, err => {
       console.error(err.error.message);
       this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
@@ -123,6 +129,7 @@ export class JobEditComponent implements OnInit {
   onDestroy() {
     this.httpClient.delete('/jobs/' + this.job.id, {withCredentials: true}).subscribe(() => {
       this.destroy.emit(this.job);
+      MenuCountService.update(this.httpClient);
     }, err => {
       console.error(err.error.message);
       this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
@@ -172,6 +179,7 @@ export class JobEditComponent implements OnInit {
       this.httpClient.put('/jobs/apply/' + this.job.id, {}, {withCredentials: true}).subscribe((res: any) => {
         this.job.approved = res.approved;
         this.job.changed = res.changed;
+        MenuCountService.update(this.httpClient);
       }, err => {
         console.error(err.error.message);
         this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
@@ -200,6 +208,7 @@ export class JobEditComponent implements OnInit {
       this.job.endOfPublication = moment(res.endOfPublication, 'X');
       this.job.approved = res.approved;
       this.job.changed = res.changed;
+      MenuCountService.update(this.httpClient);
     }, err => {
       console.error(err.error.message);
       this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
