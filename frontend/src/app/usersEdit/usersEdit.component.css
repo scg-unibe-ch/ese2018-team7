@@ -38,4 +38,8 @@ tr.example-detail-row {
   min-width: 80%;
   min-height: 160px;
 }
+.infoText{
+  color: var(--warn);
+  font-weight: bold;
+}
 

@@ -202,6 +202,7 @@ export class UsersEditComponent implements OnInit {
       'username': company.username
     }, {withCredentials: true}).subscribe(() => {
       company.unapprovedChanges = false;
+      MenuCountService.update(this.httpClient);
     }, err => {
       console.error(err.error.message);
       this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
