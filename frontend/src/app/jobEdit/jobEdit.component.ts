@@ -7,10 +7,11 @@ import {MatDatepicker} from '@angular/material/datepicker';
 import * as moment from 'moment';
 import {Moment} from 'moment';
 import {Message} from '../message';
-import {MatDialog, MatSnackBar} from '@angular/material';
+import {MatDialog, MatSlideToggle, MatSnackBar} from '@angular/material';
 import {JobViewComponent} from '../jobView/jobView.component';
 import {EditorLocale, EditorOption} from 'angular-markdown-editor';
 import {MarkdownService} from 'ngx-markdown';
+import {Salary} from '../salary';
 
 @Component({
   selector: 'app-job-edit',
@@ -110,6 +111,17 @@ export class JobEditComponent implements OnInit {
       onChange: (e) => console.log(e.getContent()),
       parser: (val) => this.markdownService.compile(val.trim())
     };
+  }
+
+  displaySalary() {
+    return this.job.salary.amount >= 0;
+  }
+  changeToggleSalary() {
+    if (this.job.salary.amount >= 0) {
+      this.job.salary.amount = -1;
+    } else {
+      this.job.salary.amount = 0;
+    }
   }
 
   onSaveSingle(type: string, value: string) {
@@ -241,7 +253,7 @@ export class JobEditComponent implements OnInit {
   isValid() {
     return (this.job.phone.match('[0-9+ ]+') &&
             this.job.email.match('[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,10}$') &&
-            this.job.website.match('^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?'));
+            this.job.website.match('(((http|https)\\:\\/\\/){0,1}www\\.){0,1}[a-zA-Z0-9]*\\.[a-zA-Z0-9]{2,10}(\\/.*){0,1}'));
   }
   block() {
     this.snackBar.open('Nicht alle obligatorischen Felder ausgefüllt!', null, {duration: 3000});
@@ -269,6 +281,7 @@ export class JobEditComponent implements OnInit {
       this.job.endOfWork = res.endOfWork;
       this.job.endOfWork = moment(res.endOfWork, 'X').endOf('day');
       this.job.workload = res.workload;
+      this.job.salary = new Salary().fromString(res.salary);
       this.job.shortDescription = res.shortDescription;
       this.job.description = res.description;
       this.job.skills = JSON.parse(res.skills);

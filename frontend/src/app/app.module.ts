@@ -30,6 +30,7 @@ import {
   MAT_PAGINATOR_INTL_PROVIDER,
   MatPaginatorIntl,
   MatSelectModule,
+  MatSlideToggleModule,
 } from '@angular/material';
 
 import { LayoutModule } from '@angular/cdk/layout';
@@ -124,6 +125,7 @@ import {JobsSortPipe} from './jobsView/jobsSort.pipe';
     MatSelectModule,
     MarkdownModule.forRoot(),
     AngularMarkdownEditorModule.forRoot(),
+    MatSlideToggleModule,
   ],
   entryComponents: [
     JobViewDetailsComponent,

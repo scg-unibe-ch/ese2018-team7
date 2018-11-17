@@ -57,6 +57,30 @@
   </div>
   <mat-slider name="workload" color="primary" min="0" max="100" step="5" value="100" tickInterval="2" thumbLabel [displayWith]="percentageLabel" [(ngModel)]="job.workload" (ngModelChange)="onSaveSingle('workload',job.workload)"></mat-slider>
   <br>
+  <mat-slide-toggle
+    class="example-margin"
+    color="primary"
+    [checked]="displaySalary()"
+    [disabled]="false"
+    (toggleChange)="changeToggleSalary()">
+    Gehalt anzeigen?
+  </mat-slide-toggle>
+  <div *ngIf="displaySalary()">
+    <br>
+    <mat-form-field >
+      <input matInput type="number" name="salaryAmount" class="salaryAmount" placeholder="Gehalt" [(ngModel)]="job.salary.amount" (ngModelChange)="onSaveSingle('salary',job.salary)">
+      <span matSuffix>&nbsp;CHF&nbsp;</span>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select [(value)]="job.salary.period" (selectionChange)="onSaveSingle('salary',job.salary)">
+        <mat-option value="month">{{job.salary.getPeriodString('month')}}</mat-option>
+        <mat-option value="hour">{{job.salary.getPeriodString('hour')}}</mat-option>
+        <mat-option value="job">{{job.salary.getPeriodString('job')}}</mat-option>
+        <mat-option value="other">{{job.salary.getPeriodString('other')}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <br>
   <mat-form-field class="input-full-width">
     <textarea #shortDescription name="shortDescription" autosize matInput placeholder="Kurzbeschreibung" [(ngModel)]="job.shortDescription" (ngModelChange)="onSaveSingle('shortDescription',job.shortDescription)" class="textarea" maxlength="250"></textarea>
     <mat-hint align="end">{{shortDescription.value.length}} / 250</mat-hint>
@@ -101,7 +125,7 @@
   <br>
     <mat-form-field class="input-full-width">
       <input matInput required name="website" type="url" #website="ngModel" placeholder="Website" [(ngModel)]="job.website" (ngModelChange)="website.valid && onSaveSingle('website',job.website)"
-             pattern="^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?">
+             pattern="(((http|https)\:\/\/){0,1}www\.){0,1}[a-zA-Z0-9]*\.[a-zA-Z0-9]{2,10}(\/.*){0,1}">
       <mat-error *ngIf="website.hasError('required')">
         Website ist zwingend
       </mat-error>

@@ -5,19 +5,22 @@
 <p><span class="smalltext">Bei {{job.company.name}} &#x25BA; {{job.department}}</span><br><br>
 <img [src]="job.company.logo" class="company-logo">
   Stellenantritt am {{formattedStartOfWork}} in {{job.placeOfWork}} mit einem {{job.workload}}% Pensum.<br>
-  Diese Stelle ist {{job.contractType=='temporary'?'befristet und endet am '+formattedEndOfWork :'unbefristet'}}.<br><br>
+  Diese Stelle ist {{job.contractType=='temporary'?'befristet und endet am '+formattedEndOfWork :'unbefristet'}}.<br>
+  <span *ngIf="job.salary.amount>=0">Das Gehalt beträgt {{job.salary.amount}} CHF {{job.salary.getPeriodString(job.salary.period)}}</span>
+  <br><br>
 Diese Anforderungen solltest du mitbringen:<br>
 <mat-list>
   <mat-list-item *ngFor="let skill of job.skills">
     <app-skill-view [skill]="skill"></app-skill-view>
   </mat-list-item>
 </mat-list>
+  <br><br>
   <markdown ngPreserveWhitespaces>
     {{job.description}}
   </markdown>
 <br><br>
 Telefon: {{job.phone}}<br>
-Email: {{obscuredMail}}<br>
-Website: <a [href]="job.website">{{job.website}}</a><br><br>
+  Email: <a class="clickable" (click)="sendMail()">{{obscuredMail}}</a><br>
+Website: <a class="clickable" (click)="openWebsite()">{{job.website}}</a><br><br>
 <a [innerHTML]="formattedContactInfo"></a></p>
 </div>
