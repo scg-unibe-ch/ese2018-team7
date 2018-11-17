@@ -2,6 +2,7 @@ import {Moment} from 'moment';
 import * as moment from 'moment';
 import {Skill} from './skill';
 import {Company} from './company';
+import {Salary} from './salary';
 
 export class Job {
 
@@ -14,6 +15,7 @@ export class Job {
     public startOfWork: Moment = moment().startOf('day'),
     public endOfWork: Moment = moment(0),
     public workload: number = 100,
+    public salary: Salary = new Salary(),
     public shortDescription: string = '',
     public description: string = '',
     public skills: Skill[] = [],

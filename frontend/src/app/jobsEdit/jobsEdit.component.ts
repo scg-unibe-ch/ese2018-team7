@@ -6,7 +6,8 @@ import {AuthService} from '../auth/auth.service';
 import * as moment from 'moment';
 import {Company} from '../company';
 import {Message} from '../message';
-import {MatSnackBar} from '@angular/material';
+import {MatSnackBar, PageEvent} from '@angular/material';
+import {Salary} from '../salary';
 
 @Component({
   selector: 'app-jobs-edit',
@@ -27,6 +28,12 @@ export class JobsEditComponent implements OnInit {
   // Variable for return messages to the user
   msg;
 
+  // Paginator event
+  pageEvent: PageEvent;
+
+  // Paginator page size
+  pageSize = ((this.getCookie('pageSize') === '') ? 8 : parseInt(this.getCookie('pageSize'), 10));
+
   constructor(private httpClient: HttpClient, private router: Router, private snackBar: MatSnackBar) {
     // Only accessible for logged-in users
     AuthService.allowOnlyLogin(httpClient, router);
@@ -46,6 +53,7 @@ export class JobsEditComponent implements OnInit {
           moment(instance.startOfWork, 'X'),
           moment(instance.endOfWork, 'X'),
           instance.workload,
+          new Salary().fromString(instance.salary),
           instance.shortDescription == null ? '' : instance.shortDescription,
           instance.description == null ? '' : instance.description,
           JSON.parse(instance.skills),
@@ -65,6 +73,11 @@ export class JobsEditComponent implements OnInit {
       console.error(err.error.message);
       this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
     });
+
+    this.pageEvent = new PageEvent();
+    this.pageEvent.pageSize = this.pageSize;
+    this.pageEvent.pageIndex = 0;
+    this.pageEvent.length = this.jobs.length;
   }
 
   /**
@@ -81,6 +94,7 @@ export class JobsEditComponent implements OnInit {
       'endOfPublication': this.job.endOfPublication.unix()
     }, {withCredentials: true}).subscribe((instance: any) => {
       this.job.id = instance.id;
+      this.job.approved = false;
       this.jobs.push(this.job);
       this.job = new Job();
       this.msg = '';
@@ -102,5 +116,26 @@ export class JobsEditComponent implements OnInit {
 
   allowCreateJob() {
     return AuthService.isEmployer();
+  }
+
+  getCookie(cname) {
+    const name = cname + '=';
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const ca = decodedCookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) === ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) === 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return '';
+  }
+
+  setPageSizeCookie(newPageSize) {
+    document.cookie = 'pageSize=' + newPageSize;
+    console.log('Changed jobs per page to ' + newPageSize);
   }
 }

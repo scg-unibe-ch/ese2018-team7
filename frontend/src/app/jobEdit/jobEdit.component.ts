@@ -7,8 +7,13 @@ import {MatDatepicker} from '@angular/material/datepicker';
 import * as moment from 'moment';
 import {Moment} from 'moment';
 import {Message} from '../message';
+
 import {MatSnackBar} from '@angular/material';
 import {MenuCountService} from '../menuCount/menuCount.service';
+import {MatDialog, MatSlideToggle, MatSnackBar} from '@angular/material';
+import {JobViewComponent} from '../jobView/jobView.component';
+import {Salary} from '../salary';
+
 
 @Component({
   selector: 'app-job-edit',
@@ -30,10 +35,21 @@ export class JobEditComponent implements OnInit {
   destroy = new EventEmitter<Job>();
   @ViewChild(MatDatepicker) datepicker: MatDatepicker<Date>;
 
-  constructor(private httpClient: HttpClient, private snackBar: MatSnackBar) {
+  constructor(private httpClient: HttpClient, private snackBar: MatSnackBar, private dialog: MatDialog) {
   }
 
   ngOnInit() {
+  }
+
+  displaySalary() {
+    return this.job.salary.amount >= 0;
+  }
+  changeToggleSalary() {
+    if (this.job.salary.amount >= 0) {
+      this.job.salary.amount = -1;
+    } else {
+      this.job.salary.amount = 0;
+    }
   }
 
   onSaveSingle(type: string, value: string) {
@@ -53,13 +69,14 @@ export class JobEditComponent implements OnInit {
   }
 
   onSaveContractType() {
+    console.log('save: ' + this.job.contractType);
     if (this.job.contractType === 'temporary') {
       this.job.endOfWork = moment(this.job.startOfWork.unix(), 'X');
       this.job.endOfWork.add(1, 'y').subtract(1, 'd').endOf('day');
     } else {
       this.job.endOfWork = moment(0);
     }
-
+    this.onSaveSingle('contractType', this.job.contractType);
     this.onSaveEndOfWork();
   }
 
@@ -168,7 +185,9 @@ export class JobEditComponent implements OnInit {
     return AuthService.isModOrAdmin();
   }
   isValid() {
-    return this.job.phone.match('[0-9+ ]+') && this.job.email.match('[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$');
+    return (this.job.phone.match('[0-9+ ]+') &&
+            this.job.email.match('[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,10}$') &&
+            this.job.website.match('(((http|https)\\:\\/\\/){0,1}www\\.){0,1}[a-zA-Z0-9]*\\.[a-zA-Z0-9]{2,10}(\\/.*){0,1}'));
   }
   block() {
     this.snackBar.open('Nicht alle obligatorischen Felder ausgefüllt!', null, {duration: 3000});
@@ -197,6 +216,7 @@ export class JobEditComponent implements OnInit {
       this.job.endOfWork = res.endOfWork;
       this.job.endOfWork = moment(res.endOfWork, 'X').endOf('day');
       this.job.workload = res.workload;
+      this.job.salary = new Salary().fromString(res.salary);
       this.job.shortDescription = res.shortDescription;
       this.job.description = res.description;
       this.job.skills = JSON.parse(res.skills);
@@ -214,4 +234,11 @@ export class JobEditComponent implements OnInit {
       this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
     });
   }
+  showPreview() {
+    const dialogRef = this.dialog.open(JobViewComponent, {
+      minWidth: '70%',
+    });
+    dialogRef.componentInstance.job = this.job;
+  }
+
 }

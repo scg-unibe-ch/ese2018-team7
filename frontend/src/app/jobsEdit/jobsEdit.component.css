@@ -2,6 +2,10 @@
   color: var(--warn);
 }
 
+.accordion-container {
+  padding: 10px 10px 30px;
+}
+
 .header-alignment .mat-expansion-panel-header-title,
 .header-alignment .mat-expansion-panel-header-description {
   flex-basis: 0;
@@ -10,4 +14,8 @@
 .header-alignment .mat-expansion-panel-header-description {
   justify-content: space-between;
   align-items: center;
+}
+
+.paginator{
+  background: #fafafa;
 }

@@ -5,12 +5,13 @@ import * as moment from 'moment';
 import {Moment} from 'moment';
 import {Company} from '../company';
 import {JobViewDetailsComponent} from '../jobViewDetails/jobViewDetails.component';
-import {MatDialog, MatSnackBar} from '@angular/material';
+import {MatDialog, MatPaginator, MatSnackBar, PageEvent} from '@angular/material';
 import {JobsAdvancedSearchComponent} from '../jobsAdvancedSearch/jobsAdvancedSearch.component';
 import {Observable} from 'rxjs';
 import {BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import {map} from 'rxjs/operators';
 import {Message} from '../message';
+import {Salary} from '../salary';
 
 @Component({
   selector: 'app-jobs-view',
@@ -61,6 +62,13 @@ export class JobsViewComponent implements OnInit {
 
   searched = false;
 
+  pageEvent: PageEvent;
+
+  // Paginator page size
+  pageSize = ((this.getCookie('pageSize') === '') ? 8 : parseInt(this.getCookie('pageSize'), 10));
+
+  sorting = 'titleASC';
+
   constructor(private httpClient: HttpClient, private dialog: MatDialog, private breakpointObserver: BreakpointObserver,
               private snackBar: MatSnackBar) {
   }
@@ -78,6 +86,7 @@ export class JobsViewComponent implements OnInit {
           moment(instance.startOfWork, 'X'),
           moment(instance.endOfWork, 'X'),
           instance.workload,
+          new Salary().fromString(instance.salary),
           instance.shortDescription,
           instance.description,
           JSON.parse(instance.skills),
@@ -100,12 +109,18 @@ export class JobsViewComponent implements OnInit {
       console.error(err.error.message);
       this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
     });
+
+    this.pageEvent = new PageEvent();
+    this.pageEvent.pageSize = this.pageSize;
+    this.pageEvent.pageIndex = 0;
+    this.pageEvent.length = this.jobs.length;
+
   }
 
   onEasySearch() {
 
     // Load the Jobs from the Server
-    this.httpClient.get('/jobs/?title=' + this.searchParam).subscribe((instances: any) => {
+    this.httpClient.get('/jobs/?easy=' + this.searchParam).subscribe((instances: any) => {
       this.jobs = instances.map((instance) =>
         new Job(instance.id,
           instance.title,
@@ -115,6 +130,7 @@ export class JobsViewComponent implements OnInit {
           moment(instance.startOfWork, 'X'),
           moment(instance.endOfWork, 'X'),
           instance.workload,
+          new Salary().fromString(instance.salary),
           instance.shortDescription,
           instance.description,
           JSON.parse(instance.skills),
@@ -156,6 +172,7 @@ export class JobsViewComponent implements OnInit {
           moment(instance.startOfWork, 'X'),
           moment(instance.endOfWork, 'X'),
           instance.workload,
+          new Salary().fromString(instance.salary),
           instance.shortDescription,
           instance.description,
           JSON.parse(instance.skills),
@@ -198,6 +215,7 @@ export class JobsViewComponent implements OnInit {
           moment(instance.startOfWork, 'X'),
           moment(instance.endOfWork, 'X'),
           instance.workload,
+          new Salary().fromString(instance.salary),
           instance.shortDescription,
           instance.description,
           JSON.parse(instance.skills),
@@ -251,5 +269,26 @@ export class JobsViewComponent implements OnInit {
         }
       }
     });
+  }
+
+  getCookie(cname) {
+    const name = cname + '=';
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const ca = decodedCookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) === ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) === 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return '';
+  }
+
+  setPageSizeCookie(newPageSize) {
+     document.cookie = 'pageSize=' + newPageSize;
+     console.log('Changed jobs per page to ' + newPageSize);
   }
 }

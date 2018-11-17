@@ -26,6 +26,9 @@ export class Job extends Model<Job> {
   @Column(DataType.INTEGER)
   workload!: number;
 
+  @Column(DataType.TEXT)
+  salary!: string;
+
   @Column
   shortDescription!: string;
 
@@ -87,6 +90,7 @@ export class Job extends Model<Job> {
       'startOfWork': this.startOfWork,
       'endOfWork': this.endOfWork,
       'workload': this.workload,
+      'salary': this.salary,
       'shortDescription': this.shortDescription,
       'description': this.description,
       'skills': this.skills,
@@ -114,6 +118,7 @@ export class Job extends Model<Job> {
       'startOfWork': this.startOfWork,
       'endOfWork': this.endOfWork,
       'workload': this.workload,
+      'salary': this.salary,
       'shortDescription': this.shortDescription,
       'description': this.description,
       'skills': this.skills,
@@ -139,6 +144,7 @@ export class Job extends Model<Job> {
       'startOfWork': this.startOfWork,
       'endOfWork': this.endOfWork,
       'workload': this.workload,
+      'salary': this.salary,
       'shortDescription': this.shortDescription,
       'description': this.description,
       'skills': this.skills,
@@ -150,35 +156,9 @@ export class Job extends Model<Job> {
       'endOfPublication': this.endOfPublication,
       'approved': this.approved,
       'companyName': this.user.company[0].name,
+      'companyLogo': this.user.company[0].logo,
       'changed': oldJson !== this.getJSONforChange(),
     };
-  }
-
-  getJobWithAdditionalDetails(): any {
-    console.log(this.changes);
-    console.log(this.getJSONforChange());
-    return {
-      'id': this.id,
-      'title': this.title,
-      'department': this.department,
-      'placeOfWork': this.placeOfWork,
-      'contractType': this.contractType,
-      'startOfWork': this.startOfWork,
-      'endOfWork': this.endOfWork,
-      'workload': this.workload,
-      'shortDescription': this.shortDescription,
-      'description': this.description,
-      'skills': this.skills,
-      'email': this.email,
-      'phone': this.phone,
-      'website': this.website,
-      'contactInfo': this.contactInfo,
-      'startOfPublication': this.startOfPublication,
-      'endOfPublication': this.endOfPublication,
-      'approved': this.approved,
-      'changed': this.changes !== this.getJSONforChange(),
-    };
-
   }
 
   getJSONforChange() {
@@ -190,6 +170,7 @@ export class Job extends Model<Job> {
       'startOfWork': this.startOfWork,
       'endOfWork': this.endOfWork,
       'workload': this.workload,
+      'salary': this.salary,
       'shortDescription': this.shortDescription,
       'description': this.description,
       'skills': this.skills,
@@ -276,6 +257,12 @@ export class Job extends Model<Job> {
 
       if (simplification['workload'] != null) {
         this.workload = simplification['workload'];
+      }
+
+      if (simplification['salary'] != null) {
+        this.salary = simplification['salary'];
+      } else if (this.salary == null) {
+        this.salary = '{amount:-1, period:month}';
       }
 
       if (simplification['shortDescription'] != null) {
