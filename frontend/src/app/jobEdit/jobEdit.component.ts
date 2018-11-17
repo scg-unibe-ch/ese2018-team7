@@ -7,8 +7,9 @@ import {MatDatepicker} from '@angular/material/datepicker';
 import * as moment from 'moment';
 import {Moment} from 'moment';
 import {Message} from '../message';
-import {MatDialog, MatSnackBar} from '@angular/material';
+import {MatDialog, MatSlideToggle, MatSnackBar} from '@angular/material';
 import {JobViewComponent} from '../jobView/jobView.component';
+import {Salary} from '../salary';
 
 @Component({
   selector: 'app-job-edit',
@@ -34,6 +35,17 @@ export class JobEditComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  displaySalary() {
+    return this.job.salary.amount >= 0;
+  }
+  changeToggleSalary() {
+    if (this.job.salary.amount >= 0) {
+      this.job.salary.amount = -1;
+    } else {
+      this.job.salary.amount = 0;
+    }
   }
 
   onSaveSingle(type: string, value: string) {
@@ -193,6 +205,7 @@ export class JobEditComponent implements OnInit {
       this.job.endOfWork = res.endOfWork;
       this.job.endOfWork = moment(res.endOfWork, 'X').endOf('day');
       this.job.workload = res.workload;
+      this.job.salary = new Salary().fromString(res.salary);
       this.job.shortDescription = res.shortDescription;
       this.job.description = res.description;
       this.job.skills = JSON.parse(res.skills);

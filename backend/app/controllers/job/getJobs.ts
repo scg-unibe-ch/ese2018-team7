@@ -10,6 +10,9 @@ module.exports = asyncRoute(async (req: Request, res: Response) => {
 
   // if the user wants to search
 
+  // Add % to create full text search on easy
+  const easy = (req.query.easy != null) ? '%' + req.query.easy + '%' : '%';
+
   // Add % to create full text search on title
   const title = (req.query.title != null) ? '%' + req.query.title + '%' : '%';
 
@@ -40,6 +43,10 @@ module.exports = asyncRoute(async (req: Request, res: Response) => {
       {approved: true},
       {startOfPublication: {lte: Math.floor(Date.now() / 1000)}},
       {endOfPublication: {gte: Math.floor(Date.now() / 1000)}},
+      Sequelize.or(
+        {title: {like: easy}},
+        Sequelize.fn('`user.company.name` LIKE', easy),
+      )
     ),
     include: [{
       model: User,

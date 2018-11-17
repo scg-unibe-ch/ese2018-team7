@@ -11,6 +11,7 @@ import {Observable} from 'rxjs';
 import {BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import {map} from 'rxjs/operators';
 import {Message} from '../message';
+import {Salary} from '../salary';
 
 @Component({
   selector: 'app-jobs-view',
@@ -85,6 +86,7 @@ export class JobsViewComponent implements OnInit {
           moment(instance.startOfWork, 'X'),
           moment(instance.endOfWork, 'X'),
           instance.workload,
+          new Salary().fromString(instance.salary),
           instance.shortDescription,
           instance.description,
           JSON.parse(instance.skills),
@@ -118,7 +120,7 @@ export class JobsViewComponent implements OnInit {
   onEasySearch() {
 
     // Load the Jobs from the Server
-    this.httpClient.get('/jobs/?title=' + this.searchParam).subscribe((instances: any) => {
+    this.httpClient.get('/jobs/?easy=' + this.searchParam).subscribe((instances: any) => {
       this.jobs = instances.map((instance) =>
         new Job(instance.id,
           instance.title,
@@ -128,6 +130,7 @@ export class JobsViewComponent implements OnInit {
           moment(instance.startOfWork, 'X'),
           moment(instance.endOfWork, 'X'),
           instance.workload,
+          new Salary().fromString(instance.salary),
           instance.shortDescription,
           instance.description,
           JSON.parse(instance.skills),
@@ -169,6 +172,7 @@ export class JobsViewComponent implements OnInit {
           moment(instance.startOfWork, 'X'),
           moment(instance.endOfWork, 'X'),
           instance.workload,
+          new Salary().fromString(instance.salary),
           instance.shortDescription,
           instance.description,
           JSON.parse(instance.skills),
@@ -211,6 +215,7 @@ export class JobsViewComponent implements OnInit {
           moment(instance.startOfWork, 'X'),
           moment(instance.endOfWork, 'X'),
           instance.workload,
+          new Salary().fromString(instance.salary),
           instance.shortDescription,
           instance.description,
           JSON.parse(instance.skills),

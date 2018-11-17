@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import {Company} from '../company';
 import {Message} from '../message';
 import {MatSnackBar, PageEvent} from '@angular/material';
+import {Salary} from '../salary';
 
 @Component({
   selector: 'app-jobs-edit',
@@ -52,6 +53,7 @@ export class JobsEditComponent implements OnInit {
           moment(instance.startOfWork, 'X'),
           moment(instance.endOfWork, 'X'),
           instance.workload,
+          new Salary().fromString(instance.salary),
           instance.shortDescription == null ? '' : instance.shortDescription,
           instance.description == null ? '' : instance.description,
           JSON.parse(instance.skills),
