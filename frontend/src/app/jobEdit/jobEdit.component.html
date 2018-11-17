@@ -100,7 +100,7 @@
   <br>
     <mat-form-field class="input-full-width">
       <input matInput required name="website" type="url" #website="ngModel" placeholder="Website" [(ngModel)]="job.website" (ngModelChange)="website.valid && onSaveSingle('website',job.website)"
-             pattern="^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?">
+             pattern="(((http|https)\:\/\/){0,1}www\.){0,1}[a-zA-Z0-9]*\.[a-zA-Z0-9]{2,10}(\/.*){0,1}">
       <mat-error *ngIf="website.hasError('required')">
         Website ist zwingend
       </mat-error>

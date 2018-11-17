@@ -39,5 +39,17 @@ export class JobViewDetailsComponent implements OnInit {
   onNoClick(): void {
     this.dialogRef.close();
   }
+  sendMail() {
+    window.location.href = 'mailto:' + this.job.email;
+  }
+  openWebsite() {
+    let web = this.job.website;
+    if (web.indexOf('http') === -1) {
+      web = 'http://' + web;
+    }
+
+    const win = window.open(web, '_blank');
+    win.focus();
+  }
 
 }

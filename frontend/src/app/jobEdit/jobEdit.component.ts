@@ -165,7 +165,7 @@ export class JobEditComponent implements OnInit {
   isValid() {
     return (this.job.phone.match('[0-9+ ]+') &&
             this.job.email.match('[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,10}$') &&
-            this.job.website.match('^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?'));
+            this.job.website.match('(((http|https)\\:\\/\\/){0,1}www\\.){0,1}[a-zA-Z0-9]*\\.[a-zA-Z0-9]{2,10}(\\/.*){0,1}'));
   }
   block() {
     this.snackBar.open('Nicht alle obligatorischen Felder ausgefüllt!', null, {duration: 3000});

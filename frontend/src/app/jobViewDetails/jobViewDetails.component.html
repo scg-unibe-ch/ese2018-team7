@@ -15,7 +15,7 @@ Diese Anforderungen solltest du mitbringen:<br>
 <a [innerHTML]="formattedDescription"></a>
 <br><br>
 Telefon: {{job.phone}}<br>
-Email: {{obscuredMail}}<br>
-Website: <a [href]="job.website">{{job.website}}</a><br><br>
+  Email: <a class="clickable" (click)="sendMail()">{{obscuredMail}}</a><br>
+Website: <a class="clickable" (click)="openWebsite()">{{job.website}}</a><br><br>
 <a [innerHTML]="formattedContactInfo"></a></p>
 </div>
