@@ -37,6 +37,8 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { CdkTableModule} from '@angular/cdk/table';
 
 import {AutosizeModule} from 'ngx-autosize';
+import {MarkdownModule} from 'ngx-markdown';
+import { AngularMarkdownEditorModule } from 'angular-markdown-editor';
 import {MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import { Ng5SliderModule } from 'ng5-slider';
 import {MatDatepickerModule, MatMomentDateModule, MAT_DATE_LOCALE, MAT_DATE_FORMATS} from '@coachcare/datepicker';
@@ -121,6 +123,8 @@ import {JobsSortPipe} from './jobsView/jobsSort.pipe';
     CdkTableModule,
     MatSnackBarModule,
     MatSelectModule,
+    MarkdownModule.forRoot(),
+    AngularMarkdownEditorModule.forRoot(),
     MatSlideToggleModule,
   ],
   entryComponents: [

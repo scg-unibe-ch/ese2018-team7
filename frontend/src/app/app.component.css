@@ -38,3 +38,6 @@
     content: url('../assets/mibLogo-small.svg');
   }
 }
+.mat-drawer-content{
+  z-index: 2;
+}

@@ -14,8 +14,10 @@ Diese Anforderungen solltest du mitbringen:<br>
     <app-skill-view [skill]="skill"></app-skill-view>
   </mat-list-item>
 </mat-list>
-<br><br>
-<a [innerHTML]="formattedDescription"></a>
+  <br><br>
+  <markdown ngPreserveWhitespaces>
+    {{job.description}}
+  </markdown>
 <br><br>
 Telefon: {{job.phone}}<br>
   Email: <a class="clickable" (click)="sendMail()">{{obscuredMail}}</a><br>

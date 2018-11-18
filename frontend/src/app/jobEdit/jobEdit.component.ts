@@ -11,6 +11,8 @@ import {Message} from '../message';
 import {MenuCountService} from '../menuCount/menuCount.service';
 import {MatDialog, MatSlideToggle, MatSnackBar} from '@angular/material';
 import {JobViewComponent} from '../jobView/jobView.component';
+import {EditorLocale, EditorOption} from 'angular-markdown-editor';
+import {MarkdownService} from 'ngx-markdown';
 import {Salary} from '../salary';
 
 
@@ -29,15 +31,89 @@ export class JobEditComponent implements OnInit {
   skill: Skill = new Skill (null, '', null);
 
   today: Moment = moment();
+  editorOptions: EditorOption;
 
   @Output()
   destroy = new EventEmitter<Job>();
   @ViewChild(MatDatepicker) datepicker: MatDatepicker<Date>;
 
-  constructor(private httpClient: HttpClient, private snackBar: MatSnackBar, private dialog: MatDialog) {
+  locale: EditorLocale = {
+    language: 'de',
+    dictionary: {
+      'Bold': 'Fett',
+      'Italic': 'Kursiv',
+      'Heading': 'Titel',
+      'URL/Link': 'HTTP-Link',
+      'Image': 'Bild einfügen',
+      'List': 'Aufzählungsliste',
+      'Ordered List': 'Geordnete Liste',
+      'Unordered List': 'Ungeordnete Liste',
+      'Code': 'Code',
+      'Quote': 'Zitat',
+      'Preview': 'Vorschau',
+      'Strikethrough': 'Durchgestrichen',
+      'Table': 'Tabelle',
+      'strong text': 'fetter Text',
+      'emphasized text': 'unterstrichener Text',
+      'heading text': 'Titeltext',
+      'enter link description here': 'Linkbeschreibung hier Einfügen',
+      'Insert Hyperlink': 'Link zum Einfügen',
+      'enter image description here': 'Füge Bildbeschreibung hier ein',
+      'Insert Image Hyperlink': 'Gib die Bildaddresse hier an',
+      'enter image title here': 'Füge Bildüberschrift hier ein',
+      'list text here': 'Eine Liste',
+      'code text here': 'Code hier einfügen',
+      'quote here': 'Zitat hier einfügen',
+    }
+  };
+
+  constructor(private httpClient: HttpClient, private snackBar: MatSnackBar, private dialog: MatDialog,
+              private markdownService: MarkdownService) {
   }
 
   ngOnInit() {
+    this.editorOptions = {
+      iconlibrary: 'fa',
+      language: 'de',
+      fullscreen: {
+        enable: false,
+        icons: null,
+      },
+      additionalButtons: [
+        [{
+            name: 'groupMisc',
+            data: [{
+              name: 'cmdTable',
+              toggle: false,
+              title: 'Table',
+              icon: {
+                fa: 'fa fa-table',
+                glyph: 'glyphicon glyphicon-th'
+              },
+              callback: (e) => {
+                // Replace selection with some drinks
+                let chunk;
+                let cursor;
+                const selected = e.getSelection();
+
+                chunk = '\n| Tabellen        | sind          | cool  | \n'
+                  + '| --------------- |:-------------:| -----:| \n'
+                  + '| Spalte 3 ist    | rechstsbündig | $1600 | \n'
+                  + '| Spalte 2 ist    | zentriert     |   $12 |';
+
+                // transform selection and set the cursor into chunked text
+                e.replaceSelection(chunk);
+                cursor = selected.start;
+
+                // Set the cursor
+                e.setSelection(cursor, cursor + chunk.length);
+              }
+            }]
+          }]
+        ],
+      onChange: (e) => console.log(e.getContent()),
+      parser: (val) => this.markdownService.compile(val.trim())
+    };
   }
 
   displaySalary() {
