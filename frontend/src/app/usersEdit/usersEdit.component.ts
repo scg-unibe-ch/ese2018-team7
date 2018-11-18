@@ -180,7 +180,24 @@ export class UsersEditComponent implements OnInit {
   }
 
   getUserTypeString(type: Usergroup): string {
-    return Usergroup[type];
+    switch (type) {
+      case 1: {
+        return 'Administrator';
+      }
+      case 3: {
+        return 'Moderator';
+      }
+      case 5: {
+        return 'Unternehmen';
+      }
+      case 7: {
+        return 'Öffentlich';
+      }
+      default: {
+        console.log('Invalid Usergroup!');
+        break;
+      }
+    }
   }
 
   isMe(user) {
