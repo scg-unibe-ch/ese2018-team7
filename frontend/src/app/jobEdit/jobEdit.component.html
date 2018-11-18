@@ -27,7 +27,7 @@
     <input matInput name="placeofwork" placeholder="Arbeitsort" [(ngModel)]="job.placeOfWork" (ngModelChange)="onSaveSingle('placeOfWork',job.placeOfWork)">
   </mat-form-field>
   <br>
-  <div flex="10" layout layout-align="center center">
+  <div flex="10" layout layout-align="center center" class="property-label">
     Vertrag
   </div>
   <mat-radio-group [(ngModel)]="job.contractType" (ngModelChange)="onSaveContractType()" class="input-full-width">
@@ -52,7 +52,7 @@
     <mat-datepicker-toggle matSuffix [for]="endWork"></mat-datepicker-toggle>
   </mat-form-field>
   <br>
-  <div flex="10" layout layout-align="center center">
+  <div flex="10" layout layout-align="center center" class="property-label">
     Pensum
   </div>
   <mat-slider name="workload" color="primary" min="0" max="100" step="5" value="100" tickInterval="2" thumbLabel [displayWith]="percentageLabel" [(ngModel)]="job.workload" (ngModelChange)="onSaveSingle('workload',job.workload)"></mat-slider>
@@ -85,6 +85,10 @@
     <textarea #shortDescription name="shortDescription" autosize matInput placeholder="Kurzbeschreibung" [(ngModel)]="job.shortDescription" (ngModelChange)="onSaveSingle('shortDescription',job.shortDescription)" class="textarea" maxlength="250"></textarea>
     <mat-hint align="end">{{shortDescription.value.length}} / 250</mat-hint>
   </mat-form-field>
+  <br><br>
+  <div flex="10" layout layout-align="center center" class="property-label">
+    Detaillierte Beschreibung
+  </div>
   <angular-markdown-editor
     textareaId="description" rows="12" (onChange)="onSaveSingle('description',job.description)"
     name="markdownText" [(ngModel)]="job.description" [locale]="locale" [options]="editorOptions">
