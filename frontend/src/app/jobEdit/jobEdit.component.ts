@@ -46,8 +46,10 @@ export class JobEditComponent implements OnInit {
   changeToggleSalary() {
     if (this.job.salary.amount >= 0) {
       this.job.salary.amount = -1;
+      this.job.salary.period = 'month';
     } else {
       this.job.salary.amount = 0;
+      this.job.salary.period = 'month';
     }
     this.onSaveSingle('salary', this.job.salary.toString());
   }
