@@ -98,7 +98,7 @@ export class JobEditComponent implements OnInit {
 
                 chunk = '\n| Tabellen        | sind          | cool  | \n'
                   + '| --------------- |:-------------:| -----:| \n'
-                  + '| Spalte 3 ist    | rechstsbündig | $1600 | \n'
+                  + '| Spalte 3 ist    | rechtsbündig | $1600 | \n'
                   + '| Spalte 2 ist    | zentriert     |   $12 |';
 
                 // transform selection and set the cursor into chunked text
