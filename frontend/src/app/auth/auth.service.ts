@@ -2,6 +2,7 @@ import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {Usergroup} from '../usergroup';
 import {Observable, of} from 'rxjs';
+import {MenuCountService} from '../menuCount/menuCount.service';
 
 /**
  * Provides the components if the user is login or admin and redirects if needed

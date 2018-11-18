@@ -11,6 +11,7 @@ import {UsersEditDataProvider} from './usersEdit.dataProvider';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Message} from '../message';
 import {ConfirmDialogComponent} from '../confirmDialog/confirmDialog.component';
+import {MenuCountService} from '../menuCount/menuCount.service';
 
 @Component({
   selector: 'app-users-edit',
@@ -65,7 +66,7 @@ export class UsersEditComponent implements OnInit {
       data.push({user: u, company: comp});
     });
     this.dataProvider = new UsersEditDataProvider(data);
-
+    MenuCountService.update(this.httpClient);
   }
 
   onCreateAdmin() {
@@ -218,6 +219,7 @@ export class UsersEditComponent implements OnInit {
       'username': company.username
     }, {withCredentials: true}).subscribe(() => {
       company.unapprovedChanges = false;
+      MenuCountService.update(this.httpClient);
     }, err => {
       console.error(err.error.message);
       this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});

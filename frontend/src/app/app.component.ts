@@ -7,6 +7,7 @@ import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {MatSidenav, MatSidenavContainer} from '@angular/material';
 import {Message} from './message';
+import {MenuCountService} from './menuCount/menuCount.service';
 
 @Component({
   selector: 'app-root',
@@ -25,28 +26,26 @@ export class AppComponent implements OnInit {
   @ViewChild(MatSidenav)
   matSidenav: MatSidenav;
 
-  jobCount: number;
-
   menus = [
     {
       link: '/viewJobs', text: 'Job finden', condition: function () {
         return true;
-      }
+      }, badgeVisible: false, badgeValue: function() {return null; }
     },
     {
       link: '/editJobs', text: 'Jobs verwalten', condition: function () {
         return AuthService.isLogin();
-      }
+      }, badgeVisible: true, badgeValue: function() { return MenuCountService.getJobCount(); }
     },
     {
       link: '/editUsers', text: 'Benutzerverwaltung', condition: function () {
         return AuthService.isModOrAdmin();
-      }
+      }, badgeVisible: true, badgeValue: function() { return MenuCountService.getUserCount(); }
     },
     {
       link: '/editAccount', text: 'Kontoeinstellungen', condition: function () {
         return AuthService.isLogin();
-      }
+      }, badgeVisible: false, badgeValue: function() {return null; }
     },
   ];
 
@@ -72,11 +71,13 @@ export class AppComponent implements OnInit {
 
     // Initialize the Authservice and update on every page change
     AuthService.update(httpClient);
+    MenuCountService.update(httpClient);
     router.events.subscribe(() => {
       AuthService.forceUpdate(httpClient);
     });
 
     AuthService.observer().subscribe(() => {
+      MenuCountService.update(this.httpClient);
       if (this.matSidenavContainer !== undefined && this.matSidenav !== undefined && this.matSidenav.mode === 'side') {
         this.matSidenavContainer._contentMargins.left = this.matSidenav._width - 1;
       }

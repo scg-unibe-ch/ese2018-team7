@@ -10,10 +10,17 @@
     <mat-nav-list *ngFor="let menu of menus">
       <!-- Distinguish between mobile and desktop -->
       <a mat-list-item *ngIf="menu.condition() && !(isHandset$ | async)" routerLink="{{menu.link}}" routerLinkActive="active">
+        <span matBadgePosition="above after" [matBadge]="menu.badgeVisible ? menu.badgeValue() : null" [matBadgeOverlap]="menu.badgeVisible ? false : null">
         {{menu.text}}
+        </span>
+        <span>&nbsp;&nbsp;&nbsp;</span>
+
       </a>
       <a mat-list-item *ngIf="menu.condition() && (isHandset$ | async)" routerLink="{{menu.link}}" routerLinkActive="active" (click)="drawer.close()">
-       {{menu.text}}
+        <span matBadgePosition="above after" [matBadge]="menu.badgeVisible ? menu.badgeValue() : null" [matBadgeOverlap]="menu.badgeVisible ? false : null">
+        {{menu.text}}
+        </span>
+        <span>&nbsp;&nbsp;&nbsp;</span>
       </a>
     </mat-nav-list>
   </mat-sidenav>
