@@ -8,7 +8,6 @@ import * as moment from 'moment';
 import {Moment} from 'moment';
 import {Message} from '../message';
 
-import {MatSnackBar} from '@angular/material';
 import {MenuCountService} from '../menuCount/menuCount.service';
 import {MatDialog, MatSlideToggle, MatSnackBar} from '@angular/material';
 import {JobViewComponent} from '../jobView/jobView.component';
@@ -50,6 +49,7 @@ export class JobEditComponent implements OnInit {
     } else {
       this.job.salary.amount = 0;
     }
+    this.onSaveSingle('salary', this.job.salary.toString());
   }
 
   onSaveSingle(type: string, value: string) {

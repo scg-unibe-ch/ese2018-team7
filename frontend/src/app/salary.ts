@@ -9,6 +9,7 @@ export class Salary {
     this.period = str.period;
     return this;
   }
+
   getPeriodString(str: string) {
     switch (str) {
       case 'month':
@@ -21,6 +22,7 @@ export class Salary {
         return 'sonstige Basis (siehe Beschreibung)';
     }
   }
+
   toString(): string {
     return '{amount:' + this.amount + ',period: ' + this.getPeriodString(this.period) + '}';
   }
