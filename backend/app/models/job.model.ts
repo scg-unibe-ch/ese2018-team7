@@ -262,7 +262,7 @@ export class Job extends Model<Job> {
       if (simplification['salary'] != null) {
         this.salary = simplification['salary'];
       } else if (this.salary == null) {
-        this.salary = '{amount:-1, period:month}';
+        this.salary = '{"amount":-1, "period":"month"}';
       }
 
       if (simplification['shortDescription'] != null) {
