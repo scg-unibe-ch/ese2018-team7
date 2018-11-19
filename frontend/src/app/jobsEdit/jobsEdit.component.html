@@ -2,7 +2,7 @@
   <input matInput placeholder="Job erstellen" [(ngModel)]="job.title" name="title">
 </mat-form-field>
 <button *ngIf="allowCreateJob()" mat-button (click)="onJobCreate()">Job erstellen</button>
-<div class="accordion-container">
+<div class="accordion-container" *ngIf="jobs.length > 0">
   <mat-accordion class="header-alignment">
     <app-job-edit [job]="job" (destroy)="onJobDestroy($event)" *ngFor="let job of jobs | jobsPageinatorPipe:pageEvent">
     </app-job-edit>
