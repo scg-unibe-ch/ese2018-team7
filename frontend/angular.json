@@ -28,8 +28,8 @@
 
               },
               "src/styles.css",
-              "node_modules/bootstrap/dist/css/bootstrap.css",
-              "node_modules/bootstrap-markdown/css/bootstrap-markdown.min.css",
+              //TODO"node_modules/bootstrap/dist/css/bootstrap.css",
+              //TODO"node_modules/bootstrap-markdown/css/bootstrap-markdown.min.css",
               "node_modules/font-awesome/css/font-awesome.css"
             ],
             "scripts": [

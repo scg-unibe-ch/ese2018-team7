@@ -24,6 +24,7 @@
     "@angular/router": "^6.0.3",
     "angular-markdown-editor": "^2.0.2",
     "bootstrap-markdown": "^2.10.0",
+    "bootstrap": "^4.1.2",
     "core-js": "^2.5.4",
     "hammerjs": "^2.0.8",
     "jquery": "^3.3.1",
