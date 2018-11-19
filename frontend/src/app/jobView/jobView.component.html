@@ -2,7 +2,7 @@
   <mat-card-header>
     <div mat-card-avatar><img [src]="job.company.logo" class="company-logo"></div>
     <mat-card-title>{{job.title}}</mat-card-title>
-    <mat-card-subtitle>bei {{job.company.name}} in {{job.placeOfWork}}</mat-card-subtitle>
+    <mat-card-subtitle>bei {{job.company.name}} {{job.placeOfWork!='' ? 'in ' + job.placeOfWork : ''}}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>{{job.shortDescription}}</mat-card-content>
   <mat-card-actions>

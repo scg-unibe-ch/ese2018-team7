@@ -68,11 +68,11 @@
   <div *ngIf="displaySalary()">
     <br>
     <mat-form-field >
-      <input matInput type="number" name="salaryAmount" class="salaryAmount" placeholder="Gehalt" [(ngModel)]="job.salary.amount" (ngModelChange)="onSaveSingle('salary',job.salary)">
+      <input matInput type="number" name="salaryAmount" class="salaryAmount" placeholder="Gehalt" [(ngModel)]="job.salary.amount" (ngModelChange)="onSaveSingle('salary',job.salary.toString())">
       <span matSuffix>&nbsp;CHF&nbsp;</span>
     </mat-form-field>
     <mat-form-field>
-      <mat-select [(value)]="job.salary.period" (selectionChange)="onSaveSingle('salary',job.salary)">
+      <mat-select [(value)]="job.salary.period" (selectionChange)="onSaveSingle('salary',job.salary.toString())">
         <mat-option value="month">{{job.salary.getPeriodString('month')}}</mat-option>
         <mat-option value="hour">{{job.salary.getPeriodString('hour')}}</mat-option>
         <mat-option value="job">{{job.salary.getPeriodString('job')}}</mat-option>

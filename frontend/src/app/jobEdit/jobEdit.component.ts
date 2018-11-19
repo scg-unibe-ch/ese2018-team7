@@ -7,7 +7,6 @@ import {MatDatepicker} from '@angular/material/datepicker';
 import * as moment from 'moment';
 import {Moment} from 'moment';
 import {Message} from '../message';
-
 import {MenuCountService} from '../menuCount/menuCount.service';
 import {MatDialog, MatSlideToggle, MatSnackBar} from '@angular/material';
 import {JobViewComponent} from '../jobView/jobView.component';
@@ -131,7 +130,6 @@ export class JobEditComponent implements OnInit {
   }
 
   onSaveSingle(type: string, value: string) {
-
     this.httpClient.put('/jobs/' + this.job.id, {
       [type]: value,
       'approved': this.job.approved

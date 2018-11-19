@@ -53,7 +53,7 @@ export class JobsEditComponent implements OnInit {
           moment(instance.startOfWork, 'X'),
           moment(instance.endOfWork, 'X'),
           instance.workload,
-          new Salary().fromString(instance.salary),
+          new Salary().fromString(JSON.parse(instance.salary)),
           instance.shortDescription == null ? '' : instance.shortDescription,
           instance.description == null ? '' : instance.description,
           JSON.parse(instance.skills),

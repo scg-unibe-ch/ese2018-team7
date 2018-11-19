@@ -24,6 +24,6 @@ export class Salary {
   }
 
   toString(): string {
-    return '{amount:' + this.amount + ',period: ' + this.getPeriodString(this.period) + '}';
+    return '{"amount":' + this.amount + ',"period":"' + this.period + '"}';
   }
 }
