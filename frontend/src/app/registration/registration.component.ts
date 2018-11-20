@@ -6,7 +6,8 @@ import {AuthService} from '../auth/auth.service';
 import {Company} from '../company';
 import {Usergroup} from '../usergroup';
 import {Message} from '../message';
-import {MatSnackBar} from '@angular/material';
+import {MatDialog, MatSnackBar} from '@angular/material';
+import {SelectLogoComponent} from '../selectLogo/selectLogo.component';
 
 @Component({
   selector: 'app-registration',
@@ -20,13 +21,14 @@ import {MatSnackBar} from '@angular/material';
 export class RegistrationComponent implements OnInit {
 
   errorMessage;
+  showSpinner = false;
 
   user: User;
   company: Company;
   @Output()
   destroy = new EventEmitter<User>();
 
-  constructor(private httpClient: HttpClient, private router: Router, private snackBar: MatSnackBar) {
+  constructor(private httpClient: HttpClient, private router: Router, private snackBar: MatSnackBar, private dialog: MatDialog) {
     AuthService.allowOnlyPublic(httpClient, router);
   }
 
@@ -64,46 +66,7 @@ export class RegistrationComponent implements OnInit {
       reader.readAsDataURL(event.target.files[0]); // read file as data url
 
       reader.onload = (res: any) => { // called once readAsDataURL is completed
-
-        // Create an image element and assign the uploaded image
-        const img = new Image();
-        img.src = res.target.result;
-        img.onload = () => {
-
-          // Get dimensions
-          let width = img.width;
-          let height = img.height;
-
-          // Define max hight and width
-          const MAX_WIDTH = 400;
-          const MAX_HEIGHT = 200;
-
-          // Calculate new size
-          if (width > height) {
-            if (width > MAX_WIDTH) {
-              height *= MAX_WIDTH / width;
-              width = MAX_WIDTH;
-            }
-          } else {
-            if (height > MAX_HEIGHT) {
-              width *= MAX_HEIGHT / height;
-              height = MAX_HEIGHT;
-            }
-          }
-
-          // Create Canvas and get context
-          const canvas = document.createElement('canvas');
-          const ctx = canvas.getContext('2d');
-          // Apply new size
-          canvas.width = width;
-          canvas.height = height;
-
-          // Draw image again, but now with new dimensions
-          ctx.drawImage(img, 0, 0, width, height);
-
-          // Get the data from the canvas
-          this.company.logo = canvas.toDataURL('image/png');
-        };
+        this.resizeLogoAndSave(res.target.result);
       };
     }
   }
@@ -133,11 +96,77 @@ export class RegistrationComponent implements OnInit {
     context.fillText(this.company.name, 200, 100);
 
     // Save Image
-    this.company.logo = canvas.toDataURL('image/png');
+    this.resizeLogoAndSave(canvas.toDataURL('image/png'));
 
   }
 
   onFetchLogo() {
-    // TODO: http request to backend and create canvas, set this.company.logo, ...
+    if (this.company.name === '') {
+      return;
+    }
+    this.showSpinner = true;
+    this.httpClient.get('/logo/' + this.company.name).subscribe((res: any) => {
+      const images: string[] = [];
+      res.map(image => {
+        images.push(image);
+      });
+
+      const dialogRef = this.dialog.open(SelectLogoComponent, {
+        minWidth: '90%',
+        minHeight: '90%',
+        data: {
+          logos: images,
+        }
+      });
+      this.showSpinner = false;
+      dialogRef.afterClosed().subscribe((result: any) => {
+        console.log('The dialog was closed');
+        if (result != null) {
+          this.resizeLogoAndSave(result);
+        }
+      });
+    });
+  }
+
+  resizeLogoAndSave(logo: string) {
+    // Create an image element and assign the uploaded image
+    const img = new Image();
+    img.src = logo;
+    img.onload = () => {
+
+      // Get dimensions
+      let width = img.width;
+      let height = img.height;
+
+      // Define max hight and width
+      const MAX_WIDTH = 400;
+      const MAX_HEIGHT = 400;
+
+      // Calculate new size
+      if (width > height) {
+        if (width > MAX_WIDTH) {
+          height *= MAX_WIDTH / width;
+          width = MAX_WIDTH;
+        }
+      } else {
+        if (height > MAX_HEIGHT) {
+          width *= MAX_HEIGHT / height;
+          height = MAX_HEIGHT;
+        }
+      }
+
+      // Create Canvas and get context
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      // Apply new size
+      canvas.width = width;
+      canvas.height = height;
+
+      // Draw image again, but now with new dimensions
+      ctx.drawImage(img, 0, 0, width, height);
+
+      // Get the data from the canvas
+      this.company.logo = canvas.toDataURL('image/png');
+    };
   }
 }

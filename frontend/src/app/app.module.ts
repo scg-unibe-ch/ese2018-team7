@@ -66,6 +66,7 @@ import {ConfirmDialogComponent} from './confirmDialog/confirmDialog.component';
 import {JobsPageinatorPipe} from './jobsView/jobsPageinator.pipe';
 import {CustomMatPaginatorIntl} from './customCHLocale/CustomMatPaginatorIntl';
 import {JobsSortPipe} from './jobsView/jobsSort.pipe';
+import {SelectLogoComponent} from './selectLogo/selectLogo.component';
 
 @NgModule({
   declarations: [
@@ -88,6 +89,7 @@ import {JobsSortPipe} from './jobsView/jobsSort.pipe';
     ConfirmDialogComponent,
     JobsPageinatorPipe,
     JobsSortPipe,
+    SelectLogoComponent,
   ],
   imports: [
     BrowserModule,
@@ -132,6 +134,7 @@ import {JobsSortPipe} from './jobsView/jobsSort.pipe';
     JobViewComponent,
     JobsAdvancedSearchComponent,
     ConfirmDialogComponent,
+    SelectLogoComponent,
   ],
   providers: [
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
