@@ -21,7 +21,7 @@ import {SelectLogoComponent} from '../selectLogo/selectLogo.component';
 export class RegistrationComponent implements OnInit {
 
   errorMessage;
-  showSpinner = false;
+  showProgressBar = false;
 
   user: User;
   company: Company;
@@ -104,7 +104,7 @@ export class RegistrationComponent implements OnInit {
     if (this.company.name === '') {
       return;
     }
-    this.showSpinner = true;
+    this.showProgressBar = true;
     this.httpClient.get('/logo/' + this.company.name).subscribe((res: any) => {
       const images: string[] = [];
       res.map(image => {
@@ -118,7 +118,7 @@ export class RegistrationComponent implements OnInit {
           logos: images,
         }
       });
-      this.showSpinner = false;
+      this.showProgressBar = false;
       dialogRef.afterClosed().subscribe((result: any) => {
         console.log('The dialog was closed');
         if (result != null) {

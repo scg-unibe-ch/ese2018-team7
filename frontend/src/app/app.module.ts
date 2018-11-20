@@ -31,11 +31,11 @@ import {
   MatPaginatorIntl,
   MatSelectModule,
   MatSlideToggleModule,
+  MatProgressBarModule,
 } from '@angular/material';
 
 import { LayoutModule } from '@angular/cdk/layout';
 import { CdkTableModule} from '@angular/cdk/table';
-
 import {AutosizeModule} from 'ngx-autosize';
 import {MarkdownModule} from 'ngx-markdown';
 import { AngularMarkdownEditorModule } from 'angular-markdown-editor';
@@ -114,6 +114,7 @@ import {SelectLogoComponent} from './selectLogo/selectLogo.component';
     MatIconModule,
     MatTooltipModule,
     MatProgressSpinnerModule,
+    MatProgressBarModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
