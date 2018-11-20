@@ -32,7 +32,7 @@ export class RegistrationComponent implements OnInit {
 
   ngOnInit() {
     // Set 'empty' User
-    this.user = new User( '', '', 1 , false);
+    this.user = new User('', '', 1, false);
     this.company = new Company('', '', '');
   }
 
@@ -55,6 +55,7 @@ export class RegistrationComponent implements OnInit {
         this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
       });
   }
+
   onSelectLogo(event) {
     console.log('changed image');
     if (event.target.files && event.target.files[0]) {
@@ -136,4 +137,7 @@ export class RegistrationComponent implements OnInit {
 
   }
 
+  onFetchLogo() {
+    // TODO: http request to backend and create canvas, set this.company.logo, ...
+  }
 }

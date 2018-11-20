@@ -8,11 +8,13 @@ const router: Router = Router();
 const allowOnlyLogin = require('./access/allowOnlyLogin');
 
 const getMenuCount = require('./getMenuCount');
-
+const getLogo = require('./getLogo');
 router.use('/jobs', JobController);
 router.use('/login', UserController);
 
 // Route for getting job count of user
 router.get('/menuCount', [allowOnlyLogin, getMenuCount]);
+router.get('/logo/:searchString', [getLogo]);
+
 
 export const MainController = router;
