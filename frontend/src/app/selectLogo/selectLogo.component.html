@@ -1,0 +1,9 @@
+<button mat-icon-button (click)="dialogRef.close()" class="close-button" tabindex="-1"><mat-icon aria-label="Schliessen">close</mat-icon></button>
+<h1>Wähle Logo</h1>
+<div class="mat-dialog-content">
+  <div class="logoParentContainer">
+    <div *ngFor="let logo of data.logos" class="logoContainer">
+      <img [src]="logo" (click)="onSelectLogo(logo)" class="logoContent">
+    </div>
+  </div>
+</div>

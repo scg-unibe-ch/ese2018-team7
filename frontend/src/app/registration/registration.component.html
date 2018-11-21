@@ -4,11 +4,13 @@
   <mat-form-field>
     <input matInput placeholder="Unternehmen" [(ngModel)]="company.name" name="company">
   </mat-form-field>
-  <img *ngIf="company.logo!=''" [src]="company.logo" height="200" class="company-logo"> <br/>
+  <br>
   <label for="logoUpload" matTooltip="Unternehmenslogo hochladen"><mat-icon>add_a_photo</mat-icon></label>
   <input id="logoUpload" type='file' style="display:none;" (change)="onSelectLogo($event)">
   <button mat-button (click)="onGenerateLogo()">Einfaches Logo generieren</button>
+  <button mat-button (click)="onFetchLogo()">Surprise!</button>
   <br>
+  <img *ngIf="company.logo!=''" [src]="company.logo" class="company-logo"><br>
   <mat-form-field>
     <input matInput placeholder="Benutzername" [(ngModel)]="user.username" name="username">
   </mat-form-field>
@@ -18,4 +20,5 @@
   </mat-form-field>
   <br>
   <button mat-button (click)="onCreate()" color="primary">Registrieren</button>
+  <mat-progress-bar *ngIf="showProgressBar" class="centerProgressBar" mode="query"></mat-progress-bar>
 </mat-card>

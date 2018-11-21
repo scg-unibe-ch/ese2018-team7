@@ -1,4 +1,3 @@
 .company-logo {
-position: absolute;
-left:400px;
+  max-width: 100%;
 }

@@ -1,0 +1,34 @@
+.warning {
+  color: var(--warn);
+}
+
+.close-button {
+   float: right;
+}
+
+.logoParentContainer{
+  padding: .5vw;
+  font-size: 0;
+  display: -ms-flexbox;
+  -ms-flex-wrap: wrap;
+  -ms-flex-direction: column;
+  -webkit-flex-flow: row wrap;
+  flex-flow: row wrap;
+  display: -webkit-box;
+  display: flex;
+  border-radius: 2px;
+  border: var(--primary) 1px solid;
+}
+
+.logoContainer{
+  -webkit-box-flex: inherit;
+  -ms-flex: auto;
+  flex: auto;
+  width: 150px;
+  margin: .5vw;
+}
+
+.logoContent{
+  width: 100%;
+  height: auto;
+}

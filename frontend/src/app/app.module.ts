@@ -31,11 +31,11 @@ import {
   MatPaginatorIntl,
   MatSelectModule,
   MatSlideToggleModule,
+  MatProgressBarModule,
 } from '@angular/material';
 
 import { LayoutModule } from '@angular/cdk/layout';
 import { CdkTableModule} from '@angular/cdk/table';
-
 import {AutosizeModule} from 'ngx-autosize';
 import {MarkdownModule} from 'ngx-markdown';
 import { AngularMarkdownEditorModule } from 'angular-markdown-editor';
@@ -66,6 +66,7 @@ import {ConfirmDialogComponent} from './confirmDialog/confirmDialog.component';
 import {JobsPageinatorPipe} from './jobsView/jobsPageinator.pipe';
 import {CustomMatPaginatorIntl} from './customCHLocale/CustomMatPaginatorIntl';
 import {JobsSortPipe} from './jobsView/jobsSort.pipe';
+import {SelectLogoComponent} from './selectLogo/selectLogo.component';
 
 @NgModule({
   declarations: [
@@ -88,6 +89,7 @@ import {JobsSortPipe} from './jobsView/jobsSort.pipe';
     ConfirmDialogComponent,
     JobsPageinatorPipe,
     JobsSortPipe,
+    SelectLogoComponent,
   ],
   imports: [
     BrowserModule,
@@ -112,6 +114,7 @@ import {JobsSortPipe} from './jobsView/jobsSort.pipe';
     MatIconModule,
     MatTooltipModule,
     MatProgressSpinnerModule,
+    MatProgressBarModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
@@ -132,6 +135,7 @@ import {JobsSortPipe} from './jobsView/jobsSort.pipe';
     JobViewComponent,
     JobsAdvancedSearchComponent,
     ConfirmDialogComponent,
+    SelectLogoComponent,
   ],
   providers: [
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
