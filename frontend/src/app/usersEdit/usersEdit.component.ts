@@ -33,7 +33,7 @@ export class UsersEditComponent implements OnInit {
   displayedColumns: string[] = ['username', 'type'];
 
   // Default new admin
-  user: User = new User( '', '', 0, true);
+  user: User = new User( '', '', '', Usergroup.moderator, true);
 
   // Array of users
   users: User[] = [];
@@ -48,7 +48,8 @@ export class UsersEditComponent implements OnInit {
   ngOnInit() {
     // Load all users from the server
     this.httpClient.get('/login/edit', {withCredentials: true}).subscribe((instances: any) => {
-      this.users = instances.map((instance) => new User(instance.username, '', instance.type, instance.enabled, instance.suspended));
+      this.users = instances.map((instance) =>
+        new User(instance.username, '', instance.email, instance.type, instance.enabled, instance.suspended));
       this.companys = instances.map((instance) =>
         new Company(instance.username, instance.companyName, instance.companyLogo, instance.companyUnapprovedChanges));
 
@@ -90,7 +91,7 @@ export class UsersEditComponent implements OnInit {
       this.user.password = '';
       this.user.type = usertype;
       this.users.push(this.user);
-      this.user = new User( '', '',  Usergroup.moderator, true);
+      this.user = new User( '', '', '', Usergroup.moderator, true);
       this.updateDataProvider();
     }, err => {
       console.error(err.error.message);
@@ -200,7 +201,7 @@ export class UsersEditComponent implements OnInit {
         return 'Öffentlich';
       }
       default: {
-        console.log('Invalid Usergroup!');
+        console.log('Invalid Usergroup! ' + type);
         break;
       }
     }
@@ -230,6 +231,9 @@ export class UsersEditComponent implements OnInit {
       this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
     });
 
+  }
+  sendMail(email) {
+    window.location.href = 'mailto:' + email;
   }
 
 }

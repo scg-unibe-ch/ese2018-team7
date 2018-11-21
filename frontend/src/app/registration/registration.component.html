@@ -12,11 +12,28 @@
   <br>
   <img *ngIf="company.logo!=''" [src]="company.logo" class="company-logo"><br>
   <mat-form-field>
-    <input matInput placeholder="Benutzername" [(ngModel)]="user.username" name="username">
+    <input matInput required #username="ngModel" placeholder="Benutzername" [(ngModel)]="user.username" name="username">
+    <mat-error *ngIf="username.hasError('required')">
+      Benutzername ist zwingend
+    </mat-error>
   </mat-form-field>
   <br>
   <mat-form-field>
-    <input matInput type="password" placeholder="Password" [(ngModel)]="user.password" name="password">
+    <input matInput required name="email" #email="ngModel" type="email" placeholder="Email" [(ngModel)]="user.email"
+           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,10}$">
+    <mat-error *ngIf="email.hasError('required')">
+      Email ist zwingend
+    </mat-error>
+    <mat-error *ngIf="email.hasError('pattern')">
+      Ungültige Email
+    </mat-error>
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <input matInput required #password="ngModel" type="password" placeholder="Password" [(ngModel)]="user.password" name="password">
+    <mat-error *ngIf="password.hasError('required')">
+      Passwort ist zwingend
+    </mat-error>
   </mat-form-field>
   <br>
   <button mat-button (click)="onCreate()" color="primary">Registrieren</button>

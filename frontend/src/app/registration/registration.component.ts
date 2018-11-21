@@ -34,7 +34,7 @@ export class RegistrationComponent implements OnInit {
 
   ngOnInit() {
     // Set 'empty' User
-    this.user = new User('', '', 1, false);
+    this.user = new User('', '', '', Usergroup.employer, false);
     this.company = new Company('', '', '');
   }
 
@@ -43,8 +43,15 @@ export class RegistrationComponent implements OnInit {
    */
   onCreate() {
     this.company.username = this.user.username;
+
+    if (this.user.username === '' || this.user.password === '' || this.user.email === '' ||
+      !this.user.email.match('[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,10}$')) {
+      this.snackBar.open('Formular nicht vollständig ausgefüllt!', null, {duration: 5000});
+      return;
+    }
+
     this.httpClient.post('/login/', {
-      'username': this.user.username, 'password': this.user.password, 'type': Usergroup.employer,
+      'username': this.user.username, 'password': this.user.password, 'email': this.user.email, 'type': Usergroup.employer,
       'enabled': 'false', 'company': this.company.name, 'logo': this.company.logo
     }, {withCredentials: true}).subscribe((res: any) => {
         console.log(res);

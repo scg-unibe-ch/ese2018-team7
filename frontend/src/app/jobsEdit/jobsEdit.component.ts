@@ -94,7 +94,8 @@ export class JobsEditComponent implements OnInit {
       'endOfPublication': this.job.endOfPublication.unix()
     }, {withCredentials: true}).subscribe((instance: any) => {
       this.job.id = instance.id;
-      this.job.approved = false;
+      this.job.email = instance.email;
+      this.job.approved = instance.approved;
       this.jobs.push(this.job);
       this.job = new Job();
       this.msg = '';
