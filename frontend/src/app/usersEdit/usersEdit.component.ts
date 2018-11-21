@@ -55,7 +55,7 @@ export class UsersEditComponent implements OnInit {
       this.updateDataProvider();
     }, err => {
       console.error(err.error.message);
-      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
+      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
     });
   }
 
@@ -79,6 +79,11 @@ export class UsersEditComponent implements OnInit {
    * If the admin wants to add a new admin
    */
   onCreate(usertype: Usergroup) {
+    if (this.user.username === '' || this.user.password === '') {
+      this.snackBar.open('Leerer Benutzername / Password ist nicht erlaubt!', null, {duration: 5000});
+      return;
+    }
+
     this.httpClient.post('/login', {
       'username': this.user.username, 'password': this.user.password, 'type': usertype, 'enabled': 'true'
     }, {withCredentials: true}).subscribe(() => {
@@ -89,7 +94,7 @@ export class UsersEditComponent implements OnInit {
       this.updateDataProvider();
     }, err => {
       console.error(err.error.message);
-      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
+      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
     });
   }
 
@@ -111,7 +116,7 @@ export class UsersEditComponent implements OnInit {
           this.updateDataProvider();
         }, err => {
           console.error(err.error.message);
-          this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
+          this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
         });
       }
     });
@@ -138,7 +143,7 @@ export class UsersEditComponent implements OnInit {
           this.updateDataProvider();
         }, err => {
           console.error(err.error.message);
-          this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
+          this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
         });
       }
     });
@@ -155,7 +160,7 @@ export class UsersEditComponent implements OnInit {
       this.updateDataProvider();
     }, err => {
       console.error(err.error.message);
-      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
+      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
     });
   }
 
@@ -171,9 +176,9 @@ export class UsersEditComponent implements OnInit {
       this.updateDataProvider();
     }, err => {
       console.error(err.error.message);
-      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
+      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
     });
-    this.snackBar.open('Das Passwort von ' + user.username + ' wurde geändert.', null, {duration: 3000});
+    this.snackBar.open('Das Passwort von ' + user.username + ' wurde geändert.', null, {duration: 5000});
   }
 
   isAdmin() {
@@ -222,7 +227,7 @@ export class UsersEditComponent implements OnInit {
       MenuCountService.update(this.httpClient);
     }, err => {
       console.error(err.error.message);
-      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
+      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
     });
 
   }

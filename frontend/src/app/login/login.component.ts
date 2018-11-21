@@ -47,11 +47,11 @@ export class LoginComponent implements OnInit {
         err => {
           console.log('Error occurred:' + err.error.message);
           this.errorMessage = Message.getMessage(err.error.code);
-          this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
+          this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
         }
       );
     } else {
-      this.snackBar.open('Du musst zuerst Cookies akzeptieren!', null, {duration: 3000});
+      this.snackBar.open('Du musst zuerst Cookies akzeptieren!', null, {duration: 5000});
     }
   }
 

@@ -48,13 +48,13 @@ export class RegistrationComponent implements OnInit {
       'enabled': 'false', 'company': this.company.name, 'logo': this.company.logo
     }, {withCredentials: true}).subscribe((res: any) => {
         console.log(res);
-        this.snackBar.open(Message.getMessage(res.code), null, {duration: 3000});
+        this.snackBar.open(Message.getMessage(res.code), null, {duration: 5000});
         this.router.navigate(['/']);
       },
       (err: any) => {
         console.error(err.error.message);
         this.errorMessage = Message.getMessage(err.error.code);
-        this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
+        this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
       });
   }
 

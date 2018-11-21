@@ -107,7 +107,7 @@ export class JobsViewComponent implements OnInit {
 
     }, err => {
       console.error(err.error.message);
-      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
+      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
     });
 
     this.pageEvent = new PageEvent();
@@ -148,7 +148,7 @@ export class JobsViewComponent implements OnInit {
       this.searched = true;
     }, err => {
       console.error(err.error.message);
-      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
+      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
     });
   }
   onAdvancedSearch() {
@@ -192,7 +192,7 @@ export class JobsViewComponent implements OnInit {
       this.searched = true;
     }, err => {
       console.error(err.error.message);
-      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
+      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
     });
   }
   resetSearch() {
@@ -235,7 +235,7 @@ export class JobsViewComponent implements OnInit {
       this.advSearchRangeRefresh.emit();
     }, err => {
       console.error(err.error.message);
-      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
+      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
     });
   }
   openAdvancedSearch (): void {

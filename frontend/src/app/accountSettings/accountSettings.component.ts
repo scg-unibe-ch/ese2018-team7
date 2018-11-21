@@ -92,7 +92,7 @@ export class AccountSettingsComponent implements OnInit {
       this.company.unapprovedChanges = true;
     }, err => {
       console.error(err.error.message);
-      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
+      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
     } );
 
   }
@@ -101,7 +101,7 @@ export class AccountSettingsComponent implements OnInit {
       this.company = new Company(res.username, res.name, res.logo, res.unapprovedChanges);
     }, err => {
       console.error(err.error.message);
-      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
+      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
     });
   }
 
