@@ -22,7 +22,7 @@ export class LogoutComponent implements OnInit {
           this.router.navigate(['/']);
       }, err => {
         console.error(err.error.message);
-        this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
+        this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
       }
     );
   }

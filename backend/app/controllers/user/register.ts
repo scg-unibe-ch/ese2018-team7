@@ -26,6 +26,12 @@ module.exports = asyncRoute(async (req: Request, res: Response) => {
     return;
 
   }
+  if (req.body.pass === '') {
+
+    res.status(403).send(Message.error.emptyPasswordNotAllowed);
+    return;
+
+  }
 
   // Get user from Request
   const instance = new User();

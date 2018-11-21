@@ -140,7 +140,7 @@ export class JobEditComponent implements OnInit {
       MenuCountService.update(this.httpClient);
     }, err => {
       console.error(err.error.message);
-      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
+      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
     });
   }
 
@@ -167,7 +167,7 @@ export class JobEditComponent implements OnInit {
       MenuCountService.update(this.httpClient);
     }, err => {
       console.error(err.error.message);
-      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
+      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
     });
   }
 
@@ -182,7 +182,7 @@ export class JobEditComponent implements OnInit {
       MenuCountService.update(this.httpClient);
     }, err => {
       console.error(err.error.message);
-      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
+      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
     });
   }
 
@@ -197,7 +197,7 @@ export class JobEditComponent implements OnInit {
       MenuCountService.update(this.httpClient);
     }, err => {
       console.error(err.error.message);
-      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
+      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
     });
   }
 
@@ -212,7 +212,7 @@ export class JobEditComponent implements OnInit {
       MenuCountService.update(this.httpClient);
     }, err => {
       console.error(err.error.message);
-      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
+      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
     });
   }
 
@@ -225,7 +225,7 @@ export class JobEditComponent implements OnInit {
       MenuCountService.update(this.httpClient);
     }, err => {
       console.error(err.error.message);
-      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
+      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
     });
   }
 
@@ -266,7 +266,7 @@ export class JobEditComponent implements OnInit {
             this.job.website.match('(((http|https)\\:\\/\\/){0,1}www\\.){0,1}[a-zA-Z0-9]*\\.[a-zA-Z0-9]{2,10}(\\/.*){0,1}'));
   }
   block() {
-    this.snackBar.open('Nicht alle obligatorischen Felder ausgefüllt!', null, {duration: 3000});
+    this.snackBar.open('Nicht alle obligatorischen Felder ausgefüllt!', null, {duration: 5000});
   }
 
   approve() {
@@ -277,7 +277,7 @@ export class JobEditComponent implements OnInit {
         MenuCountService.update(this.httpClient);
       }, err => {
         console.error(err.error.message);
-        this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
+        this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
       });
     }
   }
@@ -307,7 +307,7 @@ export class JobEditComponent implements OnInit {
       MenuCountService.update(this.httpClient);
     }, err => {
       console.error(err.error.message);
-      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
+      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
     });
   }
   showPreview() {

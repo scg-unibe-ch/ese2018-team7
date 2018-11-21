@@ -71,7 +71,7 @@ export class JobsEditComponent implements OnInit {
       }
     }, err => {
       console.error(err.error.message);
-      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
+      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
     });
 
     this.pageEvent = new PageEvent();
@@ -100,7 +100,7 @@ export class JobsEditComponent implements OnInit {
       this.msg = '';
     }, err => {
       console.error(err.error.message);
-      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 3000});
+      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
     });
   }
 
