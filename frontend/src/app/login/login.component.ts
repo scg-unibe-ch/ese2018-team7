@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
     AuthService.allowOnlyPublic(httpClient, router);
 
     // Set User without username and password
-    this.user = new User( '', '', null, null);
+    this.user = new User( '', '', '', null, null);
   }
 
   ngOnInit() {

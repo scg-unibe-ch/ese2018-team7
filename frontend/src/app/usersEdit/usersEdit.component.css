@@ -50,4 +50,8 @@ tr.example-detail-row {
   color: var(--warn);
   font-weight: bold;
 }
+.clickable{
+  cursor: pointer;
+  text-decoration: underline;
+}
 

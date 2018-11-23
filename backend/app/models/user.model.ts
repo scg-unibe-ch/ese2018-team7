@@ -16,6 +16,9 @@ export class User extends Model<User> {
   password!: string;
 
   @Column
+  email!: string;
+
+  @Column
   type!: Usergroup;
 
   @Column
@@ -61,6 +64,7 @@ export class User extends Model<User> {
 
     return {
       'username': this.username,
+      'email': this.email,
       'type': this.type,
       'enabled': this.enabled,
       'suspended': this.suspended,
@@ -78,6 +82,10 @@ export class User extends Model<User> {
 
     if (data['password'] != null) {
       this.setPassword(data['password']);
+    }
+
+    if (data['email'] != null) {
+      this.email = data['email'];
     }
 
     if (data['type'] != null) {

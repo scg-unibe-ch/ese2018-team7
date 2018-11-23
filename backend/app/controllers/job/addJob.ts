@@ -18,6 +18,10 @@ module.exports = asyncRoute(async (req: Request, res: Response) => {
   // Set approved if an admin or mod added job, and not approved else
   instance.approved = req.session.user.type <= Usergroup.moderator ;
 
+  if (instance.email == null || instance.email === '') {
+    instance.email = req.session.user.email;
+  }
+
   await instance.save();
 
   const returnInstance = await Job.findById(instance.id, {include: [{

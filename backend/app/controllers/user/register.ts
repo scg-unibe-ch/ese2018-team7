@@ -39,6 +39,7 @@ module.exports = asyncRoute(async (req: Request, res: Response) => {
   instance.createUser({
     'username': req.body.username.toLowerCase(),
     'password': req.body.password,
+    'email': req.body.email,
     'type': req.body.type,
     'enabled': req.body.enabled
   });
