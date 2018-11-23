@@ -64,7 +64,7 @@ module.exports = asyncRoute(async (req: Request, res: Response) => {
 
     const company = new Company();
     company.createCompany({
-      'username': req.body.username,
+      'username': req.body.username.toLowerCase(),
       'name': req.body.company,
       'logo': req.body.logo
     });

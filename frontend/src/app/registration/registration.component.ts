@@ -146,8 +146,8 @@ export class RegistrationComponent implements OnInit {
       let height = img.height;
 
       // Define max hight and width
-      const MAX_WIDTH = 400;
-      const MAX_HEIGHT = 400;
+      const MAX_WIDTH = 200;
+      const MAX_HEIGHT = 200;
 
       // Calculate new size
       if (width > height) {
