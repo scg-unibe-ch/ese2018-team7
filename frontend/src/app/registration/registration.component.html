@@ -2,14 +2,19 @@
 <mat-card>
   <div ng-if="errorMessage" class="error-text">{{ errorMessage }}</div>
   <mat-form-field>
-    <input matInput placeholder="Unternehmen" [(ngModel)]="company.name" name="company">
+    <input matInput placeholder="Unternehmen" #companyName="ngModel" [(ngModel)]="company.name" name="company" required>
+    <mat-error *ngIf="companyName.hasError('required')">
+      Name des Unternehmens ist zwingend
+    </mat-error>
   </mat-form-field>
   <br>
-  <label for="logoUpload" matTooltip="Unternehmenslogo hochladen"><mat-icon>add_a_photo</mat-icon></label>
-  <input id="logoUpload" type='file' style="display:none;" (change)="onSelectLogo($event)">
-  <button mat-button (click)="onGenerateLogo()">Einfaches Logo generieren</button>
-  <button mat-button (click)="onFetchLogo()">Surprise!</button>
-  <br>
+  <div class="logoSelection">
+  <a class="labelText">Unternehmenslogo*</a>
+  <input id="logoUpload" type='file' #upload style="display:none;" (change)="onSelectLogo($event)">
+  <button mat-button (click)="upload.click()" matTooltip="Unternehmenslogo hochladen"><mat-icon>add_a_photo</mat-icon></button>
+  <button mat-button (click)="onGenerateLogo()" matTooltip="Einfaches Logo erstellen"><mat-icon>create</mat-icon></button>
+  <button mat-button (click)="onFetchLogo()"  matTooltip="Unternehmenslogo suchen"><mat-icon>search</mat-icon></button>
+  </div>
   <img *ngIf="company.logo!=''" [src]="company.logo" class="company-logo"><br>
   <mat-form-field>
     <input matInput required #username="ngModel" placeholder="Benutzername" [(ngModel)]="user.username" name="username">

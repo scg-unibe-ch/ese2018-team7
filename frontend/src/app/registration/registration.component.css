@@ -1,3 +1,14 @@
 .company-logo {
   max-width: 100%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.labelText{
+  font-size: 12px;
+  color: rgba(0,0,0,0.54);
+  transform: translate(0,-15px);
+  position: absolute;
+}
+.logoSelection{
+  margin-top: 30px;
 }
