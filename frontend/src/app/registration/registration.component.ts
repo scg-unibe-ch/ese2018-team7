@@ -44,9 +44,13 @@ export class RegistrationComponent implements OnInit {
   onCreate() {
     this.company.username = this.user.username;
 
-    if (this.user.username === '' || this.user.password === '' || this.user.email === '' ||
+    if (this.company.name === '' || this.user.username === '' || this.user.password === '' || this.user.email === '' ||
       !this.user.email.match('[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,10}$')) {
       this.snackBar.open('Formular nicht vollständig ausgefüllt!', null, {duration: 5000});
+      return;
+    }
+    if (this.company.logo === '') {
+      this.snackBar.open('Kein Unternehmenslogo ausgewählt!', null, {duration: 5000});
       return;
     }
 
