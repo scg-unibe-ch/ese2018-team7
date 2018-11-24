@@ -54,4 +54,24 @@ tr.example-detail-row {
   cursor: pointer;
   text-decoration: underline;
 }
+.titleSelectionBar{
+  width: 100%;
+  padding-bottom: 0;
+}
+.sortUserSelection{
+  font-size: 14px;
+  font-weight: normal;
+  width: 200px;
+  right: 25px;
+  margin-top: -50px;
+  position: absolute;
+}
+@media only screen and (max-width: 450px) {
+  .sortUserSelection {
+    margin-top: 0;
+  }
+  .titleSelectionBar{
+    padding-bottom: 50px;
+  }
+}
 

@@ -1,6 +1,17 @@
 <h2>Benutzerverwaltung</h2>
 <mat-card>
+  <div class="titleSelectionBar">
   <h3>Benutzerübersicht</h3>
+  <mat-form-field class="sortUserSelection">
+    <mat-label>Sortieren nach:</mat-label>
+    <mat-select [(value)]="sorting" (selectionChange)="updateDataProvider()">
+      <mat-option value="usernameASC">Benutzername aufsteigend</mat-option>
+      <mat-option value="usernameDESC">Benutzername absteigend</mat-option>
+      <mat-option value="usertypeASC">Benutzertyp aufsteigend</mat-option>
+      <mat-option value="usertypeDESC">Benutzertyp absteigend</mat-option>
+    </mat-select>
+  </mat-form-field>
+  </div>
   <table mat-table [dataSource]="dataProvider" multiTemplateDataRows class="mat-elevation-z8">
     <!-- Username Column -->
     <ng-container matColumnDef="username" class="text-center">

@@ -41,6 +41,8 @@ export class UsersEditComponent implements OnInit {
   dataProvider: UsersEditDataProvider;
   expandedElement: UsersEdit;
 
+  sorting = 'usernameASC';
+
   constructor(private httpClient: HttpClient, private router: Router, private dialog: MatDialog, private snackBar: MatSnackBar) {
     AuthService.allowOnlyModsAndAdmin(httpClient, router);
   }
@@ -66,7 +68,7 @@ export class UsersEditComponent implements OnInit {
       const comp: Company = this.companys.filter(e => e.username === u.username)[0];
       data.push({user: u, company: comp});
     });
-    this.dataProvider = new UsersEditDataProvider(data);
+    this.dataProvider = new UsersEditDataProvider(data, this.sorting);
     MenuCountService.update(this.httpClient);
   }
 
