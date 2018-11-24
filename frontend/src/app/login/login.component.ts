@@ -38,18 +38,22 @@ export class LoginComponent implements OnInit {
    */
   onLogin() {
     if (this.checkForCookie()) {
-      this.httpClient.get('/login/' + this.user.username + '/' + this.user.password, {withCredentials: true}).subscribe(
-        (res: User) => {
-          console.log(res);
-          AuthService.forceUpdate(this.httpClient);
-          this.router.navigate(['/']);
-        },
-        err => {
-          console.log('Error occurred:' + err.error.message);
-          this.errorMessage = Message.getMessage(err.error.code);
-          this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
-        }
-      );
+      if (this.user.username !== '' && this.user.password !== '') {
+        this.httpClient.get('/login/' + this.user.username + '/' + this.user.password, {withCredentials: true}).subscribe(
+          (res: User) => {
+            console.log(res);
+            AuthService.forceUpdate(this.httpClient);
+            this.router.navigate(['/']);
+          },
+          err => {
+            console.log('Error occurred:' + err.error.message);
+            this.errorMessage = Message.getMessage(err.error.code);
+            this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
+          }
+        );
+      } else {
+        this.snackBar.open('Du musst beide Felder ausfüllen!', null, {duration: 5000});
+      }
     } else {
       this.snackBar.open('Du musst zuerst Cookies akzeptieren!', null, {duration: 5000});
     }
