@@ -4,16 +4,22 @@ import {asyncRoute} from '../helper/async.helper';
 
 module.exports = asyncRoute(async (req: Request, res: Response) => {
 
-  const query = req.params.searchString + ' logo';
+  // import stuff
   const https = require('https');
-  const http = require('http');
   const fetch = require('node-fetch');
   const fs = require('fs');
+
+  // form search query from companyname
+  const query = req.params.searchString + ' logo';
+
+  // Get Subscription key from config file
   const subscriptionKey = JSON.parse(fs.readFileSync('./app/msApiKey.json')).key;
+
+  // define host and path for search
   const host = 'api.cognitive.microsoft.com';
   const path = '/bing/v7.0/images/search';
 
-  const request_params = {
+  const search_request_params = {
     method : 'GET',
     hostname : host,
     path : path + '?q=' + encodeURIComponent(query) + '&count=10&safeSeach=Strict',
@@ -22,48 +28,54 @@ module.exports = asyncRoute(async (req: Request, res: Response) => {
     },
   };
 
-  const getBase64Images = async (url: string, datatype: string) => {
-    try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        return '';
-      }
+  // Async function to handle the search response
+  const search_response_handler = async function (response: any) {
 
-      const dataurl = 'data:image/' + datatype + ';base64,';
-      console.log(url);
-      return dataurl + new Buffer(await response.buffer()).toString('base64');
-    } catch (e) {
-      console.log('Failed: ' + url);
-      return '';
-    }
-  };
+    let rawAnswer = '';
 
-  const response_handler = async function (response: any) {
-    let body = '';
-
+    // Write Answer to variable
     response.on('data', function (d: any) {
-      body += d;
+      rawAnswer += d;
     });
 
+    // If finished, then load that images
     response.on('end', async function () {
 
-      const images = [];
-      const imageResults = JSON.parse(body);
+      // parse JSON-Answer to Object
+      const imageResults = JSON.parse(rawAnswer);
 
+      // Build array with promises (and define them) for the image data
+      const imagePromises = [];
       for (let i = 0; i < imageResults.value.length; ++i) {
-        const img = await getBase64Images(imageResults.value[i].contentUrl, imageResults.value[i].encodingFormat);
-        if (img !== '') {
-          images.push(img);
+        imagePromises.push(
+          fetch(imageResults.value[i].contentUrl).then(
+            (fetchRes: any) => {
+              if (!fetchRes.ok) {
+                return '\x00';
+              }
+              return fetchRes.buffer();
+            }
+          )
+        );
+      }
+
+      // Wait until all images are returned
+      const rawData = await Promise.all(imagePromises);
+      const images: string[] = [];
+
+      // Parse recieved data as base64 into array
+      for (let i = 0; i < rawData.length; ++i) {
+        if (rawData[i] !== '\x00') {
+          images.push('data:image/' + imageResults.value[i].encodingFormat + ';base64,' + new Buffer(rawData[i]).toString('base64'));
         }
       }
 
-      const imageNumber = Math.floor(Math.random() * 10);
-      console.log(`Image result count: ${imageResults.value.length}`);
+      // Send answer
       res.status(200).send(JSON.stringify(images));
     });
   };
 
-  const msReq = https.request(request_params, response_handler);
-  msReq.end();
+  // Do Request
+  https.request(search_request_params, search_response_handler).end();
 
 });
