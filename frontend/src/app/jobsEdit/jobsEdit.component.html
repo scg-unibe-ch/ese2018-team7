@@ -2,9 +2,21 @@
   <input matInput placeholder="Job erstellen" [(ngModel)]="job.title" name="title">
 </mat-form-field>
 <button *ngIf="allowCreateJob()" mat-button (click)="onJobCreate()">Job erstellen</button>
+<mat-form-field>
+  <mat-label>Sortieren nach:</mat-label>
+  <mat-select [(value)]="sorting">
+    <mat-option *ngIf="isModOrAdmin()" value="todo">ToDo</mat-option>
+    <mat-option value="titleASC">Alphabet aufsteigend</mat-option>
+    <mat-option value="titleDESC">Alphabet absteigend</mat-option>
+    <mat-option value="workloadASC">Pensum aufsteigend</mat-option>
+    <mat-option value="workloadDESC">Pensum absteigend</mat-option>
+    <mat-option value="startworkASC">Arbeitsbeginn aufsteigend</mat-option>
+    <mat-option value="startworkDESC">Arbeitsbeginn absteigend</mat-option>
+  </mat-select>
+</mat-form-field>
 <div class="accordion-container" *ngIf="jobs.length > 0">
   <mat-accordion class="header-alignment">
-    <app-job-edit [job]="job" (destroy)="onJobDestroy($event)" *ngFor="let job of jobs | jobsPageinatorPipe:pageEvent">
+    <app-job-edit [job]="job" (destroy)="onJobDestroy($event)" *ngFor="let job of (jobs | jobsEditSortPipe:sorting) | jobsPageinatorPipe:pageEvent">
     </app-job-edit>
   </mat-accordion>
 </div>

@@ -34,9 +34,13 @@ export class JobsEditComponent implements OnInit {
   // Paginator page size
   pageSize = ((this.getCookie('pageSize') === '') ? 8 : parseInt(this.getCookie('pageSize'), 10));
 
+  sorting: string;
+
   constructor(private httpClient: HttpClient, private router: Router, private snackBar: MatSnackBar) {
     // Only accessible for logged-in users
     AuthService.allowOnlyLogin(httpClient, router);
+
+    this.sorting = this.isModOrAdmin() ? 'todo' : 'titleASC';
   }
 
   ngOnInit() {
@@ -117,6 +121,9 @@ export class JobsEditComponent implements OnInit {
 
   allowCreateJob() {
     return AuthService.isEmployer();
+  }
+  isModOrAdmin() {
+    return AuthService.isModOrAdmin();
   }
 
   getCookie(cname) {

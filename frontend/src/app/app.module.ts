@@ -67,6 +67,7 @@ import {JobsPageinatorPipe} from './jobsView/jobsPageinator.pipe';
 import {CustomMatPaginatorIntl} from './customCHLocale/CustomMatPaginatorIntl';
 import {JobsSortPipe} from './jobsView/jobsSort.pipe';
 import {SelectLogoComponent} from './selectLogo/selectLogo.component';
+import {JobsEditSortPipe} from './jobsEdit/jobsEditSort.pipe';
 
 @NgModule({
   declarations: [
@@ -90,6 +91,7 @@ import {SelectLogoComponent} from './selectLogo/selectLogo.component';
     JobsPageinatorPipe,
     JobsSortPipe,
     SelectLogoComponent,
+    JobsEditSortPipe,
   ],
   imports: [
     BrowserModule,
