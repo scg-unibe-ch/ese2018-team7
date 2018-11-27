@@ -90,7 +90,7 @@
     Detaillierte Beschreibung
   </div>
   <angular-markdown-editor
-    textareaId="description" rows="12" (onChange)="onSaveSingle('description',job.description)"
+    [textareaId]="job.id" rows="12" (onChange)="onSaveSingle('description',job.description)"
     name="markdownText" [(ngModel)]="job.description" [locale]="locale" [options]="editorOptions">
   </angular-markdown-editor>
   <br>
