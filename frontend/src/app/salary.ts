@@ -4,9 +4,9 @@ export class Salary {
     public period: string = 'month',
   ) { }
 
-  fromString(str) {
-    this.amount = str.amount;
-    this.period = str.period;
+  fromString(str: any) {
+    this.amount = JSON.parse(str).amount;
+    this.period = JSON.parse(str).period;
     return this;
   }
 
