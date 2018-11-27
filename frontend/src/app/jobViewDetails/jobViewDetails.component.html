@@ -8,7 +8,7 @@
   </span>
   <br><br>
   <img [src]="job.company.logo" class="company-logo">
-  Stellenantritt am {{formattedStartOfWork}}{{job.placeOfWork!='' ? ' in ' + job.placeOfWork : ''}} mit einem {{job.workload}}% Pensum.<br>
+  Stellenantritt {{formattedStartOfWork}}{{job.placeOfWork!='' ? ' in ' + job.placeOfWork : ''}} mit einem {{job.workload}}% Pensum.<br>
   Diese Stelle ist {{job.contractType=='temporary'?'befristet und endet am '+formattedEndOfWork :'unbefristet'}}.<br>
   <span *ngIf="job.salary.amount>=0">
     Das Gehalt beträgt {{job.salary.amount}} CHF {{job.salary.getPeriodString(job.salary.period)}}

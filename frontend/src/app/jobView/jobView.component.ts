@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Job} from '../job';
 import {JobViewDetailsComponent} from '../jobViewDetails/jobViewDetails.component';
 import {MatDialog} from '@angular/material';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-job-view',
@@ -29,7 +30,8 @@ export class JobViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.formattedStartOfWork = this.job.startOfWork.format('DD.MM.YYYY');
+    this.formattedStartOfWork = moment() > this.job.startOfWork ? 'per sofort' :
+      'am ' + this.job.startOfWork.format('DD.MM.YYYY');
     this.formattedEndOfWork = this.job.endOfWork.format('DD.MM.YYYY');
     this.formattedDescription = this.job.description.replace(/\n/g, '<br>');
     this.formattedContactInfo = this.job.contactInfo.replace(/\n/g, '<br>');
