@@ -17,7 +17,7 @@ module.exports = asyncRoute(async (req: Request, res: Response) => {
 
   if (req.body.password == null || req.body.password === '') {
 
-    res.status(404).send(Message.error.emptyPasswordNotAllowed);
+    res.status(403).send(Message.error.emptyPasswordNotAllowed);
     return;
 
   }
