@@ -65,7 +65,7 @@ export class JobsEditComponent implements OnInit {
           instance.email == null ? '' : instance.email,
           instance.website == null ? '' : instance.website,
           instance.contactInfo == null ? '' : instance.contactInfo,
-          new Company('', instance.companyName, instance.companyLogo),
+          new Company('', instance.companyName, '', instance.companyLogo),
           moment(instance.startOfPublication, 'X'),
           moment(instance.endOfPublication, 'X'),
           instance.approved,

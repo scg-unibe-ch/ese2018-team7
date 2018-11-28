@@ -15,6 +15,7 @@ export class Message {
     emptyUsernameNotAllowed: new Msg(1008, 'Leerer Benutzername ist nicht erlaubt!'),
     emptyPasswordNotAllowed: new Msg(1009, 'Leeres Passwort ist nicht erlaubt!'),
     permissionDeniedChangePasswordHigherLevel: new Msg(1010, 'Du bist nicht berechtigt das Passwort für diesen Benutzer zu ändern!'),
+    emptyMailNotAllowed: new Msg(1011, 'Leere Mailaddresse ist nicht erlaubt!'),
 
   };
   public static success = {

@@ -5,6 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import {AuthService} from '../auth/auth.service';
 import {Message} from '../message';
 import {MatSnackBar} from '@angular/material';
+import {Usergroup} from '../usergroup';
 
 @Component({
   selector: 'app-login',
@@ -27,7 +28,7 @@ export class LoginComponent implements OnInit {
     AuthService.allowOnlyPublic(httpClient, router);
 
     // Set User without username and password
-    this.user = new User( '', '', '', null, null);
+    this.user = new User( '', '', Usergroup.public, true);
   }
 
   ngOnInit() {

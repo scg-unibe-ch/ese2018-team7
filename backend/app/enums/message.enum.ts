@@ -15,6 +15,7 @@ export class Message {
     emptyUsernameNotAllowed: new Msg(1008, 'Empty Username is not allowed!'),
     emptyPasswordNotAllowed: new Msg(1009, 'Empty Password is not allowed!'),
     permissionDeniedChangePasswordHigherLevel: new Msg(1010, 'You\'re not allowed to change password of a higher Level'),
+    emptyMailNotAllowed: new Msg(1011, 'Empty Mail is not allowed!'),
 
   };
   public static success = {

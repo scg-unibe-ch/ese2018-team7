@@ -12,7 +12,7 @@ module.exports = asyncRoute(async (req: Request, res: Response) => {
   const instance = new Job();
 
   if (req.body['email'] == null || req.body['email'] === '') {
-    req.body['email'] = req.session.user.email;
+    req.body['email'] = req.session.user.company[0].email;
   }
 
   req.body['owner'] = req.session.user.username;

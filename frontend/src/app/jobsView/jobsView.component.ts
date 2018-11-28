@@ -94,7 +94,7 @@ export class JobsViewComponent implements OnInit {
           instance.email,
           instance.website,
           instance.contactInfo,
-          new Company('', instance.companyName, instance.companyLogo)));
+          new Company('', instance.companyName, '', instance.companyLogo)));
 
       if (this.jobs.length === 0) {
         this.msg = 'Aktuell sind keine Jobs verfügbar!';
@@ -138,7 +138,7 @@ export class JobsViewComponent implements OnInit {
           instance.email,
           instance.website,
           instance.contactInfo,
-          new Company('', instance.companyName, instance.companyLogo)));
+          new Company('', instance.companyName, '', instance.companyLogo)));
 
       if (this.jobs.length === 0) {
         this.msg = 'Zu dieser Suche wurden keine Jobs gefunden!';
@@ -180,7 +180,7 @@ export class JobsViewComponent implements OnInit {
           instance.email,
           instance.website,
           instance.contactInfo,
-          new Company('', instance.companyName, instance.companyLogo),
+          new Company('', instance.companyName, '', instance.companyLogo),
           moment(instance.startOfPublication, 'X'),
           moment(instance.endOfPublication, 'X')));
 
@@ -223,7 +223,7 @@ export class JobsViewComponent implements OnInit {
           instance.email,
           instance.website,
           instance.contactInfo,
-          new Company('', instance.companyName, instance.companyLogo),
+          new Company('', instance.companyName, '', instance.companyLogo),
           moment(instance.startOfPublication, 'X'),
           moment(instance.endOfPublication, 'X')));
 

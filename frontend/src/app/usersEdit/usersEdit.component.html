@@ -47,7 +47,7 @@
           </div>
           <div *ngIf="isEmployer(u.user)">
             <h3>Unternehmensname: {{u.company.name}}</h3>
-            <h3>E-Mail: <a class='clickable' (click)="sendMail(u.user.email)">{{u.user.email}}</a></h3>
+            <h3>E-Mail: <a class='clickable' (click)="sendMail(u.company.email)">{{u.company.email}}</a></h3>
             <img [src]="u.company.logo" width="100">
             <br>
           </div>
