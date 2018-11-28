@@ -16,6 +16,7 @@
   <button mat-button (click)="onFetchLogo()"  matTooltip="Unternehmenslogo suchen"><mat-icon>search</mat-icon></button>
   </div>
   <img *ngIf="company.logo!=''" [src]="company.logo" class="company-logo"><br>
+  <mat-progress-bar *ngIf="showProgressBar" class="centerProgressBar" mode="query"></mat-progress-bar>
   <mat-form-field>
     <input matInput required #username="ngModel" placeholder="Benutzername" [(ngModel)]="user.username" name="username">
     <mat-error *ngIf="username.hasError('required')">
@@ -42,5 +43,4 @@
   </mat-form-field>
   <br>
   <button mat-button (click)="onCreate()" color="primary">Registrieren</button>
-  <mat-progress-bar *ngIf="showProgressBar" class="centerProgressBar" mode="query"></mat-progress-bar>
 </mat-card>
