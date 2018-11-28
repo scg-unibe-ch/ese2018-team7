@@ -103,6 +103,7 @@ export class JobsEditComponent implements OnInit {
         this.job.id = instance.id;
         this.job.email = instance.email;
         this.job.approved = instance.approved;
+        this.job.company = new Company('', instance.companyName, instance.companyLogo);
         this.jobs.push(this.job);
         this.job = new Job();
         this.msg = '';
