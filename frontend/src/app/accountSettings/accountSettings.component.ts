@@ -91,8 +91,8 @@ export class AccountSettingsComponent implements OnInit {
       'name': this.company.name,
       'email': this.company.email,
       'logo': this.company.logo
-    }, {withCredentials: true}).subscribe(res => {
-      this.company.unapprovedChanges = true;
+    }, {withCredentials: true}).subscribe((res: any) => {
+      this.company.unapprovedChanges = res.unapprovedChanges;
     }, err => {
       console.error(err.error.message);
       this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
