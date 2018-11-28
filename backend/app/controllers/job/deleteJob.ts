@@ -28,6 +28,6 @@ module.exports = asyncRoute(async (req: Request, res: Response) => {
 
   await instance.destroy();
 
-  res.status(200).send();
+  res.status(200).send(Message.success.success);
 
 });
