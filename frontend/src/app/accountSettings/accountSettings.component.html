@@ -4,6 +4,7 @@
   <mat-form-field>
     <input matInput placeholder="Unternehmen" [(ngModel)]="company.name" name="name">
   </mat-form-field>
+  <br>
   <div class="logoSelection">
     <a class="labelText">Unternehmenslogo*</a>
     <input id="logoUpload" type='file' #upload style="display:none;" (change)="onSelectLogo($event)">
