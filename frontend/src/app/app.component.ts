@@ -95,7 +95,13 @@ export class AppComponent implements OnInit {
   }
 
   getWelcomeText() {
-    return 'Willkommen ' + AuthService.getUsername() + '!';
+    let welcomeText = '';
+    if (AuthService.getUsername().length > 12) {
+      welcomeText = 'Willkommen ' + AuthService.getUsername().substr(0, 10) + '... !';
+    } else {
+      welcomeText = 'Willkommen ' + AuthService.getUsername() + '!';
+    }
+    return welcomeText;
   }
 
   isLogin() {
