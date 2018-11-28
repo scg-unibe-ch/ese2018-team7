@@ -1,0 +1,1281 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is the API documentation of the Job Portal by ESE Team 7",
+    "version": "1.0.0",
+    "title": "ESE Team 7 API"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "job",
+      "description": "Everything about the Jobs"
+    },
+    {
+      "name": "user",
+      "description": "Everything about the User"
+    },
+    {
+      "name": "company",
+      "description": "Everything about the Company"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/login": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Register a new user",
+        "description": "Register a new user, if not logged in as administrator, then it will be an employer",
+        "operationId": "user_register",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User and Company object. ",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string",
+                  "format": "mailaddress"
+                },
+                "type": {
+                  "type": "integer"
+                },
+                "enabled": {
+                  "type": "boolean"
+                },
+                "company": {
+                  "type": "string"
+                },
+                "logo": {
+                  "type": "string",
+                  "format": "base64"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful registered user",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          },
+          "403": {
+            "description": "Username or Password empty, User already exists",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          }
+        }
+      }
+    },
+    "/login/edit": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Get User for editing",
+        "description": "Get User for editing, if not logged in as administrator or moderator then returns 403",
+        "operationId": "user_edit",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of users",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "integer"
+                },
+                "enabled": {
+                  "type": "boolean"
+                },
+                "suspended": {
+                  "type": "boolean"
+                },
+                "companyName": {
+                  "type": "string"
+                },
+                "companyLogo": {
+                  "type": "string"
+                },
+                "companyUnapprovedChanges": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Not logged in as administator or moderator",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          }
+        }
+      }
+    },
+    "/login/check": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Checks if you are logged in",
+        "description": "Checks if you are logged in",
+        "operationId": "user_login_check",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "value and message if logged in and if so then username and usertype",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "boolean"
+                },
+                "type": {
+                  "type": "integer",
+                  "description": "only if value is true"
+                },
+                "username": {
+                  "type": "string",
+                  "description": "only if value is true"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/login/logout": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Loggout the user",
+        "description": "Loggout the user",
+        "operationId": "user_logout",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Message",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          }
+        }
+      }
+    },
+    "/login/{username}/{password}": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Loggout the user",
+        "description": "Loggout the user",
+        "operationId": "user_login",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "User and Company object. ",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "path",
+            "description": "User and Company object. ",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Message",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string",
+                  "description": "Always empty"
+                },
+                "type": {
+                  "type": "integer"
+                },
+                "enabled": {
+                  "type": "boolean"
+                },
+                "suspended": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Login not successfull",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          }
+        }
+      }
+    },
+    "/login/password": {
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Set new password for current user",
+        "description": "Set new password for current user",
+        "operationId": "user_password",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Message",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          },
+          "403": {
+            "description": "Empty Password",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          },
+          "404": {
+            "description": "Problem with user",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          }
+        }
+      }
+    },
+    "/login/setPassword": {
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Set new password for another user",
+        "description": "Set new password for another user",
+        "operationId": "user_set_password",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Username and Password",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Message",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          },
+          "403": {
+            "description": "Permission denied, if not Administrator or Moderator",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          },
+          "404": {
+            "description": "If User doesn't exist, Password is empty or User has higher level",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          }
+        }
+      }
+    },
+    "/login/accept": {
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Accept new user",
+        "description": "Accept new user",
+        "operationId": "user_accept",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Username",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Message",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          },
+          "403": {
+            "description": "Permission denied, if not Administrator or Moderator",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          },
+          "404": {
+            "description": "If User doesn't exist",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          }
+        }
+      }
+    },
+    "/login/suspend": {
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Suspend a user",
+        "description": "Suspend a user",
+        "operationId": "user_suspend",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Username",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Message",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "suspended": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Permission denied, if not Administrator or Moderator",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          },
+          "404": {
+            "description": "If User doesn't exist",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          }
+        }
+      }
+    },
+    "/login/{username}": {
+      "delete": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Delete a user",
+        "description": "Delete a user",
+        "operationId": "user_delete",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "Username",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Message",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "suspended": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Permission denied, if not Administrator or Moderator",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          },
+          "404": {
+            "description": "If User doesn't exist",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          }
+        }
+      }
+    },
+    "/login/company": {
+      "get": {
+        "tags": [
+          "company"
+        ],
+        "summary": "Get your own Company",
+        "description": "Get your own Company",
+        "operationId": "user_company_get",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Your Company",
+            "schema": {
+              "$ref": "#/definitions/company"
+            }
+          },
+          "403": {
+            "description": "Permission denied, if not Loggedin",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "company"
+        ],
+        "summary": "Update your own Company",
+        "description": "Update your own Company",
+        "operationId": "user_company_update",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Message",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          },
+          "403": {
+            "description": "Permission denied, if not Loggedin",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          },
+          "404": {
+            "description": "If user doesn't have a Company -> only Employer have",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          }
+        }
+      }
+    },
+    "/login/company/accept": {
+      "get": {
+        "tags": [
+          "company"
+        ],
+        "summary": "Accept changes of a Company",
+        "description": "Accept changes of a Company",
+        "operationId": "user_company_accept",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Username",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Message",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          },
+          "403": {
+            "description": "Permission denied, if not Administrator or Moderator",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          },
+          "404": {
+            "description": "If user doesn't have a company",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          }
+        }
+      }
+    },
+    "/login/company/reset": {
+      "put": {
+        "tags": [
+          "company"
+        ],
+        "summary": "Reset your own Company",
+        "description": "Reset your own Company",
+        "operationId": "user_company_reset",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Your Company",
+            "schema": {
+              "$ref": "#/definitions/company"
+            }
+          },
+          "403": {
+            "description": "Permission denied, if not Loggedin",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          },
+          "404": {
+            "description": "If user doesn't have a company",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          }
+        }
+      }
+    },
+    "/jobs": {
+      "get": {
+        "tags": [
+          "job"
+        ],
+        "summary": "Get all public jobs according to query",
+        "description": "Get all public jobs according to query",
+        "operationId": "job_get",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "easy",
+            "in": "query",
+            "description": "Easy Search field",
+            "type": "string"
+          },
+          {
+            "name": "title",
+            "in": "query",
+            "description": "Title Search field",
+            "type": "string"
+          },
+          {
+            "name": "company",
+            "in": "query",
+            "description": "Companyname Search field",
+            "type": "string"
+          },
+          {
+            "name": "department",
+            "in": "query",
+            "description": "Company Department Search field",
+            "type": "string"
+          },
+          {
+            "name": "startAfter",
+            "in": "query",
+            "description": "Job starts after timestamp Search field",
+            "type": "integer"
+          },
+          {
+            "name": "startBefore",
+            "in": "query",
+            "description": "Job starts before timestamp Search field",
+            "type": "string"
+          },
+          {
+            "name": "workloadGt",
+            "in": "query",
+            "description": "Workload greater or equal than Search field",
+            "type": "string"
+          },
+          {
+            "name": "workloadLt",
+            "in": "query",
+            "description": "Workload less or equal than Search field",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Your Company",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/getJobWithCompanyData"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "job"
+        ],
+        "summary": "Add job",
+        "description": "Add job",
+        "operationId": "job_add",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User and Company object. ",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "department": {
+                  "type": "string"
+                },
+                "placeOfWork": {
+                  "type": "string"
+                },
+                "contractType": {
+                  "type": "string"
+                },
+                "startOfWork": {
+                  "type": "integer",
+                  "format": "timestamp"
+                },
+                "endOfWork": {
+                  "type": "integer",
+                  "format": "timestamp",
+                  "description": "0 if contractType is unlimited"
+                },
+                "workload": {
+                  "type": "integer"
+                },
+                "salary": {
+                  "type": "object",
+                  "properties": {
+                    "amount": {
+                      "type": "integer"
+                    },
+                    "period": {
+                      "type": "string",
+                      "description": "month, hour, job or other"
+                    }
+                  }
+                },
+                "shortDescription": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Markdown text"
+                },
+                "skills": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "phone": {
+                  "type": "string",
+                  "description": "formatted Phonenumber"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "website": {
+                  "type": "string"
+                },
+                "contactInfo": {
+                  "type": "string"
+                },
+                "startOfPublication": {
+                  "type": "integer",
+                  "format": "timestamp"
+                },
+                "endOfPublication": {
+                  "type": "integer",
+                  "format": "timestamp"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The created Job",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/getJobForEdit"
+              }
+            }
+          },
+          "403": {
+            "description": "Permission denied, if not Loggedin as Employer",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          },
+          "404": {
+            "description": "If couldn't create Job",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          }
+        }
+      }
+    },
+    "/jobs/apply/{id}": {
+      "put": {
+        "tags": [
+          "job"
+        ],
+        "summary": "Approve Job and accept changes",
+        "description": "Approve Job and accept changes",
+        "operationId": "job_apply",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Job Id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Job with current data",
+            "schema": {
+              "$ref": "#/definitions/getJobForEdit"
+            }
+          },
+          "403": {
+            "description": "Permission denied, if not Administrator or Moderator",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          },
+          "404": {
+            "description": "If job not found",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          }
+        }
+      }
+    },
+    "/jobs/reset/{id}": {
+      "put": {
+        "tags": [
+          "job"
+        ],
+        "summary": "Reset Job to public version",
+        "description": "Reset Job to public version",
+        "operationId": "job_reset",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Job Id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Job with current data",
+            "schema": {
+              "$ref": "#/definitions/getJobForEdit"
+            }
+          },
+          "403": {
+            "description": "Permission denied, if not Administrator, Moderator or Job owner",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          },
+          "404": {
+            "description": "If job not found",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          }
+        }
+      }
+    },
+    "/jobs/{id}": {
+      "put": {
+        "tags": [
+          "job"
+        ],
+        "summary": "Update Jobfields",
+        "description": "Update Jobfields",
+        "operationId": "job_update",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Job Id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Job with current data",
+            "schema": {
+              "$ref": "#/definitions/getJobForEdit"
+            }
+          },
+          "403": {
+            "description": "Permission denied, if not Administrator, Moderator or Job owner",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          },
+          "404": {
+            "description": "If job not found",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "job"
+        ],
+        "summary": "Delete Job",
+        "description": "Delete Job",
+        "operationId": "job_delete",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Job Id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "If job successfully deleted",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          },
+          "403": {
+            "description": "Permission denied, if not Administrator, Moderator or Job owner",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          },
+          "404": {
+            "description": "If job not found",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "company": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "logo": {
+          "type": "string",
+          "format": "base64"
+        },
+        "unapprovedChanges": {
+          "type": "boolean"
+        }
+      }
+    },
+    "getJobWithCompanyData": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "department": {
+          "type": "string"
+        },
+        "placeOfWork": {
+          "type": "string"
+        },
+        "contractType": {
+          "type": "string"
+        },
+        "startOfWork": {
+          "type": "integer",
+          "format": "timestamp"
+        },
+        "endOfWork": {
+          "type": "integer",
+          "format": "timestamp",
+          "description": "0 if contractType is unlimited"
+        },
+        "workload": {
+          "type": "integer"
+        },
+        "salary": {
+          "type": "object",
+          "properties": {
+            "amount": {
+              "type": "integer"
+            },
+            "period": {
+              "type": "string",
+              "description": "month, hour, job or other"
+            }
+          }
+        },
+        "shortDescription": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string",
+          "description": "Markdown text"
+        },
+        "skills": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "phone": {
+          "type": "string",
+          "description": "By Company formatted Phonenumber"
+        },
+        "email": {
+          "type": "string"
+        },
+        "website": {
+          "type": "string"
+        },
+        "contactInfo": {
+          "type": "string"
+        },
+        "startOfPublication": {
+          "type": "integer",
+          "format": "timestamp"
+        },
+        "endOfPublication": {
+          "type": "integer",
+          "format": "timestamp"
+        },
+        "approved": {
+          "type": "boolean"
+        },
+        "companyName": {
+          "type": "string"
+        },
+        "companyLogo": {
+          "type": "string",
+          "format": "base64"
+        }
+      }
+    },
+    "getJobForEdit": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "department": {
+          "type": "string"
+        },
+        "placeOfWork": {
+          "type": "string"
+        },
+        "contractType": {
+          "type": "string"
+        },
+        "startOfWork": {
+          "type": "integer",
+          "format": "timestamp"
+        },
+        "endOfWork": {
+          "type": "integer",
+          "format": "timestamp",
+          "description": "0 if contractType is unlimited"
+        },
+        "workload": {
+          "type": "integer"
+        },
+        "salary": {
+          "type": "object",
+          "properties": {
+            "amount": {
+              "type": "integer"
+            },
+            "period": {
+              "type": "string",
+              "description": "month, hour, job or other"
+            }
+          }
+        },
+        "shortDescription": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string",
+          "description": "Markdown text"
+        },
+        "skills": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "phone": {
+          "type": "string",
+          "description": "By Company formatted Phonenumber"
+        },
+        "email": {
+          "type": "string"
+        },
+        "website": {
+          "type": "string"
+        },
+        "contactInfo": {
+          "type": "string"
+        },
+        "startOfPublication": {
+          "type": "integer",
+          "format": "timestamp"
+        },
+        "endOfPublication": {
+          "type": "integer",
+          "format": "timestamp"
+        },
+        "approved": {
+          "type": "boolean"
+        },
+        "companyName": {
+          "type": "string"
+        },
+        "companyLogo": {
+          "type": "string",
+          "format": "base64"
+        },
+        "changed": {
+          "type": "boolean"
+        }
+      }
+    },
+    "message": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
