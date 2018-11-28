@@ -55,7 +55,9 @@ module.exports = asyncRoute(async (req: Request, res: Response) => {
               }
               return fetchRes.buffer();
             }
-          )
+          ).catch((e: any) => {
+            return '\x00';
+          })
         );
       }
 
