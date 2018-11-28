@@ -23,7 +23,6 @@ export class AccountSettingsComponent implements OnInit {
   msg: String;
   password: String;
   password2: String;
-  userMail: String;
   showProgressBar = false;
   @Output()
   destroy = new EventEmitter<User>();
@@ -40,9 +39,6 @@ export class AccountSettingsComponent implements OnInit {
   ngOnInit() {
     this.httpClient.get('/login/company', {withCredentials: true}).subscribe((res: any) => {
       this.company = new Company(res.username, res.name, res.email, res.logo, res.unapprovedChanges);
-      this.httpClient.get('/login/mail/' + res.username, {withCredentials: true}).subscribe((res2: any) => {
-        this.userMail = res.userMail;
-      });
     });
   }
 

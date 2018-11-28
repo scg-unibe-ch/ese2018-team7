@@ -59,8 +59,7 @@ export class Company extends Model<Company> {
 
   forEdit(): any {
 
-    const unapprovedChanges = this.changes !== this.getJSONforChange();
-
+    const oldJSON: string = this.getJSONforChange();
     this.applyChanges();
 
     return {
@@ -68,7 +67,7 @@ export class Company extends Model<Company> {
       'name': this.name,
       'email': this.email,
       'logo': this.logo,
-      'unapprovedChanges': unapprovedChanges
+      'unapprovedChanges': oldJSON !== this.getJSONforChange(),
     };
 
   }
