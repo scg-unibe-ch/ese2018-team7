@@ -93,4 +93,12 @@ export class AppComponent implements OnInit {
       }),
     ).subscribe();
   }
+
+  getWelcomeText() {
+    return 'Willkommen ' + AuthService.getUsername() + '!';
+  }
+
+  isLogin() {
+    return AuthService.isLogin();
+  }
 }

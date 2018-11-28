@@ -126,6 +126,14 @@ export class AuthService {
   }
 
   /**
+   * Returns the last status, the username
+   * DOESN'T UPDATE STATUS!
+   */
+  static getUsername() {
+    return this.username;
+  }
+
+  /**
    * Returns the last status, if the user is an employer
    * DOESN'T UPDATE STATUS!
    */
