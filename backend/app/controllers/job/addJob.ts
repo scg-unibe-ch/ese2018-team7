@@ -10,17 +10,16 @@ import {Message} from '../../enums/message.enum';
 module.exports = asyncRoute(async (req: Request, res: Response) => {
 
   const instance = new Job();
+
+  if (req.body['email'] == null || req.body['email'] === '') {
+    req.body['email'] = req.session.user.email;
+  }
+
+  req.body['owner'] = req.session.user.username;
+  req.body['approved'] = req.session.user.type <= Usergroup.moderator ;
+
   instance.createJob(req.body);
 
-  // Set the owner
-  instance.owner = req.session.user.username;
-
-  // Set approved if an admin or mod added job, and not approved else
-  instance.approved = req.session.user.type <= Usergroup.moderator ;
-
-  if (instance.email == null || instance.email === '') {
-    instance.email = req.session.user.email;
-  }
 
   await instance.save();
 
