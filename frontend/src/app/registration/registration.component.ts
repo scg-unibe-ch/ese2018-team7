@@ -72,6 +72,7 @@ export class RegistrationComponent implements OnInit {
   onSelectLogo(event) {
     console.log('changed image');
     if (event.target.files && event.target.files[0]) {
+      this.showProgressBar = true;
       const reader = new FileReader();
       console.log('is image');
       reader.readAsDataURL(event.target.files[0]); // read file as data url
@@ -178,6 +179,7 @@ export class RegistrationComponent implements OnInit {
 
       // Get the data from the canvas
       this.company.logo = canvas.toDataURL('image/png');
+      this.showProgressBar = false;
     };
   }
 }
