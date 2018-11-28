@@ -39,7 +39,7 @@ export class Company extends Model<Company> {
     company.createCompany(c);
     company.createCompany(change);
 
-    this.changes = company.changes;
+    this.changes = company.getJSONforChange();
 
   }
 
