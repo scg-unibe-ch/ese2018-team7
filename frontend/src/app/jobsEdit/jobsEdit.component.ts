@@ -88,25 +88,29 @@ export class JobsEditComponent implements OnInit {
    * Adding a new Job
    */
   onJobCreate() {
-    this.httpClient.post('/jobs', {
-      'title': this.job.title,
-      'startOfWork': this.job.startOfWork.startOf('day').unix(),
-      'endOfWork': this.job.endOfWork.endOf('day').unix(),
-      'workload': this.job.workload,
-      'skills': JSON.stringify(this.job.skills),
-      'startOfPublication': this.job.startOfPublication.unix(),
-      'endOfPublication': this.job.endOfPublication.unix()
-    }, {withCredentials: true}).subscribe((instance: any) => {
-      this.job.id = instance.id;
-      this.job.email = instance.email;
-      this.job.approved = instance.approved;
-      this.jobs.push(this.job);
-      this.job = new Job();
-      this.msg = '';
-    }, err => {
-      console.error(err.error.message);
-      this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
-    });
+    if (this.job.title === '') {
+      this.snackBar.open('Kein Jobtitel eingegeben!', null, {duration: 5000});
+    } else {
+      this.httpClient.post('/jobs', {
+        'title': this.job.title,
+        'startOfWork': this.job.startOfWork.startOf('day').unix(),
+        'endOfWork': this.job.endOfWork.endOf('day').unix(),
+        'workload': this.job.workload,
+        'skills': JSON.stringify(this.job.skills),
+        'startOfPublication': this.job.startOfPublication.unix(),
+        'endOfPublication': this.job.endOfPublication.unix()
+      }, {withCredentials: true}).subscribe((instance: any) => {
+        this.job.id = instance.id;
+        this.job.email = instance.email;
+        this.job.approved = instance.approved;
+        this.jobs.push(this.job);
+        this.job = new Job();
+        this.msg = '';
+      }, err => {
+        console.error(err.error.message);
+        this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
+      });
+    }
   }
 
   /**
