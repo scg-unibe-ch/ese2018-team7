@@ -107,31 +107,6 @@ export class Job extends Model<Job> {
 
   }
 
-  getSimpleJob(): any {
-
-    return {
-      'id': this.id,
-      'title': this.title,
-      'department': this.department,
-      'placeOfWork': this.placeOfWork,
-      'contractType': this.contractType,
-      'startOfWork': this.startOfWork,
-      'endOfWork': this.endOfWork,
-      'workload': this.workload,
-      'salary': this.salary,
-      'shortDescription': this.shortDescription,
-      'description': this.description,
-      'skills': this.skills,
-      'email': this.email,
-      'phone': this.phone,
-      'website': this.website,
-      'contactInfo': this.contactInfo,
-      'startOfPublication': this.startOfPublication,
-      'endOfPublication': this.endOfPublication,
-      'approved': this.approved,
-    };
-
-  }
   getJobForEdit(): any {
     const oldJson: string = this.getJSONforChange();
     this.applyChanges();
