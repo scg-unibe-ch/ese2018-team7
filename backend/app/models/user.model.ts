@@ -16,9 +16,6 @@ export class User extends Model<User> {
   password!: string;
 
   @Column
-  email!: string;
-
-  @Column
   type!: Usergroup;
 
   @Column
@@ -50,13 +47,12 @@ export class User extends Model<User> {
     if (this.company.length === 0) {
 
       const c: Company = new Company();
-      c.createCompany({'username': this.username, 'name': '', 'logo': ''});
+      c.createCompany({'username': this.username, 'name': '', 'email': '', 'logo': ''});
       this.company.push(c);
 
     } else {
 
-      const companyChanges = JSON.parse(this.company[0].changes);
-      unapprovedChanges = companyChanges.name !== this.company[0].name || companyChanges.logo !== this.company[0].logo;
+      unapprovedChanges = this.company[0].changes !== this.company[0].getJSONforChange();
 
       this.company[0].applyChanges();
 
@@ -64,11 +60,11 @@ export class User extends Model<User> {
 
     return {
       'username': this.username,
-      'email': this.email,
       'type': this.type,
       'enabled': this.enabled,
       'suspended': this.suspended,
       'companyName': this.company[0].name,
+      'companyEmail': this.company[0].email,
       'companyLogo': this.company[0].logo,
       'companyUnapprovedChanges': unapprovedChanges,
     };
@@ -82,10 +78,6 @@ export class User extends Model<User> {
 
     if (data['password'] != null) {
       this.setPassword(data['password']);
-    }
-
-    if (data['email'] != null) {
-      this.email = data['email'];
     }
 
     if (data['type'] != null) {

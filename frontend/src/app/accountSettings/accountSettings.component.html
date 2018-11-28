@@ -4,9 +4,25 @@
   <mat-form-field>
     <input matInput placeholder="Unternehmen" [(ngModel)]="company.name" name="name">
   </mat-form-field>
-  <img *ngIf="company.logo!=''" [src]="company.logo" height="150" class="company-logo"> <br/>
-  <label for="logoUpload" matTooltip="Unternehmenslogo hochladen"><mat-icon>add_a_photo</mat-icon></label>
-  <input id="logoUpload" type='file' style="display:none;" (change)="onSelectLogo($event)">
+  <div class="logoSelection">
+    <a class="labelText">Unternehmenslogo*</a>
+    <input id="logoUpload" type='file' #upload style="display:none;" (change)="onSelectLogo($event)">
+    <button mat-button (click)="upload.click()" matTooltip="Unternehmenslogo hochladen"><mat-icon>add_a_photo</mat-icon></button>
+    <button mat-button (click)="onFetchLogo()"  matTooltip="Unternehmenslogo suchen"><mat-icon>search</mat-icon></button>
+  </div>
+  <img *ngIf="company.logo!=''" [src]="company.logo" class="company-logo"><br>
+  <mat-progress-bar *ngIf="showProgressBar" class="centerProgressBar" mode="query"></mat-progress-bar>
+  <br>
+  <mat-form-field>
+    <input matInput required name="email" #email="ngModel" type="email" placeholder="Email" [(ngModel)]="company.email"
+           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,10}$">
+    <mat-error *ngIf="email.hasError('required')">
+      Email ist zwingend
+    </mat-error>
+    <mat-error *ngIf="email.hasError('pattern')">
+      Ungültige Email
+    </mat-error>
+  </mat-form-field>
   <br>
   <button mat-button (click)="onSaveCompany()">Speichern</button>
   <button mat-icon-button *ngIf="company.unapprovedChanges" (click)="onReset()" color="warn">

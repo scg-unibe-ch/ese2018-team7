@@ -33,7 +33,7 @@ export class UsersEditComponent implements OnInit {
   displayedColumns: string[] = ['username', 'type'];
 
   // Default new admin
-  user: User = new User( '', '', '', Usergroup.moderator, true);
+  user: User = new User( '', '', Usergroup.moderator, true);
 
   // Array of users
   users: User[] = [];
@@ -51,9 +51,10 @@ export class UsersEditComponent implements OnInit {
     // Load all users from the server
     this.httpClient.get('/login/edit', {withCredentials: true}).subscribe((instances: any) => {
       this.users = instances.map((instance) =>
-        new User(instance.username, '', instance.email, instance.type, instance.enabled, instance.suspended));
+        new User(instance.username, '', instance.type, instance.enabled, instance.suspended));
       this.companys = instances.map((instance) =>
-        new Company(instance.username, instance.companyName, instance.companyLogo, instance.companyUnapprovedChanges));
+        new Company(instance.username, instance.companyName, instance.companyEmail, instance.companyLogo,
+          instance.companyUnapprovedChanges));
 
       this.updateDataProvider();
     }, err => {
@@ -93,7 +94,7 @@ export class UsersEditComponent implements OnInit {
       this.user.password = '';
       this.user.type = usertype;
       this.users.push(this.user);
-      this.user = new User( '', '', '', Usergroup.moderator, true);
+      this.user = new User( '', '', Usergroup.moderator, true);
       this.updateDataProvider();
     }, err => {
       console.error(err.error.message);

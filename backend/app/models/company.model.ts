@@ -15,6 +15,9 @@ export class Company extends Model<Company> {
   @Column
   name!: string;
 
+  @Column
+  email!: string;
+
   @Column(DataType.TEXT)
   logo!: string;
 
@@ -56,14 +59,14 @@ export class Company extends Model<Company> {
 
   forEdit(): any {
 
-    const changes = JSON.parse(this.changes);
-    const unapprovedChanges = changes.name !== this.name || changes.logo !== this.logo;
+    const unapprovedChanges = this.changes !== this.getJSONforChange();
 
     this.applyChanges();
 
     return {
       'username': this.username,
       'name': this.name,
+      'email': this.email,
       'logo': this.logo,
       'unapprovedChanges': unapprovedChanges
     };
@@ -74,6 +77,7 @@ export class Company extends Model<Company> {
     return JSON.stringify({
       'username': this.username,
       'name': this.name,
+      'email': this.email,
       'logo': this.logo,
     });
   }
@@ -85,6 +89,9 @@ export class Company extends Model<Company> {
     }
     if (data['name'] != null) {
       this.name = data['name'];
+    }
+    if (data['email'] != null) {
+      this.email = data['email'];
     }
     if (data['logo'] != null) {
       this.logo = data['logo'];
