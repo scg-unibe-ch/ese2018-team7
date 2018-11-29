@@ -3,6 +3,37 @@ import {Response} from 'express';
 import {Request} from '../../interfaces/request.interface';
 import {asyncRoute} from '../../helper/async.helper';
 
+/**
+ * @swagger
+ *
+ * /login/check:
+ *   get:
+ *     tags:
+ *     - user
+ *     summary: Checks if you are logged in
+ *     description: Checks if you are logged in
+ *     operationId: user_login_check
+ *     consumes:
+ *     - application/json
+ *     produces:
+ *     - application/json
+ *     responses:
+ *       200:
+ *         description: value and message if logged in and if so then username and usertype
+ *         schema:
+ *           type: object
+ *           properties:
+ *             message:
+ *               type: string
+ *             value:
+ *               type: boolean
+ *             type:
+ *               type: integer
+ *               description: only if value is true
+ *             username:
+ *               type: string
+ *               description: only if value is true
+ */
 module.exports = asyncRoute(async (req: Request, res: Response) => {
 
   if (req.session != null && req.session.user != null) {

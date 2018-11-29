@@ -6,6 +6,32 @@ import {Job} from '../models/job.model';
 import {Usergroup} from '../enums/usergroup.enum';
 import {Company} from '../models/company.model';
 
+/**
+ * @swagger
+ *
+ * /menuCount:
+ *   get:
+ *     tags:
+ *     - miscellaneous
+ *     summary: Number of Jobs and Users, needing attention
+ *     description: Number of Job and User, needing attention
+ *     operationId: getMenuCount
+ *     consumes:
+ *     - application/json
+ *     produces:
+ *     - application/json
+ *     responses:
+ *       200:
+ *         description: array with number of jobs and users needing attention
+ *         schema:
+ *           type: object
+ *           properties:
+ *             jobs:
+ *               type: integer
+ *             users:
+ *               type: integer
+ *
+ */
 module.exports = asyncRoute(async (req: Request, res: Response) => {
 
   const jobInstances = await Job.findAll({

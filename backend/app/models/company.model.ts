@@ -57,6 +57,23 @@ export class Company extends Model<Company> {
 
   }
 
+  /**
+   * @swagger
+   *
+   * definitions:
+   *   company:
+   *     type: object
+   *     properties:
+   *       username:
+   *         type: string
+   *       name:
+   *         type: string
+   *       logo:
+   *         type: string
+   *         format: base64
+   *       unapprovedChanges:
+   *         type: boolean
+   */
   forEdit(): any {
 
     const oldJSON: string = this.getJSONforChange();

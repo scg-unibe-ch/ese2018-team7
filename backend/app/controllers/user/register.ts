@@ -6,6 +6,55 @@ import {Request} from '../../interfaces/request.interface';
 import {asyncRoute} from '../../helper/async.helper';
 import {Message} from '../../enums/message.enum';
 
+/**
+ * @swagger
+ *
+ * /login:
+ *   post:
+ *     tags:
+ *     - user
+ *     summary: Register a new user
+ *     description: Register a new user, if not logged in as administrator, then it will be an employer
+ *     operationId: user_register
+ *     consumes:
+ *     - application/json
+ *     produces:
+ *     - application/json
+ *     parameters:
+ *     - in: body
+ *       name: body
+ *       description: User and Company object.
+ *       required: true
+ *       schema:
+ *         type: object
+ *         properties:
+ *           username:
+ *             type: string
+ *           password:
+ *             type: string
+ *           email:
+ *             type: string
+ *             format: mailaddress
+ *           type:
+ *             type: integer
+ *           enabled:
+ *             type: boolean
+ *           company:
+ *             type: string
+ *           logo:
+ *             type: string
+ *             format: base64
+ *     responses:
+ *       200:
+ *         description: Successful registered user
+ *         schema:
+ *           $ref: '#/definitions/message'
+ *       403:
+ *         description: Username or Password empty, User already exists
+ *         schema:
+ *           $ref: '#/definitions/message'
+ *
+ */
 module.exports = asyncRoute(async (req: Request, res: Response) => {
 
   // if loggedin admin register then new is admin, else employer

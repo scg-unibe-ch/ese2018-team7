@@ -3,12 +3,50 @@ import {Router} from 'express';
 // Set Router
 const router: Router = Router();
 
-const fs = require('fs');
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = JSON.parse(fs.readFileSync('./app/swagger.json'));
+const swaggerJSDoc = require('swagger-jsdoc');
+
+const options = {
+  definition: {
+    info: {
+      title: 'ESE Team 7 API',
+      description: 'This is the API documentation of the Job Portal by ESE Team 7',
+      version: '1.0.0',
+    },
+  },
+  host: 'localhost:3000',
+  basePath: '/',
+  tags: [
+    {name: 'job', description: 'Everything about the Jobs'},
+    {name: 'user', description: 'Everything about the User'},
+    {name: 'company', description: 'Everything about the Company'},
+    {name: 'miscellaneous', description: 'Miscellaneous'},
+  ],
+
+  apis: ['./app/**/*.ts'], // Where to search for definitions
+};
+const swaggerSpec = swaggerJSDoc(options);
 
 router.use('/', swaggerUi.serve);
-router.get('/', swaggerUi.setup(swaggerDocument));
+
+
+/**
+ * @swagger
+ *
+ * /docs:
+ *   get:
+ *     tags:
+ *     - miscellaneous
+ *     summary: Get this API Documentation
+ *     description: Get this API Documentation
+ *     operationId: swaggerDocs
+ *     produces:
+ *       - text/html
+ *     responses:
+ *       200:
+ *         description: this page
+ */
+router.get('/', swaggerUi.setup(swaggerSpec));
 
 // Export this Controller
 export const Swagger: Router = router;

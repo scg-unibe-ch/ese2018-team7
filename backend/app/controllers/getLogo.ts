@@ -2,6 +2,36 @@ import {Response} from 'express';
 import {Request} from '../interfaces/request.interface';
 import {asyncRoute} from '../helper/async.helper';
 
+/**
+ * @swagger
+ *
+ * /logo/{searchString}:
+ *   get:
+ *     tags:
+ *     - miscellaneous
+ *     summary: Search Logo of Company
+ *     description: Search Logo of Company on Bing
+ *     operationId: getLogo
+ *     consumes:
+ *     - application/json
+ *     produces:
+ *     - application/json
+ *     parameters:
+ *     - name: searchString
+ *       in: path
+ *       description: Companyname to search for on Bing
+ *       required: true
+ *       type: string
+ *     responses:
+ *       200:
+ *         description: array of images
+ *         schema:
+ *           type: array
+ *           items:
+ *             type: string
+ *             format: base64
+ *
+ */
 module.exports = asyncRoute(async (req: Request, res: Response) => {
 
   // import stuff

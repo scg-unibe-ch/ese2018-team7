@@ -70,7 +70,75 @@ export class Job extends Model<Job> {
   changes!: string;
 
 
-
+  /**
+   * @swagger
+   *
+   * definitions:
+   *   getJobWithCompanyData:
+   *     type: object
+   *     properties:
+   *       id:
+   *         type: integer
+   *       title:
+   *         type: string
+   *       department:
+   *         type: string
+   *       placeOfWork:
+   *         type: string
+   *       contractType:
+   *         type: string
+   *       startOfWork:
+   *         type: integer
+   *         format: timestamp
+   *       endOfWork:
+   *         type: integer
+   *         format: timestamp
+   *         description: 0 if contractType is unlimited
+   *       workload:
+   *         type: integer
+   *       salary:
+   *         type: object
+   *         properties:
+   *           amount:
+   *             type: integer
+   *           period:
+   *             type: string
+   *             description: month, hour, job or other
+   *       shortDescription:
+   *         type: string
+   *       description:
+   *         type: string
+   *         description: Markdown text
+   *       skills:
+   *         type: array
+   *         items:
+   *           type: object
+   *           properties:
+   *             name:
+   *               type: string
+   *       phone:
+   *         type: string
+   *         description: By Company formatted Phonenumber
+   *       email:
+   *         type: string
+   *       website:
+   *         type: string
+   *       contactInfo:
+   *         type: string
+   *       startOfPublication:
+   *         type: integer
+   *         format: timestamp
+   *       endOfPublication:
+   *         type: integer
+   *         format: timestamp
+   *       approved:
+   *         type: boolean
+   *       companyName:
+   *         type: string
+   *       companyLogo:
+   *         type: string
+   *         format: base64
+   */
   getWithCompanyData(): any {
 
     if (this.user.company.length === 0) {
@@ -107,6 +175,78 @@ export class Job extends Model<Job> {
 
   }
 
+
+  /**
+   * @swagger
+   *
+   * definitions:
+   *   getJobForEdit:
+   *     type: object
+   *     properties:
+   *       id:
+   *         type: integer
+   *       title:
+   *         type: string
+   *       department:
+   *         type: string
+   *       placeOfWork:
+   *         type: string
+   *       contractType:
+   *         type: string
+   *       startOfWork:
+   *         type: integer
+   *         format: timestamp
+   *       endOfWork:
+   *         type: integer
+   *         format: timestamp
+   *         description: 0 if contractType is unlimited
+   *       workload:
+   *         type: integer
+   *       salary:
+   *         type: object
+   *         properties:
+   *           amount:
+   *             type: integer
+   *           period:
+   *             type: string
+   *             description: month, hour, job or other
+   *       shortDescription:
+   *         type: string
+   *       description:
+   *         type: string
+   *         description: Markdown text
+   *       skills:
+   *         type: array
+   *         items:
+   *           type: object
+   *           properties:
+   *             name:
+   *               type: string
+   *       phone:
+   *         type: string
+   *         description: By Company formatted Phonenumber
+   *       email:
+   *         type: string
+   *       website:
+   *         type: string
+   *       contactInfo:
+   *         type: string
+   *       startOfPublication:
+   *         type: integer
+   *         format: timestamp
+   *       endOfPublication:
+   *         type: integer
+   *         format: timestamp
+   *       approved:
+   *         type: boolean
+   *       companyName:
+   *         type: string
+   *       companyLogo:
+   *         type: string
+   *         format: base64
+   *       changed:
+   *         type: boolean
+   */
   getJobForEdit(): any {
     const oldJson: string = this.getJSONforChange();
     this.applyChanges();

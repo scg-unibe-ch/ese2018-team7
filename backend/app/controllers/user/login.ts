@@ -5,6 +5,53 @@ import {asyncRoute} from '../../helper/async.helper';
 import {Message} from '../../enums/message.enum';
 import {Company} from '../../models/company.model';
 
+/**
+ * @swagger
+ *
+ * /login/{username}/{password}:
+ *   get:
+ *     tags:
+ *     - user
+ *     summary: Loggout the user
+ *     description: Loggout the user
+ *     operationId: user_login
+ *     consumes:
+ *     - application/json
+ *     produces:
+ *     - application/json
+ *     parameters:
+ *       - name: username
+ *         in: path
+ *         description: User and Company object.
+ *         required: true
+ *         type: string
+ *       - name: password
+ *         in: path
+ *         description: User and Company object.
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Success Message
+ *         schema:
+ *           type: object
+ *           properties:
+ *             username:
+ *               type: string
+ *             password:
+ *               type: string
+ *               description: Always empty
+ *             type:
+ *               type: integer
+ *             enabled:
+ *               type: boolean
+ *             suspended:
+ *               type: boolean
+ *       403:
+ *         description: Login not successfull
+ *         schema:
+ *          $ref: '#/definitions/message'
+ */
 module.exports = asyncRoute(async (req: Request, res: Response) => {
 
   const username = req.params.user.toLowerCase();

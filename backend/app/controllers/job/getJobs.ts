@@ -6,6 +6,61 @@ import {Response} from 'express';
 import {Request} from '../../interfaces/request.interface';
 import {asyncRoute} from '../../helper/async.helper';
 
+/**
+ * @swagger
+ *
+ * /jobs:
+ *   get:
+ *     tags:
+ *     - job
+ *     summary: Get all public jobs according to query
+ *     description: Get all public jobs according to query
+ *     operationId: job_get
+ *     consumes:
+ *     - application/json
+ *     produces:
+ *     - application/json
+ *     parameters:
+ *     - name: easy
+ *       in: query
+ *       description: Easy Search field
+ *       type: string
+ *     - name: title
+ *       in: query
+ *       description: Title Search field
+ *       type: string
+ *     - name: company
+ *       in: query
+ *       description: Companyname Search field
+ *       type: string
+ *     - name: department
+ *       in: query
+ *       description: Company Department Search field
+ *       type: string
+ *     - name: startAfter
+ *       in: query
+ *       description: Job starts after timestamp Search field
+ *       type: integer
+ *     - name: startBefore
+ *       in: query
+ *       description: Job starts before timestamp Search field
+ *       type: string
+ *     - name: workloadGt
+ *       in: query
+ *       description: Workload greater or equal than Search field
+ *       type: string
+ *     - name: workloadLt
+ *       in: query
+ *       description: Workload less or equal than Search field
+ *       type: string
+ *     responses:
+ *       200:
+ *         description: Your Company
+ *         schema:
+ *           type: array
+ *           items:
+ *             '$ref: #/definitions/getJobWithCompanyData'
+ */
 module.exports = asyncRoute(async (req: Request, res: Response) => {
 
   // if the user wants to search
