@@ -39,7 +39,6 @@ module.exports = asyncRoute(async (req: Request, res: Response) => {
   instance.createUser({
     'username': req.body.username.toLowerCase(),
     'password': req.body.password,
-    'email': req.body.email,
     'type': req.body.type,
     'enabled': req.body.enabled
   });
@@ -66,6 +65,7 @@ module.exports = asyncRoute(async (req: Request, res: Response) => {
     company.createCompany({
       'username': req.body.username.toLowerCase(),
       'name': req.body.company,
+      'email': req.body.email,
       'logo': req.body.logo
     });
 

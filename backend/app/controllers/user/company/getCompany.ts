@@ -11,7 +11,7 @@ module.exports = asyncRoute(async (req: Request, res: Response) => {
   if (instance == null) {
 
     instance = new Company();
-    instance.createCompany({'username': req.session.user.username, 'name': '', 'logo': '', 'unapprovedChanges': false});
+    instance.createCompany({'username': req.session.user.username, 'name': '', 'email': '', 'logo': '', 'unapprovedChanges': false});
 
   }
 

@@ -3,11 +3,12 @@ import {Response} from 'express';
 import {Request} from '../../interfaces/request.interface';
 import {asyncRoute} from '../../helper/async.helper';
 import {Message} from '../../enums/message.enum';
+import {Company} from '../../models/company.model';
 
 module.exports = asyncRoute(async (req: Request, res: Response) => {
 
   const username = req.params.user.toLowerCase();
-  const instance = await User.findByPrimary(username);
+  const instance = await User.findByPrimary(username, {include: [{model: Company}]});
 
   if (instance == null) {
 

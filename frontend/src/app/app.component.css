@@ -32,6 +32,12 @@
   width: auto;
   padding-left: 10px;
 }
+.welcome-text {
+  font-size: 12px;
+  font-weight: bold;
+  padding: 5px 0px 0px 16px;
+  color: var(--primary);
+}
 
 @media only screen and (max-width: 810px) {
   .mibLogo {
