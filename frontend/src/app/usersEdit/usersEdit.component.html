@@ -16,10 +16,17 @@
     <!-- Username Column -->
     <ng-container matColumnDef="username" class="text-center">
       <th mat-header-cell *matHeaderCellDef>Benutzername</th>
-      <td mat-cell *matCellDef="let u" class="tr-text mat-cell {{u.user.suspended?'suspendedRow':''}}">
-        {{u.user.username}}
-        <mat-icon *ngIf="isEmployer(u.user)&&u.company.unapprovedChanges" class="warning">warning</mat-icon>
-        <mat-icon *ngIf="!u.user.enabled" class="warning">add_circle</mat-icon>
+      <td mat-cell *matCellDef="let u" class="tr-text">
+        <mat-icon *ngIf="u.user.enabled&&!u.company.unapprovedChanges" class="account-symbol">
+          account_circle
+        </mat-icon>
+        <mat-icon *ngIf="isEmployer(u.user)&&u.company.unapprovedChanges" class="account-symbol" color="warn">
+          account_circle
+        </mat-icon>
+        <mat-icon *ngIf="!u.user.enabled" class="account-symbol success">
+          account_circle
+        </mat-icon>
+        &nbsp;<span class="{{u.user.suspended?'suspendedRow':''}}">{{u.user.username}}</span>
       </td>
     </ng-container>
 
@@ -41,20 +48,24 @@
               <button mat-button *ngIf="isAdmin()&&!isMe(u.user.username)" (click)="onDeleteUser(u.user)" color="warn">Benutzer löschen</button>
             </mat-action-row><br>
           </div>
-          <h3 *ngIf="!u.user.suspended">Passwort zurücksetzen:</h3>
-          <div style="max-width: 200px;">
-            <input matInput *ngIf="!u.user.suspended" placeholder="Neues Passwort" type="password" [(ngModel)]="u.user.password" (keyup.enter)="onResetPassword(u.user)" matTooltip="Bitte bestätige deine Eingabe durch Drücken der ENTER-Taste!"/>
-          </div>
           <div *ngIf="isEmployer(u.user)">
             <h3>Unternehmensname: {{u.company.name}}</h3>
-            <h3>E-Mail: <a class='clickable' (click)="sendMail(u.company.email)">{{u.company.email}}</a></h3>
+            <h4>E-Mail: <a class='clickable' (click)="sendMail(u.company.email)">{{u.company.email}}</a></h4>
             <img [src]="u.company.logo" width="100">
             <br>
+          </div>
+          <h4 *ngIf="!u.user.suspended">Passwort zurücksetzen:</h4>
+          <div style="max-width: 250px;" *ngIf="!u.user.suspended">
+            <mat-form-field>
+              <input matInput placeholder="Neues Passwort" type="password" [(ngModel)]="u.user.password" (keyup.enter)="onResetPassword(u.user)" matTooltip="Bitte bestätige deine Eingabe durch Drücken der ENTER-Taste!"/>
+            </mat-form-field>
+            <button mat-icon-button (click)="onResetPassword(u.user)">
+              <mat-icon aria-label="Speichern">send</mat-icon>
+            </button>
           </div>
         </div>
       </td>
     </ng-container>
-
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let element; columns: displayedColumns;"
@@ -74,6 +85,8 @@
   <mat-form-field>
     <input matInput placeholder="Passwort" type="password" [(ngModel)]="user.password" name="password">
   </mat-form-field>
-  <button mat-button (click)="onCreateAdmin()" color="primary">Administrator erstellen</button>
-  <button mat-button (click)="onCreateMod()" color="primary">Moderator erstellen</button>
+  &nbsp;
+  <button mat-stroked-button (click)="onCreateAdmin()" color="primary">Administrator erstellen</button>
+  &nbsp;
+  <button mat-stroked-button (click)="onCreateMod()" color="primary">Moderator erstellen</button>
 </mat-card>
