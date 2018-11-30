@@ -14,7 +14,7 @@ export class Message {
     userAlreadyExist: new Msg(1007, 'Benutzer existiert bereits!'),
     emptyUsernameNotAllowed: new Msg(1008, 'Leerer Benutzername ist nicht erlaubt!'),
     emptyPasswordNotAllowed: new Msg(1009, 'Leeres Passwort ist nicht erlaubt!'),
-    permissionDeniedChangePasswordHigherLevel: new Msg(1010, 'Du bist nicht berechtigt das Passwort für diesen Benutzer zu ändern!'),
+    permissionDeniedChangePasswordHigherLevel: new Msg(1010, 'Keine Berechtigung für das Ändern des Passworts für diesen Benutzer!'),
     emptyMailNotAllowed: new Msg(1011, 'Leere Mailaddresse ist nicht erlaubt!'),
 
   };

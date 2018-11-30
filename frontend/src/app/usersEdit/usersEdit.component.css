@@ -20,14 +20,6 @@
   color: lightgreen;
 }
 
-.warning {
-  color: var(--warn);
-  font-size: 15px;
-  height: 15px;
-  width: 15px;
-  line-height: 15px;
-}
-
 table {
   width: 100%;
 }

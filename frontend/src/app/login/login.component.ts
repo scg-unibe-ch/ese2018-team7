@@ -50,10 +50,10 @@ export class LoginComponent implements OnInit {
           }
         );
       } else {
-        this.snackBar.open('Du musst beide Felder ausfüllen!', null, {duration: 5000});
+        this.snackBar.open('Bitte beide Felder ausfüllen!', null, {duration: 5000});
       }
     } else {
-      this.snackBar.open('Du musst zuerst Cookies akzeptieren!', null, {duration: 5000});
+      this.snackBar.open('Bitte zuerst Cookies akzeptieren!', null, {duration: 5000});
     }
   }
 
