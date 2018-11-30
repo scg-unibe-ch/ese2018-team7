@@ -17,7 +17,7 @@
     <ng-container matColumnDef="username" class="text-center">
       <th mat-header-cell *matHeaderCellDef>Benutzername</th>
       <td mat-cell *matCellDef="let u" class="tr-text">
-        <mat-icon *ngIf="u.user.enabled&&!u.company.unapprovedChanges" class="account-symbol">
+        <mat-icon *ngIf="!isEmployer(u.user)||(u.user.enabled&&!u.company.unapprovedChanges)" class="account-symbol">
           account_circle
         </mat-icon>
         <mat-icon *ngIf="isEmployer(u.user)&&u.company.unapprovedChanges" class="account-symbol" color="warn">
@@ -40,14 +40,12 @@
       <td mat-cell *matCellDef="let u" [attr.colspan]="displayedColumns.length">
         <div class="example-element-detail"
              [@detailExpand]="u == expandedElement ? 'expanded' : 'collapsed'">
-          <div *ngIf="!isUserAdmin(u.user)||!isMe(u.user.username)">
-            <mat-action-row>
-              <button mat-button *ngIf="isEmployer(u.user)&&u.company.unapprovedChanges" (click)="onApproveCompany(u.company)" color="primary">Änderungen akzeptieren</button>
-              <button mat-button *ngIf="!u.user.enabled" (click)="onAcceptUser(u.user)" color="primary">Benutzer freischalten</button>
-              <button mat-button *ngIf="u.user.enabled&&!isMe(u.user.username)" (click)="onSuspendUser(u.user)" color="warn">Benutzer {{u.user.suspended?'reaktivieren':'sperren'}}</button>
-              <button mat-button *ngIf="isAdmin()&&!isMe(u.user.username)" (click)="onDeleteUser(u.user)" color="warn">Benutzer löschen</button>
-            </mat-action-row><br>
-          </div>
+          <mat-action-row *ngIf="!isUserAdmin(u.user)||!isMe(u.user.username)">
+            <button mat-button *ngIf="isEmployer(u.user)&&u.company.unapprovedChanges" (click)="onApproveCompany(u.company)">Änderungen akzeptieren</button>
+            <button mat-button *ngIf="!u.user.enabled" (click)="onAcceptUser(u.user)" color="primary">Benutzer freischalten</button>
+            <button mat-button *ngIf="u.user.enabled&&!isMe(u.user.username)" (click)="onSuspendUser(u.user)" color="warn">Benutzer {{u.user.suspended?'reaktivieren':'sperren'}}</button>
+            <button mat-button *ngIf="isAdmin()&&!isMe(u.user.username)" (click)="onDeleteUser(u.user)" color="warn">Benutzer löschen</button>
+          </mat-action-row>
           <div *ngIf="isEmployer(u.user)">
             <h3>Unternehmensname: {{u.company.name}}</h3>
             <h4>E-Mail: <a class='clickable' (click)="sendMail(u.company.email)">{{u.company.email}}</a></h4>
