@@ -164,11 +164,13 @@
   </div>
   <mat-action-row>
     <button mat-button (click)="showPreview()">Vorschau</button>
-    <button mat-button *ngIf="job.changed" (click)="resetJob()" matTooltip="Änderungen auf den letzten akzeptierten Stand zurücksetzen"><mat-icon>undo</mat-icon></button>
-    <button mat-button *ngIf="isValid()&&isAdmin()&&!job.approved" (click)="approve()" color="primary">Job akzeptieren</button>
+    <button mat-button *ngIf="job.changed" (click)="resetJob()" matTooltip="Änderungen auf den letzten akzeptierten Stand zurücksetzen">
+      <mat-icon>undo</mat-icon>
+    </button>
+    <button mat-raised-button *ngIf="isValid()&&isAdmin()&&!job.approved" (click)="approve()" color="primary">Job akzeptieren</button>
     <button mat-button *ngIf="isValid()&&isAdmin()&&job.approved&&job.changed" (click)="approve()"><mat-icon>check</mat-icon></button>
-    <button mat-button *ngIf="!isValid()&&isAdmin()&&!job.approved" (click)="block()">Job akzeptieren</button>
-    <button mat-button *ngIf="!isValid()&&isAdmin()&&job.approved&&job.changed" (click)="block()" color="primary"><mat-icon>check</mat-icon></button>
+    <button mat-raised-button *ngIf="!isValid()&&isAdmin()&&!job.approved" (click)="block()" color="primary">Job akzeptieren</button>
+    <button mat-button *ngIf="!isValid()&&isAdmin()&&job.approved&&job.changed" (click)="block()"><mat-icon>check</mat-icon></button>
     &nbsp;<button mat-raised-button (click)="onDestroy()" color="warn">Job löschen</button>
   </mat-action-row>
 </mat-expansion-panel>
