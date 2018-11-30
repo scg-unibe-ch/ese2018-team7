@@ -56,7 +56,6 @@ import {RegistrationComponent} from './registration/registration.component';
 import {PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import {AppRoutingModule } from './app-routing.module';
 import {LogoutComponent} from './logout/logout.component';
-import {ChangePasswordComponent} from './changePassword/changePassword.component';
 import {UsersEditComponent} from './usersEdit/usersEdit.component';
 import {AccountSettingsComponent} from './accountSettings/accountSettings.component';
 import {JobViewDetailsComponent} from './jobViewDetails/jobViewDetails.component';
@@ -84,7 +83,6 @@ import {JobsEditSortPipe} from './jobsEdit/jobsEditSort.pipe';
     LogoutComponent,
     RegistrationComponent,
     PageNotFoundComponent,
-    ChangePasswordComponent,
     UsersEditComponent,
     AccountSettingsComponent,
     ConfirmDialogComponent,
