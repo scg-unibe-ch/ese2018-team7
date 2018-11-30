@@ -12,12 +12,22 @@ import {Message} from '../../enums/message.enum';
  *     tags:
  *     - user
  *     summary: Set new password for current user
- *     description: Set new password for current user
+ *     description: Set new password for user that is currently logged in
  *     operationId: user_password
  *     consumes:
  *     - application/json
  *     produces:
  *     - application/json
+ *     parameters:
+ *     - in: body
+ *       name: password
+ *       description: New password
+ *       required: true
+ *       schema:
+ *         type: object
+ *         properties:
+ *           password:
+ *             type: string
  *     responses:
  *       200:
  *         description: Success Message

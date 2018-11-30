@@ -13,7 +13,7 @@ import {Message} from '../../enums/message.enum';
  *    tags:
  *    - job
  *    summary: Delete Job
- *    description: Delete Job
+ *    description: Delete a Job
  *    operationId: job_delete
  *    consumes:
  *    - application/json

@@ -11,7 +11,7 @@ import {Message} from '../../../enums/message.enum';
  *   get:
  *     tags:
  *     - company
- *     summary: Accept changes of a Company
+ *     summary: Accept changes of Company
  *     description: Accept changes of a Company
  *     operationId: user_company_accept
  *     consumes:

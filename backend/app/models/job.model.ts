@@ -118,7 +118,7 @@ export class Job extends Model<Job> {
    *               type: string
    *       phone:
    *         type: string
-   *         description: By Company formatted Phonenumber
+   *         description: formatted phone number
    *       email:
    *         type: string
    *       website:
@@ -224,7 +224,7 @@ export class Job extends Model<Job> {
    *               type: string
    *       phone:
    *         type: string
-   *         description: By Company formatted Phonenumber
+   *         description: formatted phone number
    *       email:
    *         type: string
    *       website:
@@ -248,7 +248,7 @@ export class Job extends Model<Job> {
    *         type: boolean
    */
   getJobForEdit(): any {
-    const oldJson: string = this.getJSONforChange();
+    const oldJson: string = this.getJSONForChange();
     this.applyChanges();
     return {
       'id': this.id,
@@ -272,11 +272,11 @@ export class Job extends Model<Job> {
       'approved': this.approved,
       'companyName': this.user.company[0].name,
       'companyLogo': this.user.company[0].logo,
-      'changed': oldJson !== this.getJSONforChange(),
+      'changed': oldJson !== this.getJSONForChange(),
     };
   }
 
-  getJSONforChange() {
+  getJSONForChange() {
     return JSON.stringify({
       'title': this.title,
       'department': this.department,
@@ -313,7 +313,7 @@ export class Job extends Model<Job> {
     job.createJob(c);
     job.createJob(change);
 
-    this.changes = job.getJSONforChange();
+    this.changes = job.getJSONForChange();
 
   }
 
@@ -438,7 +438,7 @@ export class Job extends Model<Job> {
         this.approved = simplification['approved'];
       }
 
-      this.changes = this.getJSONforChange();
+      this.changes = this.getJSONForChange();
 
     }
 

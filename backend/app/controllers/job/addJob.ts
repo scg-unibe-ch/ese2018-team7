@@ -15,7 +15,7 @@ import {Message} from '../../enums/message.enum';
  *     tags:
  *     - job
  *     summary: Add job
- *     description: Add job
+ *     description: Add a job
  *     operationId: job_add
  *     consumes:
  *     - application/json
@@ -23,8 +23,8 @@ import {Message} from '../../enums/message.enum';
  *     - application/json
  *     parameters:
  *     - in: body
- *       name: body
- *       description: User and Company object.
+ *       name: job
+ *       description: Job object
  *       required: true
  *       schema:
  *         type: object
@@ -68,7 +68,7 @@ import {Message} from '../../enums/message.enum';
  *                   type: string
  *           phone:
  *             type: string
- *             description: formatted Phonenumber
+ *             description: formatted phone number
  *           email:
  *             type: string
  *           website:
@@ -87,11 +87,11 @@ import {Message} from '../../enums/message.enum';
  *         schema:
  *           '$ref: #/definitions/getJobForEdit'
  *       403:
- *         description: Permission denied, if not Loggedin as Employer
+ *         description: Permission denied, if not logged in as Employer
  *         schema:
  *           '$ref: #/definitions/message'
  *       404:
- *         description: If couldn't create Job
+ *         description: if unable to create Job
  *         schema:
  *           '$ref: #/definitions/message'
  */

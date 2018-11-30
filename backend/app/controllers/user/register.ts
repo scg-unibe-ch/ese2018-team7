@@ -13,7 +13,7 @@ import {Message} from '../../enums/message.enum';
  *   post:
  *     tags:
  *     - user
- *     summary: Register a new user
+ *     summary: Register new user
  *     description: Register a new user, if not logged in as administrator, then it will be an employer
  *     operationId: user_register
  *     consumes:
@@ -22,8 +22,8 @@ import {Message} from '../../enums/message.enum';
  *     - application/json
  *     parameters:
  *     - in: body
- *       name: body
- *       description: User and Company object.
+ *       name: user
+ *       description: User and Company object
  *       required: true
  *       schema:
  *         type: object
@@ -34,7 +34,7 @@ import {Message} from '../../enums/message.enum';
  *             type: string
  *           email:
  *             type: string
- *             format: mailaddress
+ *             format: email address
  *           type:
  *             type: integer
  *           enabled:

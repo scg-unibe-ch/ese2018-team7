@@ -13,8 +13,8 @@ import {Company} from '../../models/company.model';
  *   put:
  *     tags:
  *     - job
- *     summary: Approve Job and accept changes
- *     description: Approve Job and accept changes
+ *     summary: Approve job and accept changes
+ *     description: Approve a job and accept changes, if there are any
  *     operationId: job_apply
  *     consumes:
  *     - application/json

@@ -9,8 +9,8 @@ const swaggerJSDoc = require('swagger-jsdoc');
 const options = {
   definition: {
     info: {
-      title: 'ESE Team 7 API',
-      description: 'This is the API documentation of the Job Portal by ESE Team 7',
+      title: 'ESE 2018 Team 7 API',
+      description: 'This is the API documentation to the backend of the Job Portal by ESE 2018 Team 7',
       version: '1.0.0',
     },
   },

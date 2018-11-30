@@ -11,8 +11,8 @@ import {asyncRoute} from '../../helper/async.helper';
  *   get:
  *     tags:
  *     - user
- *     summary: Get User for editing
- *     description: Get User for editing, if not logged in as administrator or moderator then returns 403
+ *     summary: Get Users for editing
+ *     description: Get all users for editing, if not logged in as administrator or moderator it will return 403
  *     operationId: user_edit
  *     consumes:
  *     - application/json
@@ -24,7 +24,7 @@ import {asyncRoute} from '../../helper/async.helper';
  *         schema:
  *           $ref: '#definitions/userGetAdminEditDetails'
  *       403:
- *         description: Not logged in as administator or moderator
+ *         description: Not logged in as administrator or moderator
  *         schema:
  *           $ref: '#/definitions/message'
  */

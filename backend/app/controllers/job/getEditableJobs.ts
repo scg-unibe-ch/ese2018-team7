@@ -7,6 +7,27 @@ import {asyncRoute} from '../../helper/async.helper';
 import {User} from '../../models/user.model';
 import {Company} from '../../models/company.model';
 
+/**
+ * @swagger
+ *
+ * /jobs/editable:
+ *   get:
+ *     tags:
+ *     - job
+ *     summary: Get all editable jobs for user
+ *     description: Get all editable jobs for a specific user, a working session is needed
+ *     operationId: job_getEditable
+ *     consumes:
+ *     - application/json
+ *     produces:
+ *     - application/json
+ *     parameters:
+ *     responses:
+ *       200:
+ *        description: Your editable jobs
+ *        schema:
+ *          $ref: '#/definitions/getJobForEdit'
+ */
 module.exports = asyncRoute(async (req: Request, res: Response) => {
 
   // Set filter to allow only specific access

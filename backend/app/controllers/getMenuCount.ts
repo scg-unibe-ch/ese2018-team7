@@ -13,8 +13,8 @@ import {Company} from '../models/company.model';
  *   get:
  *     tags:
  *     - miscellaneous
- *     summary: Number of Jobs and Users, needing attention
- *     description: Number of Job and User, needing attention
+ *     summary: Get number of jobs and users, needing attention
+ *     description: Returns the number of jobs and users, that need special attention
  *     operationId: getMenuCount
  *     consumes:
  *     - application/json
@@ -22,7 +22,7 @@ import {Company} from '../models/company.model';
  *     - application/json
  *     responses:
  *       200:
- *         description: array with number of jobs and users needing attention
+ *         description: object with number of jobs and users needing attention
  *         schema:
  *           type: object
  *           properties:
@@ -46,7 +46,7 @@ module.exports = asyncRoute(async (req: Request, res: Response) => {
     if (req.session.user.type > Usergroup.moderator && instance.owner === req.session.user.username) {
       ++jobCounter;
     } else if (req.session.user.type <= Usergroup.moderator) {
-      if (!instance.approved || instance.getJSONforChange() !== instance.changes) {
+      if (!instance.approved || instance.getJSONForChange() !== instance.changes) {
         ++jobCounter;
       }
     }
@@ -61,7 +61,7 @@ module.exports = asyncRoute(async (req: Request, res: Response) => {
   let userCounter = 0;
   if (req.session.user.type <= Usergroup.moderator) {
     userInstances.map((instance) => {
-      if (!instance.enabled || (instance.company[0] != null && instance.company[0].getJSONforChange() !== instance.company[0].changes)) {
+      if (!instance.enabled || (instance.company[0] != null && instance.company[0].getJSONForChange() !== instance.company[0].changes)) {
         ++userCounter;
       }
     });

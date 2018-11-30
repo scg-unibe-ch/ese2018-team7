@@ -18,13 +18,20 @@ import {Message} from '../../../enums/message.enum';
  *     - application/json
  *     produces:
  *     - application/json
+ *     parameters:
+ *     - in: body
+ *       name: company
+ *       description: Company object
+ *       required: true
+ *       schema:
+ *         $ref: '#/definitions/company'
  *     responses:
  *       200:
  *         description: Success Message
  *         schema:
  *         $ref: '#/definitions/message'
  *       403:
- *         description: Permission denied, if not Loggedin
+ *         description: Permission denied, if not logged in
  *         schema:
  *         $ref: '#/definitions/message'
  *       404:

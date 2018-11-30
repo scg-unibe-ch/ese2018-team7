@@ -10,8 +10,8 @@ import {asyncRoute} from '../../helper/async.helper';
  *   get:
  *     tags:
  *     - user
- *     summary: Checks if you are logged in
- *     description: Checks if you are logged in
+ *     summary: Check login state
+ *     description: Checks if you are logged in or not
  *     operationId: user_login_check
  *     consumes:
  *     - application/json
@@ -19,7 +19,7 @@ import {asyncRoute} from '../../helper/async.helper';
  *     - application/json
  *     responses:
  *       200:
- *         description: value and message if logged in and if so then username and usertype
+ *         description: value and message if logged in and if so then userName and userType
  *         schema:
  *           type: object
  *           properties:

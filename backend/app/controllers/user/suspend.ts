@@ -11,7 +11,7 @@ import {Message} from '../../enums/message.enum';
  *   put:
  *     tags:
  *     - user
- *     summary: Suspend a user
+ *     summary: Suspend user
  *     description: Suspend a user
  *     operationId: user_suspend
  *     consumes:
@@ -20,8 +20,8 @@ import {Message} from '../../enums/message.enum';
  *     - application/json
  *     parameters:
  *     - in: body
- *       name: body
- *       description: Username
+ *       name: username
+ *       description: Username of the user that should be suspended
  *       required: true
  *       schema:
  *         type: object

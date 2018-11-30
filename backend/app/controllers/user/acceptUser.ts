@@ -20,27 +20,27 @@ import {Message} from '../../enums/message.enum';
  *     - application/json
  *     parameters:
  *     - in: body
- *       name: body
- *       description: Username
+ *       name: username
+ *       description: Username of user that should be accepted
  *       required: true
  *       schema:
  *         type: object
  *         properties:
  *           username:
- *           type: string
+ *             type: string
  *     responses:
  *       200:
  *         description: Success Message
  *         schema:
- *         $ref: '#/definitions/message'
+ *           $ref: '#/definitions/message'
  *       403:
  *         description: Permission denied, if not Administrator or Moderator
  *         schema:
- *         $ref: '#/definitions/message'
+ *           $ref: '#/definitions/message'
  *       404:
  *         description: If User doesn't exist
  *         schema:
- *         $ref: '#/definitions/message'
+ *           $ref: '#/definitions/message'
  */
 module.exports = asyncRoute(async (req: Request, res: Response) => {
 

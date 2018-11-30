@@ -74,7 +74,7 @@ export class User extends Model<User> {
 
     } else {
 
-      unapprovedChanges = this.company[0].changes !== this.company[0].getJSONforChange();
+      unapprovedChanges = this.company[0].changes !== this.company[0].getJSONForChange();
 
       this.company[0].applyChanges();
 

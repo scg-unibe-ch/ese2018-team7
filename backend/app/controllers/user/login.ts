@@ -12,8 +12,8 @@ import {Company} from '../../models/company.model';
  *   get:
  *     tags:
  *     - user
- *     summary: Loggout the user
- *     description: Loggout the user
+ *     summary: Log in user
+ *     description: Log in with the provided credentials
  *     operationId: user_login
  *     consumes:
  *     - application/json
@@ -22,12 +22,12 @@ import {Company} from '../../models/company.model';
  *     parameters:
  *       - name: username
  *         in: path
- *         description: User and Company object.
+ *         description:
  *         required: true
  *         type: string
  *       - name: password
  *         in: path
- *         description: User and Company object.
+ *         description:
  *         required: true
  *         type: string
  *     responses:

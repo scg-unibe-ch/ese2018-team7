@@ -9,8 +9,8 @@ import {asyncRoute} from '../helper/async.helper';
  *   get:
  *     tags:
  *     - miscellaneous
- *     summary: Search Logo of Company
- *     description: Search Logo of Company on Bing
+ *     summary: Search logo of company
+ *     description: Returns an array of at most 10 images for a company logo based on a Bing Image Search
  *     operationId: getLogo
  *     consumes:
  *     - application/json
@@ -19,7 +19,7 @@ import {asyncRoute} from '../helper/async.helper';
  *     parameters:
  *     - name: searchString
  *       in: path
- *       description: Companyname to search for on Bing
+ *       description: name of company to search a logo for
  *       required: true
  *       type: string
  *     responses:

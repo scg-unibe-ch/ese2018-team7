@@ -14,8 +14,8 @@ import {Company} from '../../models/company.model';
  *   put:
  *     tags:
  *     - job
- *     summary: Update Jobfields
- *     description: Update Jobfields
+ *     summary: Update Job
+ *     description: Update one or multiple attributes of a job
  *     operationId: job_update
  *     consumes:
  *     - application/json

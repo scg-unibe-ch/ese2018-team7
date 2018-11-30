@@ -11,8 +11,8 @@ import {Message} from '../../enums/message.enum';
  *   get:
  *     tags:
  *     - user
- *     summary: Loggout the user
- *     description: Loggout the user
+ *     summary: Log out user
+ *     description: Log out the user that is currently logged in
  *     operationId: user_logout
  *     consumes:
  *     - application/json

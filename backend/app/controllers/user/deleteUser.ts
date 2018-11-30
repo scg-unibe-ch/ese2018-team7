@@ -11,7 +11,7 @@ import {Message} from '../../enums/message.enum';
  *   delete:
  *     tags:
  *     - user
- *     summary: Delete a user
+ *     summary: Delete user
  *     description: Delete a user
  *     operationId: user_delete
  *     consumes:
@@ -21,7 +21,7 @@ import {Message} from '../../enums/message.enum';
  *     parameters:
  *     - name: username
  *       in: path
- *       description: Username
+ *       description: Username of user that should be deleted
  *       required: true
  *       type: string
  *     responses:

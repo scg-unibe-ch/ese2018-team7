@@ -11,8 +11,8 @@ import {Message} from '../../enums/message.enum';
  *   put:
  *     tags:
  *     - user
- *     summary: Set new password for another user
- *     description: Set new password for another user
+ *     summary: Set new password for any user
+ *     description: Set a new password for any user, return 403 if not allowed to do so
  *     operationId: user_set_password
  *     consumes:
  *     - application/json
@@ -21,7 +21,7 @@ import {Message} from '../../enums/message.enum';
  *     parameters:
  *     - in: body
  *       name: body
- *       description: Username and Password
+ *       description: Username and new password
  *       required: true
  *       schema:
  *         type: object

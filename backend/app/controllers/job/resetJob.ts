@@ -64,7 +64,7 @@ module.exports = asyncRoute(async (req: Request, res: Response) => {
 
   }
 
-  instance.changes = instance.getJSONforChange();
+  instance.changes = instance.getJSONForChange();
 
   await instance.save();
 

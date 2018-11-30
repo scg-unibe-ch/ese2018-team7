@@ -23,7 +23,7 @@ import {asyncRoute} from '../../../helper/async.helper';
  *         schema:
  *           $ref: '#/definitions/company'
  *       403:
- *         description: 'Permission denied, if not Loggedin'
+ *         description: 'Permission denied, if not logged in'
  *         schema:
  *           $ref: '#/definitions/message'
  */
