@@ -20,7 +20,6 @@ import {SelectLogoComponent} from '../selectLogo/selectLogo.component';
  */
 export class RegistrationComponent implements OnInit {
 
-  errorMessage;
   showProgressBar = false;
 
   user: User;
@@ -64,7 +63,6 @@ export class RegistrationComponent implements OnInit {
       },
       (err: any) => {
         console.error(err.error.message);
-        this.errorMessage = Message.getMessage(err.error.code);
         this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
       });
   }
@@ -84,6 +82,12 @@ export class RegistrationComponent implements OnInit {
   }
 
   onGenerateLogo() {
+
+    if (this.company.name === '') {
+      this.snackBar.open('Zuerst Unternehmensname eingeben!', null, {duration: 5000});
+      return;
+    }
+
     // create canvas element
     const canvas = document.createElement('canvas');
     const height = 200;
@@ -113,9 +117,12 @@ export class RegistrationComponent implements OnInit {
   }
 
   onFetchLogo() {
+
     if (this.company.name === '') {
+      this.snackBar.open('Zuerst Unternehmensname eingeben!', null, {duration: 5000});
       return;
     }
+
     this.showProgressBar = true;
     this.httpClient.get('/logo/' + this.company.name).subscribe((res: any) => {
       const images: string[] = [];

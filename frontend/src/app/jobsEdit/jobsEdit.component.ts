@@ -89,7 +89,7 @@ export class JobsEditComponent implements OnInit {
    */
   onJobCreate() {
     if (this.job.title === '') {
-      this.snackBar.open('Kein Jobtitel eingegeben!', null, {duration: 5000});
+      this.snackBar.open('Keinen Jobtitel eingegeben!', null, {duration: 5000});
     } else {
       this.httpClient.post('/jobs', {
         'title': this.job.title,

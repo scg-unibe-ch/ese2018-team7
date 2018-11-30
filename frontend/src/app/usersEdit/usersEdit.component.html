@@ -23,7 +23,7 @@
         <mat-icon *ngIf="isEmployer(u.user)&&u.company.unapprovedChanges" class="account-symbol" color="warn">
           account_circle
         </mat-icon>
-        <mat-icon *ngIf="!u.user.enabled" class="account-symbol success">
+        <mat-icon *ngIf="!u.user.enabled" class="account-symbol lightgreen">
           account_circle
         </mat-icon>
         &nbsp;<span class="{{u.user.suspended?'suspendedRow':''}}">{{u.user.username}}</span>

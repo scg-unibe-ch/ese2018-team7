@@ -20,7 +20,6 @@ export class AccountSettingsComponent implements OnInit {
 
   @Input()
   company: Company;
-  msg: String;
   password: String;
   password2: String;
   showProgressBar = false;
@@ -46,14 +45,6 @@ export class AccountSettingsComponent implements OnInit {
     return AuthService.isEmployer();
   }
 
-  isMessage() {
-    return this.msg === '';
-  }
-
-  messageClass() {
-    return (this.msg === 'Neues Passwort gespeichert!' ? 'success' : 'error-text');
-  }
-
   /**
    * Try to save the new password
    */
@@ -61,23 +52,23 @@ export class AccountSettingsComponent implements OnInit {
 
     // Check if the passwords are identical
     if (this.password === this.password2) {
-      this.msg = '';
 
       // Save to Server
       this.httpClient.put('/login/password', {'password': this.password}, {withCredentials: true}).subscribe(
         res => {
           console.log(res);
-          this.msg = 'Neues Passwort gespeichert!';
+          this.snackBar.open('Neues Passwort gespeichert!', null, {duration: 5000});
           this.password = '';
           this.password2 = '';
         },
         err => {
           console.log('Error occurred:' + err.error.message);
-          this.msg = 'Das neue Passwort konnte nicht gespeichert werden! -> ' + Message.getMessage(err.error.code);
+          this.snackBar.open('Das neue Passwort konnte nicht gespeichert werden! -> '
+            + Message.getMessage(err.error.code), null, {duration: 5000});
         }
       );
     } else {
-      this.msg = 'Passwörter stimmen nicht überein!';
+      this.snackBar.open('Passwörter stimmen nicht überein!', null, {duration: 5000});
     }
   }
 

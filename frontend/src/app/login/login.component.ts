@@ -17,8 +17,6 @@ import {Usergroup} from '../usergroup';
  */
 export class LoginComponent implements OnInit {
 
-  errorMessage;
-
   user: User;
   @Output()
   destroy = new EventEmitter<User>();
@@ -48,7 +46,6 @@ export class LoginComponent implements OnInit {
           },
           err => {
             console.log('Error occurred:' + err.error.message);
-            this.errorMessage = Message.getMessage(err.error.code);
             this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
           }
         );

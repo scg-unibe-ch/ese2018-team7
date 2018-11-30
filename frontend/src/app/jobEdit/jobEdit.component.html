@@ -8,7 +8,9 @@
     <span *ngIf="!job.approved" class="warning">{{'Job ist noch ungeprüft!'}}</span>
     <span *ngIf="job.approved&&job.changed" class="warning">{{'Ungeprüfte Änderungen!'}}</span>
     <span *ngIf="job.approved&&!job.changed"></span>
-    <mat-icon>work</mat-icon>
+    <mat-icon *ngIf="job.approved&&!job.changed">work</mat-icon>
+    <mat-icon *ngIf="job.approved&&job.changed" color="warn">work</mat-icon>
+    <mat-icon *ngIf="!job.approved" color="warn">work</mat-icon>
     </mat-panel-description>
   </mat-expansion-panel-header>
   <div class="inputForm">
@@ -162,11 +164,11 @@
   </div>
   <mat-action-row>
     <button mat-button (click)="showPreview()">Vorschau</button>
-    <button mat-button (click)="onDestroy()" color="warn">Job löschen</button>
-    <button *ngIf="job.changed" mat-button (click)="resetJob()"><mat-icon>undo</mat-icon></button>
-    <button *ngIf="isValid()&&isAdmin()&&!job.approved" mat-button (click)="approve()">Job akzeptieren</button>
-    <button *ngIf="isValid()&&isAdmin()&&job.approved&&job.changed" mat-button (click)="approve()"><mat-icon>done</mat-icon></button>
-    <button *ngIf="!isValid()&&isAdmin()&&!job.approved" mat-button (click)="block()">Job akzeptieren</button>
-    <button *ngIf="!isValid()&&isAdmin()&&job.approved&&job.changed" mat-button (click)="block()"><mat-icon>done</mat-icon></button>
+    <button mat-button *ngIf="job.changed" (click)="resetJob()" matTooltip="Änderungen auf den letzten akzeptierten Stand zurücksetzen"><mat-icon>undo</mat-icon></button>
+    <button mat-button *ngIf="isValid()&&isAdmin()&&!job.approved" (click)="approve()" color="primary">Job akzeptieren</button>
+    <button mat-button *ngIf="isValid()&&isAdmin()&&job.approved&&job.changed" (click)="approve()"><mat-icon>check</mat-icon></button>
+    <button mat-button *ngIf="!isValid()&&isAdmin()&&!job.approved" (click)="block()">Job akzeptieren</button>
+    <button mat-button *ngIf="!isValid()&&isAdmin()&&job.approved&&job.changed" (click)="block()" color="primary"><mat-icon>check</mat-icon></button>
+    &nbsp;<button mat-raised-button (click)="onDestroy()" color="warn">Job löschen</button>
   </mat-action-row>
 </mat-expansion-panel>

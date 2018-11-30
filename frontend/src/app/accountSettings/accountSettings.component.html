@@ -1,16 +1,14 @@
 <h2>Kontoeinstellungen</h2>
 <mat-card *ngIf="isEmployer()">
-  <h2 class="error-text" *ngIf="company.unapprovedChanges">Ungeprüfte Änderungen!</h2>
+  <h3>Profil bearbeiten<span class="error-text" *ngIf="company.unapprovedChanges"> (Ungeprüfte Änderungen!)</span></h3>
   <mat-form-field>
     <input matInput placeholder="Unternehmen" [(ngModel)]="company.name" name="name" #name="ngModel" required>
   </mat-form-field>
   <br>
-  <div class="logoSelection">
-    <a class="labelText">Unternehmenslogo*</a>
-    <input id="logoUpload" type='file' #upload style="display:none;" (change)="onSelectLogo($event)">
-    <button mat-button (click)="upload.click()" matTooltip="Unternehmenslogo hochladen"><mat-icon>add_a_photo</mat-icon></button>
-    <button mat-button (click)="onFetchLogo()"  matTooltip="Unternehmenslogo suchen"><mat-icon>search</mat-icon></button>
-  </div>
+  <a class="labelText">Unternehmenslogo *</a>
+  <input id="logoUpload" type='file' #upload style="display:none;" (change)="onSelectLogo($event)">
+  <button mat-icon-button (click)="upload.click()" matTooltip="Unternehmenslogo hochladen"><mat-icon>add_a_photo</mat-icon></button>
+  <button mat-icon-button (click)="onFetchLogo()"  matTooltip="Unternehmenslogo suchen"><mat-icon>search</mat-icon></button>
   <img *ngIf="company.logo!=''" [src]="company.logo" class="company-logo"><br>
   <mat-progress-bar *ngIf="showProgressBar" class="centerProgressBar" mode="query"></mat-progress-bar>
   <br>
@@ -26,13 +24,13 @@
   </mat-form-field>
   <br>
   <button mat-button (click)="name.valid && email.valid && onSaveCompany()">Speichern</button>
-  <button mat-icon-button *ngIf="company.unapprovedChanges" (click)="onReset()" color="warn">
+  <button mat-icon-button *ngIf="company.unapprovedChanges" (click)="onReset()" matTooltip="Änderungen auf den letzten akzeptierten Stand zurücksetzen">
     <mat-icon>undo</mat-icon>
   </button>
 </mat-card>
 <br>
 <mat-card>
-  <h2 [ngClass]="messageClass()">{{msg}}</h2>
+  <h3>Passwort ändern</h3>
   <mat-form-field>
     <input matInput type="password" placeholder="Neues Password" [(ngModel)]="this.password" name="password">
   </mat-form-field>

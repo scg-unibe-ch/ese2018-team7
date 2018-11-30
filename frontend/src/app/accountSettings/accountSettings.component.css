@@ -1,12 +1,10 @@
-.success {
-  color: lightgreen;
-}
 .labelText{
   font-size: 12px;
   color: rgba(0,0,0,0.54);
   transform: translate(0,-15px);
   position: absolute;
 }
+
 .company-logo {
   position: relative;
   float:right;

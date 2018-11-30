@@ -1,9 +1,5 @@
 <h2>Login</h2>
 <mat-card>
-  <mat-list-item>
-    <div *ngIf="errorMessage" class="error-text">{{ errorMessage }}</div>
-    <br *ngIf="errorMessage">
-  </mat-list-item>
   <mat-form-field>
     <input matInput placeholder="Benutzername" [(ngModel)]="user.username" name="username">
   </mat-form-field>
@@ -14,6 +10,6 @@
     <mat-icon aria-label="Password info">info</mat-icon>
   </button>
   <br>
-  <button mat-button color="primary"(click)="onLogin()">Login</button><br><hr>
-  <button mat-button (click)="toRegistration()" tabindex="-1">Registrierung für Unternehmen</button>
+  <button mat-raised-button color="primary" (click)="onLogin()">Login</button><br><br><hr>
+  <button mat-stroked-button (click)="toRegistration()" tabindex="-1" color="primary">Registrierung für Unternehmen</button>
 </mat-card>

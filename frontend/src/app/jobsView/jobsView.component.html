@@ -1,7 +1,7 @@
 <mat-form-field>
   <input matInput placeholder="Suche" [(ngModel)]="searchParam" name="search" (ngModelChange)="onEasySearch()" />
 </mat-form-field>
-<button mat-button (click)="openAdvancedSearch()">Erweiterte Suche</button>
+<button mat-raised-button (click)="openAdvancedSearch()" style="margin-left: 5px; margin-right: 5px;">Erweiterte Suche</button>
 <button *ngIf="searched" mat-button (click)="resetSearch()">Suche zurücksetzen</button>
 <mat-form-field>
   <mat-label>Sortieren nach:</mat-label>
@@ -15,7 +15,7 @@
   </mat-select>
 </mat-form-field>
 <div class="card-deck-container">
-  <div *ngIf="msg"><h2 class="warning">{{msg}}</h2> </div>
+  <div *ngIf="msg"><h3 class="warning">{{msg}}</h3> </div>
   <div *ngFor="let job of ((jobs | jobsSortPipe:sorting) | jobsPageinatorPipe:pageEvent)" class="card-item"><app-job-view [job]="job"></app-job-view></div>
 </div>
 <mat-paginator [length]="jobs.length"

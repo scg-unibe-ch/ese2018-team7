@@ -16,6 +16,21 @@
   align-items: center;
 }
 
+.sortUserSelection{
+  margin-top: 5px;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.header-container {
+  display: flex; /* or inline-flex */
+  flex-wrap: wrap;
+}
+
+.header-item {
+  flex-basis: auto; /* default auto */
+}
+
 .paginator{
   background: #fafafa;
 }
