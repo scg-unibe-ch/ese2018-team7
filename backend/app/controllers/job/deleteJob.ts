@@ -5,6 +5,40 @@ import {Request} from '../../interfaces/request.interface';
 import {asyncRoute} from '../../helper/async.helper';
 import {Message} from '../../enums/message.enum';
 
+/**
+ * @swagger
+ *
+ * /jobs/{id}:
+ *  delete:
+ *    tags:
+ *    - job
+ *    summary: Delete Job
+ *    description: Delete a Job
+ *    operationId: job_delete
+ *    consumes:
+ *    - application/json
+ *    produces:
+ *    - application/json
+ *    parameters:
+ *    - name: id
+ *      in: path
+ *      description: Job Id
+ *      required: true
+ *      type: integer
+ *    responses:
+ *      200:
+ *        description: If job successfully deleted
+ *        schema:
+ *          $ref: '#/definitions/message'
+ *      403:
+ *        description: Permission denied, if not Administrator, Moderator or Job owner
+ *        schema:
+ *          $ref: '#/definitions/message'
+ *      404:
+ *        description: If job not found
+ *        schema:
+ *          $ref: '#/definitions/message'
+ */
 module.exports = asyncRoute(async (req: Request, res: Response) => {
 
   const id = parseInt(req.params.id);
@@ -28,6 +62,6 @@ module.exports = asyncRoute(async (req: Request, res: Response) => {
 
   await instance.destroy();
 
-  res.status(200).send();
+  res.status(200).send(Message.success.success);
 
 });

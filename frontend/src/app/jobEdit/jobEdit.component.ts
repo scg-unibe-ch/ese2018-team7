@@ -27,7 +27,7 @@ export class JobEditComponent implements OnInit {
 
   @Input()
   job: Job;
-  skill: Skill = new Skill (null, '', null);
+  skill: Skill = new Skill ('');
 
   today: Moment = moment();
   editorOptions: EditorOption;
@@ -233,9 +233,8 @@ export class JobEditComponent implements OnInit {
    * Adding a Skill
    */
   onSkillCreate() {
-    this.skill.jobId = this.job.id;
     this.job.skills.push(this.skill);
-    this.skill = new Skill(null, '', null);
+    this.skill = new Skill('');
     this.onSaveSkills();
   }
 

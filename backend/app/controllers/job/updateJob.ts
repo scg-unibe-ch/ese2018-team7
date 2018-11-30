@@ -7,6 +7,40 @@ import {Message} from '../../enums/message.enum';
 import {User} from '../../models/user.model';
 import {Company} from '../../models/company.model';
 
+/**
+ * @swagger
+ *
+ * /jobs/{id}:
+ *   put:
+ *     tags:
+ *     - job
+ *     summary: Update Job
+ *     description: Update one or multiple attributes of a job
+ *     operationId: job_update
+ *     consumes:
+ *     - application/json
+ *     produces:
+ *     - application/json
+ *     parameters:
+ *     - name: id
+ *       in: path
+ *       description: Job Id
+ *       required: true
+ *       type: integer
+ *     responses:
+ *       200:
+ *         description: Job with current data
+ *         schema:
+ *           $ref: '#/definitions/getJobForEdit'
+ *       403:
+ *         description: Permission denied, if not Administrator, Moderator or Job owner
+ *         schema:
+ *           $ref: '#/definitions/message'
+ *       404:
+ *         description: If job not found
+ *         schema:
+ *           $ref: '#/definitions/message'
+ */
 module.exports = asyncRoute(async (req: Request, res: Response) => {
 
   const id = parseInt(req.params.id);

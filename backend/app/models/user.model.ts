@@ -40,6 +40,28 @@ export class User extends Model<User> {
     this.password = this.bcrypt.hashSync(passwordClear, this.saltRounds);
   }
 
+/**
+ * @swagger
+ *
+ * definitions:
+ *   userGetAdminEditDetails:
+ *     type: object
+ *     properties:
+ *       username:
+ *         type: string
+ *       type:
+ *         type: integer
+ *       enabled:
+ *         type: boolean
+ *       suspended:
+ *         type: boolean
+ *       companyName:
+ *         type: string
+ *       companyLogo:
+ *         type: string
+ *       companyUnapprovedChanges:
+ *         type: boolean
+ */
   getAdminEditDetails(): any {
 
     let unapprovedChanges = false;
@@ -52,7 +74,7 @@ export class User extends Model<User> {
 
     } else {
 
-      unapprovedChanges = this.company[0].changes !== this.company[0].getJSONforChange();
+      unapprovedChanges = this.company[0].changes !== this.company[0].getJSONForChange();
 
       this.company[0].applyChanges();
 

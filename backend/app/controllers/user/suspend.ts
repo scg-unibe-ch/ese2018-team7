@@ -4,6 +4,47 @@ import {Request} from '../../interfaces/request.interface';
 import {asyncRoute} from '../../helper/async.helper';
 import {Message} from '../../enums/message.enum';
 
+/**
+ * @swagger
+ *
+ * /login/suspend:
+ *   put:
+ *     tags:
+ *     - user
+ *     summary: Suspend user
+ *     description: Suspend a user
+ *     operationId: user_suspend
+ *     consumes:
+ *     - application/json
+ *     produces:
+ *     - application/json
+ *     parameters:
+ *     - in: body
+ *       name: username
+ *       description: Username of the user that should be suspended
+ *       required: true
+ *       schema:
+ *         type: object
+ *         properties:
+ *           username:
+ *             type: string
+ *     responses:
+ *       200:
+ *         description: Success Message
+ *         schema:
+ *           type: object
+ *           properties:
+ *             suspended:
+ *               type: boolean
+ *       403:
+ *         description: Permission denied, if not Administrator or Moderator
+ *         schema:
+ *           $ref: '#/definitions/message'
+ *       404:
+ *         description: If User doesn't exist
+ *         schema:
+ *           $ref: '#/definitions/message'
+ */
 module.exports = asyncRoute(async (req: Request, res: Response) => {
 
   const instance = await User.findByPrimary(req.body.username);

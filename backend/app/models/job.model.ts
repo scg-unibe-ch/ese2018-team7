@@ -70,7 +70,75 @@ export class Job extends Model<Job> {
   changes!: string;
 
 
-
+  /**
+   * @swagger
+   *
+   * definitions:
+   *   getJobWithCompanyData:
+   *     type: object
+   *     properties:
+   *       id:
+   *         type: integer
+   *       title:
+   *         type: string
+   *       department:
+   *         type: string
+   *       placeOfWork:
+   *         type: string
+   *       contractType:
+   *         type: string
+   *       startOfWork:
+   *         type: integer
+   *         format: timestamp
+   *       endOfWork:
+   *         type: integer
+   *         format: timestamp
+   *         description: 0 if contractType is unlimited
+   *       workload:
+   *         type: integer
+   *       salary:
+   *         type: object
+   *         properties:
+   *           amount:
+   *             type: integer
+   *           period:
+   *             type: string
+   *             description: month, hour, job or other
+   *       shortDescription:
+   *         type: string
+   *       description:
+   *         type: string
+   *         description: Markdown text
+   *       skills:
+   *         type: array
+   *         items:
+   *           type: object
+   *           properties:
+   *             name:
+   *               type: string
+   *       phone:
+   *         type: string
+   *         description: formatted phone number
+   *       email:
+   *         type: string
+   *       website:
+   *         type: string
+   *       contactInfo:
+   *         type: string
+   *       startOfPublication:
+   *         type: integer
+   *         format: timestamp
+   *       endOfPublication:
+   *         type: integer
+   *         format: timestamp
+   *       approved:
+   *         type: boolean
+   *       companyName:
+   *         type: string
+   *       companyLogo:
+   *         type: string
+   *         format: base64
+   */
   getWithCompanyData(): any {
 
     if (this.user.company.length === 0) {
@@ -107,33 +175,80 @@ export class Job extends Model<Job> {
 
   }
 
-  getSimpleJob(): any {
 
-    return {
-      'id': this.id,
-      'title': this.title,
-      'department': this.department,
-      'placeOfWork': this.placeOfWork,
-      'contractType': this.contractType,
-      'startOfWork': this.startOfWork,
-      'endOfWork': this.endOfWork,
-      'workload': this.workload,
-      'salary': this.salary,
-      'shortDescription': this.shortDescription,
-      'description': this.description,
-      'skills': this.skills,
-      'email': this.email,
-      'phone': this.phone,
-      'website': this.website,
-      'contactInfo': this.contactInfo,
-      'startOfPublication': this.startOfPublication,
-      'endOfPublication': this.endOfPublication,
-      'approved': this.approved,
-    };
-
-  }
+  /**
+   * @swagger
+   *
+   * definitions:
+   *   getJobForEdit:
+   *     type: object
+   *     properties:
+   *       id:
+   *         type: integer
+   *       title:
+   *         type: string
+   *       department:
+   *         type: string
+   *       placeOfWork:
+   *         type: string
+   *       contractType:
+   *         type: string
+   *       startOfWork:
+   *         type: integer
+   *         format: timestamp
+   *       endOfWork:
+   *         type: integer
+   *         format: timestamp
+   *         description: 0 if contractType is unlimited
+   *       workload:
+   *         type: integer
+   *       salary:
+   *         type: object
+   *         properties:
+   *           amount:
+   *             type: integer
+   *           period:
+   *             type: string
+   *             description: month, hour, job or other
+   *       shortDescription:
+   *         type: string
+   *       description:
+   *         type: string
+   *         description: Markdown text
+   *       skills:
+   *         type: array
+   *         items:
+   *           type: object
+   *           properties:
+   *             name:
+   *               type: string
+   *       phone:
+   *         type: string
+   *         description: formatted phone number
+   *       email:
+   *         type: string
+   *       website:
+   *         type: string
+   *       contactInfo:
+   *         type: string
+   *       startOfPublication:
+   *         type: integer
+   *         format: timestamp
+   *       endOfPublication:
+   *         type: integer
+   *         format: timestamp
+   *       approved:
+   *         type: boolean
+   *       companyName:
+   *         type: string
+   *       companyLogo:
+   *         type: string
+   *         format: base64
+   *       changed:
+   *         type: boolean
+   */
   getJobForEdit(): any {
-    const oldJson: string = this.getJSONforChange();
+    const oldJson: string = this.getJSONForChange();
     this.applyChanges();
     return {
       'id': this.id,
@@ -157,11 +272,11 @@ export class Job extends Model<Job> {
       'approved': this.approved,
       'companyName': this.user.company[0].name,
       'companyLogo': this.user.company[0].logo,
-      'changed': oldJson !== this.getJSONforChange(),
+      'changed': oldJson !== this.getJSONForChange(),
     };
   }
 
-  getJSONforChange() {
+  getJSONForChange() {
     return JSON.stringify({
       'title': this.title,
       'department': this.department,
@@ -198,7 +313,7 @@ export class Job extends Model<Job> {
     job.createJob(c);
     job.createJob(change);
 
-    this.changes = job.getJSONforChange();
+    this.changes = job.getJSONForChange();
 
   }
 
@@ -323,7 +438,7 @@ export class Job extends Model<Job> {
         this.approved = simplification['approved'];
       }
 
-      this.changes = this.getJSONforChange();
+      this.changes = this.getJSONForChange();
 
     }
 

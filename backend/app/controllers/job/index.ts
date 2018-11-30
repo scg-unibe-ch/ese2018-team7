@@ -26,7 +26,7 @@ router.get('/', [getJobs]);
 router.get('/editable', [allowOnlyLogin, getEditableJobs]);
 
 // Add a Job
-router.post('/', [allowOnlyLogin, addJob]);
+router.post('/', [allowOnlyEmployer, addJob]);
 
 // Apply changed to Job
 router.put('/apply/:id', [allowOnlyModAdmin, acceptJob]);

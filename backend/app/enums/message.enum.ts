@@ -1,3 +1,17 @@
+
+/**
+ * @swagger
+ *
+ * definitions:
+ *   message:
+ *     type: object
+ *     properties:
+ *       code:
+ *         type: integer
+ *       message:
+ *         type: string
+ *
+ */
 class Msg {
   constructor(public code: number, public message: string) {
   }

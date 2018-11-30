@@ -39,7 +39,7 @@ export class Company extends Model<Company> {
     company.createCompany(c);
     company.createCompany(change);
 
-    this.changes = company.getJSONforChange();
+    this.changes = company.getJSONForChange();
 
   }
 
@@ -57,9 +57,26 @@ export class Company extends Model<Company> {
 
   }
 
+  /**
+   * @swagger
+   *
+   * definitions:
+   *   company:
+   *     type: object
+   *     properties:
+   *       username:
+   *         type: string
+   *       name:
+   *         type: string
+   *       logo:
+   *         type: string
+   *         format: base64
+   *       unapprovedChanges:
+   *         type: boolean
+   */
   forEdit(): any {
 
-    const oldJSON: string = this.getJSONforChange();
+    const oldJSON: string = this.getJSONForChange();
     this.applyChanges();
 
     return {
@@ -67,12 +84,12 @@ export class Company extends Model<Company> {
       'name': this.name,
       'email': this.email,
       'logo': this.logo,
-      'unapprovedChanges': oldJSON !== this.getJSONforChange(),
+      'unapprovedChanges': oldJSON !== this.getJSONForChange(),
     };
 
   }
 
-  getJSONforChange(): any {
+  getJSONForChange(): any {
     return JSON.stringify({
       'username': this.username,
       'name': this.name,
@@ -96,7 +113,7 @@ export class Company extends Model<Company> {
       this.logo = data['logo'];
     }
 
-    this.changes = this.getJSONforChange();
+    this.changes = this.getJSONForChange();
 
   }
 
