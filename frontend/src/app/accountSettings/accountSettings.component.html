@@ -23,7 +23,7 @@
     </mat-error>
   </mat-form-field>
   <br>
-  <button mat-button (click)="name.valid && email.valid && onSaveCompany()">Speichern</button>
+  <button mat-stroked-button (click)="name.valid && email.valid && onSaveCompany()">Speichern</button>
   <button mat-icon-button *ngIf="company.unapprovedChanges" (click)="onReset()" matTooltip="Änderungen auf den letzten akzeptierten Stand zurücksetzen">
     <mat-icon>undo</mat-icon>
   </button>
@@ -38,5 +38,5 @@
     <input matInput type="password" placeholder="Neues Passwort bestätigen" [(ngModel)]="this.password2" name="password2">
   </mat-form-field>
   <br>
-  <button mat-button (click)="onSavePassword()">Speichern</button>
+  <button mat-stroked-button (click)="onSavePassword()">Speichern</button>
 </mat-card>

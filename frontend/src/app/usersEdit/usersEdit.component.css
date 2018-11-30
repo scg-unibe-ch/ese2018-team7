@@ -20,6 +20,10 @@
   color: lightgreen;
 }
 
+.mat-action-row > * {
+  margin-left: 5px;
+}
+
 table {
   width: 100%;
 }

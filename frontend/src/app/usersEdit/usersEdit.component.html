@@ -41,10 +41,10 @@
         <div class="example-element-detail"
              [@detailExpand]="u == expandedElement ? 'expanded' : 'collapsed'">
           <mat-action-row *ngIf="!isUserAdmin(u.user)||!isMe(u.user.username)">
-            <button mat-button *ngIf="isEmployer(u.user)&&u.company.unapprovedChanges" (click)="onApproveCompany(u.company)">Änderungen akzeptieren</button>
-            <button mat-button *ngIf="!u.user.enabled" (click)="onAcceptUser(u.user)" color="primary">Benutzer freischalten</button>
-            <button mat-button *ngIf="u.user.enabled&&!isMe(u.user.username)" (click)="onSuspendUser(u.user)" color="warn">Benutzer {{u.user.suspended?'reaktivieren':'sperren'}}</button>
-            <button mat-button *ngIf="isAdmin()&&!isMe(u.user.username)" (click)="onDeleteUser(u.user)" color="warn">Benutzer löschen</button>
+            <button mat-stroked-button *ngIf="isEmployer(u.user)&&u.company.unapprovedChanges" (click)="onApproveCompany(u.company)">Änderungen akzeptieren</button>
+            <button mat-stroked-button *ngIf="!u.user.enabled" (click)="onAcceptUser(u.user)" color="primary">Benutzer freischalten</button>
+            <button mat-stroked-button *ngIf="u.user.enabled&&!isMe(u.user.username)" (click)="onSuspendUser(u.user)" color="warn">Benutzer {{u.user.suspended?'reaktivieren':'sperren'}}</button>
+            <button mat-stroked-button *ngIf="isAdmin()&&!isMe(u.user.username)" (click)="onDeleteUser(u.user)" color="warn">Benutzer löschen</button>
           </mat-action-row>
           <div *ngIf="isEmployer(u.user)">
             <h3>Unternehmensname: {{u.company.name}}</h3>
