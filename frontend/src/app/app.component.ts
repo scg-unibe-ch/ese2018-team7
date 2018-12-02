@@ -1,31 +1,40 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
+import {BreakpointObserver} from '@angular/cdk/layout';
+import {Observable} from 'rxjs';
 import {debounceTime, map, tap} from 'rxjs/operators';
 import {AuthService} from './auth/auth.service';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {MatSidenav, MatSidenavContainer} from '@angular/material';
-import {Message} from './message';
+
 import {MenuCountService} from './menuCount/menuCount.service';
 
+/**
+ * Root component of this application consisting of header bar, menu and content
+ */
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 
-/**
- * Component with the Head and Menu, merging everything together
- */
 export class AppComponent implements OnInit {
 
+  /**
+   * Container for sidenav and main content
+   */
   @ViewChild(MatSidenavContainer)
   matSidenavContainer: MatSidenavContainer;
 
+  /**
+   * Sidenav which contains the menu
+   */
   @ViewChild(MatSidenav)
   matSidenav: MatSidenav;
 
+  /**
+   * Array of each menupoint with its corresponding properties and visibility constraints
+   */
   menus = [
     {
       link: '/viewJobs', text: 'Job finden', condition: function () {
@@ -49,6 +58,9 @@ export class AppComponent implements OnInit {
     },
   ];
 
+  /**
+   * Array of possible login states and the corresponding text for the login button
+   */
   login = [
     {
       link: '/login', text: 'Login', condition: function () {
@@ -62,14 +74,23 @@ export class AppComponent implements OnInit {
     },
   ];
 
+  /**
+   * Boolean observable to determine if the user is using a mobile device
+   */
   isHandset$: Observable<boolean> = this.breakpointObserver.observe('(max-width: 950px)')
     .pipe(
       map(result => result.matches)
     );
 
+  /**
+   * Main constructor, initialises the global AuthService and MenuCountService
+   * @param httpClient
+   * @param router
+   * @param breakpointObserver
+   */
   constructor(private httpClient: HttpClient, router: Router, private breakpointObserver: BreakpointObserver) {
 
-    // Initialize the Authservice and update on every page change
+    // Initialise the Authservice and update on every page change
     AuthService.update(httpClient);
     MenuCountService.update(httpClient);
     router.events.subscribe(() => {
@@ -84,6 +105,9 @@ export class AppComponent implements OnInit {
     });
   }
 
+  /**
+   * Initialises the sidebar and collapses the sidebar if the screensize is too small
+   */
   ngOnInit() {
     this.matSidenavContainer._contentMarginChanges.pipe(
       debounceTime(250), tap(() => {
@@ -94,7 +118,11 @@ export class AppComponent implements OnInit {
     ).subscribe();
   }
 
-  getWelcomeText() {
+  /**
+   * Generates the welcome text that is displayed in the menu to welcome the user
+   * @returns Welcome text
+   */
+  getWelcomeText(): string {
     let welcomeText = '';
     if (AuthService.getUsername().length > 12) {
       welcomeText = 'Willkommen ' + AuthService.getUsername().substr(0, 10) + '... !';
@@ -104,7 +132,11 @@ export class AppComponent implements OnInit {
     return welcomeText;
   }
 
-  isLogin() {
+  /**
+   * Checks if a user is currently logged in
+   * @returns true if user is logged in, false else
+   */
+  isLogin(): boolean {
     return AuthService.isLogin();
   }
 }

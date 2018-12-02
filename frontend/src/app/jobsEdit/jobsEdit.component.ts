@@ -1,52 +1,75 @@
 import {Component, OnInit} from '@angular/core';
-import {Job} from '../job';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
+import {MatSnackBar, PageEvent} from '@angular/material';
+
 import {AuthService} from '../auth/auth.service';
 import * as moment from 'moment';
+import {Job} from '../job';
 import {Company} from '../company';
 import {Message} from '../message';
-import {MatSnackBar, PageEvent} from '@angular/material';
 import {Salary} from '../salary';
 
+/**
+ * Component to display all jobs that are editable for the current user
+ *
+ * Serves as a wrapper for the [JobEditComponent]{@link JobEditComponent.html}
+ */
 @Component({
   selector: 'app-jobs-edit',
   templateUrl: './jobsEdit.component.html',
   styleUrls: ['./jobsEdit.component.css']
 })
-/**
- * Component to display all Jobs editable for the current user
- */
+
 export class JobsEditComponent implements OnInit {
 
-  // Object for creating a new Job
+  /**
+   * Object for creating a new job
+   */
   job: Job = new Job();
 
-  // Array of current jobs
+  /**
+   * Array of all current jobs
+   */
   jobs: Job[] = [];
 
-  // Variable for return messages to the user
-  msg;
+  /**
+   * Variable to return messages to the user
+   */
+  msg: string;
 
-  // Paginator event
+  /**
+   * Paginator event
+   */
   pageEvent: PageEvent;
 
-  // Paginator page size
+  /**
+   * Paginator page size, stored in cookie
+   */
   pageSize = ((this.getCookie('pageSize') === '') ? 8 : parseInt(this.getCookie('pageSize'), 10));
 
+  /**
+   * Sorting of jobs for the paginator
+   */
   sorting: string;
 
+  /**
+   * Creates a new instance of this component with the provided parameters
+   * @param httpClient
+   * @param router
+   * @param snackBar SnackBar to present messages to the user
+   */
   constructor(private httpClient: HttpClient, private router: Router, private snackBar: MatSnackBar) {
     // Only accessible for logged-in users
     AuthService.allowOnlyLogin(httpClient, router);
-
     this.sorting = this.isModOrAdmin() ? 'todo' : 'titleASC';
   }
 
+  /**
+   * Initialise this component by loading all editable jobs from the server
+   */
   ngOnInit() {
-    // Load all editable jobs from the server
     this.httpClient.get('/jobs/editable', {withCredentials: true}).subscribe((instances: any) => {
-
       console.log(instances);
       this.jobs = instances.map((instance) =>
         new Job(instance.id,
@@ -85,7 +108,7 @@ export class JobsEditComponent implements OnInit {
   }
 
   /**
-   * Adding a new Job
+   * Add a new job
    */
   onJobCreate() {
     if (this.job.title === '') {
@@ -115,7 +138,8 @@ export class JobsEditComponent implements OnInit {
   }
 
   /**
-   * Removing a Job
+   * Remove the specified job
+   * @param job Job that should be removed
    */
   onJobDestroy(job: Job) {
     this.jobs.splice(this.jobs.indexOf(job), 1);
@@ -124,14 +148,28 @@ export class JobsEditComponent implements OnInit {
     }
   }
 
+  /**
+   * Check if the logged in user is allowed to create a new job
+   */
   allowCreateJob() {
     return AuthService.isEmployer();
   }
+
+  /**
+   * Check if the logged in user is administrator or moderator
+   */
   isModOrAdmin() {
     return AuthService.isModOrAdmin();
   }
 
-  getCookie(cname) {
+  /**
+   * Get content of cookie with the specified name
+   *
+   * Returns an empty string if no cookie exists with this name
+   * @param cname Name of the cookie that should be retrieved
+   * @returns Content of the specified cookie
+   */
+  getCookie(cname): string {
     const name = cname + '=';
     const decodedCookie = decodeURIComponent(document.cookie);
     const ca = decodedCookie.split(';');
@@ -147,8 +185,13 @@ export class JobsEditComponent implements OnInit {
     return '';
   }
 
+  /**
+   * Save the pageSize that was chosen by the user in a cookie
+   * @param newPageSize PageSize that should be saved
+   */
   setPageSizeCookie(newPageSize) {
     document.cookie = 'pageSize=' + newPageSize;
     console.log('Changed jobs per page to ' + newPageSize);
   }
+
 }

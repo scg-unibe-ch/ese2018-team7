@@ -1,8 +1,24 @@
+/**
+ * @ignore
+ */
 class Msg {
+
+  /**
+   * @ignore
+   */
   constructor(public code: number, public message: string) {
   }
+
 }
+
+/**
+ * Container class for all the message that can appear on the frontend
+ */
 export class Message {
+
+  /**
+   * Error messages
+   */
   public static error = {
     permissionDenied: new Msg(1000, 'Zugriff verweigert!'),
     notFound: new Msg(1001, 'Element nicht gefunden!'),
@@ -16,17 +32,25 @@ export class Message {
     emptyPasswordNotAllowed: new Msg(1009, 'Leeres Passwort ist nicht erlaubt!'),
     permissionDeniedChangePasswordHigherLevel: new Msg(1010, 'Keine Berechtigung für das Ändern des Passworts für diesen Benutzer!'),
     emptyMailNotAllowed: new Msg(1011, 'Leere Mailaddresse ist nicht erlaubt!'),
-
   };
+
+  /**
+   * Success messages
+   */
   public static success = {
     success: new Msg(2000, 'Erfolgreich'),
     userLoggedOut: new Msg(2001, 'Erfolgreich abgemeldet'),
     userCreated: new Msg(2002, 'Benutzer erfolgreich erstellt'),
-    userRegisteredNeedsApproval: new Msg(2003, 'Benutzer erfolgreich registiert, warte bis ein Moderator' +
+    userRegisteredNeedsApproval: new Msg(2003, 'Benutzer erfolgreich registriert, warte bis ein Moderator' +
       ' deinen Account freigeschalten hat!'),
   };
 
-  public static getMessage(msgNummer: number) {
+  /**
+   * Return the message that corresponds to a msgNumber
+   * @param msgNummer number of the message that is needed
+   * @returns message corresponding to the msgNumber
+   */
+  public static getMessage(msgNummer: number): string {
     const variables = ['error', 'success'];
     for (let i = 0; i < variables.length; ++i) {
       for (const tag in Message[variables[i]]) {
@@ -35,9 +59,9 @@ export class Message {
         }
       }
     }
-
     return 'Unbekannter Fehler!';
   }
+
 }
 
 

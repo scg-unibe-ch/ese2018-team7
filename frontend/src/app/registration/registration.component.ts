@@ -1,36 +1,62 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {User} from '../user';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
+import {MatDialog, MatSnackBar} from '@angular/material';
+
+import {User} from '../user';
 import {AuthService} from '../auth/auth.service';
 import {Company} from '../company';
 import {Usergroup} from '../usergroup';
 import {Message} from '../message';
-import {MatDialog, MatSnackBar} from '@angular/material';
 import {SelectLogoComponent} from '../selectLogo/selectLogo.component';
 
+/**
+ * Component where employers can register for a new user account
+ */
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
 
-/**
- * Component to register employer
- */
 export class RegistrationComponent implements OnInit {
 
+  /**
+   * Flag to indicate if loading bar should be shown
+   */
   showProgressBar = false;
 
+  /**
+   * New `user` that is created during registration
+   */
   user: User;
+
+  /**
+   * New `company` that is created during registration
+   */
   company: Company;
+
+  /**
+   * Simple EventEmitter to destroy this component
+   */
   @Output()
   destroy = new EventEmitter<User>();
 
+  /**
+   * Creates a new instance of this component with the given parameters
+   * and makes sure it is only accessible to public users
+   * @param httpClient
+   * @param router
+   * @param snackBar SnackBar to display messages to the user
+   * @param dialog Dialog to present a selection of logos to the user
+   */
   constructor(private httpClient: HttpClient, private router: Router, private snackBar: MatSnackBar, private dialog: MatDialog) {
     AuthService.allowOnlyPublic(httpClient, router);
   }
 
+  /**
+   * Initialise this component with a new empty `user` and `company`
+   */
   ngOnInit() {
     // Set 'empty' User
     this.user = new User('', '', Usergroup.employer, false);
@@ -38,7 +64,8 @@ export class RegistrationComponent implements OnInit {
   }
 
   /**
-   * If the user wants to register with the given credentials
+   * Attempt to register a new user on the server with the given credentials
+   * and do form validation in advance
    */
   onCreate() {
     this.company.username = this.user.username;
@@ -67,6 +94,10 @@ export class RegistrationComponent implements OnInit {
       });
   }
 
+  /**
+   * Allow the user to upload a logo from his own computer and save it in the company
+   * @param event
+   */
   onSelectLogo(event) {
     console.log('changed image');
     if (event.target.files && event.target.files[0]) {
@@ -74,15 +105,16 @@ export class RegistrationComponent implements OnInit {
       const reader = new FileReader();
       console.log('is image');
       reader.readAsDataURL(event.target.files[0]); // read file as data url
-
       reader.onload = (res: any) => { // called once readAsDataURL is completed
         this.resizeLogoAndSave(res.target.result);
       };
     }
   }
 
+  /**
+   * Generate a simple logo with the name of the company and random complementary colors
+   */
   onGenerateLogo() {
-
     if (this.company.name === '') {
       this.snackBar.open('Zuerst Unternehmensname eingeben!', null, {duration: 5000});
       return;
@@ -92,18 +124,17 @@ export class RegistrationComponent implements OnInit {
     const canvas = document.createElement('canvas');
     const height = 200;
     const width = 400;
-
     canvas.height = height;
     canvas.width = width;
 
-    // get the context to allow manipulating the image
+    // Get the context to allow manipulating the image
     const context = canvas.getContext('2d');
 
-    // Fill background with white
+    // Fill background with random color
     context.fillStyle = 'rgba(' + Math.random() * 256 + ',' + Math.random() * 256 + ',' + Math.random() * 256 + ')';
     context.fillRect(0, 0, width, height);
 
-    // Write black text
+    // Write text in complementary color
     context.globalCompositeOperation = 'difference';
     context.fillStyle = 'white';
     context.font = 500 / this.company.name.length + 'px sans-serif';
@@ -113,17 +144,20 @@ export class RegistrationComponent implements OnInit {
 
     // Save Image
     this.resizeLogoAndSave(canvas.toDataURL('image/png'));
-
   }
 
+  /**
+   * Fetch a selection of logos from the web via server request,
+   * the user can then choose one and it will be saved in the company.
+   */
   onFetchLogo() {
-
     if (this.company.name === '') {
-      this.snackBar.open('Zuerst Unternehmensname eingeben!', null, {duration: 5000});
+      this.snackBar.open('Zuerst Unternehmensnamen eingeben!', null, {duration: 5000});
       return;
     }
 
     this.showProgressBar = true;
+
     this.httpClient.get('/logo/' + this.company.name).subscribe((res: any) => {
       const images: string[] = [];
       res.map(image => {
@@ -137,7 +171,9 @@ export class RegistrationComponent implements OnInit {
           logos: images,
         }
       });
+
       this.showProgressBar = false;
+
       dialogRef.afterClosed().subscribe((result: any) => {
         console.log('The dialog was closed');
         if (result != null) {
@@ -147,6 +183,10 @@ export class RegistrationComponent implements OnInit {
     });
   }
 
+  /**
+   * Resize and save the logo passed as parameter
+   * @param logo Chosen logo as base64 encoded string
+   */
   resizeLogoAndSave(logo: string) {
     // Create an image element and assign the uploaded image
     const img = new Image();
@@ -157,7 +197,7 @@ export class RegistrationComponent implements OnInit {
       let width = img.width;
       let height = img.height;
 
-      // Define max hight and width
+      // Define max height and width
       const MAX_WIDTH = 200;
       const MAX_HEIGHT = 200;
 

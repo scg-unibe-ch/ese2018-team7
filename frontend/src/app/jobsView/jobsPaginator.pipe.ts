@@ -1,13 +1,17 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 import {PageEvent} from '@angular/material';
+
 import {Job} from '../job';
 
+/**
+ * Custom paginator for our job overview which saves the users selection in a cookie
+ */
 @Pipe({
-  name: 'jobsPageinatorPipe',
+  name: 'jobsPaginatorPipe',
   pure: false
 })
-export class JobsPageinatorPipe implements PipeTransform {
 
+export class JobsPaginatorPipe implements PipeTransform {
 
   transform(jobs: Job[], filter: PageEvent): any {
     if (this.getCookie('pageSize') === '') {
@@ -24,6 +28,13 @@ export class JobsPageinatorPipe implements PipeTransform {
         jobs.indexOf(job) < ((filter.pageIndex + 1) * filter.pageSize));
   }
 
+  /**
+   * Get content of cookie with the specified name
+   *
+   * Returns an empty string if no cookie exists with this name
+   * @param cname Name of the cookie that should be retrieved
+   * @returns Content of the specified cookie
+   */
   getCookie(cname) {
     const name = cname + '=';
     const decodedCookie = decodeURIComponent(document.cookie);
@@ -39,4 +50,5 @@ export class JobsPageinatorPipe implements PipeTransform {
     }
     return '';
   }
+
 }

@@ -6,8 +6,11 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import { MatDateFormats } from '@coachcare/datepicker/core/index';
+import {MatDateFormats} from '@coachcare/datepicker/core/index';
 
+/**
+ * Custom swiss/german locale for the mat-datepicker
+ */
 export const MAT_MOMENT_DATE_FORMATS: MatDateFormats = {
   parse: {
     date: ['YYYY-MM-DD', 'YYYY/MM/DD', 'll'],

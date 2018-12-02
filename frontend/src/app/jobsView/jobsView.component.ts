@@ -1,81 +1,139 @@
 import {Component, EventEmitter, OnInit} from '@angular/core';
-import {Job} from '../job';
 import {HttpClient} from '@angular/common/http';
+import {MatDialog, MatSnackBar, PageEvent} from '@angular/material';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+
+import {Job} from '../job';
 import * as moment from 'moment';
 import {Moment} from 'moment';
 import {Company} from '../company';
-import {JobViewDetailsComponent} from '../jobViewDetails/jobViewDetails.component';
-import {MatDialog, MatPaginator, MatSnackBar, PageEvent} from '@angular/material';
 import {JobsAdvancedSearchComponent} from '../jobsAdvancedSearch/jobsAdvancedSearch.component';
-import {Observable} from 'rxjs';
-import {BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
-import {map} from 'rxjs/operators';
 import {Message} from '../message';
 import {Salary} from '../salary';
 
+/**
+ * Component to display all approved jobs in an aggregated way to the public
+ */
 @Component({
   selector: 'app-jobs-view',
   templateUrl: './jobsView.component.html',
   styleUrls: ['./jobsView.component.css']
 })
 
-/**
- * Component to display all approved Jobs
- */
 export class JobsViewComponent implements OnInit {
 
-  // Array of all approved Jobs
+  /**
+   * Array of all approved jobs
+   */
   jobs: Job[] = [];
 
-  // Variable to return values to the user
+  /**
+   * Variable to return messages to the user
+   */
   msg: String = '';
 
-  // Easy Search query variable
+  /**
+   * Search query variable for the easy search
+   */
   searchParam = '';
 
+  /**
+   * Observable to check if user is using a mobile device
+   */
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches)
     );
 
+  /**
+   * Observable to check if user is using a tablet device
+   */
   isTablet$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Tablet)
     .pipe(
       map(result => result.matches)
     );
 
+  /**
+   * Observable to check if user is using a desktop device
+   */
   isWeb$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Web)
     .pipe(
       map(result => result.matches)
     );
 
-  // Advanced Search variables
+  /**
+   * Advanced search variable for title
+   */
   advSearchTitle = '';
+
+  /**
+   * Advanced search variable for company
+   */
   advSearchCompany = '';
+
+  /**
+   * Advanced search variable for department
+   */
   advSearchDepartment = '';
+
+  /**
+   * Advanced search variable for start of work after a specific time point
+   */
   advSearchStartAfter: Moment =  moment().subtract(1, 'w');
+
+  /**
+   * Advanced search variable for start of work before a specific time point
+   */
   advSearchStartBefore: Moment = moment().add(1, 'y');
+
+  /**
+   * Advanced search variable for workload greater than a specific percentage
+   */
   advSearchWorkLoadGt = 0;
+
+  /**
+   * Advanced search variable for workload lower than a specific percentage
+   */
   advSearchWorkLoadLt = 100;
 
-  // To manually refresh range bar -> needed...
+  /**
+   * Simple EventEmitter to refresh the advanced search
+   */
   advSearchRangeRefresh: EventEmitter<void> = new EventEmitter<void>();
 
+  /**
+   * Flag to indicate if a search is active or not
+   */
   searched = false;
 
+  /**
+   * PageEvent for the paginator
+   */
   pageEvent: PageEvent;
 
-  // Paginator page size
+  /**
+   * Page size that was chosen by the user for the pagination
+   */
   pageSize = ((this.getCookie('pageSize') === '') ? 8 : parseInt(this.getCookie('pageSize'), 10));
 
+  /**
+   * Sorting that was chosen by the user for the jobs
+   */
   sorting = 'titleASC';
 
+  /**
+   * @ignore
+   */
   constructor(private httpClient: HttpClient, private dialog: MatDialog, private breakpointObserver: BreakpointObserver,
               private snackBar: MatSnackBar) {
   }
 
+  /**
+   * Initialise this component by loading all jobs from the server
+   */
   ngOnInit() {
-
-    // Load the Jobs from the Server
     this.httpClient.get('/jobs').subscribe((instances: any) => {
       this.jobs = instances.map((instance) =>
         new Job(instance.id,
@@ -103,8 +161,6 @@ export class JobsViewComponent implements OnInit {
         this.msg = '';
       }
       this.advSearchRangeRefresh.emit();
-
-
     }, err => {
       console.error(err.error.message);
       this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
@@ -114,12 +170,12 @@ export class JobsViewComponent implements OnInit {
     this.pageEvent.pageSize = this.pageSize;
     this.pageEvent.pageIndex = 0;
     this.pageEvent.length = this.jobs.length;
-
   }
 
+  /**
+   * Load jobs from the server that match the easy search query
+   */
   onEasySearch() {
-
-    // Load the Jobs from the Server
     this.httpClient.get('/jobs/?easy=' + this.searchParam).subscribe((instances: any) => {
       this.jobs = instances.map((instance) =>
         new Job(instance.id,
@@ -151,9 +207,11 @@ export class JobsViewComponent implements OnInit {
       this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
     });
   }
-  onAdvancedSearch() {
 
-    // Load the Jobs from the Server
+  /**
+   * Load all jobs from the server that match the advanced search
+   */
+  onAdvancedSearch() {
     this.httpClient.get('/jobs/?' +
       'title=' + this.advSearchTitle + '&' +
       'company=' + this.advSearchCompany + '&' +
@@ -195,6 +253,10 @@ export class JobsViewComponent implements OnInit {
       this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
     });
   }
+
+  /**
+   * Reset a search that has been performed
+   */
   resetSearch() {
     this.searchParam = '';
     this.advSearchTitle = '';
@@ -238,6 +300,10 @@ export class JobsViewComponent implements OnInit {
       this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
     });
   }
+
+  /**
+   * Open the dialog window which contains the advanced search options
+   */
   openAdvancedSearch (): void {
     const dialogRef = this.dialog.open(JobsAdvancedSearchComponent, {
       minWidth: '90%',
@@ -271,6 +337,13 @@ export class JobsViewComponent implements OnInit {
     });
   }
 
+  /**
+   * Get content of cookie with the specified name
+   *
+   * Returns an empty string if no cookie exists with this name
+   * @param cname Name of the cookie that should be retrieved
+   * @returns Content of the specified cookie
+   */
   getCookie(cname) {
     const name = cname + '=';
     const decodedCookie = decodeURIComponent(document.cookie);
@@ -287,6 +360,10 @@ export class JobsViewComponent implements OnInit {
     return '';
   }
 
+  /**
+   * Save the pageSize that was chosen by the user in a cookie
+   * @param newPageSize PageSize that should be saved
+   */
   setPageSizeCookie(newPageSize) {
      document.cookie = 'pageSize=' + newPageSize;
      console.log('Changed jobs per page to ' + newPageSize);

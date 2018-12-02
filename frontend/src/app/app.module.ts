@@ -1,50 +1,47 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-
-import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-
-// Add css components from angular material
+import {LayoutModule} from '@angular/cdk/layout';
+import {CdkTableModule} from '@angular/cdk/table';
+import {MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
+import {FormsModule} from '@angular/forms';
+// 3rd party imports
+import {AutosizeModule} from 'ngx-autosize';
+import {MarkdownModule} from 'ngx-markdown';
+import {AngularMarkdownEditorModule} from 'angular-markdown-editor';
+import {Ng5SliderModule} from 'ng5-slider';
+import {MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDatepickerModule, MatMomentDateModule} from '@coachcare/datepicker';
+import {MAT_MOMENT_DATE_FORMATS} from './customCHLocale/moment-date-formats';
+// Import css components from angular material
 import {
+  MatBadgeModule,
   MatButtonModule,
   MatCardModule,
   MatCheckboxModule,
+  MatExpansionModule,
+  MatGridListModule,
+  MatIconModule,
   MatInputModule,
   MatListModule,
-  MatSliderModule,
-  MatToolbarModule,
-  MatSidenavModule,
-  MatIconModule,
-  MatTooltipModule,
-  MatProgressSpinnerModule,
-  MatTableModule,
-  MatSortModule,
-  MatPaginatorModule,
-  MatRadioModule,
-  MatExpansionModule,
-  MatStepperModule,
-  MatGridListModule,
-  MatSnackBarModule,
-  MatBadgeModule,
-  MAT_PAGINATOR_INTL_PROVIDER,
   MatPaginatorIntl,
-  MatSelectModule,
-  MatSlideToggleModule,
+  MatPaginatorModule,
   MatProgressBarModule,
+  MatProgressSpinnerModule,
+  MatRadioModule,
+  MatSelectModule,
+  MatSidenavModule,
+  MatSliderModule,
+  MatSlideToggleModule,
+  MatSnackBarModule,
+  MatSortModule,
+  MatStepperModule,
+  MatTableModule,
+  MatToolbarModule,
+  MatTooltipModule,
 } from '@angular/material';
-
-import { LayoutModule } from '@angular/cdk/layout';
-import { CdkTableModule} from '@angular/cdk/table';
-import {AutosizeModule} from 'ngx-autosize';
-import {MarkdownModule} from 'ngx-markdown';
-import { AngularMarkdownEditorModule } from 'angular-markdown-editor';
-import {MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
-import { Ng5SliderModule } from 'ng5-slider';
-import {MatDatepickerModule, MatMomentDateModule, MAT_DATE_LOCALE, MAT_DATE_FORMATS} from '@coachcare/datepicker';
-import { MAT_MOMENT_DATE_FORMATS } from './customCHLocale/moment-date-formats';
-import {FormsModule, Validators} from '@angular/forms';
 // Import all Components
+import {AppComponent} from './app.component';
 import {JobEditComponent} from './jobEdit/jobEdit.component';
 import {JobsEditComponent} from './jobsEdit/jobsEdit.component';
 import {JobViewComponent} from './jobView/jobView.component';
@@ -53,8 +50,8 @@ import {SkillEditComponent} from './skillEdit/skillEdit.component';
 import {SkillViewComponent} from './skillView/skillView.component';
 import {LoginComponent} from './login/login.component';
 import {RegistrationComponent} from './registration/registration.component';
-import {PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import {AppRoutingModule } from './app-routing.module';
+import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
+import {AppRoutingModule} from './app-routing.module';
 import {LogoutComponent} from './logout/logout.component';
 import {UsersEditComponent} from './usersEdit/usersEdit.component';
 import {AccountSettingsComponent} from './accountSettings/accountSettings.component';
@@ -62,7 +59,7 @@ import {JobViewDetailsComponent} from './jobViewDetails/jobViewDetails.component
 import {JobsAdvancedSearchComponent} from './jobsAdvancedSearch/jobsAdvancedSearch.component';
 import {APIInterceptor} from './apiInterceptor/apiInterceptor';
 import {ConfirmDialogComponent} from './confirmDialog/confirmDialog.component';
-import {JobsPageinatorPipe} from './jobsView/jobsPageinator.pipe';
+import {JobsPaginatorPipe} from './jobsView/jobsPaginator.pipe';
 import {CustomMatPaginatorIntl} from './customCHLocale/CustomMatPaginatorIntl';
 import {JobsSortPipe} from './jobsView/jobsSort.pipe';
 import {SelectLogoComponent} from './selectLogo/selectLogo.component';
@@ -86,7 +83,7 @@ import {JobsEditSortPipe} from './jobsEdit/jobsEditSort.pipe';
     UsersEditComponent,
     AccountSettingsComponent,
     ConfirmDialogComponent,
-    JobsPageinatorPipe,
+    JobsPaginatorPipe,
     JobsSortPipe,
     SelectLogoComponent,
     JobsEditSortPipe,
@@ -146,5 +143,6 @@ import {JobsEditSortPipe} from './jobsEdit/jobsEditSort.pipe';
     ],
    bootstrap: [AppComponent]
 })
+
 export class AppModule {
 }

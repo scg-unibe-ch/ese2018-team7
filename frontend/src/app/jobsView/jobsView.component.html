@@ -16,7 +16,7 @@
 </mat-form-field>
 <div class="card-deck-container">
   <h3 class="warning" *ngIf="msg">{{msg}}</h3>
-  <div *ngFor="let job of ((jobs | jobsSortPipe:sorting) | jobsPageinatorPipe:pageEvent)" class="card-item"><app-job-view [job]="job"></app-job-view></div>
+  <div *ngFor="let job of ((jobs | jobsSortPipe:sorting) | jobsPaginatorPipe:pageEvent)" class="card-item"><app-job-view [job]="job"></app-job-view></div>
 </div>
 <mat-paginator [length]="jobs.length"
                [pageSize]="pageSize"

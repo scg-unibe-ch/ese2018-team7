@@ -23,7 +23,7 @@
 </div>
 <div class="accordion-container" *ngIf="jobs.length > 0">
   <mat-accordion class="header-alignment">
-    <app-job-edit [job]="job" (destroy)="onJobDestroy($event)" *ngFor="let job of (jobs | jobsEditSortPipe:sorting) | jobsPageinatorPipe:pageEvent">
+    <app-job-edit [job]="job" (destroy)="onJobDestroy($event)" *ngFor="let job of (jobs | jobsEditSortPipe:sorting) | jobsPaginatorPipe:pageEvent">
     </app-job-edit>
   </mat-accordion>
 </div>

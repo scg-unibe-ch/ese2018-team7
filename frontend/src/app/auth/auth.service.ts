@@ -1,22 +1,46 @@
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
-import {Usergroup} from '../usergroup';
 import {Observable, of} from 'rxjs';
-import {MenuCountService} from '../menuCount/menuCount.service';
+
+import {Usergroup} from '../usergroup';
 
 /**
- * Provides the components if the user is login or admin and redirects if needed
+ * Authentication service which provides information about the user to the components and handles the redirecting
+ *
+ * This class is a Singleton.
  */
 export class AuthService {
 
+  /**
+   * Usergroup of the logged in user
+   */
   private static usergroup = Usergroup.public;
+
+  /**
+   * Username of the logged in user
+   */
   private static username = '';
+
+  /**
+   * Ask Marcel?
+   */
   private static set = false;
+
+  /**
+   * Observer for the AuthService
+   */
   private static observerEl;
+
+  /**
+   * Observable for the AuthService
+   */
   private static observable: Observable<Boolean> = new Observable(obs => {
     AuthService.observerEl = obs;
   });
 
+  /**
+   * Creates a new instance of AuthService
+   */
   constructor() {
     AuthService.observable = of(AuthService.set);
   }
@@ -45,7 +69,6 @@ export class AuthService {
       this.set = true;
       this.observerEl.next();
     }
-
     return true;
   }
 
@@ -103,48 +126,61 @@ export class AuthService {
 
   /**
    * Returns the last status, if the user is login
+   *
    * DOESN'T UPDATE STATUS!
    */
-  static isLogin() {
+  static isLogin(): boolean {
    return this.usergroup < Usergroup.public;
   }
 
   /**
    * Returns the last status, if the user is an admin or mod
+   *
    * DOESN'T UPDATE STATUS!
    */
-  static isModOrAdmin() {
+  static isModOrAdmin(): boolean {
     return this.usergroup <= Usergroup.moderator;
   }
 
   /**
    * Returns the last status, if the user is an admin
+   *
    * DOESN'T UPDATE STATUS!
    */
-  static isAdmin() {
+  static isAdmin(): boolean {
     return this.usergroup <= Usergroup.administrator;
   }
 
   /**
    * Returns the last status, the username
+   * @returns Username of the logged in user
+   *
    * DOESN'T UPDATE STATUS!
    */
-  static getUsername() {
+  static getUsername(): string {
     return this.username;
   }
 
   /**
    * Returns the last status, if the user is an employer
+   *
    * DOESN'T UPDATE STATUS!
    */
-  static isEmployer() {
+  static isEmployer(): boolean {
     return this.usergroup === Usergroup.employer;
   }
 
-  static isMe(user) {
+  /**
+   * Returns the last status, if the provided user matches the logged in user
+   * @param user User to compare with
+   */
+  static isMe(user): boolean {
     return user === this.username;
   }
 
+  /**
+   * Simple observer which returns Observable
+   */
   static observer(): Observable<Boolean> {
     return this.observable;
   }

@@ -1,41 +1,69 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {Job} from '../job';
 import {HttpClient} from '@angular/common/http';
+import {MatDatepicker} from '@angular/material/datepicker';
+import {MatDialog, MatSnackBar} from '@angular/material';
+import {MarkdownService} from 'ngx-markdown';
+import {EditorLocale, EditorOption} from 'angular-markdown-editor';
+
+import {Job} from '../job';
 import {Skill} from '../skill';
 import {AuthService} from '../auth/auth.service';
-import {MatDatepicker} from '@angular/material/datepicker';
 import * as moment from 'moment';
 import {Moment} from 'moment';
 import {Message} from '../message';
 import {MenuCountService} from '../menuCount/menuCount.service';
-import {MatDialog, MatSlideToggle, MatSnackBar} from '@angular/material';
 import {JobViewComponent} from '../jobView/jobView.component';
-import {EditorLocale, EditorOption} from 'angular-markdown-editor';
-import {MarkdownService} from 'ngx-markdown';
 import {Salary} from '../salary';
 
-
+/**
+ * Component to edit a single job
+ *
+ * This component is wrapped by the [JobsEditComponent]{@link JobsEditComponent.html}.
+ */
 @Component({
   selector: 'app-job-edit',
   templateUrl: './jobEdit.component.html',
   styleUrls: ['./jobEdit.component.css']
 })
-/**
- * Component to edit one Job
- */
+
 export class JobEditComponent implements OnInit {
 
+  /**
+   * Job that is edited
+   */
   @Input()
   job: Job;
+
+  /**
+   * Default skill
+   */
   skill: Skill = new Skill ('');
 
+  /**
+   * Timestamp of today in moment format
+   */
   today: Moment = moment();
+
+  /**
+   * Editor options for markdown editor
+   */
   editorOptions: EditorOption;
 
+  /**
+   * Simple EventEmitter to destroy this component
+   */
   @Output()
   destroy = new EventEmitter<Job>();
-  @ViewChild(MatDatepicker) datepicker: MatDatepicker<Date>;
 
+  /**
+   * Datepicker UI for choosing dates and times
+   */
+  @ViewChild(MatDatepicker)
+  datepicker: MatDatepicker<Date>;
+
+  /**
+   * German translation for markdown editor
+   */
   locale: EditorLocale = {
     language: 'de',
     dictionary: {
@@ -55,21 +83,27 @@ export class JobEditComponent implements OnInit {
       'strong text': 'fetter Text',
       'emphasized text': 'unterstrichener Text',
       'heading text': 'Titeltext',
-      'enter link description here': 'Linkbeschreibung hier Einfügen',
-      'Insert Hyperlink': 'Link zum Einfügen',
-      'enter image description here': 'Füge Bildbeschreibung hier ein',
-      'Insert Image Hyperlink': 'Gib die Bildaddresse hier an',
-      'enter image title here': 'Füge Bildüberschrift hier ein',
+      'enter link description here': 'Linkbeschreibung hier einfügen',
+      'Insert Hyperlink': 'Link einfügen',
+      'enter image description here': 'Bildbeschreibung hier einfügen',
+      'Insert Image Hyperlink': 'Bild-URL hier einfügen',
+      'enter image title here': 'Bildüberschrift hier einfügen',
       'list text here': 'Eine Liste',
       'code text here': 'Code hier einfügen',
       'quote here': 'Zitat hier einfügen',
     }
   };
 
+  /**
+   * @ignore
+   */
   constructor(private httpClient: HttpClient, private snackBar: MatSnackBar, private dialog: MatDialog,
               private markdownService: MarkdownService) {
   }
 
+  /**
+   * Initialise this component and set parameters for markdown editor
+   */
   ngOnInit() {
     this.editorOptions = {
       iconlibrary: 'fa',
@@ -115,9 +149,16 @@ export class JobEditComponent implements OnInit {
     };
   }
 
+  /**
+   * Get initial state of displaySalary switch
+   */
   displaySalary() {
     return this.job.salary.amount >= 0;
   }
+
+  /**
+   * Toggle the displaySalary switch and adjust values if needed
+   */
   changeToggleSalary() {
     if (this.job.salary.amount >= 0) {
       this.job.salary.amount = -1;
@@ -129,6 +170,11 @@ export class JobEditComponent implements OnInit {
     this.onSaveSingle('salary', this.job.salary.toString());
   }
 
+  /**
+   * Save a single specified property of the job to the server
+   * @param type Property that should be saved
+   * @param value Value that should be saved
+   */
   onSaveSingle(type: string, value: string) {
     this.httpClient.put('/jobs/' + this.job.id, {
       [type]: value,
@@ -144,6 +190,9 @@ export class JobEditComponent implements OnInit {
     });
   }
 
+  /**
+   * Save the contractType property of this job
+   */
   onSaveContractType() {
     console.log('save: ' + this.job.contractType);
     if (this.job.contractType === 'temporary') {
@@ -156,6 +205,9 @@ export class JobEditComponent implements OnInit {
     this.onSaveEndOfWork();
   }
 
+  /**
+   * Save the startOfWork property of this job
+   */
   onSaveStartOfWork() {
     this.httpClient.put('/jobs/' + this.job.id, {
       'startOfWork': this.job.startOfWork.startOf('day').unix(),
@@ -171,6 +223,9 @@ export class JobEditComponent implements OnInit {
     });
   }
 
+  /**
+   * Save the endOfWork property of this job
+   */
   onSaveEndOfWork() {
     this.httpClient.put('/jobs/' + this.job.id, {
       'endOfWork': this.job.endOfWork.endOf('day').unix(),
@@ -186,6 +241,9 @@ export class JobEditComponent implements OnInit {
     });
   }
 
+  /**
+   * Save the skills of this job
+   */
   onSaveSkills() {
     this.httpClient.put('/jobs/' + this.job.id, {
       'skills': JSON.stringify(this.job.skills),
@@ -201,6 +259,9 @@ export class JobEditComponent implements OnInit {
     });
   }
 
+  /**
+   * Save the dateOfPublication property of this job
+   */
   onSaveDateOfPublication(type: string, value: Moment) {
     this.httpClient.put('/jobs/' + this.job.id, {
       [type]: value.unix(),
@@ -217,7 +278,7 @@ export class JobEditComponent implements OnInit {
   }
 
   /**
-   * Deletes the Job from the Server
+   * Delete this job on the server
    */
   onDestroy() {
     this.httpClient.delete('/jobs/' + this.job.id, {withCredentials: true}).subscribe(() => {
@@ -230,7 +291,7 @@ export class JobEditComponent implements OnInit {
   }
 
   /**
-   * Adding a Skill
+   * Add a new skill
    */
   onSkillCreate() {
     this.job.skills.push(this.skill);
@@ -239,7 +300,8 @@ export class JobEditComponent implements OnInit {
   }
 
   /**
-   * Deleting a Skill
+   * Delete the specified skill
+   * @param skill Skill that should be deleted
    */
   onSkillDestroy(skill: Skill) {
     this.job.skills.splice(this.job.skills.indexOf(skill), 1);
@@ -247,27 +309,39 @@ export class JobEditComponent implements OnInit {
   }
 
   /**
-   * Custom label for workload percentage slider
+   * Return custom label for workload percentage slider
    */
-  percentageLabel(value: number | null) {
+  percentageLabel(value: number | null): string {
     return value + '%';
   }
 
   /**
    * Returns if the job could be approved <=> isn't approved and user is admin
    */
-  isAdmin() {
+  isAdmin(): boolean {
     return AuthService.isModOrAdmin();
   }
+
+  /**
+   * Check if all form fields are valid
+   * @returns Flag if form is valid
+   */
   isValid() {
     return (this.job.phone.match('[0-9+ ]+') &&
             this.job.email.match('[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,10}$') &&
             this.job.website.match('(((http|https)\\:\\/\\/){0,1}www\\.){0,1}[a-zA-Z0-9]*\\.[a-zA-Z0-9]{2,10}(\\/.*){0,1}'));
   }
+
+  /**
+   * Open SnackBar to inform the user about the incompleteness of the form
+   */
   block() {
     this.snackBar.open('Nicht alle obligatorischen Felder ausgefüllt!', null, {duration: 5000});
   }
 
+  /**
+   * Approve this job or changes to this job
+   */
   approve() {
     if (AuthService.isModOrAdmin()) {
       this.httpClient.put('/jobs/apply/' + this.job.id, {}, {withCredentials: true}).subscribe((res: any) => {
@@ -280,6 +354,10 @@ export class JobEditComponent implements OnInit {
       });
     }
   }
+
+  /**
+   * Reset the changes to this job
+   */
   resetJob() {
     this.httpClient.put('/jobs/reset/' + this.job.id, {}, {withCredentials: true}).subscribe((res: any) => {
       this.job.title = res.title;
@@ -309,6 +387,10 @@ export class JobEditComponent implements OnInit {
       this.snackBar.open(Message.getMessage(err.error.code), null, {duration: 5000});
     });
   }
+
+  /**
+   * Open a preview window for this job
+   */
   showPreview() {
     const dialogRef = this.dialog.open(JobViewComponent, {
       minWidth: '70%',

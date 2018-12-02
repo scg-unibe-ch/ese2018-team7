@@ -1,19 +1,23 @@
-import { Pipe, PipeTransform } from '@angular/core';
-import {PageEvent} from '@angular/material';
+import {Pipe, PipeTransform} from '@angular/core';
+
 import {Job} from '../job';
 
+/**
+ * Custom sorting options for our `jobsView`
+ */
 @Pipe({
   name: 'jobsSortPipe',
   pure: false
 })
+
 export class JobsSortPipe implements PipeTransform {
+
   transform(jobs: Job[], filter: string): any {
     if (!jobs || !filter) {
       return jobs;
     }
 
     jobs = jobs.sort((job1, job2) => {
-
       switch (filter) {
         case 'titleASC':
           return (job1.title < job2.title ? -1 : 1);
@@ -43,7 +47,7 @@ export class JobsSortPipe implements PipeTransform {
 
       return 0;
     });
-
     return jobs;
   }
+
 }

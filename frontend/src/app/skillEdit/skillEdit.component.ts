@@ -1,30 +1,46 @@
 import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
+
 import {Skill} from '../skill';
 import {JobEditComponent} from '../jobEdit/jobEdit.component';
 
+/**
+ * Component to display one skill in an editable format (edit mode).
+ */
 @Component({
   selector: 'app-skill-edit',
   templateUrl: './skillEdit.component.html',
   styleUrls: ['./skillEdit.component.css']
 })
-/**
- * This Components displays one Skill to edit it
- */
+
 export class SkillEditComponent implements OnInit {
 
+  /**
+   * Skill that should be edited
+   */
   @Input()
   skill: Skill;
+
+  /**
+   * Simple EventEmitter to delete the component
+   */
   @Output()
   destroy = new EventEmitter<Skill>();
 
+  /**
+   * Injects the skillEdit into the JobEditComponent of a specific job
+   * @param job Job that the skill belongs to
+   */
   constructor(@Inject(JobEditComponent) private job: JobEditComponent) {
   }
 
+  /**
+   * @ignore
+   */
   ngOnInit() {
   }
 
   /**
-   * Save the changed on the server
+   * Save the changed skill on the server
    */
   onSave() {
     this.job.onSaveSkills();

@@ -12,9 +12,9 @@
 
 .mat-toolbar.mat-primary {
   position: sticky;
-  position: -webkit-sticky; /* For macOS/iOS Safari */
+  position: -webkit-sticky;
   top: 0;
-  z-index: 1000; /* Ensure that your app's content doesn't overlap the toolbar */
+  z-index: 1000;
 }
 
 .fill-space {
@@ -26,12 +26,14 @@
   height: 50px;
   width: auto;
 }
+
 .mibLogo{
   content: url('../assets/mibLogo-large.svg');
   height: 50px;
   width: auto;
   padding-left: 10px;
 }
+
 .welcome-text {
   font-size: 12px;
   font-weight: bold;
@@ -44,6 +46,7 @@
     content: url('../assets/mibLogo-small.svg');
   }
 }
+
 .mat-drawer-content{
   z-index: 2;
 }

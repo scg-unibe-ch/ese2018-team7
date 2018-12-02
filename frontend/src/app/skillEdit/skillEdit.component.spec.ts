@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { SkillEditComponent } from './skillEdit.component';
+import {SkillEditComponent} from './skillEdit.component';
 
 describe('SkillEditComponent', () => {
   let component: SkillEditComponent;

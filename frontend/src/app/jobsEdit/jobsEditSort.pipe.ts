@@ -1,20 +1,24 @@
-import { Pipe, PipeTransform } from '@angular/core';
-import {PageEvent} from '@angular/material';
+import {Pipe, PipeTransform} from '@angular/core';
+
 import {Job} from '../job';
 import {AuthService} from '../auth/auth.service';
 
+/**
+ * Custom sorting options for our `jobsEdit`
+ */
 @Pipe({
   name: 'jobsEditSortPipe',
   pure: false
 })
+
 export class JobsEditSortPipe implements PipeTransform {
+
   transform(jobs: Job[], filter: string): any {
     if (!jobs || !filter) {
       return jobs;
     }
 
     jobs = jobs.sort((job1, job2) => {
-
       let title1 = job1.title;
       let title2 = job2.title;
 
@@ -59,10 +63,9 @@ export class JobsEditSortPipe implements PipeTransform {
           }
           return (job1.startOfWork > job2.startOfWork ? -1 : 1);
       }
-
       return 0;
     });
-
     return jobs;
   }
+
 }
