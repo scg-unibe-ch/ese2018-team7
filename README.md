@@ -34,5 +34,8 @@ Express is licensed under the [Creative Commons Attribution-ShareAlike 3.0 Licen
 
 SQLite is in the public domain.
 
+## Browser
+Our application is optimised for use with the [Google Chrome](http://www.google.com/chrome) web browser.
+
 ## Licensing
 This work is licensed under the [MIT License](https://github.com/scg-unibe-ch/ese2018-team7/blob/master/LICENSE.md).
