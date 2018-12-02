@@ -28,15 +28,15 @@ table {
   width: 100%;
 }
 
-tr.example-detail-row {
+tr.detail-row {
   height: 0;
 }
 
-.example-element-row td {
+.element-row td {
   border-bottom-width: 0;
 }
 
-.example-element-detail {
+.element-detail {
   height: auto;
   overflow: hidden;
   padding: 10px;
@@ -47,6 +47,7 @@ tr.example-detail-row {
   min-width: 80%;
   min-height: 160px;
 }
+
 .infoText{
   color: var(--warn);
   font-weight: bold;

@@ -35,6 +35,10 @@
   min-height: 100%;
 }
 
+.paginator{
+  background: #fafafa;
+}
+
 /* Custom ng5 slider */
 
 ::ng-deep .custom-slider .ng5-slider .ng5-slider-bar {
@@ -78,8 +82,4 @@
 
 ::ng-deep .custom-slider .ng5-slider .ng5-slider-tick.ng5-slider-selected {
   background: var(--primary-a60);
-}
-
-.paginator{
-  background: #fafafa;
 }

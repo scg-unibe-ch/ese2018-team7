@@ -23,12 +23,12 @@
 }
 
 .header-container {
-  display: flex; /* or inline-flex */
+  display: flex;
   flex-wrap: wrap;
 }
 
 .header-item {
-  flex-basis: auto; /* default auto */
+  flex-basis: auto;
 }
 
 .paginator{

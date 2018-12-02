@@ -60,7 +60,6 @@
   <mat-slider name="workload" color="primary" min="0" max="100" step="5" value="100" tickInterval="2" thumbLabel [displayWith]="percentageLabel" [(ngModel)]="job.workload" (ngModelChange)="onSaveSingle('workload',job.workload)"></mat-slider>
   <br>
   <mat-slide-toggle
-    class="example-margin"
     color="primary"
     [checked]="displaySalary()"
     [disabled]="false"
