@@ -35,4 +35,4 @@ Express is licensed under the [Creative Commons Attribution-ShareAlike 3.0 Licen
 SQLite is in the public domain.
 
 ## Licensing
-This work is licensed under the [MIT License](https://spdx.org/licenses/MIT.html).
+This work is licensed under the [MIT License](https://github.com/scg-unibe-ch/ese2018-team7/blob/master/LICENSE.md).
