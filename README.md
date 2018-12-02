@@ -5,11 +5,11 @@ This Repo was developed for the [ESE course at the University of Bern](http://sc
 ## How to run
 Ensure that you have [Node.js](https://nodejs.org/en/) and NPM installed, then you can run the [install.sh](https://github.com/scg-unibe-ch/ese2018-team7/blob/master/install.sh) script. For further runs you can use the [start.sh](https://github.com/scg-unibe-ch/ese2018-team7/blob/master/start.sh) script.
 
-The frontend should open automatically, else you can find it under [localhost:4200](http://localhost:4200)
+The frontend should open automatically, else you can find it under [localhost:4200](http://localhost:4200).
 
-The backend runs at [localhost:3000](http://localhost:3000), but it should't be necessary to view that.
+The backend runs at [localhost:3000](http://localhost:3000), but it should't be necessary to look at this.
 
-The system uses a SQLite Database
+The system uses a SQLite Database.
 
 ## Technologies
 We use a number of different technologies. Some of them are:
@@ -22,4 +22,17 @@ We use a number of different technologies. Some of them are:
 - [SQLite](https://www.sqlite.org/): Database for this project
 - [Sequelize](http://docs.sequelizejs.com/): ORM to connect to the SQLite Database
 - [Bcrypt](https://github.com/kelektiv/node.bcrypt.js): Library to securely hash your password
+- [Swagger](https://github.com/swagger-api/swagger-ui/): To present beautiful backend API documentation we use swagger UI
+- [Compodoc](https://compodoc.app/): To present beautiful frontend documentation we use compodoc
 - [Webstorm](https://www.jetbrains.com/webstorm/) or [IntelliJ IDEA](https://www.jetbrains.com/idea/) as the [IDE](https://en.wikipedia.org/wiki/Integrated_development_environment)
+
+Angular 6, Angular Material, Moment.js, Express Session, Sequelize, Bcrypt and Compodoc are licensed under the [MIT License](https://spdx.org/licenses/MIT.html).
+
+Typescript and Swagger are licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
+
+Express is licensed under the [Creative Commons Attribution-ShareAlike 3.0 License](https://creativecommons.org/licenses/by-sa/3.0/legalcode).
+
+SQLite is in the public domain.
+
+## Licensing
+This work is licensed under the [MIT License](https://github.com/scg-unibe-ch/ese2018-team7/blob/master/LICENSE.md).
