@@ -2,6 +2,8 @@
 
 This application was developed for the [ESE course at the University of Bern](http://scg.unibe.ch/teaching/ese) in 2018.
 
+Documentation and further textual information can be found in our [project wiki](https://github.com/scg-unibe-ch/ese2018-team7/wiki) and in the README file for the [frontend](https://github.com/scg-unibe-ch/ese2018-team7/tree/master/frontend) and [backend](https://github.com/scg-unibe-ch/ese2018-team7/tree/master/backend).
+
 ## How to run
 Ensure that you have [Node.js](https://nodejs.org/en/) and NPM installed, then you can run the [install.sh](https://github.com/scg-unibe-ch/ese2018-team7/blob/master/install.sh) script. For further runs you can use the [start.sh](https://github.com/scg-unibe-ch/ese2018-team7/blob/master/start.sh) script.
 
