@@ -26,10 +26,13 @@ We use a number of different technologies. Some of them are:
 - [Compodoc](https://compodoc.app/): To present beautiful frontend documentation we use compodoc
 - [Webstorm](https://www.jetbrains.com/webstorm/) or [IntelliJ IDEA](https://www.jetbrains.com/idea/) as the [IDE](https://en.wikipedia.org/wiki/Integrated_development_environment)
 
-Angular 6, Angular Material, Moment.js, Express Session, Sequelize, Bcrypt and Compodoc are licensed under the MIT License.
+Angular 6, Angular Material, Moment.js, Express Session, Sequelize, Bcrypt and Compodoc are licensed under the [MIT License](https://spdx.org/licenses/MIT.html).
 
-Typescript and Swagger are licensed under the Apache License 2.0.
+Typescript and Swagger are licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
 
-Express is licensed under the Creative Commons Attribution-ShareAlike 3.0 License.
+Express is licensed under the [Creative Commons Attribution-ShareAlike 3.0 License](https://creativecommons.org/licenses/by-sa/3.0/legalcode).
 
 SQLite is in the public domain.
+
+## Licensing
+This work is licesed under the [MIT License](https://spdx.org/licenses/MIT.html).
