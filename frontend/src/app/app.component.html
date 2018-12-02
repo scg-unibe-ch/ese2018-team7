@@ -1,3 +1,4 @@
+<!--suppress CheckImageSize -->
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav
     #drawer
@@ -6,7 +7,9 @@
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="!(isHandset$ | async)">
-    <mat-toolbar color="primary"><div class="mibLogoImg"></div></mat-toolbar>
+    <mat-toolbar color="primary">
+      <div class="mibLogoImg"></div>
+    </mat-toolbar>
     <div *ngIf="isLogin()" class="welcome-text">{{getWelcomeText()}}</div>
     <mat-nav-list *ngFor="let menu of menus">
       <!-- Distinguish between mobile and desktop -->
@@ -45,7 +48,7 @@
       </div>
     </mat-toolbar>
     <div class="content">
-    <router-outlet></router-outlet>
+      <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
