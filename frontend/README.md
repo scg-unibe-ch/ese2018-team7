@@ -9,4 +9,4 @@ After you run the [start.sh](https://github.com/scg-unibe-ch/ese2018-team7/blob/
 In order to view the documentation, you can run the [startFrontendDoc.sh](https://github.com/scg-unibe-ch/ese2018-team7/blob/master/startFrontendDoc.sh) script and then open [localhost:8080](http://localhost:8080), where detailed documentation is shown by Compodoc.
 
 ### E2E testing
-If you want to run our End-To-End tests you can run `npm run e2e` in the frontend directory but make sure, that you don't have the application already running, because it uses the same port.
+If you want to run our End-To-End tests you can run `npm run e2e` in the frontend directory. Make sure you have the backend server already running with our [testing database](https://github.com/scg-unibe-ch/ese2018-team7/blob/master/docs/testing.sqlite), otherwise the tests won't work.
