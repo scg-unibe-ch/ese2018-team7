@@ -216,7 +216,8 @@ export class JobsViewComponent implements OnInit {
       'title=' + this.advSearchTitle + '&' +
       'company=' + this.advSearchCompany + '&' +
       'department=' + this.advSearchDepartment + '&' +
-      'startAfter=' + this.advSearchStartAfter.unix() + '&' +
+      'startAfter=' + (this.advSearchStartAfter.startOf('day').unix() !== moment().subtract(1, 'w')
+        .startOf('day').unix() ? this.advSearchStartAfter.unix() : 0) + '&' +
       'startBefore=' + this.advSearchStartBefore.unix() + '&' +
       'workloadGt=' + this.advSearchWorkLoadGt + '&' +
       'workloadLt=' + this.advSearchWorkLoadLt
