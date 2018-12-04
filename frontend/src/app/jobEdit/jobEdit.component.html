@@ -58,7 +58,7 @@
   <div flex="10" layout layout-align="center center" class="property-label">
     Pensum
   </div>
-  <mat-slider name="workload" color="primary" min="0" max="100" step="5" value="100" tickInterval="2" thumbLabel [displayWith]="percentageLabel" [(ngModel)]="job.workload" (ngModelChange)="onSaveSingle('workload',job.workload)"></mat-slider>
+  <mat-slider name="workload" color="primary" min="0" max="100" step="5" value="100" tickInterval="2" thumbLabel [displayWith]="percentageLabel" [(ngModel)]="job.workload" (ngModelChange)="onSaveSingle('workload',job.workload+'')"></mat-slider>
   <br>
   <mat-slide-toggle
     color="primary"
