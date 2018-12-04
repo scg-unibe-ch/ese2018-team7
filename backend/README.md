@@ -14,3 +14,10 @@ However, in general no output will be shown if you visit this page in your brows
 ### Documentation
 In order to view the documentation, you can navigate to [localhost:3000/docs](http://localhost:3000/docs),
 where detailed API documentation of our backend is shown by swagger UI.
+
+### Deployment
+Don't forget to add your valid [Bing Cognitive Services API key by Microsoft Azure](https://azure.microsoft.com/en-us/services/cognitive-services/bing-image-search-api/), into the [msApiKey.json](https://github.com/scg-unibe-ch/ese2018-team7/blob/master/backend/app/msApiKey.json) file.
+
+If you want the backend on a different Port than 3000, change in [server.ts](https://github.com/scg-unibe-ch/ese2018-team7/blob/master/backend/app/server.ts) the port number in line 49 (`let port = 3000;`).
+
+Then run `npm run tsc` once and `node build/server.js` to start your backend NodeJs-Server.

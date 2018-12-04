@@ -10,3 +10,19 @@ In order to view the documentation, you can run the [startFrontendDoc.sh](https:
 
 ### E2E testing
 If you want to run our End-To-End tests you can run `npm run e2e` in the frontend directory. Make sure you have the backend server already running with our [testing database](https://github.com/scg-unibe-ch/ese2018-team7/blob/master/docs/testing.sqlite) copied into the backend folder and renamed to db.sqlite, otherwise the tests won't work.
+
+### Deployment
+In [apiInterceptor.ts](https://github.com/scg-unibe-ch/ese2018-team7/blob/master/frontend/src/app/apiInterceptor/apiInterceptor.ts)
+change your backend URL from ``{ url: `http://` + window.location.hostname + `:3000${req.url}` `` to ``{ url: `https://serverurl${req.url}` ``
+
+Run `npm build --aot --prod` in the frontend folder and then copy the files from `frontend/dist/ESE-Angular-Frontend` to your webserver.
+
+If you run an apache server you probably have to change your `.htaccess` the following way to enable Angular Routing correctly:
+```
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} -s [OR]
+RewriteCond %{REQUEST_FILENAME} -l [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^.*$ - [NC,L]
+RewriteRule ^(.*) /index.html [NC,L]
+```
