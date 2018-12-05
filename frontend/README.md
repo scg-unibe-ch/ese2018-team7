@@ -16,7 +16,7 @@ Also, keep in mind that protractor is rather unreliable when it comes to consist
 In [apiInterceptor.ts](https://github.com/scg-unibe-ch/ese2018-team7/blob/master/frontend/src/app/apiInterceptor/apiInterceptor.ts)
 change your backend URL from ``{ url: `http://` + window.location.hostname + `:3000${req.url}` `` to ``{ url: `https://serverurl${req.url}` ``
 
-Run `npm build --aot --prod` in the frontend folder and then copy the files from `frontend/dist/ESE-Angular-Frontend` to your webserver.
+Run `ng build --aot --prod` in the frontend folder and then copy the files from `frontend/dist/ESE-Angular-Frontend` to your webserver.
 
 If you run an apache server you probably have to change your `.htaccess` the following way to enable Angular Routing correctly:
 ```
