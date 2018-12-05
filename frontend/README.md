@@ -10,6 +10,7 @@ In order to view the documentation, you can run the [startFrontendDoc.sh](https:
 
 ### E2E testing
 If you want to run our End-To-End tests you can run `npm run e2e` in the frontend directory. Make sure you have the backend server already running with our [testing database](https://github.com/scg-unibe-ch/ese2018-team7/blob/master/docs/testing.sqlite) copied into the backend folder and renamed to db.sqlite, otherwise the tests won't work.
+Also, keep in mind that protractor is rather unreliable when it comes to consistency. Even though all tests passed during our tests in our environment, we can not guarantee, that the tests will run successfully in your setting.
 
 ### Deployment
 In [apiInterceptor.ts](https://github.com/scg-unibe-ch/ese2018-team7/blob/master/frontend/src/app/apiInterceptor/apiInterceptor.ts)

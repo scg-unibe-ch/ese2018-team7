@@ -32,6 +32,7 @@ export class Message {
     emptyPasswordNotAllowed: new Msg(1009, 'Leeres Passwort ist nicht erlaubt!'),
     permissionDeniedChangePasswordHigherLevel: new Msg(1010, 'Keine Berechtigung für das Ändern des Passworts für diesen Benutzer!'),
     emptyMailNotAllowed: new Msg(1011, 'Leere Mailaddresse ist nicht erlaubt!'),
+    userHasJobs: new Msg(1012, 'Benutzer hat noch Jobs, löschen Sie diese zuerst!')
   };
 
   /**

@@ -30,7 +30,7 @@ export class Message {
     emptyPasswordNotAllowed: new Msg(1009, 'Empty Password is not allowed!'),
     permissionDeniedChangePasswordHigherLevel: new Msg(1010, 'You\'re not allowed to change password of a higher Level'),
     emptyMailNotAllowed: new Msg(1011, 'Empty Mail is not allowed!'),
-
+    userHasJobs: new Msg(1012, 'User still has jobs, delete them first!'),
   };
   public static success = {
     success: new Msg(2000, 'success'),

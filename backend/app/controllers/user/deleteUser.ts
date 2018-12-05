@@ -3,6 +3,8 @@ import {Response} from 'express';
 import {Request} from '../../interfaces/request.interface';
 import {asyncRoute} from '../../helper/async.helper';
 import {Message} from '../../enums/message.enum';
+import {Sequelize} from 'sequelize-typescript';
+import {Job} from '../../models/job.model';
 
 /**
  * @swagger
@@ -37,7 +39,7 @@ import {Message} from '../../enums/message.enum';
  *         schema:
  *           $ref: '#/definitions/message'
  *       404:
- *         description: If User doesn't exist
+ *         description: If User doesn't exist or still has jobs
  *         schema:
  *           $ref: '#/definitions/message'
  */
@@ -52,8 +54,16 @@ module.exports = asyncRoute(async (req: Request, res: Response) => {
 
   }
 
-  await instance.destroy();
+  const jobs = await Job.findAll( {
+    where: Sequelize.and(
+      {'owner': {like: instance.username}})});
 
+  if (jobs !== null && jobs.length !== 0) {
+    res.status(404).send(Message.error.userHasJobs);
+    return;
+  }
+
+  await instance.destroy();
   res.status(200).send(Message.success.success);
 
 });
