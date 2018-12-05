@@ -5,7 +5,7 @@ This application was developed for the [ESE course at the University of Bern](ht
 Documentation and further textual information can be found in our [project wiki](https://github.com/scg-unibe-ch/ese2018-team7/wiki) and in the README file for the [frontend](https://github.com/scg-unibe-ch/ese2018-team7/tree/master/frontend) and [backend](https://github.com/scg-unibe-ch/ese2018-team7/tree/master/backend).
 
 ## Demo
-Our Project is currently running on [Heroku](https://ese2018-team7.herokuapp.com/).
+Our Project is currently running on [Heroku](https://ese2018-team7.herokuapp.com/). There you can also find the [frontend documentation](https://ese2018-team7.herokuapp.com/docs) and [backend documentation](https://ese2018-team7-backend.herokuapp.com/docs).
 
 ## How to run
 Ensure that you have [Node.js](https://nodejs.org/en/), [NPM](https://www.npmjs.com/) and [Git](https://git-scm.com/) installed, then you can run the [startInstallation.sh](https://github.com/scg-unibe-ch/ese2018-team7/blob/master/startInstallation.sh) script. For further runs you can use the [start.sh](https://github.com/scg-unibe-ch/ese2018-team7/blob/master/start.sh) script.
