@@ -371,7 +371,7 @@ export class Job extends Model<Job> {
       }
 
       if (simplification['workload'] != null) {
-        this.workload = simplification['workload'];
+        this.workload = (typeof simplification['workload'] === 'string') ? Number(simplification['workload']) : simplification['workload'];
       }
 
       if (simplification['salary'] != null) {
